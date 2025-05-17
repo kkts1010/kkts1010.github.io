@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="坂本航太">
+<meta name="dcterms.date" content="2025-05-17">
 
-<title>About – blog</title>
+<title>臨床試験のサンプルサイズ設計 – Kota Sakamoto</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,61 +22,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-de070a7b0ab54f8780927367ac907214.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-ad92c8f6789d64c8f40a91dd2b038e8c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../../">
+<script src="../../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../site_libs/quarto-html/quarto-syntax-highlighting-9849038e97c5862c14c4eb81893d019b.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../site_libs/bootstrap/bootstrap-07476ae561ffd188ceb0ab63e6b60ae5.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -104,7 +71,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
 
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../../../../styles.css">
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -114,8 +81,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">blog</span>
+    <a class="navbar-brand" href="../../../../index.html">
+    <span class="navbar-title">Kota Sakamoto</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -125,16 +92,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html"> 
+    <a class="nav-link" href="../../../../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./about.html" aria-current="page"> 
+    <a class="nav-link" href="../../../../about.html"> 
 <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../posts/statistics/index.html"> 
+<span class="menu-text">Notes</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../posts/Web_tools/Web_tools.html"> 
+<span class="menu-text">Web Tools</span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
+    <a href="https://github.com/kkts1010/kkts1010.github.io/" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-github"></i></a>
 </div>
       </div> <!-- /container-fluid -->
     </nav>
@@ -143,22 +119,54 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">目次</h2>
+   
+  <ul>
+  <li><a href="#実務で利用するサンプルサイズ設計" id="toc-実務で利用するサンプルサイズ設計" class="nav-link active" data-scroll-target="#実務で利用するサンプルサイズ設計"><span class="header-section-number">1</span> 実務で利用するサンプルサイズ設計</a></li>
+  <li><a href="#目次" id="toc-目次" class="nav-link" data-scroll-target="#目次"><span class="header-section-number">2</span> 目次</a></li>
+  <li><a href="#単群試験" id="toc-単群試験" class="nav-link" data-scroll-target="#単群試験"><span class="header-section-number">3</span> 単群試験</a>
+  <ul class="collapse">
+  <li><a href="#値アウトカム" id="toc-値アウトカム" class="nav-link" data-scroll-target="#値アウトカム"><span class="header-section-number">3.1</span> 2値アウトカム</a></li>
+  </ul></li>
+  <li><a href="#並行群間比較計画" id="toc-並行群間比較計画" class="nav-link" data-scroll-target="#並行群間比較計画"><span class="header-section-number">4</span> 並行群間比較計画</a>
+  <ul class="collapse">
+  <li><a href="#連続量アウトカム" id="toc-連続量アウトカム" class="nav-link" data-scroll-target="#連続量アウトカム"><span class="header-section-number">4.1</span> 連続量アウトカム</a></li>
+  <li><a href="#値アウトカム-1" id="toc-値アウトカム-1" class="nav-link" data-scroll-target="#値アウトカム-1"><span class="header-section-number">4.2</span> 2値アウトカム</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">About</h1>
-</div>
+<h1 class="title">臨床試験のサンプルサイズ設計</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">統計学</div>
+    <div class="quarto-category">臨床試験</div>
+  </div>
+  </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>坂本航太 </p>
+          </div>
+  </div>
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">May 17, 2025</p>
+    </div>
+  </div>
   
     
   </div>
@@ -168,15 +176,125 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>About this site</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 2</code></pre>
-</div>
-</div>
+<section id="実務で利用するサンプルサイズ設計" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> 実務で利用するサンプルサイズ設計</h1>
+<p>本書は、ARO（Academi Research Organization） の実務で利用するサンプルサイズ設計について解説します。特に、SASを用いたサンプルサイズ設計の方法に焦点を当てています。実務で利用することのみを念頭に置いているため、数理的な導出は省きます。 本書では、以下の内容を扱います。</p>
+</section>
+<section id="目次" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> 目次</h1>
+<ul>
+<li>0章：はじめに
+<ul>
+<li>比較の形式
+<ul>
+<li>優越性を示すための試験</li>
+<li>同等性又は非劣性を示すための試験</li>
+<li>用量反応関係を示すための試験</li>
+</ul></li>
+</ul></li>
+<li>1章：単群試験
+<ul>
+<li>2値アウトカム</li>
+</ul></li>
+<li>並行群間比較計画
+<ul>
+<li>2値アウトカム</li>
+<li>連続量アウトカム</li>
+<li>生存時間アウトカム</li>
+</ul></li>
+<li>群逐次計画
+<ul>
+<li>無効中止</li>
+<li>有効中止</li>
+<li>無効中止と有効中止の両方を考慮する場合</li>
+</ul></li>
+<li>クロスオーバ―計画</li>
+<li>シミュレーションに基づくサンプルサイズ設計</li>
+</ul>
+</section>
+<section id="単群試験" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> 単群試験</h1>
+<section id="値アウトカム" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="値アウトカム"><span class="header-section-number">3.1</span> 2値アウトカム</h2>
+<p>2値アウトカムの場合、サンプルサイズは以下の式で計算できます。例えば、1標本割合の検定です。主に抗がん剤の第2相試験を想定しています。</p>
+<ul>
+<li>H0: p = 0.1（閾値奏効割合）</li>
+<li>H1: p &gt; 0.3（期待奏効率）</li>
+<li>α = 0.05（第一種の過誤、片側）</li>
+<li>β = 0.2（第二種の過誤）</li>
+</ul>
+<p>実務上では、無効中止や有効中止を考慮する必要がある場合もあり、後述するSimonの2段階デザインやFlemingの2段階デザインを用いることが多いです。</p>
+<p>以下は、正規近似を用いたサンプルサイズ計算の例です。 連続修正は行いません。正規近似に基づく症例数設計では、H0におけるp0を用いて分散が計算されている点は理解されたい。</p>
+<pre class="sas"><code>proc power;
+onesamplefreq test=z
+    method = normal
+    sides = 1
+    alpha = 0.05
+    nullproportion = 0.1
+    proportion = 0.3
+    ntotal = .
+    power = 0.8;
+run;</code></pre>
+<p>しかし、実務では2項分布による正確な検定に基づく症例数設計を利用することが標準です。理由は正規近似による例数設計が二項分布の中心極限定理を用いているため、あくまでＮ→∞における漸近論を仮定しているためです。漸近論を利用せず、2項分布を用いて症例数設計をするSASプログラムは以下となる。</p>
+<pre class="sas"><code>proc power;
+    onesamplefreq test=exact
+        sides = 1
+        alpha = 0.05
+        nullproportion = 0.1
+        proportion = 0.3
+        ntotal = 30.
+        power = .;
+        plot x = n min =2 max = 100 step = 1 yopts = (ref  = 0.8);
+run;</code></pre>
+<p>上記のプログラムを実行すると、必要症例数に対して検出力は単調増加になりません。Nは目標とするPowerの値を満たす最小の整数値 or 目標とするPowerの値を満たす最大の整数値とします。個人的には、より保守的だえうため後者を推奨します。。実際、より大きなサンプルサイズを選ぶことで、検出力の目標値をより確実に達成できる可能性が高まります。ただし、リソースの制約がある場合は、目標検出力を満たす最小のn値を選ぶことも実用的な選択肢となり得ます。どちらのアプローチを取るかは、研究の目的やリソースの制約によって相談の上、決定してください。</p>
+</section>
+</section>
+<section id="並行群間比較計画" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> 並行群間比較計画</h1>
+<section id="連続量アウトカム" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="連続量アウトカム"><span class="header-section-number">4.1</span> 連続量アウトカム</h2>
+<p>連続量アウトカムの場合、サンプルサイズは以下の式で計算できます。 以下では優越性を示す第3相試験のような検証的試験を想定しています。</p>
+<pre class="sas"><code>proc power;
+    twosamplemeans test=diff
+        meandiff = 0.5
+        stddev = 1
+        alpha = 0.05
+        power = 0.8
+        nptotal = .;
+run;</code></pre>
+<p>複数の状況をまとめて計算する場合は、以下のようにします。</p>
+<pre class="sas"><code>proc power;
+    twosamplemeans test=diff
+        meandiff = 0.5 , 1 , 1.5
+        stddev = 1 , 2 , 3
+        alpha = 0.05
+        power = 0.8
+        ntotal = .;
+run;</code></pre>
+</section>
+<section id="値アウトカム-1" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="値アウトカム-1"><span class="header-section-number">4.2</span> 2値アウトカム</h2>
+<p>2値アウトカムの場合、サンプルサイズは以下の式で計算できます。例えば、2標本割合の検定です。基本的に、リスク差（割合の差）に基づいて優越性を検討することを想定しています。一般的に、2値アウトカムを主要評価項目として第3相試験を計画することは多くないような気がします。</p>
+<ul>
+<li>H0: p1 - p2 = 0（閾値奏効割合）</li>
+<li>H1: p1 - p2 &gt; 0（期待奏効率）</li>
+<li>α = 0.05（第一種の過誤、両側）</li>
+<li>β = 0.2（第二種の過誤）</li>
+</ul>
+<p>SASプログラムは以下となる。ここでは、対照群のp1及びリスク差を指定している。リスク差は、対照群のp0に基づいて計算されるため、対照群のp0を指定する必要がある。</p>
+<pre class="sas"><code>proc power;
+twossamplefreq test=pchi
+    sides = 2
+    alpha = 0.05
+    refproportion = 0.1
+    proportiondiff = 0.2
+    npergroup = .
+    power = 0.8;
+run;</code></pre>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -519,25 +637,66 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           }
         };
       }
-        // Attach click handler to the DT
-        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-        for (const annoteDlNode of annoteDls) {
-          annoteDlNode.addEventListener('click', (event) => {
-            const clickedEl = event.target;
-            if (clickedEl !== selectedAnnoteEl) {
-              unselectCodeLines();
-              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-              if (activeEl) {
-                activeEl.classList.remove('code-annotation-active');
-              }
-              selectCodeLines(clickedEl);
-              clickedEl.classList.add('code-annotation-active');
-            } else {
-              // Unselect the line
-              unselectCodeLines();
-              clickedEl.classList.remove('code-annotation-active');
+        const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
+        for (let i=0; i<annoteTargets.length; i++) {
+          const annoteTarget = annoteTargets[i];
+          const targetCell = annoteTarget.getAttribute("data-target-cell");
+          const targetAnnotation = annoteTarget.getAttribute("data-target-annotation");
+          const contentFn = () => {
+            const content = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+            if (content) {
+              const tipContent = content.cloneNode(true);
+              tipContent.classList.add("code-annotation-tip-content");
+              return tipContent.outerHTML;
             }
-          });
+          }
+          const config = {
+            allowHTML: true,
+            content: contentFn,
+            onShow: (instance) => {
+              selectCodeLines(instance.reference);
+              instance.reference.classList.add('code-annotation-active');
+              window.tippy.hideAll();
+            },
+            onHide: (instance) => {
+              unselectCodeLines();
+              instance.reference.classList.remove('code-annotation-active');
+            },
+            maxWidth: 300,
+            delay: [50, 0],
+            duration: [200, 0],
+            offset: [5, 10],
+            arrow: true,
+            trigger: 'click',
+            appendTo: function(el) {
+              return el.parentElement.parentElement.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'quarto',
+            placement: 'right',
+            positionFixed: true,
+            popperOptions: {
+              modifiers: [
+              {
+                name: 'flip',
+                options: {
+                  flipVariations: false, // true by default
+                  allowedAutoPlacements: ['right'],
+                  fallbackPlacements: ['right', 'top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left'],
+                },
+              },
+              {
+                name: 'preventOverflow',
+                options: {
+                  mainAxis: false,
+                  altAxis: false
+                }
+              }
+              ]        
+            }      
+          };
+          window.tippy(annoteTarget, config); 
         }
     const findCites = (el) => {
       const parentEl = el.parentElement;
@@ -579,6 +738,37 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   });
   </script>
 </div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="https://github.com/kkts1010/kkts1010.github.io/">
+<p>Kota Sakamoto</p>
+</a>
+  </li>  
+</ul>
+    </div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/kkts1010/kkts1010.github.io/">
+<p>Kota Sakamoto</p>
+</a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/kkt_1010">
+      <i class="bi bi-twitter" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
 
 
 

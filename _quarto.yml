@@ -12,7 +12,9 @@ website:
       - href: about.qmd
         text: About
       - href: posts/statistics/index.qmd
-        text: 記事一覧  
+        text: Notes
+      - href: posts/Web_tools/Web_tools.qmd
+        text: Web Tools
     tools:  
       - icon: github
         href: https://github.com/kkts1010/kkts1010.github.io/
@@ -28,7 +30,7 @@ website:
        href : https://twitter.com/kkt_1010
 
   sidebar: 
-    title: "記事カテゴリ"
+    title: "記事"
     style: "docked"
     contents:
       - posts/statistics/index.qmd
