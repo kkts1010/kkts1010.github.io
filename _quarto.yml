@@ -3,13 +3,22 @@ project:
   output-dir: docs
 
 website:
-  title: "blog"
+  title: "坂本航太のブログ"
   navbar:
-    background: dark
     left:
       - href: index.qmd
         text: Home
-      - about.qmd
+      - href: about.qmd
+        text: About
+      - href: posts/index.qmd
+        text: 記事一覧  
+      
+
+sidebar:
+  -title: "記事カテゴリ"
+  style: "docked"
+  contents:
+    - posts/statistics/index.qmd
 
 format:
   html:
