@@ -10,7 +10,7 @@ website:
         text: Home
       - href: about.qmd
         text: About
-      - href: posts/index.qmd
+      - href: posts/statistics/index.qmd
         text: 記事一覧  
       
 

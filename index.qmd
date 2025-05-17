@@ -2,10 +2,14 @@
 title: "Kota Sakamoto"
 ---
 
-坂本航太（さかもとこうた）のブログです。
+坂本航太のブログです。実務や研究で得た知識を備忘録として記録をしています。
 
-実務や研究で得た知識/経験を備忘録として記録をしています。
+所属先
 
-臨床試験でのSASによるサンプルサイズ設計
+[岡山大学病院 新医療研究開発センター データサイエンス部](https://shin-iryo.hospital.okayama-u.ac.jp/center/index8/)
 
-[サンプルサイズの設計方法について](posts/statistics/サンプルサイズ設計.md)
+連絡先
+
+-   Private：kota.sakamoto0514\@gmail.com
+
+-   所属組織：kota-sakamoto0514\@okayama-u.ac.jp

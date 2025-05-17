@@ -2,15 +2,92 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "blog",
+    "title": "Kota Sakamoto",
     "section": "",
-    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites.\n\n1 + 1\n\n[1] 2"
+    "text": "坂本航太のブログです。実務や研究で得た知識を備忘録として記録をしています。\n所属先\n岡山大学病院 新医療研究開発センター データサイエンス部\n連絡先\n\nPrivate：kota.sakamoto0514@gmail.com\n所属組織：kota-sakamoto0514@okayama-u.ac.jp"
   },
   {
     "objectID": "about.html",
     "href": "about.html",
     "title": "About",
     "section": "",
-    "text": "こんにちは。私は坂本航太（さかもと こうた）です。\n私は岡山大学病院 新医療研究開発センター データサイエンス部 統計解析室にて生物統計家/試験統計家として勤務しております。\n私の研究テーマは以下の通りです。\n\n臨床試験のデザインと解析\n項目反応理論\n測定法における信頼性と妥当性評価\n\n学歴\n\n2015年～202"
+    "text": "こんにちは。私は坂本航太（さかもと こうた）です。\n私は岡山大学病院 新医療研究開発センター データサイエンス部 統計解析室にて生物統計家/試験統計家として勤務しております。\n私の研究テーマは以下の通りです。"
+  },
+  {
+    "objectID": "posts/statistics/サンプルサイズ設計.html",
+    "href": "posts/statistics/サンプルサイズ設計.html",
+    "title": "臨床試験のサンプルサイズ設計",
+    "section": "",
+    "text": "本書は、ARO（Academi Research Organization） の実務で利用するサンプルサイズ設計について解説します。特に、SASを用いたサンプルサイズ設計の方法に焦点を当てています。実務で利用することのみを念頭に置いているため、数理的な導出は省きます。 本書では、以下の内容を扱SSいます。"
+  },
+  {
+    "objectID": "posts/statistics/サンプルサイズ設計.html#値アウトカム",
+    "href": "posts/statistics/サンプルサイズ設計.html#値アウトカム",
+    "title": "臨床試験のサンプルサイズ設計",
+    "section": "2値アウトカム",
+    "text": "2値アウトカム\n2値アウトカムの場合、サンプルサイズは以下の式で計算できます。例えば、1標本割合の検定です。主に抗がん剤の第2相試験を想定しています。\n\nH0: p = 0.1（閾値奏効割合）\nH1: p &gt; 0.3（期待奏効率）\nα = 0.05（第一種の過誤、片側）\nβ = 0.2（第二種の過誤）\n\n実務上では、無効中止や有効中止を考慮する必要がある場合もあり、後述するSimonの2段階デザインやFlemingの2段階デザインを用いることが多いです。\n以下は、正規近似を用いたサンプルサイズ計算の例です。 連続修正は行いません。正規近似に基づく症例数設計では、H0におけるp0を用いて分散が計算されている点は理解されたい。\nproc power;\nonesamplefreq test=z\n    method = normal\n    sides = 1\n    alpha = 0.05\n    nullproportion = 0.1\n    proportion = 0.3\n    ntotal = .\n    power = 0.8;\nrun;\nしかし、実務では2項分布による正確な検定に基づく症例数設計を利用することが標準です。理由は正規近似による例数設計が二項分布の中心極限定理を用いているため、あくまでＮ→∞における漸近論を仮定しているためです。漸近論を利用せず、2項分布を用いて症例数設計をするSASプログラムは以下となる。\nproc power;\n    onesamplefreq test=exact\n        sides = 1\n        alpha = 0.05\n        nullproportion = 0.1\n        proportion = 0.3\n        ntotal = 30.\n        power = .;\n        plot x = n min =2 max = 100 step = 1 yopts = (ref  = 0.8);\nrun;\n上記のプログラムを実行すると、必要症例数に対して検出力は単調増加になりません。Nは目標とするPowerの値を満たす最小の整数値 or 目標とするPowerの値を満たす最大の整数値とします。個人的には、より保守的だえうため後者を推奨します。。実際、より大きなサンプルサイズを選ぶことで、検出力の目標値をより確実に達成できる可能性が高まります。ただし、リソースの制約がある場合は、目標検出力を満たす最小のn値を選ぶことも実用的な選択肢となり得ます。どちらのアプローチを取るかは、研究の目的やリソースの制約によって相談の上、決定してください。"
+  },
+  {
+    "objectID": "posts/statistics/サンプルサイズ設計.html#連続量アウトカム",
+    "href": "posts/statistics/サンプルサイズ設計.html#連続量アウトカム",
+    "title": "臨床試験のサンプルサイズ設計",
+    "section": "連続量アウトカム",
+    "text": "連続量アウトカム\n連続量アウトカムの場合、サンプルサイズは以下の式で計算できます。 以下では優越性を示す第3相試験のような検証的試験を想定しています。\nproc power;\n    twosamplemeans test=diff\n        meandiff = 0.5\n        stddev = 1\n        alpha = 0.05\n        power = 0.8\n        nptotal = .;\nrun;\n複数の状況をまとめて計算する場合は、以下のようにします。\nproc power;\n    twosamplemeans test=diff\n        meandiff = 0.5 , 1 , 1.5\n        stddev = 1 , 2 , 3\n        alpha = 0.05\n        power = 0.8\n        ntotal = .;\nrun;"
+  },
+  {
+    "objectID": "posts/statistics/サンプルサイズ設計.html#値アウトカム-1",
+    "href": "posts/statistics/サンプルサイズ設計.html#値アウトカム-1",
+    "title": "臨床試験のサンプルサイズ設計",
+    "section": "2値アウトカム",
+    "text": "2値アウトカム\n2値アウトカムの場合、サンプルサイズは以下の式で計算できます。例えば、2標本割合の検定です。基本的に、リスク差（割合の差）に基づいて優越性を検討することを想定しています。一般的に、2値アウトカムを主要評価項目として第3相試験を計画することは多くないような気がします。\n\nH0: p1 - p2 = 0（閾値奏効割合）\nH1: p1 - p2 &gt; 0（期待奏効率）\nα = 0.05（第一種の過誤、両側）\nβ = 0.2（第二種の過誤）\n\nSASプログラムは以下となる。ここでは、対照群のp1及びリスク差を指定している。リスク差は、対照群のp0に基づいて計算されるため、対照群のp0を指定する必要がある。\nproc power;\ntwossamplefreq test=pchi\n    sides = 2\n    alpha = 0.05\n    refproportion = 0.1\n    proportiondiff = 0.2\n    npergroup = .\n    power = 0.8;\nrun;"
+  },
+  {
+    "objectID": "posts/statistics/index.html",
+    "href": "posts/statistics/index.html",
+    "title": "記事",
+    "section": "",
+    "text": "これまでに書いた記事の一覧です。カテゴリや日付でフィルタリングできます。 最新の技術トレンドや統計手法について定期的に更新しています。\n\n\n\n\n\n\nNote\n\n\n\n記事は不定期で更新します。内容に質問があれば、ぜひコメントやフィードバックを以下までお寄せください！\nアドレス：kota-sakamoto0514@okayama-u.ac.jp"
+  },
+  {
+    "objectID": "about.html#学歴",
+    "href": "about.html#学歴",
+    "title": "About",
+    "section": "学歴",
+    "text": "学歴\n2015.3 私立中央大学杉並高校卒業\n2015.4 中央大学理工学部人間総合理工学科入学\n2017.8 香港城市大学 交換留学開始\n2018.5 香港城市大学 交換留学修了\n2019.3 中央大学理工学部人間総合理工学科卒業\n2019.4 東京大学学際情報学府学際情報学専攻 生物統計情報学コース 入学\n2021.3 東京大学学際情報学府学際情報学専攻 生物統計情報学コース 修了\n2024.4 岡山大学大学院医歯薬学研究科医歯薬学専攻入学\n2028.3 岡山大学大学院医歯薬学研究科医歯薬学専攻修了予定"
+  },
+  {
+    "objectID": "about.html#学位",
+    "href": "about.html#学位",
+    "title": "About",
+    "section": "学位",
+    "text": "学位\n2028.3 博士（医学）岡山大学（見込み）\n2021.3 修士（学際情報学）東京大学\n2019.3 学士（理工学）中央大学"
+  },
+  {
+    "objectID": "about.html#職歴",
+    "href": "about.html#職歴",
+    "title": "About",
+    "section": "職歴",
+    "text": "職歴\n2021.4 - 現在 岡山大学病院新医療研究開発センター データサイエンス部 統計解析室 助教"
+  },
+  {
+    "objectID": "about.html#資格",
+    "href": "about.html#資格",
+    "title": "About",
+    "section": "資格",
+    "text": "資格\n日本統計学会 統計検定1級（数理、医薬生物学） 2024.11"
+  },
+  {
+    "objectID": "about.html#学会",
+    "href": "about.html#学会",
+    "title": "About",
+    "section": "学会",
+    "text": "学会\n日本計量生物学会"
+  },
+  {
+    "objectID": "posts/statistics/index.html#ブログの記事一覧",
+    "href": "posts/statistics/index.html#ブログの記事一覧",
+    "title": "記事",
+    "section": "",
+    "text": "これまでに書いた記事の一覧です。カテゴリや日付でフィルタリングできます。 最新の技術トレンドや統計手法について定期的に更新しています。\n\n\n\n\n\n\nNote\n\n\n\n記事は不定期で更新します。内容に質問があれば、ぜひコメントやフィードバックを以下までお寄せください！\nアドレス：kota-sakamoto0514@okayama-u.ac.jp"
   }
 ]
