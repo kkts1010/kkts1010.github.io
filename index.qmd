@@ -10,8 +10,10 @@ about:
       href: https://researchmap.jp/80912104
     - icon: github
       text: Github
+      href: https://github.com/kkts1010
     - icon: twitter
       text: twitter
+      href: https://x.com/kkt_1010
 toc : false
 number-sections: false
 include-in-header: 
