@@ -3,7 +3,8 @@ project:
   output-dir: docs
 
 website:
-  title: "坂本航太のブログ"
+  title: "Kota Sakamoto"
+  description: "臨床試験の実務統計家によるブログ"
   navbar:
     left:
       - href: index.qmd
@@ -12,19 +13,41 @@ website:
         text: About
       - href: posts/statistics/index.qmd
         text: 記事一覧  
-      
+    tools:  
+      - icon: github
+        href: https://github.com/kkts1010/kkts1010.github.io/
+  page-navigation: true  
+  page-footer:
+    left :
+     - text : "Kota Sakamoto"
+       href : https://github.com/kkts1010/kkts1010.github.io/
+    right:
+     - icon : github
+       href : https://github.com/kkts1010/kkts1010.github.io/
+     - icon : twitter
+       href : https://twitter.com/kkt_1010
 
-sidebar:
-  -title: "記事カテゴリ"
-  style: "docked"
-  contents:
-    - posts/statistics/index.qmd
+  sidebar: 
+    title: "記事カテゴリ"
+    style: "docked"
+    contents:
+      - posts/statistics/index.qmd
 
 format:
   html:
+    mainfont: "BIZ UDPGothic"
+    toc: true
     theme: cosmo
     css: styles.css
-    toc: true
+    number-sections: true
+    highlight-style: ayu
+    code-block-bg: true
+    code-block-border-left: "#7CC4AC"
+    code-overflow: scroll
+    code-fold: true
+    code-annotations: select
+    toc-title: "目次"
+    abstract-title: "概要"
 
 editor: visual
 

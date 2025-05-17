@@ -1,23 +1,15 @@
 ---
-title: "記事"
+title: "Notes"
 listing:
   contents: "."
   sort: "date desc"
   type: default
-  fields: [date, title]  # 日付とタイトルのみ表示
-  date-format: "YYYY-MM-DD"  # 日付フォーマット
+  fields: [date, title]  
+  date-format: "YYYY-MM-DD"  
   feed: false
   filter-ui: false
   sort-ui: false
-  page-size: 20
+page-layout: full
+title-block-banner: true
+comments: false
 ---
-
-## ブログの記事一覧
-
-これまでに書いた記事の一覧です。カテゴリや日付でフィルタリングできます。 最新の技術トレンドや統計手法について定期的に更新しています。
-
-::: callout-note
-記事は不定期で更新します。内容に質問があれば、ぜひコメントやフィードバックを以下までお寄せください！
-
-アドレス：kota-sakamoto0514\@okayama-u.ac.jp
-:::
