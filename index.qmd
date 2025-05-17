@@ -1,11 +1,7 @@
 ---
-title: "blog"
+title: "Kota Sakamoto"
 ---
 
-This is a Quarto website.
+坂本航太（さかもとこうた）のブログです。
 
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
-
-```{r}
-1 + 1
-```
+実務や研究で得た知識/経験を備忘録として記録をしています。
