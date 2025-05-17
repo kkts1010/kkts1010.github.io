@@ -2,7 +2,7 @@
 title: "Kota Sakamoto"
 ---
 
-坂本航太のブログです。実務や研究で得た知識を備忘録として記録をしています。
+坂本航太のブログです。実務や研究で得た知識を備忘録として記録しています。
 
 所属先
 
@@ -10,6 +10,8 @@ title: "Kota Sakamoto"
 
 連絡先
 
--   Private：kota.sakamoto0514\@gmail.com
+本記事等について、問い合わせがありましたら以下までご連絡ください。
+
+-   プライベート：kota.sakamoto0514\@gmail.com
 
 -   所属組織：kota-sakamoto0514\@okayama-u.ac.jp
