@@ -107,9 +107,9 @@
   {
     "objectID": "posts/Web_tools/Web_tools.html",
     "href": "posts/Web_tools/Web_tools.html",
-    "title": "Tools",
+    "title": "Web Tools",
     "section": "",
-    "text": "ここでは、わたしが普段利用しているWeb URLを備忘録として保存する。\n\nPankaj Kumar Choudhary"
+    "text": "ここでは、参考にさせていただいてるWeb URLを備忘録として保存する。"
   },
   {
     "objectID": "posts/statistics/2025/SampleSize/サンプルサイズ設計.html",
@@ -138,5 +138,103 @@
     "title": "臨床試験のサンプルサイズ設計",
     "section": "4.2 2値アウトカム",
     "text": "4.2 2値アウトカム\n2値アウトカムの場合、サンプルサイズは以下の式で計算できます。例えば、2標本割合の検定です。基本的に、リスク差（割合の差）に基づいて優越性を検討することを想定しています。一般的に、2値アウトカムを主要評価項目として第3相試験を計画することは多くないような気がします。\n\nH0: p1 - p2 = 0（閾値奏効割合）\nH1: p1 - p2 &gt; 0（期待奏効率）\nα = 0.05（第一種の過誤、両側）\nβ = 0.2（第二種の過誤）\n\nSASプログラムは以下となる。ここでは、対照群のp1及びリスク差を指定している。リスク差は、対照群のp0に基づいて計算されるため、対照群のp0を指定する必要がある。\nproc power;\ntwossamplefreq test=pchi\n    sides = 2\n    alpha = 0.05\n    refproportion = 0.1\n    proportiondiff = 0.2\n    npergroup = .\n    power = 0.8;\nrun;"
+  },
+  {
+    "objectID": "posts/Web_tools/Web_tools.html#統計",
+    "href": "posts/Web_tools/Web_tools.html#統計",
+    "title": "Web Tools",
+    "section": "3 統計",
+    "text": "3 統計\n\nPankaj Kumar Choudhary先生\nFrank Harrell先生\nBayesian Data Analysis Course\n早稲田大学 村田先生 講義資料等\nCamden Lopez（海外の生物統計家ブログ）\nBiostatistics for Biomedical Research"
+  },
+  {
+    "objectID": "posts/Web_tools/Web_tools.html#プログラミング",
+    "href": "posts/Web_tools/Web_tools.html#プログラミング",
+    "title": "Web Tools",
+    "section": "2 プログラミング",
+    "text": "2 プログラミング"
+  },
+  {
+    "objectID": "posts/Web_tools/Web_tools.html#国内の統計の先生のブログ",
+    "href": "posts/Web_tools/Web_tools.html#国内の統計の先生のブログ",
+    "title": "Web Tools",
+    "section": "3 国内の統計の先生のブログ",
+    "text": "3 国内の統計の先生のブログ"
+  },
+  {
+    "objectID": "posts/Web_tools/Web_tools.html#rプログラミング海外サイト",
+    "href": "posts/Web_tools/Web_tools.html#rプログラミング海外サイト",
+    "title": "Web Tools",
+    "section": "4 Rプログラミング（海外サイト）",
+    "text": "4 Rプログラミング（海外サイト）\n\nTidyverse style guide\nR Workflow for Reproducible Data Analysis and Reporting\nBuilding reproducible analytical pipelines with R\nR Workflow（Frank Harrell先生\nReproducible Medical Research with R\nR for Clinical Study Reports and Submission\nAn Introduction to Statistical Programming Methods with R\nTables in Clinical Trials with R\nIntroduction to tern\nWorkshops at rstudio::conf 2022\nTLG Catalog\nIntroduction to {rtables}\nReproducible Environments(Posit社)"
+  },
+  {
+    "objectID": "posts/Web_tools/Web_tools.html#rプログラミング日本語",
+    "href": "posts/Web_tools/Web_tools.html#rプログラミング日本語",
+    "title": "Web Tools",
+    "section": "5 Rプログラミング（日本語）",
+    "text": "5 Rプログラミング（日本語）\n\nデータサイエンス100本ノック（構造化データ加工編）をRで解く\nRによる再現可能なデータ分析（瓜生真也先生）\n今日からできる再現可能な論文執筆（国里愛彦先生・竹林由武先生）\nはじめよう！R（小杉考司先生）\n気軽にRでWebサイト\nRではじめようモダンなデータ分析"
+  },
+  {
+    "objectID": "posts/Web_tools/Web_tools.html#sasプログラミング",
+    "href": "posts/Web_tools/Web_tools.html#sasプログラミング",
+    "title": "Web Tools",
+    "section": "6 SASプログラミング",
+    "text": "6 SASプログラミング\n\nデータサイエンス100本ノック（構造化データ加工編）のSAS版"
+  },
+  {
+    "objectID": "posts/Web_tools/Web_tools.html#国内の統計家の先生のブログ",
+    "href": "posts/Web_tools/Web_tools.html#国内の統計家の先生のブログ",
+    "title": "Web Tools",
+    "section": "5 国内の統計家の先生のブログ",
+    "text": "5 国内の統計家の先生のブログ\n\n[田中史郎先生]"
+  },
+  {
+    "objectID": "posts/Web_tools/Web_tools.html#研究関連",
+    "href": "posts/Web_tools/Web_tools.html#研究関連",
+    "title": "Web Tools",
+    "section": "7 研究関連",
+    "text": "7 研究関連\n\nWriting-Tips Series(Journal of Clinical Epidemiology)"
+  },
+  {
+    "objectID": "posts/Web_tools/Web_tools.html#論文",
+    "href": "posts/Web_tools/Web_tools.html#論文",
+    "title": "Web Tools",
+    "section": "8 論文",
+    "text": "8 論文\n\nTen Simple Rules for Reproducible Computational Research"
+  },
+  {
+    "objectID": "posts/Web_tools/Web_tools.html#その他",
+    "href": "posts/Web_tools/Web_tools.html#その他",
+    "title": "Web Tools",
+    "section": "9 その他",
+    "text": "9 その他\n\n長島健悟先生のブログ\n司馬先生のブログ\nExcelシートの一括変換"
+  },
+  {
+    "objectID": "posts/Web_tools/Web_tools.html#論文雑誌",
+    "href": "posts/Web_tools/Web_tools.html#論文雑誌",
+    "title": "Web Tools",
+    "section": "10 論文雑誌",
+    "text": "10 論文雑誌\n\n[]"
+  },
+  {
+    "objectID": "posts/Web_tools/Web_tools.html#日本計量生物学会",
+    "href": "posts/Web_tools/Web_tools.html#日本計量生物学会",
+    "title": "Web Tools",
+    "section": "1 日本計量生物学会",
+    "text": "1 日本計量生物学会\n\n統計家の行動基準"
+  },
+  {
+    "objectID": "posts/Web_tools/Web_tools.html#計量生物学会",
+    "href": "posts/Web_tools/Web_tools.html#計量生物学会",
+    "title": "Web Tools",
+    "section": "1 計量生物学会",
+    "text": "1 計量生物学会\n\n統計家の行動基準"
+  },
+  {
+    "objectID": "posts/Web_tools/Web_tools.html#医薬品開発",
+    "href": "posts/Web_tools/Web_tools.html#医薬品開発",
+    "title": "Web Tools",
+    "section": "2 医薬品開発",
+    "text": "2 医薬品開発\n\nICH Efficacyガイドライン\nPMDA 審査関連業務の概要について\n製薬協データサイエンス部会 成果物\nFDA Clinical Trials Guidance Documents\nFDA Real-World Evidence Documents\nEMA Biostatistics guidelines\nEMA Real-world evidence guidelines"
   }
 ]
