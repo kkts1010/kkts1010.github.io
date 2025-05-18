@@ -81,7 +81,7 @@ title: "Web Tools"
 -   [Yanagimoto先生のブログ](https://zenn.dev/nicetak)
 -   [すうがくぶんか株式会社](https://sugakubunka.com/)
 -   [Quarto](https://quarto.org/)
-* [Git公式書籍（日本語](https://git-scm.com/book/ja/v2)
+-   [Git公式書籍（日本語](https://git-scm.com/book/ja/v2)
 -   [Excelシートの一括変換 note](https://note.com/office_haru/n/n35ab7211eece)
 
 ## 論文雑誌
