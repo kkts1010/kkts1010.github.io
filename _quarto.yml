@@ -29,12 +29,6 @@ website:
      - icon : twitter
        href : https://twitter.com/kkt_1010
 
-  sidebar: 
-    title: "記事"
-    style: "docked"
-    contents:
-      - posts/statistics/index.qmd
-
 format:
   html:
     mainfont: "BIZ UDPGothic"
@@ -50,6 +44,7 @@ format:
     code-annotations: select
     toc-title: "目次"
     abstract-title: "概要"
+
 
 editor: visual
 

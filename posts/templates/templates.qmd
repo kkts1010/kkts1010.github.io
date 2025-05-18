@@ -1,0 +1,14 @@
+---
+title: "タイトルを入力"
+author: "坂本航太"
+date: "{{< meta today >}}"
+date-modified: "{{< meta today >}}"
+categories: []
+abstract-title: 概要
+abstract: "ここに概要を入力してください。"
+image: "画像のパス"
+format:
+  html: default
+execute: 
+  cache: true
+---

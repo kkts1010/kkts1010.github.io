@@ -6,8 +6,11 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="坂本航太">
+<meta name="dcterms.date" content="2025-05-17">
+<meta name="keywords" content="臨床試験, サンプルサイズ設計, SAS">
 
-<title>About – Kota Sakamoto</title>
+<title>臨床試験のサンプルサイズ設計 – Kota Sakamoto</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,23 +26,23 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-9849038e97c5862c14c4eb81893d019b.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-5c5a4ce15ea03f2a96650e783ca02c3c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-9849038e97c5862c14c4eb81893d019b.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-5c5a4ce15ea03f2a96650e783ca02c3c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -69,17 +72,17 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../../../styles.css">
 </head>
 
 <body class="nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../../index.html">
     <span class="navbar-title">Kota Sakamoto</span>
     </a>
   </div>
@@ -90,19 +93,19 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html"> 
+    <a class="nav-link" href="../../../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./about.html" aria-current="page"> 
+    <a class="nav-link" href="../../../about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./posts/statistics/index.html"> 
+    <a class="nav-link" href="../../../posts/statistics/index.html"> 
 <span class="menu-text">Notes</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./posts/Web_tools/Web_tools.html"> 
+    <a class="nav-link" href="../../../posts/Web_tools/Web_tools.html"> 
 <span class="menu-text">Web Tools</span></a>
   </li>  
 </ul>
@@ -114,7 +117,58 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">臨床試験のサンプルサイズ設計</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">臨床試験</div>
+                <div class="quarto-category">SAS</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>坂本航太 </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">May 17, 2025</p>
+      </div>
+    </div>
+    
+      <div>
+      <div class="quarto-title-meta-heading">Modified</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date-modified">May 18, 2025</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  <div>
+    <div class="abstract">
+      <div class="block-title">Abstract</div>
+      ARO（Academi Research Organization）の実務で利用するサンプルサイズ設計について解説します。
+    </div>
+  </div>
+
+  <div>
+    <div class="keywords">
+      <div class="block-title">Keywords</div>
+      <p>臨床試験, サンプルサイズ設計, SAS</p>
+    </div>
+  </div>
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
@@ -122,84 +176,146 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">目次</h2>
    
   <ul>
-  <li><a href="#学歴" id="toc-学歴" class="nav-link active" data-scroll-target="#学歴"><span class="header-section-number">1</span> 学歴</a></li>
-  <li><a href="#学位" id="toc-学位" class="nav-link" data-scroll-target="#学位"><span class="header-section-number">2</span> 学位</a></li>
-  <li><a href="#職歴" id="toc-職歴" class="nav-link" data-scroll-target="#職歴"><span class="header-section-number">3</span> 職歴</a></li>
-  <li><a href="#資格" id="toc-資格" class="nav-link" data-scroll-target="#資格"><span class="header-section-number">4</span> 資格</a></li>
-  <li><a href="#所属学会" id="toc-所属学会" class="nav-link" data-scroll-target="#所属学会"><span class="header-section-number">5</span> 所属学会</a></li>
+  <li><a href="#実務で利用するサンプルサイズ設計" id="toc-実務で利用するサンプルサイズ設計" class="nav-link active" data-scroll-target="#実務で利用するサンプルサイズ設計"><span class="header-section-number">1</span> 実務で利用するサンプルサイズ設計</a></li>
+  <li><a href="#目次" id="toc-目次" class="nav-link" data-scroll-target="#目次"><span class="header-section-number">2</span> 目次</a></li>
+  <li><a href="#単群試験" id="toc-単群試験" class="nav-link" data-scroll-target="#単群試験"><span class="header-section-number">3</span> 単群試験</a>
+  <ul class="collapse">
+  <li><a href="#値アウトカム" id="toc-値アウトカム" class="nav-link" data-scroll-target="#値アウトカム"><span class="header-section-number">3.1</span> 2値アウトカム</a></li>
+  </ul></li>
+  <li><a href="#並行群間比較計画" id="toc-並行群間比較計画" class="nav-link" data-scroll-target="#並行群間比較計画"><span class="header-section-number">4</span> 並行群間比較計画</a>
+  <ul class="collapse">
+  <li><a href="#連続量アウトカム" id="toc-連続量アウトカム" class="nav-link" data-scroll-target="#連続量アウトカム"><span class="header-section-number">4.1</span> 連続量アウトカム</a></li>
+  <li><a href="#値アウトカム-1" id="toc-値アウトカム-1" class="nav-link" data-scroll-target="#値アウトカム-1"><span class="header-section-number">4.2</span> 2値アウトカム</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">About</h1>
-</div>
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
 
 
-</header>
-
-
-<p>坂本航太（さかもと こうた）です。私は岡山大学病院 新医療研究開発センター データサイエンス部 統計解析室にて、生物統計家/試験統計家を目指して勤務しています。</p>
-<p>私の関心・興味は以下の通りです。</p>
+<p>SASによるサンプルサイズ設計</p>
+<section id="実務で利用するサンプルサイズ設計" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> 実務で利用するサンプルサイズ設計</h1>
+<p>本書は、ARO（Academi Research Organization） の実務で利用するサンプルサイズ設計について解説します。特に、SASを用いたサンプルサイズ設計の方法に焦点を当てています。実務で利用することのみを念頭に置いているため、数理的な導出は省きます。 本書では、以下の内容を扱います。</p>
+</section>
+<section id="目次" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> 目次</h1>
 <ul>
-<li><p>臨床試験のデザインと解析</p></li>
-<li><p>測定法における信頼性と妥当性評価</p></li>
-<li><p>項目反応理論</p></li>
-</ul>
-<section id="学歴" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="学歴"><span class="header-section-number">1</span> 学歴</h2>
+<li>0章：はじめに
 <ul>
-<li><p>2015.3 私立中央大学杉並高校卒業</p></li>
-<li><p>2015.4 中央大学理工学部人間総合理工学科入学</p></li>
-<li><p>2017.8 香港城市大学 交換留学開始</p></li>
-<li><p>2018.5 香港城市大学 交換留学終了</p></li>
-<li><p>2019.3 中央大学理工学部人間総合理工学科卒業</p></li>
-<li><p>2019.4 東京大学学際情報学府学際情報学専攻 生物統計情報学コース 入学</p></li>
-<li><p>2021.3 東京大学学際情報学府学際情報学専攻 生物統計情報学コース 修了</p></li>
-<li><p>2024.4 岡山大学大学院医歯薬学研究科医歯薬学専攻入学</p></li>
-<li><p>2028.3 岡山大学大学院医歯薬学研究科医歯薬学専攻修了予定</p></li>
+<li>比較の形式
+<ul>
+<li>優越性を示すための試験</li>
+<li>同等性又は非劣性を示すための試験</li>
+<li>用量反応関係を示すための試験</li>
+</ul></li>
+</ul></li>
+<li>1章：単群試験
+<ul>
+<li>2値アウトカム</li>
+</ul></li>
+<li>並行群間比較計画
+<ul>
+<li>2値アウトカム</li>
+<li>連続量アウトカム</li>
+<li>生存時間アウトカム</li>
+</ul></li>
+<li>群逐次計画
+<ul>
+<li>無効中止</li>
+<li>有効中止</li>
+<li>無効中止と有効中止の両方を考慮する場合</li>
+</ul></li>
+<li>クロスオーバ―計画</li>
+<li>シミュレーションに基づくサンプルサイズ設計</li>
 </ul>
 </section>
-<section id="学位" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="学位"><span class="header-section-number">2</span> 学位</h2>
+<section id="単群試験" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> 単群試験</h1>
+<section id="値アウトカム" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="値アウトカム"><span class="header-section-number">3.1</span> 2値アウトカム</h2>
+<p>2値アウトカムの場合、サンプルサイズは以下の式で計算できます。例えば、1標本割合の検定です。主に抗がん剤の第2相試験を想定しています。</p>
 <ul>
-<li><p>博士（医学）（2028.3 岡山大学（取得予定））</p></li>
-<li><p>修士（学際情報学）（2021.3 東京大学）</p></li>
-<li><p>学士（理工学）（2019.3 中央大学）</p></li>
+<li>H0: p = 0.1（閾値奏効割合）</li>
+<li>H1: p &gt; 0.3（期待奏効率）</li>
+<li>α = 0.05（第一種の過誤、片側）</li>
+<li>β = 0.2（第二種の過誤）</li>
 </ul>
+<p>実務上では、無効中止や有効中止を考慮する必要がある場合もあり、後述するSimonの2段階デザインやFlemingの2段階デザインを用いることが多いです。</p>
+<p>以下は、正規近似を用いたサンプルサイズ計算の例です。 連続修正は行いません。正規近似に基づく症例数設計では、H0におけるp0を用いて分散が計算されている点は理解されたい。</p>
+<pre class="sas"><code>proc power;
+onesamplefreq test=z
+    method = normal
+    sides = 1
+    alpha = 0.05
+    nullproportion = 0.1
+    proportion = 0.3
+    ntotal = .
+    power = 0.8;
+run;</code></pre>
+<p>しかし、実務では2項分布による正確な検定に基づく症例数設計を利用することが標準です。理由は正規近似による例数設計が二項分布の中心極限定理を用いているため、あくまでＮ→∞における漸近論を仮定しているためです。漸近論を利用せず、2項分布を用いて症例数設計をするSASプログラムは以下となる。</p>
+<pre class="sas"><code>proc power;
+    onesamplefreq test=exact
+        sides = 1
+        alpha = 0.05
+        nullproportion = 0.1
+        proportion = 0.3
+        ntotal = 30.
+        power = .;
+        plot x = n min =2 max = 100 step = 1 yopts = (ref  = 0.8);
+run;</code></pre>
+<p>上記のプログラムを実行すると、必要症例数に対して検出力は単調増加になりません。Nは目標とするPowerの値を満たす最小の整数値 or 目標とするPowerの値を満たす最大の整数値とします。個人的には、より保守的だえうため後者を推奨します。。実際、より大きなサンプルサイズを選ぶことで、検出力の目標値をより確実に達成できる可能性が高まります。ただし、リソースの制約がある場合は、目標検出力を満たす最小のn値を選ぶことも実用的な選択肢となり得ます。どちらのアプローチを取るかは、研究の目的やリソースの制約によって相談の上、決定してください。</p>
 </section>
-<section id="職歴" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="職歴"><span class="header-section-number">3</span> 職歴</h2>
-<ul>
-<li>2021.4 - 現在 岡山大学病院新医療研究開発センター データサイエンス部 統計解析室 助教</li>
-</ul>
 </section>
-<section id="資格" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="資格"><span class="header-section-number">4</span> 資格</h2>
-<ul>
-<li>日本統計学会 統計検定1級（統計数理、統計応用（医薬生物学）） 2024.11</li>
-</ul>
+<section id="並行群間比較計画" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> 並行群間比較計画</h1>
+<section id="連続量アウトカム" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="連続量アウトカム"><span class="header-section-number">4.1</span> 連続量アウトカム</h2>
+<p>連続量アウトカムの場合、サンプルサイズは以下の式で計算できます。 以下では優越性を示す第3相試験のような検証的試験を想定しています。</p>
+<pre class="sas"><code>proc power;
+    twosamplemeans test=diff
+        meandiff = 0.5
+        stddev = 1
+        alpha = 0.05
+        power = 0.8
+        nptotal = .;
+run;</code></pre>
+<p>複数の状況をまとめて計算する場合は、以下のようにします。</p>
+<pre class="sas"><code>proc power;
+    twosamplemeans test=diff
+        meandiff = 0.5 , 1 , 1.5
+        stddev = 1 , 2 , 3
+        alpha = 0.05
+        power = 0.8
+        ntotal = .;
+run;</code></pre>
 </section>
-<section id="所属学会" class="level2" data-number="5">
-<h2 data-number="5" class="anchored" data-anchor-id="所属学会"><span class="header-section-number">5</span> 所属学会</h2>
+<section id="値アウトカム-1" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="値アウトカム-1"><span class="header-section-number">4.2</span> 2値アウトカム</h2>
+<p>2値アウトカムの場合、サンプルサイズは以下の式で計算できます。例えば、2標本割合の検定です。基本的に、リスク差（割合の差）に基づいて優越性を検討することを想定しています。一般的に、2値アウトカムを主要評価項目として第3相試験を計画することは多くないような気がします。</p>
 <ul>
-<li>日本計量生物学会</li>
+<li>H0: p1 - p2 = 0（閾値奏効割合）</li>
+<li>H1: p1 - p2 &gt; 0（期待奏効率）</li>
+<li>α = 0.05（第一種の過誤、両側）</li>
+<li>β = 0.2（第二種の過誤）</li>
 </ul>
+<p>SASプログラムは以下となる。ここでは、対照群のp1及びリスク差を指定している。リスク差は、対照群のp0に基づいて計算されるため、対照群のp0を指定する必要がある。</p>
+<pre class="sas"><code>proc power;
+twossamplefreq test=pchi
+    sides = 2
+    alpha = 0.05
+    refproportion = 0.1
+    proportiondiff = 0.2
+    npergroup = .
+    power = 0.8;
+run;</code></pre>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

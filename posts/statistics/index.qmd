@@ -4,11 +4,11 @@ listing:
   contents: "2025"
   sort: "date desc"
   type: default
-  fields: [date, title]  
-  date-format: "YYYY-MM-DD"  
-  feed: false
+  categories: true
+  fields: [date, title , categories]  
   filter-ui: false
   sort-ui: false
+  date-format: "YYYY-MM-DD"  
 page-layout: full
 title-block-banner: true
 comments: false

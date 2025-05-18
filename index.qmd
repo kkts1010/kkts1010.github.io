@@ -6,6 +6,9 @@ about:
   template: solana   
   image-width: 15em
   links:
+    - text: Linkedin
+      icon: LinkedIn
+      href: https://www.linkedin.com/in/kota-sakamoto-6817a116a/
     - text: reserach map
       href: https://researchmap.jp/80912104
     - icon: github
@@ -60,7 +63,7 @@ include-in-header:
                 </style>
 ---
 
-実務や研究で得た知識を備忘録として記録しています。
+日々の研究/勉強で得た知識の備忘録です。
 
 所属先
 
@@ -68,6 +71,6 @@ include-in-header:
 
 連絡先
 
-本記事等について、問い合わせがありましたら以下までご連絡ください。
+本ブログ等について、問い合わせがありましたら以下までご連絡ください。
 
 -   kota-sakamoto0514\@okayama-u.ac.jp

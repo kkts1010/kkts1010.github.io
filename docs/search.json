@@ -4,14 +4,14 @@
     "href": "index.html",
     "title": "Kota Sakamoto",
     "section": "",
-    "text": "実務や研究で得た知識を備忘録として記録しています。\n所属先\n\n岡山大学病院 新医療研究開発センター データサイエンス部\n\n連絡先\n本記事等について、問い合わせがありましたら以下までご連絡ください。\n\nkota-sakamoto0514@okayama-u.ac.jp"
+    "text": "日々の研究/勉強で得た知識の備忘録です。\n所属先\n\n岡山大学病院 新医療研究開発センター データサイエンス部\n\n連絡先\n本ブログ等について、問い合わせがありましたら以下までご連絡ください。\n\nkota-sakamoto0514@okayama-u.ac.jp"
   },
   {
     "objectID": "about.html",
     "href": "about.html",
     "title": "About",
     "section": "",
-    "text": "坂本航太（さかもと こうた）です。私は岡山大学病院 新医療研究開発センター データサイエンス部 統計解析室にて生物統計家/試験統計家として勤務しています。\n私の研究テーマは以下の通りです。"
+    "text": "坂本航太（さかもと こうた）です。私は岡山大学病院 新医療研究開発センター データサイエンス部 統計解析室にて、生物統計家/試験統計家を目指して勤務しています。\n私の関心・興味は以下の通りです。"
   },
   {
     "objectID": "posts/statistics/サンプルサイズ設計.html",
@@ -46,10 +46,7 @@
     "href": "posts/statistics/index.html",
     "title": "Notes",
     "section": "",
-    "text": "臨床試験のサンプルサイズ設計\n\n\n\n\n\n2025-05-17\n\n\n\n\n\nNo matching items",
-    "crumbs": [
-      "Notes"
-    ]
+    "text": "臨床試験のサンプルサイズ設計\n\n\n\n臨床試験\n\nSAS\n\n\n\n\n\n\n2025-05-17\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "about.html#学歴",
@@ -144,7 +141,7 @@
     "href": "posts/Web_tools/Web_tools.html#統計",
     "title": "Web Tools",
     "section": "3 統計",
-    "text": "3 統計\n\nPankaj Kumar Choudhary先生\nFrank Harrell先生\nBayesian Data Analysis Course\n早稲田大学 村田先生 講義資料等\nCamden Lopez（海外の生物統計家ブログ）\nBiostatistics for Biomedical Research"
+    "text": "3 統計\n\nPankaj Kumar Choudhary先生\nFrank Harrell先生\nBayesian Data Analysis Course\n早稲田大学 村田先生 講義資料等\nCamden Lopez（海外の生物統計家ブログ）\nBiostatistics for Biomedical Research\n久保川達也先生 書籍関連"
   },
   {
     "objectID": "posts/Web_tools/Web_tools.html#プログラミング",
@@ -179,7 +176,7 @@
     "href": "posts/Web_tools/Web_tools.html#sasプログラミング",
     "title": "Web Tools",
     "section": "6 SASプログラミング",
-    "text": "6 SASプログラミング\n\nデータサイエンス100本ノック（構造化データ加工編）のSAS版"
+    "text": "6 SASプログラミング\n\nSASユーザー会\nSASユーザー総会 論文集アーカイブ\n大阪SAS勉強会\nデータステップ100万回　SAS新手一生\n晴れ時々SAS\n我輩はブロガーではない。ネタもまだない\nデータサイエンス100本ノック（構造化データ加工編）のSAS版"
   },
   {
     "objectID": "posts/Web_tools/Web_tools.html#国内の統計家の先生のブログ",
@@ -207,14 +204,14 @@
     "href": "posts/Web_tools/Web_tools.html#その他",
     "title": "Web Tools",
     "section": "9 その他",
-    "text": "9 その他\n\n長島健悟先生のブログ\n司馬先生のブログ\nExcelシートの一括変換"
+    "text": "9 その他\n\n長島健悟先生のブログ\nKRSK先生のブログ\n司馬先生のブログ\nすうがくぶんか株式会社\nQuarto\nExcelシートの一括変換 note"
   },
   {
     "objectID": "posts/Web_tools/Web_tools.html#論文雑誌",
     "href": "posts/Web_tools/Web_tools.html#論文雑誌",
     "title": "Web Tools",
     "section": "10 論文雑誌",
-    "text": "10 論文雑誌\n\n[]"
+    "text": "10 論文雑誌\n\n計量生物学\n薬剤疫学\nJournal of Epideimology\nStatistics in Medicine\nPharmaceutical Statistics"
   },
   {
     "objectID": "posts/Web_tools/Web_tools.html#日本計量生物学会",
@@ -228,13 +225,48 @@
     "href": "posts/Web_tools/Web_tools.html#計量生物学会",
     "title": "Web Tools",
     "section": "1 計量生物学会",
-    "text": "1 計量生物学会\n\n統計家の行動基準"
+    "text": "1 計量生物学会\n\n計量生物学会\n統計家の行動基準"
   },
   {
     "objectID": "posts/Web_tools/Web_tools.html#医薬品開発",
     "href": "posts/Web_tools/Web_tools.html#医薬品開発",
     "title": "Web Tools",
     "section": "2 医薬品開発",
-    "text": "2 医薬品開発\n\nICH Efficacyガイドライン\nPMDA 審査関連業務の概要について\n製薬協データサイエンス部会 成果物\nFDA Clinical Trials Guidance Documents\nFDA Real-World Evidence Documents\nEMA Biostatistics guidelines\nEMA Real-world evidence guidelines"
+    "text": "2 医薬品開発\n\nPMDA 審査関連業務の概要について\nICH Efficacyガイドライン\n製薬協データサイエンス部会 成果物\nFDA Clinical Trials Guidance Documents\nFDA Real-World Evidence Documents\nEMA Biostatistics guidelines\nEMA Real-world evidence guidelines\nCDISC ADaM"
+  },
+  {
+    "objectID": "posts/statistics/2025/サンプルサイズ設計.html",
+    "href": "posts/statistics/2025/サンプルサイズ設計.html",
+    "title": "臨床試験のサンプルサイズ設計",
+    "section": "",
+    "text": "SASによるサンプルサイズ設計"
+  },
+  {
+    "objectID": "posts/statistics/2025/サンプルサイズ設計.html#値アウトカム",
+    "href": "posts/statistics/2025/サンプルサイズ設計.html#値アウトカム",
+    "title": "臨床試験のサンプルサイズ設計",
+    "section": "3.1 2値アウトカム",
+    "text": "3.1 2値アウトカム\n2値アウトカムの場合、サンプルサイズは以下の式で計算できます。例えば、1標本割合の検定です。主に抗がん剤の第2相試験を想定しています。\n\nH0: p = 0.1（閾値奏効割合）\nH1: p &gt; 0.3（期待奏効率）\nα = 0.05（第一種の過誤、片側）\nβ = 0.2（第二種の過誤）\n\n実務上では、無効中止や有効中止を考慮する必要がある場合もあり、後述するSimonの2段階デザインやFlemingの2段階デザインを用いることが多いです。\n以下は、正規近似を用いたサンプルサイズ計算の例です。 連続修正は行いません。正規近似に基づく症例数設計では、H0におけるp0を用いて分散が計算されている点は理解されたい。\nproc power;\nonesamplefreq test=z\n    method = normal\n    sides = 1\n    alpha = 0.05\n    nullproportion = 0.1\n    proportion = 0.3\n    ntotal = .\n    power = 0.8;\nrun;\nしかし、実務では2項分布による正確な検定に基づく症例数設計を利用することが標準です。理由は正規近似による例数設計が二項分布の中心極限定理を用いているため、あくまでＮ→∞における漸近論を仮定しているためです。漸近論を利用せず、2項分布を用いて症例数設計をするSASプログラムは以下となる。\nproc power;\n    onesamplefreq test=exact\n        sides = 1\n        alpha = 0.05\n        nullproportion = 0.1\n        proportion = 0.3\n        ntotal = 30.\n        power = .;\n        plot x = n min =2 max = 100 step = 1 yopts = (ref  = 0.8);\nrun;\n上記のプログラムを実行すると、必要症例数に対して検出力は単調増加になりません。Nは目標とするPowerの値を満たす最小の整数値 or 目標とするPowerの値を満たす最大の整数値とします。個人的には、より保守的だえうため後者を推奨します。。実際、より大きなサンプルサイズを選ぶことで、検出力の目標値をより確実に達成できる可能性が高まります。ただし、リソースの制約がある場合は、目標検出力を満たす最小のn値を選ぶことも実用的な選択肢となり得ます。どちらのアプローチを取るかは、研究の目的やリソースの制約によって相談の上、決定してください。"
+  },
+  {
+    "objectID": "posts/statistics/2025/サンプルサイズ設計.html#連続量アウトカム",
+    "href": "posts/statistics/2025/サンプルサイズ設計.html#連続量アウトカム",
+    "title": "臨床試験のサンプルサイズ設計",
+    "section": "4.1 連続量アウトカム",
+    "text": "4.1 連続量アウトカム\n連続量アウトカムの場合、サンプルサイズは以下の式で計算できます。 以下では優越性を示す第3相試験のような検証的試験を想定しています。\nproc power;\n    twosamplemeans test=diff\n        meandiff = 0.5\n        stddev = 1\n        alpha = 0.05\n        power = 0.8\n        nptotal = .;\nrun;\n複数の状況をまとめて計算する場合は、以下のようにします。\nproc power;\n    twosamplemeans test=diff\n        meandiff = 0.5 , 1 , 1.5\n        stddev = 1 , 2 , 3\n        alpha = 0.05\n        power = 0.8\n        ntotal = .;\nrun;"
+  },
+  {
+    "objectID": "posts/statistics/2025/サンプルサイズ設計.html#値アウトカム-1",
+    "href": "posts/statistics/2025/サンプルサイズ設計.html#値アウトカム-1",
+    "title": "臨床試験のサンプルサイズ設計",
+    "section": "4.2 2値アウトカム",
+    "text": "4.2 2値アウトカム\n2値アウトカムの場合、サンプルサイズは以下の式で計算できます。例えば、2標本割合の検定です。基本的に、リスク差（割合の差）に基づいて優越性を検討することを想定しています。一般的に、2値アウトカムを主要評価項目として第3相試験を計画することは多くないような気がします。\n\nH0: p1 - p2 = 0（閾値奏効割合）\nH1: p1 - p2 &gt; 0（期待奏効率）\nα = 0.05（第一種の過誤、両側）\nβ = 0.2（第二種の過誤）\n\nSASプログラムは以下となる。ここでは、対照群のp1及びリスク差を指定している。リスク差は、対照群のp0に基づいて計算されるため、対照群のp0を指定する必要がある。\nproc power;\ntwossamplefreq test=pchi\n    sides = 2\n    alpha = 0.05\n    refproportion = 0.1\n    proportiondiff = 0.2\n    npergroup = .\n    power = 0.8;\nrun;"
+  },
+  {
+    "objectID": "posts/Web_tools/Web_tools.html#quartoブログ",
+    "href": "posts/Web_tools/Web_tools.html#quartoブログ",
+    "title": "Web Tools",
+    "section": "11 Quartoブログ",
+    "text": "11 Quartoブログ\n\ntutorial"
   }
 ]
