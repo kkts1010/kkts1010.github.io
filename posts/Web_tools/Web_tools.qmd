@@ -78,8 +78,10 @@ title: "Web Tools"
 -   [長島健悟先生のブログ](https://nshi.jp/)
 -   [KRSK先生のブログ](https://www.krsk-phs.com/)
 -   [司馬先生のブログ](https://162348.github.io/)
+-   [Yanagimoto先生のブログ](https://zenn.dev/nicetak)
 -   [すうがくぶんか株式会社](https://sugakubunka.com/)
 -   [Quarto](https://quarto.org/)
+* [Git公式書籍（日本語](https://git-scm.com/book/ja/v2)
 -   [Excelシートの一括変換 note](https://note.com/office_haru/n/n35ab7211eece)
 
 ## 論文雑誌
@@ -91,4 +93,5 @@ title: "Web Tools"
 -   [Pharmaceutical Statistics](https://onlinelibrary.wiley.com/toc/15391612/current)
 
 ## Quartoブログ
-* [tutorial](https://ivelasq.quarto.pub/building-a-blog-with-quarto/intro.html)
+
+-   [tutorial](https://ivelasq.quarto.pub/building-a-blog-with-quarto/intro.html)
