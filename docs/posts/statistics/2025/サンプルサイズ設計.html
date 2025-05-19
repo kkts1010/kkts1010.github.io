@@ -8,7 +8,6 @@
 
 <meta name="author" content="坂本航太">
 <meta name="dcterms.date" content="2025-05-17">
-<meta name="keywords" content="臨床試験, サンプルサイズ設計, SAS">
 
 <title>臨床試験のサンプルサイズ設計 – Kota Sakamoto</title>
 <style>
@@ -157,14 +156,7 @@ ul.task-list li input[type="checkbox"] {
   <div>
     <div class="abstract">
       <div class="block-title">Abstract</div>
-      ARO（Academi Research Organization）の実務で利用するサンプルサイズ設計について解説します。
-    </div>
-  </div>
-
-  <div>
-    <div class="keywords">
-      <div class="block-title">Keywords</div>
-      <p>臨床試験, サンプルサイズ設計, SAS</p>
+      私が頻用する基本的なサンプルサイズ設計について解説します。
     </div>
   </div>
   
@@ -177,7 +169,7 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#実務で利用するサンプルサイズ設計" id="toc-実務で利用するサンプルサイズ設計" class="nav-link active" data-scroll-target="#実務で利用するサンプルサイズ設計"><span class="header-section-number">1</span> 実務で利用するサンプルサイズ設計</a></li>
-  <li><a href="#目次" id="toc-目次" class="nav-link" data-scroll-target="#目次"><span class="header-section-number">2</span> 目次</a></li>
+  <li><a href="#目次" id="toc-目次" class="nav-link" data-scroll-target="#目次"><span class="header-section-number">2</span> 目次　</a></li>
   <li><a href="#単群試験" id="toc-単群試験" class="nav-link" data-scroll-target="#単群試験"><span class="header-section-number">3</span> 単群試験</a>
   <ul class="collapse">
   <li><a href="#値アウトカム" id="toc-値アウトカム" class="nav-link" data-scroll-target="#値アウトカム"><span class="header-section-number">3.1</span> 2値アウトカム</a></li>
@@ -186,6 +178,7 @@ ul.task-list li input[type="checkbox"] {
   <ul class="collapse">
   <li><a href="#連続量アウトカム" id="toc-連続量アウトカム" class="nav-link" data-scroll-target="#連続量アウトカム"><span class="header-section-number">4.1</span> 連続量アウトカム</a></li>
   <li><a href="#値アウトカム-1" id="toc-値アウトカム-1" class="nav-link" data-scroll-target="#値アウトカム-1"><span class="header-section-number">4.2</span> 2値アウトカム</a></li>
+  <li><a href="#生存時間アウトカム" id="toc-生存時間アウトカム" class="nav-link" data-scroll-target="#生存時間アウトカム"><span class="header-section-number">4.3</span> 生存時間アウトカム</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -197,13 +190,12 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<p>SASによるサンプルサイズ設計</p>
 <section id="実務で利用するサンプルサイズ設計" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> 実務で利用するサンプルサイズ設計</h1>
-<p>本書は、ARO（Academi Research Organization） の実務で利用するサンプルサイズ設計について解説します。特に、SASを用いたサンプルサイズ設計の方法に焦点を当てています。実務で利用することのみを念頭に置いているため、数理的な導出は省きます。 本書では、以下の内容を扱います。</p>
+<p>本書は、頻繁に利用されるサンプルサイズ設計SASプログラムをまとめます。実務において、本記事のSASプログラムをコピーして利用することのみを念頭に置いています。数学的な導出は省略します。</p>
 </section>
 <section id="目次" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> 目次</h1>
+<h1 data-number="2"><span class="header-section-number">2</span> 目次　</h1>
 <ul>
 <li>0章：はじめに
 <ul>
@@ -211,7 +203,6 @@ ul.task-list li input[type="checkbox"] {
 <ul>
 <li>優越性を示すための試験</li>
 <li>同等性又は非劣性を示すための試験</li>
-<li>用量反応関係を示すための試験</li>
 </ul></li>
 </ul></li>
 <li>1章：単群試験
@@ -224,43 +215,66 @@ ul.task-list li input[type="checkbox"] {
 <li>連続量アウトカム</li>
 <li>生存時間アウトカム</li>
 </ul></li>
-<li>群逐次計画
-<ul>
-<li>無効中止</li>
-<li>有効中止</li>
-<li>無効中止と有効中止の両方を考慮する場合</li>
-</ul></li>
-<li>クロスオーバ―計画</li>
-<li>シミュレーションに基づくサンプルサイズ設計</li>
 </ul>
 </section>
 <section id="単群試験" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> 単群試験</h1>
 <section id="値アウトカム" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="値アウトカム"><span class="header-section-number">3.1</span> 2値アウトカム</h2>
-<p>2値アウトカムの場合、サンプルサイズは以下の式で計算できます。例えば、1標本割合の検定です。主に抗がん剤の第2相試験を想定しています。</p>
+<p>単群試験で2値アウトカムの場合、サンプルサイズは、H0（閾値奏効割合）、H1（期待奏効割合）、α（第一種の過誤確率）、β（第二種の過誤確率）を事前に仮定することで計算できます。閾値奏効割合とは、これ以上の奏効割合がなければ治療効果がないと考えられる割合のことです。期待奏効割合とは、治療効果があると考えられる割合のことです。臨床仮説や先行研究に基づいて決定するため、試験統計家がコメントすることはあまりません。H1について、両側検定として両側有意水準5%検定としています。これは、ICH E9に準拠しており、ICH E9では以下のような記載があります。すなわち、GCP準拠の治験においては原則として以下の記載に準じて試験計画を考える。</p>
+<p>「規制上の観点から、本ガイドラインの施行に伴い、原則として片側仮説を検証する場合は2.5％、両側仮説の場合は5％とすることとした。」</p>
+<p>ただし、ICH E9にはQ＆AがありQ2で有意水準について言及されている。</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Q2
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>片側検定又は両側検定のどちらを用いるか、またそこでの有意水準をいくらにすべき かを、優越性試験と非劣性試験のそれぞれで説明願いたい。</p>
+<p>(答) ガイドラインでは、同等性を示す場合には両側信頼区間、非劣性試験では片側信頼 区間による解析を行うことが記載されているが、一般には推測を片側と考えるか両側 と考えるかには議論があり一概に決められるものではないとされている。また、有意 水準についても、個々の試験において適切な基準を設定すべきである旨の記載がある。 しかしながら、推論を片側とするか両側とするかにより統計的な判断に大きな差異 が生じることは規制上の観点から望ましくない。また、一方で、臨床試験における有 効性の評価では、検定により有意差があるか否かを判断するだけでなく、試験治療効 果の大きさ(比較群間の差の大きさ)がどの程度であるかを推定することも重要である。 そこで、今後は、検証的試験においては、仮説の検定においてどちらの方法を用いる 場合であっても、効果の推定には95％信頼係数の両側信頼区間を用い、検定の際の有水準は、これによる判断との整合性を図るため、優越性試験、非劣性試験のいずれにおいても、片側2.5％又は両側5％とすることを原則とする。用量反応試験についても、用量反応性を示すことにより薬剤の有効性を検証するような試験においては上記と同様である。ただし、適切な説明ができるのであれば、より強固な有効性の根拠を 示すために有意水準を厳しくする、稀少疾病用医薬品にみられる例のように十分な被 験者を集めることが困難な場合は有意水準を緩くする、などの措置をとってもよい。 なお、生物学的同等性試験については、「後発医薬品の生物学的同等性試験ガイドライン(平成9年12月22日医薬審第487号)」により、90％信頼係数の両側信頼区間を用いるとされているが、臨床効果を指標に標準製剤との同等性を検証しようとする場合(臨床的同等性試験)は、上記と同様に95％信頼係数の両側信頼区間を用いることを原則とする。</p>
+</div>
+</div>
+<p>　特に重要なのは、「適切な説明ができるのであれば、より強固な有効性の根拠を示すために有意水準を厳しくする、稀少疾病用医薬品にみられる例のように十分な被験者を集めることが困難な場合は有意水準を緩くする、などの措置をとってもよい。」の記載である。すなわち、両側10%や片側5%も、きちんと説明をして納得していただければ許容されるということである。これらの【5%か2.5%か】の議論については、以下のJCOGプロトコールマニュアルにも記載がある。</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+JCOGプロトコール
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>国立がん研究センターでの第2相相当の臨床試験では、片側検定を用いることもありえます。これは、標準治療 vs 試験治療であり、少なくとも試験治療が標準治療より劣っているとは考えておらず、片側検定の方が適切と考えられるからです。 JCOGのプロトコールマニュアルのURLは以下です。 <a href="https://jcog.jp/doctor/tool/manual/">JCOGプロトコールマニュアル</a></p>
+</div>
+</div>
+<p>試験計画時の例：</p>
 <ul>
-<li>H0: p = 0.1（閾値奏効割合）</li>
-<li>H1: p &gt; 0.3（期待奏効率）</li>
-<li>α = 0.05（第一種の過誤、片側）</li>
-<li>β = 0.2（第二種の過誤）</li>
+<li><p>H0: p = 0.1（閾値奏効割合）</p></li>
+<li><p>H1: p ≠ 0.3（期待奏効割合）</p></li>
+<li><p>α = 0.05（第一種の過誤、片側）</p></li>
+<li><p>β = 0.2（第二種の過誤）</p></li>
 </ul>
-<p>実務上では、無効中止や有効中止を考慮する必要がある場合もあり、後述するSimonの2段階デザインやFlemingの2段階デザインを用いることが多いです。</p>
-<p>以下は、正規近似を用いたサンプルサイズ計算の例です。 連続修正は行いません。正規近似に基づく症例数設計では、H0におけるp0を用いて分散が計算されている点は理解されたい。</p>
+<p>以下は、正規近似を用いたサンプルサイズ計算の例です。 連続修正は行いません。正規近似に基づく症例数設計では、H0におけるp0を用いて分散が計算されている点に注意してください。</p>
+<p>実務上では、抗がん剤の単群試験では中間解析を事前に規定して、無効中止や有効中止を考慮する必要がある場合もある。そのような場合は、単純な2値データの割合のサンプルサイズ設計では実施できず、適切な試験統計家がSimonの2段階デザインやFlemingの2段階デザインを用いて例数設計をすべきである。単群試験において、ベイズ流の例数設計も提案されていることから、ベイズ流例数設計も考慮していただきたい。なお、中間解析やベイズ流例数設計は常に必要ではなく、SASでの実装はシンプルではないため、ここでは割愛します。別記事で説明します。</p>
 <pre class="sas"><code>proc power;
 onesamplefreq test=z
     method = normal
-    sides = 1
+    sides = 2
     alpha = 0.05
     nullproportion = 0.1
     proportion = 0.3
     ntotal = .
     power = 0.8;
 run;</code></pre>
-<p>しかし、実務では2項分布による正確な検定に基づく症例数設計を利用することが標準です。理由は正規近似による例数設計が二項分布の中心極限定理を用いているため、あくまでＮ→∞における漸近論を仮定しているためです。漸近論を利用せず、2項分布を用いて症例数設計をするSASプログラムは以下となる。</p>
+<p>Nが多い場合、N = 50相当（主観）では、上記の正規分布に基づく方法でも良いと考えます。しかし、一般的に2項分布による正確な検定に基づく症例数設計を利用することが標準的な方法です。理由は正規近似による例数設計が二項分布の中心極限定理を用いているため、あくまでＮが十分大きい状況における中心極限定理を仮定しているためです。中心極限定理を利用せず、2項分布を用いて症例数設計をするSASプログラムは以下となる。</p>
 <pre class="sas"><code>proc power;
     onesamplefreq test=exact
-        sides = 1
+        sides = 2
         alpha = 0.05
         nullproportion = 0.1
         proportion = 0.3
@@ -268,14 +282,14 @@ run;</code></pre>
         power = .;
         plot x = n min =2 max = 100 step = 1 yopts = (ref  = 0.8);
 run;</code></pre>
-<p>上記のプログラムを実行すると、必要症例数に対して検出力は単調増加になりません。Nは目標とするPowerの値を満たす最小の整数値 or 目標とするPowerの値を満たす最大の整数値とします。個人的には、より保守的だえうため後者を推奨します。。実際、より大きなサンプルサイズを選ぶことで、検出力の目標値をより確実に達成できる可能性が高まります。ただし、リソースの制約がある場合は、目標検出力を満たす最小のn値を選ぶことも実用的な選択肢となり得ます。どちらのアプローチを取るかは、研究の目的やリソースの制約によって相談の上、決定してください。</p>
+<p>上記のプログラムを実行すると、必要症例数に対して検出力は単調増加にならず、test = normalと異なり、N = xxのように数値が出力されません。そのため、SASの出力を結果を見ながら、目標とする検出力を満たす最小の整数値 or 目標とする検出力を満たす最大の整数値とします。個人的には、より保守的であるため後者を推奨します。実際、より大きなサンプルサイズを選ぶことで、検出力の目標値をより確実に達成できる可能性が高まります。ただし、リソースの制約がある場合は、目標検出力を満たす最小の症例数を選ぶことも実用的な選択肢となり得ます。どちらのアプローチを取るかは、研究の目的やリソースの制約によって相談の上、決定してください。</p>
 </section>
 </section>
 <section id="並行群間比較計画" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> 並行群間比較計画</h1>
 <section id="連続量アウトカム" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="連続量アウトカム"><span class="header-section-number">4.1</span> 連続量アウトカム</h2>
-<p>連続量アウトカムの場合、サンプルサイズは以下の式で計算できます。 以下では優越性を示す第3相試験のような検証的試験を想定しています。</p>
+<p>連続量アウトカムの場合、サンプルサイズは以下の式で計算できます。 以下では優越性を示す検証的試験を想定しています。</p>
 <pre class="sas"><code>proc power;
     twosamplemeans test=diff
         meandiff = 0.5
@@ -293,25 +307,48 @@ run;</code></pre>
         power = 0.8
         ntotal = .;
 run;</code></pre>
+<p>平均値の差の検定は一般的であり、連続量のアウトカムを用いた試験では最も多く利用される方法です。平均値の差の検定は、通常、正規分布に従うと仮定される連続量データに適用されます。連続量アウトカムにおける経時測定データのサンプルサイズ設計が求められることもあるかと思います。その場合、最終観察時点における平均値の差を検定する方法として上記のプログラムを利用することが保守的で望ましいと考えます。例数設計としてはt検定に基づきより保守的なサンプルサイズ設計をする。統計解析においては、共分散分析やMMRMなどの同じEstimandを推定する方法で、より検出力の高い解析方法を適用することが治験の分野では求められると考えます。</p>
 </section>
 <section id="値アウトカム-1" class="level2" data-number="4.2">
 <h2 data-number="4.2" class="anchored" data-anchor-id="値アウトカム-1"><span class="header-section-number">4.2</span> 2値アウトカム</h2>
-<p>2値アウトカムの場合、サンプルサイズは以下の式で計算できます。例えば、2標本割合の検定です。基本的に、リスク差（割合の差）に基づいて優越性を検討することを想定しています。一般的に、2値アウトカムを主要評価項目として第3相試験を計画することは多くないような気がします。</p>
+<p>2値アウトカムの場合、サンプルサイズは以下の式で計算できます。リスク差（割合の差）に基づいて優越性を検討することを想定しています。 p0を対照群のリスク、p1を実験群のリスクとします。リスク差は、対照群のリスクp0に基づいて計算されるため、対照群のp0を指定する必要があります。以下では、対照群のリスクp0 = 0.1、実験群のリスクp1 = 0.3、リスク差 = 0.2を想定しています。</p>
 <ul>
-<li>H0: p1 - p2 = 0（閾値奏効割合）</li>
-<li>H1: p1 - p2 &gt; 0（期待奏効率）</li>
+<li>H0: p1 - p0 = 0</li>
+<li>H1: p1 - p0 ≠ 0</li>
 <li>α = 0.05（第一種の過誤、両側）</li>
 <li>β = 0.2（第二種の過誤）</li>
 </ul>
-<p>SASプログラムは以下となる。ここでは、対照群のp1及びリスク差を指定している。リスク差は、対照群のp0に基づいて計算されるため、対照群のp0を指定する必要がある。</p>
+<p>SASプログラムは以下となります。ここでは、対照群のリスク及びリスク差を指定している。リスク差は、対照群のp0に基づいて計算されるため、対照群のp0を指定する必要があります。</p>
 <pre class="sas"><code>proc power;
-twossamplefreq test=pchi
+twosamplefreq test=pchi
     sides = 2
     alpha = 0.05
     refproportion = 0.1
     proportiondiff = 0.2
     npergroup = .
     power = 0.8;
+run;</code></pre>
+</section>
+<section id="生存時間アウトカム" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="生存時間アウトカム"><span class="header-section-number">4.3</span> 生存時間アウトカム</h2>
+<p>生存時間アウトカムの場合、サンプルサイズは以下の式で計算できます。以下では優越性を示す検証的試験を想定しています。アウトカムはハザード比として、生存時間解析のノンパラメトリック検定（ログランク検定等）を前提とした例数設計を想定する。例えば生存時間アウトカムとして生存割合（死亡、生存）を前提として例数設計を考える場合、本節に基づく方法での例数設計も考えられるが、より保守的に2値データに基づく例数設計を行うことが望ましい場合もありえます。この違いについては、別記事で説明します。生存時間の例数設計については、SAS user総会の<a href="https://www.sas.com/content/dam/SAS/ja_jp/doc/event/sas-user-groups/usergroups2016-d-11.pdf">SASプロシジャを用いた生存時間データに対する例数設計の変革</a>が参考になります。</p>
+<p>SASのproc power twosamplesurvivalプロシジャではLakatosの方法が採用されています。これは区分指数分布を前提としており解析的にN = xxの形で表すことはできません。教育的な立場だと、解析的にN = xxの形で表すことができる方法としてFreedmanの方法やSchoenfeldの方法がありますが、上記のSASユーザー総会の資料によると、Lakatosの方法の方が性能が良いことが報告されているそうです。実務上もproc power procedureを用いて、再現可能な状態で例数設計を行うことが望ましいので、基本的にLakatosの方法を採用します。</p>
+<ul>
+<li>H0: HR = 1</li>
+<li>H1: HR ≠ 1</li>
+<li>α = 0.05（第一種の過誤、両側）</li>
+<li>β = 0.2（第二種の過誤）</li>
+</ul>
+<pre class="sas"><code>proc power;
+    twosamplesurvival test = logrank
+    curve("Control") = 3:0.3
+    curve("Experimental") = 3:0.2
+    groupsurvival = "Control" | "Experimental"
+    groupweights = (1 1)
+    accurualtime = A followuptime = F
+    ntotal = .
+    power = 0.8
+    alpha = 0.05;
 run;</code></pre>
 
 
