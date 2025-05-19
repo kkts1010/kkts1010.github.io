@@ -416,7 +416,7 @@ run;</code></pre>
 <p><span class="math display">\[
 S(t) = 1-F(t) = exp(-λt) ⇔ λ = -\frac{log(S(t))}{t}
 \]</span></p>
-<p>この関係を用いて、KM推定量の結果を用いて各群のハザードを指定してサンプルサイズ計算をする方法は以下となります。</p>
+<p>この関係を用いて、ある時点tとその時点のKM推定量の結果を用いて各群のハザードを指定してサンプルサイズ計算をする方法は以下となります。</p>
 <pre class="sas"><code>proc power;
     twosamplesurvival test = logrank
     groupsurvexphazards = (0.05 0.01)
@@ -433,7 +433,7 @@ run;</code></pre>
 S(1/2) = exp(-λt) ⇔ λ = -\frac{log(S(1/2))}{t}
 \]</span></p>
 <p>この関係を用いて、KM推定量の結果を用いて各群の中央生存時間からハザードを推定することもできる。いずれの方法もTに指数分布を仮定している。</p>
-<p>###参考文献 * <a href="https://documentation.sas.com/doc/en/statug/15.2/statug_power_syntax104.htm">TwoSsampleSurvival Statement</a></p>
+<p>###　参考文献 * <a href="https://documentation.sas.com/doc/en/statug/15.2/statug_power_syntax104.htm">TwoSsampleSurvival Statement</a></p>
 
 
 </section>
