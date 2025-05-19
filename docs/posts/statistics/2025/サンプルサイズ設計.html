@@ -70,6 +70,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../../styles.css">
 </head>
@@ -172,12 +201,21 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#目次" id="toc-目次" class="nav-link" data-scroll-target="#目次"><span class="header-section-number">2</span> 目次　</a></li>
   <li><a href="#単群試験" id="toc-単群試験" class="nav-link" data-scroll-target="#単群試験"><span class="header-section-number">3</span> 単群試験</a>
   <ul class="collapse">
-  <li><a href="#値アウトカム" id="toc-値アウトカム" class="nav-link" data-scroll-target="#値アウトカム"><span class="header-section-number">3.1</span> 2値アウトカム</a></li>
+  <li><a href="#値アウトカム" id="toc-値アウトカム" class="nav-link" data-scroll-target="#値アウトカム"><span class="header-section-number">3.1</span> 2値アウトカム</a>
+  <ul class="collapse">
+  <li><a href="#参考文献" id="toc-参考文献" class="nav-link" data-scroll-target="#参考文献"><span class="header-section-number">3.1.1</span> 参考文献</a></li>
+  </ul></li>
   </ul></li>
   <li><a href="#並行群間比較計画" id="toc-並行群間比較計画" class="nav-link" data-scroll-target="#並行群間比較計画"><span class="header-section-number">4</span> 並行群間比較計画</a>
   <ul class="collapse">
-  <li><a href="#連続量アウトカム" id="toc-連続量アウトカム" class="nav-link" data-scroll-target="#連続量アウトカム"><span class="header-section-number">4.1</span> 連続量アウトカム</a></li>
-  <li><a href="#値アウトカム-1" id="toc-値アウトカム-1" class="nav-link" data-scroll-target="#値アウトカム-1"><span class="header-section-number">4.2</span> 2値アウトカム</a></li>
+  <li><a href="#連続量アウトカム" id="toc-連続量アウトカム" class="nav-link" data-scroll-target="#連続量アウトカム"><span class="header-section-number">4.1</span> 連続量アウトカム</a>
+  <ul class="collapse">
+  <li><a href="#参考文献-1" id="toc-参考文献-1" class="nav-link" data-scroll-target="#参考文献-1"><span class="header-section-number">4.1.1</span> 参考文献</a></li>
+  </ul></li>
+  <li><a href="#値アウトカム-1" id="toc-値アウトカム-1" class="nav-link" data-scroll-target="#値アウトカム-1"><span class="header-section-number">4.2</span> 2値アウトカム</a>
+  <ul class="collapse">
+  <li><a href="#参考文献-2" id="toc-参考文献-2" class="nav-link" data-scroll-target="#参考文献-2"><span class="header-section-number">4.2.1</span> 参考文献</a></li>
+  </ul></li>
   <li><a href="#生存時間アウトカム" id="toc-生存時間アウトカム" class="nav-link" data-scroll-target="#生存時間アウトカム"><span class="header-section-number">4.3</span> 生存時間アウトカム</a></li>
   </ul></li>
   </ul>
@@ -221,9 +259,9 @@ ul.task-list li input[type="checkbox"] {
 <h1 data-number="3"><span class="header-section-number">3</span> 単群試験</h1>
 <section id="値アウトカム" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="値アウトカム"><span class="header-section-number">3.1</span> 2値アウトカム</h2>
-<p>単群試験で2値アウトカムの場合、サンプルサイズは、H0（閾値奏効割合）、H1（期待奏効割合）、α（第一種の過誤確率）、β（第二種の過誤確率）を事前に仮定することで計算できます。閾値奏効割合とは、これ以上の奏効割合がなければ治療効果がないと考えられる割合のことです。期待奏効割合とは、治療効果があると考えられる割合のことです。臨床仮説や先行研究に基づいて決定するため、試験統計家がコメントすることはあまりません。H1について、両側検定として両側有意水準5%検定としています。これは、ICH E9に準拠しており、ICH E9では以下のような記載があります。すなわち、GCP準拠の治験においては原則として以下の記載に準じて試験計画を考える。</p>
+<p>単群試験で2値アウトカムの場合、サンプルサイズは、<span class="math inline">\(P0\)</span>（閾値奏効割合）、<span class="math inline">\(P1\)</span>（期待奏効割合）、<span class="math inline">\(α\)</span>（第一種の過誤確率）、<span class="math inline">\(β\)</span>（第二種の過誤確率）を事前に仮定することで計算できます。閾値奏効割合とは、これ以上の奏効割合がなければ治療効果がない（開発中止をしたい）と考えられる割合のことです。期待奏効割合とは、治療効果があると考えられる割合（次相に進みたい程度）のことです。これらの割合は臨床仮説や先行研究に基づいて決定するため、試験統計家がコメントすることはあまりありません。ICHガイドラインに準じて、SASプログラムは全て両側検定として両側有意水準5%としています。これは、なお、ICH E9では以下のような記載があります。すなわち、GCP準拠の治験においては原則として以下の記載に準じて試験計画を考える必要があります。</p>
 <p>「規制上の観点から、本ガイドラインの施行に伴い、原則として片側仮説を検証する場合は2.5％、両側仮説の場合は5％とすることとした。」</p>
-<p>ただし、ICH E9にはQ＆AがありQ2で有意水準について言及されている。</p>
+<p>なお、ICH E9にはQ＆AがありQ2で有意水準について言及されている。</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -254,13 +292,14 @@ JCOGプロトコール
 </div>
 <p>試験計画時の例：</p>
 <ul>
-<li><p>H0: p = 0.1（閾値奏効割合）</p></li>
-<li><p>H1: p ≠ 0.3（期待奏効割合）</p></li>
-<li><p>α = 0.05（第一種の過誤、片側）</p></li>
-<li><p>β = 0.2（第二種の過誤）</p></li>
+<li><p><span class="math inline">\(p0\)</span> = 0.1（閾値奏効割合）</p></li>
+<li><p><span class="math inline">\(p1\)</span> = 0.3（期待奏効割合）</p></li>
+<li><p><span class="math inline">\(α\)</span> = 0.05（第一種の過誤、片側）</p></li>
+<li><p><span class="math inline">\(β\)</span> = 0.2（第二種の過誤）</p></li>
 </ul>
-<p>以下は、正規近似を用いたサンプルサイズ計算の例です。 連続修正は行いません。正規近似に基づく症例数設計では、H0におけるp0を用いて分散が計算されている点に注意してください。</p>
-<p>実務上では、抗がん剤の単群試験では中間解析を事前に規定して、無効中止や有効中止を考慮する必要がある場合もある。そのような場合は、単純な2値データの割合のサンプルサイズ設計では実施できず、適切な試験統計家がSimonの2段階デザインやFlemingの2段階デザインを用いて例数設計をすべきである。単群試験において、ベイズ流の例数設計も提案されていることから、ベイズ流例数設計も考慮していただきたい。なお、中間解析やベイズ流例数設計は常に必要ではなく、SASでの実装はシンプルではないため、ここでは割愛します。別記事で説明します。</p>
+<p>以下は、正規近似を用いたサンプルサイズ計算の例です。 連続修正は行いません。正規近似に基づく症例数設計では、H0における<span class="math inline">\(p0\)</span>を用いて分散が計算されている点に注意してください。数理統計学を学ばれた方からみるとスコア検定に基づく方法に相当します。Wald検定に基づく例数設計とすると<span class="math inline">\(p1\)</span>を用いて分散が計算されることになります。中間解析を勉強するとWald検定に基づく方法でサンプルサイズ設計がされることもあると気付きます。中間解析では検定統計量間の相関を考えるため、漸近正規性を仮定したサンプルサイズ設計をするためWald型の統計量を利用します。</p>
+<p>　実務上では、抗がん剤の単群試験では中間解析を事前に規定して、2項分布に基づいてに基づいて無効中止や有効中止を考慮したくなる場面が多いです。それは患者さんにとっての倫理性や開発戦略の観点からも重要な要素です。中間解析を行う場合、無効中止や有効中止の基準を事前に規定する必要があります。無効中止や有効中止の基準は、試験の目的やデザインに応じて異なるため、試験統計家と相談して決定することが重要です。無効中止や有効中止の基準を事前に規定することで、試験の透明性が向上し、倫理的な問題を回避することができます。そのような場合は、単純な2値データの割合のサンプルサイズ設計では実施できず、適切な試験統計家がSimonの2段階デザインやFlemingの2段階デザインを用いて例数設計がなされます。また、単群試験において、ベイズ流の例数設計も提案されていることから、ベイズ流例数設計も考慮していただきたい。なお、中間解析やベイズ流例数設計は常に必要ではなく、SASでの実装はシンプルではないため、ここでは割愛します。別記事で説明します。</p>
+<p>通常の単群試験の例数設計は以下のように行います。以下のSASプログラムは、対照群のリスクp0 = 0.1、実験群のリスクp1 = 0.3、リスク差 = 0.2を想定しています。なお、sides = 2は両側検定を意味します。片側検定を行う場合は、sides = 1としてください。</p>
 <pre class="sas"><code>proc power;
 onesamplefreq test=z
     method = normal
@@ -271,7 +310,8 @@ onesamplefreq test=z
     ntotal = .
     power = 0.8;
 run;</code></pre>
-<p>Nが多い場合、N = 50相当（主観）では、上記の正規分布に基づく方法でも良いと考えます。しかし、一般的に2項分布による正確な検定に基づく症例数設計を利用することが標準的な方法です。理由は正規近似による例数設計が二項分布の中心極限定理を用いているため、あくまでＮが十分大きい状況における中心極限定理を仮定しているためです。中心極限定理を利用せず、2項分布を用いて症例数設計をするSASプログラムは以下となる。</p>
+<p>対象者数が多い場合（シミュレーションによる確認要です）、上記の正規分布に基づく方法でも良いと考えます。しかし、一般的に2項分布による正確な検定に基づく症例数設計を利用することが標準的な方法です。理由は正規近似による例数設計が二項分布の中心極限定理を用いているため、あくまで対象者数が十分多い状況における中心極限定理を仮定しているためです。中心極限定理を利用せず、2項分布を用いて症例数設計をするSASプログラムは以下です。</p>
+<p>先ほどと異なり、test = exactを指定しています。これにより、2項分布に基づく正確な検定が行われます。これにより、サンプルサイズ計算がより正確になります。また、plotオプションを使用して、サンプルサイズに対する検出力の変化を視覚化しています。これにより、必要なサンプルサイズをより直感的に理解できます。</p>
 <pre class="sas"><code>proc power;
     onesamplefreq test=exact
         sides = 2
@@ -282,14 +322,20 @@ run;</code></pre>
         power = .;
         plot x = n min =2 max = 100 step = 1 yopts = (ref  = 0.8);
 run;</code></pre>
-<p>上記のプログラムを実行すると、必要症例数に対して検出力は単調増加にならず、test = normalと異なり、N = xxのように数値が出力されません。そのため、SASの出力を結果を見ながら、目標とする検出力を満たす最小の整数値 or 目標とする検出力を満たす最大の整数値とします。個人的には、より保守的であるため後者を推奨します。実際、より大きなサンプルサイズを選ぶことで、検出力の目標値をより確実に達成できる可能性が高まります。ただし、リソースの制約がある場合は、目標検出力を満たす最小の症例数を選ぶことも実用的な選択肢となり得ます。どちらのアプローチを取るかは、研究の目的やリソースの制約によって相談の上、決定してください。</p>
+<p>Exact法に基づく症例数設計では、検出力は単調増加にならず、test = normalと異なり、N = xxのように数値が出力されません。そのため、SASの出力を結果を見ながら、目標とする検出力を満たす最小の整数値 or 目標とする検出力を満たす最大の整数値とします。個人的には、より保守的であるため後者を推奨します。実際、より大きなサンプルサイズを選ぶことで、検出力の目標値をより確実に達成できる可能性が高まります。ただし、リソースの制約がある場合は、目標検出力を満たす最小の症例数を選ぶことも実用的な選択肢となり得ます。どちらのアプローチを取るかは、研究の目的やリソースの制約によって相談の上、決定してください。</p>
+<section id="参考文献" class="level3" data-number="3.1.1">
+<h3 data-number="3.1.1" class="anchored" data-anchor-id="参考文献"><span class="header-section-number">3.1.1</span> 参考文献</h3>
+<ul>
+<li><a href="https://documentation.sas.com/doc/en/statug/15.2/statug_power_syntax35.htm">OneSampleFreq Statement</a></li>
+</ul>
+</section>
 </section>
 </section>
 <section id="並行群間比較計画" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> 並行群間比較計画</h1>
 <section id="連続量アウトカム" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="連続量アウトカム"><span class="header-section-number">4.1</span> 連続量アウトカム</h2>
-<p>連続量アウトカムの場合、サンプルサイズは以下の式で計算できます。 以下では優越性を示す検証的試験を想定しています。</p>
+<p>連続量アウトカムの場合、サンプルサイズは以下の式で計算できます。 以下では優越性を示す検証的試験を想定しています。 twosamplemeans test = diffを用いて、2群間の平均値の差を検定する方法を想定しています。以下では、対照群の平均値μ0 = 0、実験群の平均値μ1 = 0.5、標準偏差σ = 1を想定しています。</p>
 <pre class="sas"><code>proc power;
     twosamplemeans test=diff
         meandiff = 0.5
@@ -307,14 +353,18 @@ run;</code></pre>
         power = 0.8
         ntotal = .;
 run;</code></pre>
-<p>平均値の差の検定は一般的であり、連続量のアウトカムを用いた試験では最も多く利用される方法です。平均値の差の検定は、通常、正規分布に従うと仮定される連続量データに適用されます。連続量アウトカムにおける経時測定データのサンプルサイズ設計が求められることもあるかと思います。その場合、最終観察時点における平均値の差を検定する方法として上記のプログラムを利用することが保守的で望ましいと考えます。例数設計としてはt検定に基づきより保守的なサンプルサイズ設計をする。統計解析においては、共分散分析やMMRMなどの同じEstimandを推定する方法で、より検出力の高い解析方法を適用することが治験の分野では求められると考えます。</p>
+<p>　平均値の差の検定は一般的であり、連続量のアウトカムを用いた試験では最も多く利用される方法です。平均値の差の検定は、通常、正規分布に従うと仮定される連続量データに適用されます。連続量アウトカムにおける経時測定データのサンプルサイズ設計が求められることもあるかと思います。その場合、最終観察時点における平均値の差を検定する方法として上記のプログラムを利用することが保守的で望ましいと考えます。例数設計としてはt検定に基づきより保守的なサンプルサイズ設計をする。統計解析においては、共分散分析やMMRMなどの同じEstimandを推定する方法で、より検出力の高い解析方法を適用することが治験の分野では求められると考えます。</p>
+<section id="参考文献-1" class="level3" data-number="4.1.1">
+<h3 data-number="4.1.1" class="anchored" data-anchor-id="参考文献-1"><span class="header-section-number">4.1.1</span> 参考文献</h3>
+<p><a href="https://documentation.sas.com/doc/en/statug/15.2/statug_power_syntax93.htm">TwoSampleMeans Statement</a></p>
+</section>
 </section>
 <section id="値アウトカム-1" class="level2" data-number="4.2">
 <h2 data-number="4.2" class="anchored" data-anchor-id="値アウトカム-1"><span class="header-section-number">4.2</span> 2値アウトカム</h2>
-<p>2値アウトカムの場合、サンプルサイズは以下の式で計算できます。リスク差（割合の差）に基づいて優越性を検討することを想定しています。 p0を対照群のリスク、p1を実験群のリスクとします。リスク差は、対照群のリスクp0に基づいて計算されるため、対照群のp0を指定する必要があります。以下では、対照群のリスクp0 = 0.1、実験群のリスクp1 = 0.3、リスク差 = 0.2を想定しています。</p>
+<p>2値アウトカムの場合、サンプルサイズは以下の式で計算できます。リスク差（割合の差）に基づいて優越性を検討することを想定しています。p0を対照群のリスク、p1を実験群のリスクとします。リスク差は、対照群のリスクp0に基づいて計算されるため、対照群のp0を指定する必要があります。以下では、対照群のリスクp0 = 0.1、実験群のリスクp1 = 0.3、リスク差 = 0.2を想定しています。</p>
 <ul>
-<li>H0: p1 - p0 = 0</li>
-<li>H1: p1 - p0 ≠ 0</li>
+<li>p0 = 0.1（対照群の和依頼）</li>
+<li>p1 = 0.3（実験群の割合）</li>
 <li>α = 0.05（第一種の過誤、両側）</li>
 <li>β = 0.2（第二種の過誤）</li>
 </ul>
@@ -328,28 +378,62 @@ twosamplefreq test=pchi
     npergroup = .
     power = 0.8;
 run;</code></pre>
+<section id="参考文献-2" class="level3" data-number="4.2.1">
+<h3 data-number="4.2.1" class="anchored" data-anchor-id="参考文献-2"><span class="header-section-number">4.2.1</span> 参考文献</h3>
+<ul>
+<li><a href="https://documentation.sas.com/doc/en/statug/15.2/statug_power_syntax83.htm">TWOSAMPLEFREQ Statement</a></li>
+</ul>
+</section>
 </section>
 <section id="生存時間アウトカム" class="level2" data-number="4.3">
 <h2 data-number="4.3" class="anchored" data-anchor-id="生存時間アウトカム"><span class="header-section-number">4.3</span> 生存時間アウトカム</h2>
 <p>生存時間アウトカムの場合、サンプルサイズは以下の式で計算できます。以下では優越性を示す検証的試験を想定しています。アウトカムはハザード比として、生存時間解析のノンパラメトリック検定（ログランク検定等）を前提とした例数設計を想定する。例えば生存時間アウトカムとして生存割合（死亡、生存）を前提として例数設計を考える場合、本節に基づく方法での例数設計も考えられるが、より保守的に2値データに基づく例数設計を行うことが望ましい場合もありえます。この違いについては、別記事で説明します。生存時間の例数設計については、SAS user総会の<a href="https://www.sas.com/content/dam/SAS/ja_jp/doc/event/sas-user-groups/usergroups2016-d-11.pdf">SASプロシジャを用いた生存時間データに対する例数設計の変革</a>が参考になります。</p>
-<p>SASのproc power twosamplesurvivalプロシジャではLakatosの方法が採用されています。これは区分指数分布を前提としており解析的にN = xxの形で表すことはできません。教育的な立場だと、解析的にN = xxの形で表すことができる方法としてFreedmanの方法やSchoenfeldの方法がありますが、上記のSASユーザー総会の資料によると、Lakatosの方法の方が性能が良いことが報告されているそうです。実務上もproc power procedureを用いて、再現可能な状態で例数設計を行うことが望ましいので、基本的にLakatosの方法を採用します。</p>
+<p>SASのtwosamplesurvival statementではLakatosの方法が採用されています。これは区分指数分布を前提としており解析的にN = xxの形で表すことはできません。教育的な立場だと、解析的にN = xxの形で表すことができる方法としてFreedmanの方法やSchoenfeldの方法がありますが、上記のSASユーザー総会の資料によると、Lakatosの方法の方が性能が良いことが報告されているそうです。実務上もproc power procedureを用いて、再現可能な状態で例数設計を行うことが望ましいので、基本的にLakatosの方法を採用します。</p>
+<p>生存時間アウトカムに基づく症例数設計では以下のような情報が必要です。特徴的なのは、登録期間とフォローアップ期間の情報が必要な点です。登録期間は、患者さんを試験に登録するための期間であり、フォローアップ期間は、患者さんを追跡するための期間です。これらの情報は、試験のデザインや目的に応じて異なるため、試験統計家と相談して決定することが重要です。 なお、通常登録は一様に登録されると仮定され、一様分布を仮定することがデフォルトです。</p>
 <ul>
-<li>H0: HR = 1</li>
-<li>H1: HR ≠ 1</li>
+<li>S_c(3) = 0.3（対照群Cの3年あたりの生存率）</li>
+<li>S_a(2) = 0.2（実験群Aの3年あたりの生存率）</li>
+<li>登録期間：A = 3年</li>
+<li>フォローアップ期間：F = 2年</li>
 <li>α = 0.05（第一種の過誤、両側）</li>
 <li>β = 0.2（第二種の過誤）</li>
 </ul>
+<p>SASでは以下のように実行します。ここでは、対照群の生存率S_c(3) = 0.3、実験群の生存率S_a(2) = 0.2を想定しています。登録期間は3年、フォローアップ期間は2年としています。これにより、試験のデザインや目的に応じたサンプルサイズを計算することができます。</p>
 <pre class="sas"><code>proc power;
     twosamplesurvival test = logrank
     curve("Control") = 3:0.3
     curve("Experimental") = 3:0.2
     groupsurvival = "Control" | "Experimental"
     groupweights = (1 1)
-    accurualtime = A followuptime = F
+    accrualtime = 3 
+    followuptime = 2
     ntotal = .
     power = 0.8
-    alpha = 0.05;
+    alpha = 0.05
+    sides = 2;
 run;</code></pre>
+<p>通常、生存時間の例数設計で3年間での生存割合20%や、30%ということを仮定できる状況は多くないと思います。例えば第2相試験では1年間の追跡しかしていない場合に3年生存割合を仮定することは難しいです。そこで、通常は生存時間Tが指数分布に従うとして以下の式を用いてハザードを基にサンプルサイズ設計は有用です。ただし、ハザード比は生存時間の分布に依存するため、注意が必要です。生存時間Tが指数分布に従う場合、ハザード比は以下のように表されます。</p>
+<p><span class="math display">\[
+S(t) = 1-F(t) = exp(-λt) ⇔ λ = -\frac{log(S(t))}{t}
+\]</span></p>
+<p>この関係を用いて、KM推定量の結果を用いて各群のハザードを指定してサンプルサイズ計算をする方法は以下となります。</p>
+<pre class="sas"><code>proc power;
+    twosamplesurvival test = logrank
+    groupsurvexphazards = (0.05 0.01)
+    groupweights = (1 1)
+    accrualtime = 3 
+    followuptime = 2
+    ntotal = .
+    power = 0.8
+    alpha = 0.05
+    sides = 2;
+run;</code></pre>
+<p>他にも、中央生存時間を用いて計算することもできる。これも生存時間アウトカムに指数分布を仮定すると簡単に示せます。</p>
+<p><span class="math display">\[
+S(1/2) = exp(-λt) ⇔ λ = -\frac{log(S(1/2))}{t}
+\]</span></p>
+<p>この関係を用いて、KM推定量の結果を用いて各群の中央生存時間からハザードを推定することもできる。いずれの方法もTに指数分布を仮定している。</p>
+<p>###参考文献 * <a href="https://documentation.sas.com/doc/en/statug/15.2/statug_power_syntax104.htm">TwoSsampleSurvival Statement</a></p>
 
 
 </section>
