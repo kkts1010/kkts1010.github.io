@@ -50,8 +50,8 @@ title: "Web Tools"
 
 -   [データサイエンス100本ノック（構造化データ加工編）をRで解く](https://zenn.dev/masayukeeeee/articles/a7fbdb6f2f38b9)
 -   [Rによる再現可能なデータ分析（瓜生真也先生）](https://uribo.github.io/rrr/)
-* [Rによるデータ解析のための前処理（瓜生真也先生）](https://uribo.github.io/dmr/)
-* [次の一歩を踏み出すためのtidyverse入門（瓜生真也先生）](https://uribo.github.io/230827ism_ws/)
+-   [Rによるデータ解析のための前処理（瓜生真也先生）](https://uribo.github.io/dmr/)
+-   [次の一歩を踏み出すためのtidyverse入門（瓜生真也先生）](https://uribo.github.io/230827ism_ws/)
 -   [今日からできる再現可能な論文執筆（国里愛彦先生・竹林由武先生）](https://ykunisato.github.io/jpa2020-tws-002/)
 -   [はじめよう！R（小杉考司先生）](https://kosugitti.github.io/slides/TokyoR117/RforBeginner.html#r%E3%82%92%E3%81%95%E3%82%8F%E3%81%A3%E3%81%A6%E3%81%BF%E3%81%BE%E3%81%97%E3%82%87%E3%81%86)
 -   [気軽にRでWebサイト](https://shohei-doi.github.io/academic-website/get-started.html)
@@ -68,9 +68,11 @@ title: "Web Tools"
 -   [データサイエンス100本ノック（構造化データ加工編）のSAS版](https://github.com/Nikkei-R-DataScience/sas-100knocks-preprocess/blob/main/answer/sas100knocks.ipynb)
 
 ## 研究関連
+
 -   [Writing-Tips Series(Journal of Clinical Epidemiology)](https://www.jclinepi.com/content/jce-Writing-Tips-Series)
 
 ## 論文
+
 -   [Ten Simple Rules for Reproducible Computational Research](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1003285)
 
 ## その他
