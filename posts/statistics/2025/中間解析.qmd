@@ -1,0 +1,291 @@
+---
+title: "第2相抗がん剤開発及び検証的試験の中間解析"
+author: "坂本航太"
+date: "2025-05-24"
+format:
+  html: 
+    fontsize: normal
+    page-layout: full
+    lang: "ja"
+    encoding: "UTF-8"
+    toc: true
+    toc-depth: 2
+    code-fold: show
+    html-math-method: katex
+    fig-format: svg
+    fig-height: 5
+    fig-width: 9
+    self-contained: true
+    number-sections: true
+    code-block-border-left: true
+    code-line-numbers: false
+    code-overflow: wrap
+    highlight-style: atom-one
+    df-print: tibble
+#   pdf:
+#     documentclass: bxjsarticle
+#     classoption: 
+#       - xelatex
+#       - ja=standard
+#     pdf-engine: xelatex
+#     mainfont: "Times New Roman"
+#     sansfont: "Times New Roman"
+#     monofont: "Courier New"
+#     CJKmainfont: "MS Mincho"  
+#     CJKsansfont: "MS Gothic" 
+#     toc: true
+#     toc-depth: 2
+#     number-sections: true
+#     colorlinks: true
+#     keep-tex: true
+editor: visual
+---
+
+# 中間解析について
+
+## 中間解析の目的
+
+中間解析は、試験の進行中にデータを評価し、治療効果や安全性に関する情報を得るために行われます。これにより、試験の進行状況を把握し、必要に応じて試験デザインやプロトコルを調整することができます。 中間解析は、特に以下の目的で実施されます。
+
+-   治療効果の初期評価: 中間解析は、治療効果の初期評価を行うために使用されます。これにより、治療が有効であるかどうかを早期に判断することができます。
+
+-   安全性の評価: 中間解析は、安全性に関する情報を収集するためにも使用されます。これにより、治療が安全であるかどうかを早期に判断することができます。
+
+-   早期終了の判断: 中間解析の結果に基づいて、試験を早期に終了するかどうか（無効中止や有効中止）を判断することができます。これにより、無駄なリソースを節約することができます。
+
+-   倫理的な配慮: 中間解析は、倫理的な配慮からも重要です。治療が有効でない場合や安全性に問題がある場合、試験を早期に終了することで、被験者の安全を確保することができます。
+
+-   リソースの最適化: 中間解析は、試験の進行状況を把握し、リソースを最適化するためにも使用されます。これにより、試験の効率を向上させることができます。
+
+本記事では、以下の内容について説明します。
+
+-   抗がん剤第2相における2値アウトカムの中間解析
+
+    -   Simonの最適法
+    -   SimonのMinmax法
+    -   Flemingデザイン
+    -   Bayes流の方法
+
+-   検証的試験における中間解析
+
+    -   O'Brien-Flemingデザイン
+    -   Pocockデザイン
+    -   Lan-DeMetsデザイン（α spending function）
+
+## 抗がん剤第2相における2値アウトカムの中間解析
+
+抗がん剤第2相試験においては、治療効果を評価するために2値アウトカム（例: 完全奏効、部分奏効、無効など）が使用されます。中間解析は、これらのアウトカムを評価するために行われます。試験統計家として試験計画時に中間解析を実施する必要があるかを考えておく必要があります。
+
+これらの資料が参考になります。
+
+-   [山本先生：SASユーザー総会2010](https://www.sas.com/content/dam/SAS/ja_jp/doc/event/sas-user-groups/usergroups10-a-07.pdf)
+
+また、基本的に本節での手法はSASのProc power等のプロシジャで簡単に実装されていません。SASで実行する場合は、ネットからマクロを活用するか、社内でSASマクロを開発しておく必要があります。若干ハードルが高いかもしれないですが、SASでサンプルサイズ設計マクロを開発しておき、RやWebサイトの計算結果との一致をもってQCを行うことができるので、開発しておくことをお勧めします。
+
+## パラメータの定義
+
+この節での記法について導入します。検証的試験における中間解析では別途記法を定義します。
+
+-   $p$ : 奏効確率（主要評価項目）
+-   $p_0$ : 閾値奏効確率（$p$ が $p_0$ 以下の場合，薬剤は無効と判断）
+-   $p_1$ : 期待奏効確率（$p$ が $p_1$ 以上の場合，薬剤は有効かもしれないと判断）
+-   $\alpha$ : 第 I 種の過誤確率（一般的に0.05と規定）
+-   $\beta$ : 第 II 種の過誤確率（一般的に0.20と規定）
+
+## 仮説検定
+
+仮説検定は片側検定として以下のように定義する。
+
+-   $H_0 : p \leq p_0$
+
+-   $H_1 : p > p_1$
+
+# Simonの最適法とMinMaxデザイン
+
+Simonデザインは、抗がん剤第2相試験において、2値アウトカムの中間解析を行うためのデザインです。このデザインは、治療効果が期待できる場合に、早期に試験を終了することができるように設計されています。Simonの方法は2段階のデザインであり、最初の段階で治療効果が期待できる場合にのみ、次の段階に進むことができます。これにより、無駄なリソースを節約することができます。
+
+残念ながら、SimonのデザインはSASで簡単に実装できるプロシジャがないため、Rでの実装を行います。 Rだと`clinifunc package`の`ph2simon`関数が利用できます。日本のブログだと長嶋先生のWebブログにWebアプリが公開されています。以下のURLからアクセスできます。
+
+-   [長嶋先生のWebアプリ](https://www.nagashima-lab.com/simon/)
+
+Rでclinfunc packageを利用する例は以下となります。以下の例では無効閾値p0に0.1,期待奏効閾値に0.3として、片側有意水準5%、検出力80%の元での症例数計算を実施した。
+
+```r
+library(clinfun)
+# Simonのデザイン（Minmax,Optimalを両方）
+simon <- clinfun::ph2simon(pu = 0.1 , pa = 0.3 , ep1 = 0.05 , ep2 = 0.08, nmax=100)
+print(simon)
+plot(simon)
+```
+
+各記法の説明は以下となります。 これは[こちらのReference manual](https://cran.r-project.org/web/packages/clinfun/index.html)の引用です。
+
+## Arguments
+
+| パラメータ | 説明 |
+|------------------------------------|------------------------------------|
+| pu | unacceptable response rate; baseline response rate that needs to be exceeded for treatment to be deemed promising |
+| pa | response rate that is desirable; should be larger than pu |
+| ep1 | threshold for the probability of declaring drug desirable under pu (target type 1 error rate); between 0 and 1 |
+| ep2 | threshold for the probability of rejecting the drug under pa (target type 2 error rate); between 0 and 1 |
+| nmax | maximum total sample size (default 100; can be at most 1000) |
+| x | object returned by ph2simon |
+| ... | arguments to be passed onto plot and print commands called within |
+
+## Value
+
+ph2simon returns a list with pu, pa, alpha, beta and nmax as above and:
+
+| 出力 | 説明 |
+|------------------------------------|------------------------------------|
+| out | matrix of best 2 stage designs for each value of total sample size n. The 6 columns in the matrix are: |
+
+| カラム  | 説明                                                       |
+|---------|------------------------------------------------------------|
+| r1      | number of responses needed to exceeded in first stage      |
+| n1      | number of subjects treated in first stage                  |
+| r       | number of responses needed to exceeded at the end of trial |
+| n       | total number of subjects to be treated in the trial        |
+| EN(pu)  | expected number of patients in the trial under pu          |
+| PET(pu) | probability of stopping after the first stage under pu     |
+
+Trial is stopped early if \<= r1 responses are seen in the first stage and treatment is considered desirable only when \>r responses seen.
+
+## Methods
+
+-   `print(ph2simon)`: formats and returns the minimax, optimal and any admissible designs.
+-   `plot(ph2simon)`: plots the expected sample size against the maximum sample size as in Jung et al., 2001
+
+## 実務に応用する際において
+
+SimonのMinmax、SimonのOptimanデザインのいずれの方法においても、「薬剤が無効な場合に早期中止を判断するための2段階デザイン無効な場合の期待患者数/を最小にしたい」という無効中止のみを考えた試験デザインである。 すなわち、Rの出力結果から、第1段階目のn1人において、r1人未満の奏効例数であれば、試験を無効中止とするようなデザインである。Rのパッケージで症例数設計をする場合、この数値が正しいことを試験統計家としてValidationをしておく必要はある。
+
+## 数学的背景について
+
+別記事で解説します。
+
+# Flemingデザイン
+
+Flemingデザインとは、Simonのデザインと同様に2段階デザインによるものであるが、「無効中止」と「有効中止」を考えることができる方法である。
+
+SAS/Rで簡単に実装できるパッケージがないため説明は省略する。また、第1段階で「有効中止」となってすぐに「申請」となることは考えずらい。試験統計家としては「有効中止」になった場合の点推定値のバイアス/検出力の検討はしておく必要があると考える。
+
+# ベイズ流のデザイン
+
+# 検証的試験における中間解析（群逐次デザイン）
+
+ここでは、検証的試験における中間解析を群逐次デザインと呼ぶ。
+
+WebにあるSASによる中間解析の解説記事は[SASuse総会の浜田先生（2010)](https://www.sas.com/content/dam/SAS/ja_jp/doc/event/sas-user-groups/usergroups10-a-03.pdf)が一番分かりやすく丁寧である。
+
+[丹後先生の資料](https://www.niph.go.jp/journal/data/60-1/201160010006.pdf)や第一三共の[小山さん](file:///C:/Users/kotas/Downloads/%E7%94%B2438_%E6%9C%AC%E6%96%87.pdf)の博論も参考になる。
+
+基本的な考え方として、2種類ある。数式は[こちらのSAShelp](https://documentation.sas.com/doc/en/statug/15.2/statug_seqdesign_details15.htm)に詳しくかかれている
+
+-   複数時点で得られるZ検定統計量において、検定統計量の多変量正規分布に近似し、第一種の過誤確率を抑えながら各時点における棄却域を構成する。すなわち検定統計量をWald型と捉えることで、連続量アウトカム、2値データ、生存時間アウトカムに基づく検定統計量を統一的に表すことが可能である。なので、検定統計量の漸近正規性を利用することが原則である。そのため、固定効果デザインに基づくサンプルサイズ設計は`Proc Power procedure`や`Proc GLMPower procedure`を利用すべきである。SAS helpにもそのような記載がある。
+-   α消費関数を用いた方法
+
+本記事では、臨床試験で利用しやすいα消費関数を用いた方法を紹介する。SASでは`PROC SEQDESIGN Procedure` を用いて中間解析に基づく症例数設計をすることができる。なお、中間解析での解析は`PROC SEQTEST Procedure` で実施することができる。α消費関数の例として以下を選択する。
+
+-   O'Brien-Fleming型 $f(t) = \min\{2 - 2\Phi(z_{1-\alpha/2}/\sqrt{t}), \alpha\}$
+
+-   Pocock型 $f(t) = \min\{\alpha \log[1 + (e - 1)t], \alpha\}$
+
+-   一般化 $f(t) = \min\{\alpha t^{\rho}, \alpha\}$
+
+ここで、tは情報分散(0 \< t \<1)である。
+
+SASでは以下のように実施される。 SASのhelpは[こちら](https://documentation.sas.com/doc/en/statug/15.2/statug_seqdesign_toc.htm)
+
+``` sas
+PROC SEQDESIGN <options>;
+<label:> DESIGN options;
+SAMPLESIZE <MODEL= option>;
+```
+
+SASヘルプに記載されているのは下記である。
+
+-   Each DESIGN statement requests a new group sequential design, and multiple DESIGN statements can be used to create more than one design for comparison of features.
+-   The label, which must be a valid SAS name, is used to identify the design in the output tables and graphics.
+-   The SAMPLESIZE statement computes the required sample sizes for the design specified in each DESIGN statement. With a selected design, the SAMPLESIZE statement computes the required sample sizes for the trial.
+
+すなわち、Design Statementでは、中間解析の方法、条件指定を複数指定できるということである。また、Samplesize Statementでは、解析対象変数の条件の指定が可能となる。
+
+実務上では、2つめのα消費関数を用いたサンプルサイズ設計を利用することが標準的であるため、そちらのプログラムを紹介する。α消費関数アプローチでは、以下の2つの特徴を有する。
+
+以下では、SASプログラムの例を提示する。
+
+ここでは以下の状況を想定する。
+
+-   生存時間データをログランク検定
+-   帰無仮説：対数ハザード比 = 0
+-   対立仮説：ハザード比 0.5 、対数ハザード比：log(0.5) = 0.69315
+-   対照群のハザード：0.35、介入群のハザード 0.145
+-   α：両側5%、β：80%
+-   登録期間：2年、追跡期間：5年
+-   情報時間の半分で中間解析1回：有効・無効中止
+-   エラーの消費（O'Brien-Fleming型のα消費関数、Pocock型のβ消費関数）
+
+``` sas
+ods graphics on;
+proc seqdesign altref=0.69315 errspend
+   pss(cref=0 0.5 1) stopprob(cref=0 0.5 1)
+   plots=(asn power errspend);
+   
+   OneSidedErrorSpending:
+   design method(alpha)=errfuncobf alpha=0.025
+          method(beta)=errfuncpoc beta=0.10
+          nstages=2 alt=upper stop=both;
+          
+   samplesize model=twosamplesurvival
+              (nullhazard=0.35 acctime=2 foltime=5);
+              
+ods output Boundary=bound_surv;
+run;
+
+ods graphics off;
+```
+
+この出力結果から以下である。詳細はSASユーザー総会の浜田先生の資料を参照すること。
+
+# 逐次デザインによる臨床試験設計の結果
+
+## 試験概要
+
+今回設計した臨床試験の基本パラメータと解析計画をまとめました。この試験では2段階の逐次デザインを採用し、中間解析で早期中止の可能性を検討します。
+
+## 試験設計パラメータ
+
+| 項目           | 設定値                                   |
+|----------------|------------------------------------------|
+| 登録期間       | 2年                                      |
+| 追跡期間       | 5年                                      |
+| 目標症例数     | 126.7例（2群計128例）<br>63.25例/年      |
+| 期待イベント数 | 96.5例（対照群: 55.4例、治療群: 41.1例） |
+
+## 解析スケジュール
+
+### 中間解析（第1段階）
+
+-   **実施時期**: 試験開始から3年後（2.92年）
+-   **期待イベント数**: 48.3例（対照群: 30.4例、治療群: 17.9例）
+
+### 最終解析（第2段階）
+
+-   **実施時期**: 全症例の追跡完了後
+-   **期待イベント数**: 96.5例
+
+## 統計的判定基準
+
+| 解析段階     | 統計量                 | 判定基準           | 結論         |
+|--------------|------------------------|--------------------|--------------|
+| **中間解析** | Z₁ \> 2.96259          | 有効性境界を超過   | **有効中止** |
+|              | Z₁ \< 0.86994          | 無効性境界を下回る | **無効中止** |
+|              | 0.86994 ≤ Z₁ ≤ 2.96259 | 境界値の間         | **試験継続** |
+| **最終解析** | Z₂ \> 1.89189          | 有効性境界を超過   | **有効**     |
+
+## まとめ
+
+この逐次デザインにより、試験の途中で明確な結果が得られた場合には早期中止が可能となり、患者さんの負担軽減と試験の効率化が期待できます。特に、中間解析時点で強い有効性が示された場合や、逆に無効性が明らかになった場合には、倫理的観点からも適切な判断ができる設計となっている。
+
+この後は、`Proc lifetest Procedure`等で実際に解析を行い推定値に基づくZ統計量を算出した上で、`Proc Seqtest Procedure`で中間解析の結果を評価することとなる。
