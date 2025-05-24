@@ -18,7 +18,7 @@
     "href": "posts/Web_tools/Web_tools.html#医薬品開発",
     "title": "Web Tools",
     "section": "2 医薬品開発",
-    "text": "2 医薬品開発\n\nPMDA 審査関連業務の概要について\nICH Efficacyガイドライン\n製薬協データサイエンス部会 成果物\nFDA Clinical Trials Guidance Documents\nFDA Real-World Evidence Documents\nEMA Biostatistics guidelines\nEMA Real-world evidence guidelines\nCDISC ADaM"
+    "text": "2 医薬品開発\n\nPMDA 審査関連業務の概要について\nICH Efficacyガイドライン\n製薬協データサイエンス部会 成果物\nFDA Clinical Trials Guidance Documents\nFDA Real-World Evidence Documents\nEMA Biostatistics guidelines\nEMA Real-world evidence guidelines\nCDISC ADaM\nStatistical Analysi Plan(Australian Clinical Trials)"
   },
   {
     "objectID": "posts/Web_tools/Web_tools.html#統計",
@@ -46,7 +46,7 @@
     "href": "posts/Web_tools/Web_tools.html#sasプログラミング",
     "title": "Web Tools",
     "section": "6 SASプログラミング",
-    "text": "6 SASプログラミング\n\nSASユーザー会\nSASユーザー総会 論文集アーカイブ\n大阪SAS勉強会\nデータステップ100万回　SAS新手一生\n晴れ時々SAS\n我輩はブロガーではない。ネタもまだない\nデータサイエンス100本ノック（構造化データ加工編）のSAS版"
+    "text": "6 SASプログラミング\n\nSASユーザー会\nSASユーザー総会 論文集アーカイブ -SAS Forumユーザー会 2006\n大阪SAS勉強会\nデータステップ100万回　SAS新手一生\n晴れ時々SAS\n我輩はブロガーではない。ネタもまだない\nデータサイエンス100本ノック（構造化データ加工編）のSAS版"
   },
   {
     "objectID": "posts/Web_tools/Web_tools.html#研究関連",
@@ -81,7 +81,7 @@
     "href": "posts/Web_tools/Web_tools.html#quartoブログ",
     "title": "Web Tools",
     "section": "11 Quartoブログ",
-    "text": "11 Quartoブログ\n\ntutorial"
+    "text": "11 Quartoブログ\n\ntutorial\nBuilding a blog with Quarto\nMarkdown記法チート"
   },
   {
     "objectID": "posts/statistics/index.html",

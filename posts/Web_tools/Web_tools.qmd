@@ -19,6 +19,7 @@ title: "Web Tools"
 -   [EMA Biostatistics guidelines](https://www.ema.europa.eu/en/human-regulatory-overview/research-and-development/scientific-guidelines/clinical-efficacy-safety-guidelines/biostatistics#topics)
 -   [EMA Real-world evidence guidelines](https://www.ema.europa.eu/en/human-regulatory-overview/research-development/scientific-guidelines/clinical-efficacy-safety-guidelines/real-world-evidence)
 -   [CDISC ADaM](https://www.cdisc.org/standards/foundational/adam)
+- [Statistical Analysi Plan(Australian Clinical Trials)](https://clinicaltrialsalliance.org.au/resource/statistical-analysis-plan/)
 
 ## 統計
 
@@ -61,6 +62,7 @@ title: "Web Tools"
 
 -   [SASユーザー会](https://www.sas.com/ja_jp/usergroups.html)
 -   [SASユーザー総会 論文集アーカイブ](https://sites.google.com/view/sas-japan-user-group-archive/%E3%83%9B%E3%83%BC%E3%83%A0)
+-[SAS Forumユーザー会 2006](https://www.sas.com/offices/asiapacific/japan/usergroups/technical06/appendix.html)
 -   [大阪SAS勉強会](https://sites.google.com/view/osakasasbenkyokai/%E3%83%9B%E3%83%BC%E3%83%A0)
 -   [データステップ100万回　SAS新手一生](https://sas-tumesas.blogspot.com/)
 -   [晴れ時々SAS](https://dengonmemo.blogspot.com/p/blog-page.html)
@@ -97,3 +99,6 @@ title: "Web Tools"
 ## Quartoブログ
 
 -   [tutorial](https://ivelasq.quarto.pub/building-a-blog-with-quarto/intro.html)
+- [Building a blog with Quarto](https://qiita.com/Qiita/items/c686397e4a0f4f11683d)
+- [Markdown記法チート](https://qiita.com/Qiita/items/c686397e4a0f4f11683d)
+
