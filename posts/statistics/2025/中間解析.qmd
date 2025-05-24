@@ -1,6 +1,10 @@
 ---
 title: "第2相抗がん剤開発及び検証的試験の中間解析"
 author: "坂本航太"
+categories: [臨床試験,SAS]
+date-modified: "2025-05-18"
+abstract-title: Abstract
+abstract: "私が頻用する基本的なサンプルサイズ設計について解説します。"
 date: "2025-05-24"
 format:
   html: 
@@ -110,7 +114,7 @@ Simonデザインは、抗がん剤第2相試験において、2値アウトカ�
 
 Rでclinfunc packageを利用する例は以下となります。以下の例では無効閾値p0に0.1,期待奏効閾値に0.3として、片側有意水準5%、検出力80%の元での症例数計算を実施した。
 
-```r
+``` r
 library(clinfun)
 # Simonのデザイン（Minmax,Optimalを両方）
 simon <- clinfun::ph2simon(pu = 0.1 , pa = 0.3 , ep1 = 0.05 , ep2 = 0.08, nmax=100)
