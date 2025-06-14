@@ -62,7 +62,8 @@ title: "Web Tools"
 ## SASプログラミング
 
 -   [SASユーザー会](https://www.sas.com/ja_jp/usergroups.html)
--   [SASユーザー総会 論文集アーカイブ](https://sites.google.com/view/sas-japan-user-group-archive/%E3%83%9B%E3%83%BC%E3%83%A0) -[SAS Forumユーザー会 2006](https://www.sas.com/offices/asiapacific/japan/usergroups/technical06/appendix.html)
+-   [SASユーザー総会 論文集アーカイブ](https://sites.google.com/view/sas-japan-user-group-archive/%E3%83%9B%E3%83%BC%E3%83%A0) 
+-   [SAS Forumユーザー会 2006](https://www.sas.com/offices/asiapacific/japan/usergroups/technical06/appendix.html)
 -   [大阪SAS勉強会](https://sites.google.com/view/osakasasbenkyokai/%E3%83%9B%E3%83%BC%E3%83%A0)
 -   [データステップ100万回　SAS新手一生](https://sas-tumesas.blogspot.com/)
 -   [晴れ時々SAS](https://dengonmemo.blogspot.com/p/blog-page.html)
@@ -95,7 +96,7 @@ title: "Web Tools"
 -   [Pharmaceutical Statistics](https://onlinelibrary.wiley.com/toc/15391612/current)
 -   [すうがくぶんか株式会社](https://sugakubunka.com/)
 -   [Quarto](https://quarto.org/)
--  [Git公式書籍（日本語](https://git-scm.com/book/ja/v2)」
+-  [Git公式書籍（日本語](https://git-scm.com/book/ja/v2)
 
 
 ## Quartoブログ

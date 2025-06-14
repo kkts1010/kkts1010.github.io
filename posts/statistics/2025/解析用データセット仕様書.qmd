@@ -49,7 +49,7 @@ editor: visual
 
 ## はじめに
 
-臨床試験や統計解析プロジェクトにおいて、解析用データセット仕様書は分析の設計図とも言える重要な文書です。本記事では、実用的な解析用データセット仕様書の構成と記載内容について、主要な3つのデータセット（ADSL、ADLB、ADTTE）を例に解説し、さらに仕様書に基づくデータセット作成とバリデーションプロセスについても説明します。
+臨床試験や統計解析プロジェクトにおいて、解析用データセット仕様書は分析の設計図とも言える重要な文書です。本記事では、実用的な解析用データセット仕様書の構成と記載内容について、主要な3つのデータセット（ADSL、ADLB、ADTTE）を例に解説し、さらに仕様書に基づくデータセット作成とバリデーションプロセスについても説明します。探索的解析であっても事前に解析用データセット仕様書を作成することを推奨する。
 
 ## 仕様書の基本構成
 
@@ -255,44 +255,5 @@ ADTTEでは元データの追跡可能性が重要です：
 ### 1. 仕様書に基づくプログラム作成
 
 解析用データセット仕様書を読み込み、Specificationシートの定義に従ってSASプログラムを作成します。ADxx_Conversionシートを参照してパラメータ変換処理も実装します。
-
-### 2. ADTTEプログラム例
-
-``` sas
-/* ADTTE作成例 */
-data adtte;
-    set adsl;
-    
-    /* Overall Survival パラメータ */
-    param = "Overall Survival";
-    paramcd = "OS";
-    paramn = 1;
-    
-    /* 解析開始日 */
-    startdt = trtsdt;
-    
-    /* 事象または打ち切りの判定 */
-    if dthfl = "Y" then do;
-        adt = dthdt;
-        cnsr = 0;
-        srcdom = "ADSL";
-        srcvar = "DTHDT";
-    end;
-    else do;
-        adt = eosdt;
-        cnsr = 1;
-        srcdom = "ADSL";
-        srcvar = "EOSDT";
-    end;
-    
-    /* AVAL計算 */
-    aval = adt - startdt + 1;
-    
-    /* ラベル付与 */
-    label param = "Parameter"
-          paramcd = "Parameter Code"
-          aval = "Analysis Value";
-run;
-```
 
 ###　参考文献 - [生存時間解析用ADaMデータセット（ADTTE）のソースコード紹介](https://sas-user2024.ywstat.jp/download.html?n=74&key=paper)

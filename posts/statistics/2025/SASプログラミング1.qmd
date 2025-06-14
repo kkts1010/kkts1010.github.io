@@ -1,0 +1,411 @@
+---
+title: ""
+author: "坂本航太"
+categories: [SAS,解析プログラミング]
+date-modified: "2025-06-14"
+abstract-title: Abstract
+abstract: ""
+date: "2025-06-14"
+format:
+  html: 
+    fontsize: normal
+    page-layout: full
+    lang: "ja"
+    encoding: "UTF-8"
+    toc: true
+    toc-depth: 2
+    code-fold: show
+    html-math-method: katex
+    fig-format: svg
+    fig-height: 5
+    fig-width: 9
+    self-contained: true
+    number-sections: true
+    code-block-border-left: true
+    code-line-numbers: false
+    code-overflow: wrap
+    highlight-style: atom-one
+    df-print: tibble
+#   pdf:
+#     documentclass: bxjsarticle
+#     classoption: 
+#       - xelatex
+#       - ja=standard
+#     pdf-engine: xelatex
+#     mainfont: "Times New Roman"
+#     sansfont: "Times New Roman"
+#     monofont: "Courier New"
+#     CJKmainfont: "MS Mincho"  
+#     CJKsansfont: "MS Gothic" 
+#     toc: true
+#     toc-depth: 2
+#     number-sections: true
+#     colorlinks: true
+#     keep-tex: true
+editor: visual
+---
+
+# SASプログラミング入門
+
+効率的なフォルダ構成でプロジェクトを管理する
+
+## はじめに
+
+SAS（Statistical Analysis System）を使ったデータ分析プロジェクトにおいて、最初に決めるべき重要な要素の一つがフォルダ構成です。適切なフォルダ構成を設定することで、プロジェクトの管理が格段に楽になり、チームでの作業効率も向上します。
+
+多くのSAS初心者は、とりあえずデスクトップやマイドキュメントにファイルを保存してしまいがちですが、プロジェクトが進むにつれて「あのファイルはどこに保存したっけ？」「これは最新バージョン？」といった問題に直面することになります。
+
+## 基本的なフォルダ構成
+
+SASプログラミングを実施する際は、フォルダ構成をまず設定します。
+
+ここでは、実際の業務で使用されている標準的な構成例を紹介します。
+
+任意のプロジェクトフォルダに対して以下のようなフォルダを作成します。テンプレートを作成しておくのが便利でしょう。
+
+-   Input
+-   Log
+-   Output
+-   Prg
+-   Setting
+-   Spec
+
+### 各フォルダの役割
+
+**Input**：分析に使用する元データを格納
+
+-   外部から受け取ったCSVファイル、Excelファイル -
+
+-   データベースから抽出した生データ
+
+-   既存のSASデータセット
+
+**Log**：SASプログラムの実行ログを保存
+
+-   プログラム実行時に出力されるログファイル
+
+-   エラーメッセージや警告の記録
+
+-   処理時間やデータ件数の確認用
+
+**Output**：分析結果や成果物を保存
+
+-   作成されたSASデータセット
+
+-   データ品質チェック結果
+
+**Prg**：SASプログラムファイル（.sas）を格納
+
+-   データ処理プログラム（1_xx、2_xxのように実行するプログラムの順番が分かる方が望ましい）
+
+-   データクリーニングプログラム
+
+-   派生変数作成プログラム
+
+**Setting**：
+
+-   設定ファイルや共通処理を保存
+
+-   よく使用するマクロ定義
+
+-   プロジェクト固有の設定
+
+**Spec**：仕様書や設計書類を格納
+
+-   解析用データセット仕様書
+
+## 解析用データセット作成に特化したフォルダ構成
+
+実際のプロジェクトでは、解析用データセット作成プログラミングと、解析プログラミングはフォルダを分けることを推奨しています。
+
+ここでは、解析用データセット作成に焦点を当てたフォルダ構成について詳しく説明します。
+
+### データセット作成フォルダ構成
+
+解析用データセット作成用のフォルダ構成例：
+
+-   Project/
+-   Input/
+    -   Raw_Data/ \# 生データ（CSV、Excel等）
+    -   External/ \# 外部参照データ、マスタ情報
+-   Log/ \# データ処理ログ
+-   Output/ \# 作成されたSASデータセット
+-   Prg/ \# データ処理プログラム
+-   Setting/ \# 設定ファイル、マクロ
+
+### 具体的な作業内容
+
+**データ取り込み（PROC IMPORT）**
+
+-   CSVファイルやExcelファイルからSASデータセットへの変換
+
+-   文字エンコーディングの統一
+
+-   変数名の標準化
+
+**データクリーニング**
+
+-   欠損値の処理（削除、補完、フラグ付け）
+
+-   外れ値の検出と処理
+
+-   重複レコードの確認と処理
+
+-   データ型の統一
+
+**派生変数の作成**
+
+-   年齢の計算（生年月日から）
+
+-   カテゴリ変数の作成（連続変数の区分化）
+
+-   合計値や比率の計算
+
+-   フラグ変数の作成
+
+**データの品質チェック**
+
+-   PROC FREQ による度数分布の確認
+
+-   PROC MEANS による基本統計量の確認
+
+-   データ件数の確認
+
+-   変数ごとの欠損値率の確認
+
+## プログラムの日付管理とバージョン管理
+
+SASプログラミングにおいて、プログラムの更新履歴を管理することは非常に重要です。特にデータ処理では、どの時点のプログラムで作成されたデータセットなのかを明確にする必要があります。
+
+### ファイル名による日付管理
+
+データセット作成プログラムの命名例
+
+-   01_data_import_20250614.sas \# 初回作成
+
+-   01_data_import_20250615.sas \# 修正版
+
+-   01_data_import_20250620.sas \# 最新版
+
+-   02_data_cleaning_20250614.sas \# データクリーニング
+
+-   03_variable_creation_20250615.sas \# 派生変数作成
+
+-   04_quality_check_20250620.sas \# 品質チェック
+
+### プログラム内でのヘッダーコメント管理
+
+各SASプログラムの冒頭には、以下のような標準的なヘッダーを記述することを必須とします。
+
+``` sas
+/*=================================
+プログラム名: 01_data_import.sas
+プロジェクト: プロジェクト名
+作成者      : 山田太郎
+作成日      : 2025/06/14
+最終更新日  : 2025/06/20
+バージョン  : v1.2
+目的        : 顧客アンケートデータの取り込みとクリーニング
+
+入力データ  : Raw_Data/survey_data.csv
+出力データ  : Output/cleaned_survey.sas7bdat
+
+更新履歴:
+v1.0 2025/06/14 初回作成
+v1.1 2025/06/15 欠損値処理ロジック追加
+v1.2 2025/06/20 外れ値検出機能追加
+=================================*/
+
+
+
+
+*---------------------- EOF （プログラム名.sas） ------------------------------- ;
+```
+
+## 自動的な実行日時記録
+
+プログラム実行時に、実行日時をログに記録する仕組みを組み込むことも有効です：
+
+``` sas
+/* 実行開始時刻を記録 */
+%let start_time = %sysfunc(datetime());
+%put NOTE: データセット作成開始 - %sysfunc(datetime(), datetime19.);
+
+/* データ取り込み処理 */
+proc import datafile="Input/Raw_Data/survey_data.csv"
+    out=work.raw_data
+    dbms=csv replace;
+    getnames=yes;
+run;
+
+/* 実行終了時刻を記録 */
+%let end_time = %sysfunc(datetime());
+%let elapsed_time = %sysevalf(&end_time - &start_time);
+%put NOTE: データセット作成終了 - %sysfunc(datetime(), datetime19.);
+%put NOTE: 実行時間: %sysfunc(&elapsed_time, time8.);
+%put NOTE: 処理件数: %sysfunc(attrn(open(work.raw_data), nobs));
+```
+
+## 実践的な運用のコツ
+
+ログファイルの活用 データ処理では、どのような処理が行われたかを正確に記録することが重要です：
+
+``` sas
+/* ログファイルの出力先を指定（日付付き） */
+%let today = %sysfunc(today(), yymmddn8.);
+proc printto log="Log/data_creation_&today..log";
+run;
+
+/* データ処理 */
+/* ... */
+
+/* ログ出力を元に戻す */
+proc printto;
+run;
+```
+
+## Settingフォルダについて
+
+Settingフォルダでは、事前に解析用データセット仕様書のinputするファイル情報やPath、InputデータのPaht、OutputデータのPathを指定しておく。これを作成しておくことで、第3者に解析用データセット作成プログラムを提供した際でも、このSettingフォルダのPathだけを更新することで、再現可能な状態がすぐに作ることができる。
+
+Excelファイルには以下の3つの要素を設定します。：
+
+-   **パス（Path）**：ファイルの保存場所
+-   **ファイル名**：Excelファイル名
+-   **シート名**：参照するワークシート名
+
+# SASデータハンドリング
+
+## Attrib statement
+
+具体的なプログラミングについては、別記事で解説をするが、ここでは解析用データセットを作成する上で大事なAttrib Statementについて解説する。
+
+以下記事が参考になる。
+
+-   [ATTRIBステートメント](https://sas-tumesas.blogspot.com/2014/01/attrib.html)
+-   [変数属性を定義した空のデータセットを作成する方法【まとめ】](https://sas-boubi.blogspot.com/search/label/%E3%82%B9%E3%83%86%E3%83%BC%E3%83%88%E3%83%A1%E3%83%B3%E3%83%88%3A%20ATTRIB)
+
+解析用データ仕様書にて、各変数のLabel、Length、formatを指定する必要がある。 その際に、解析用データセットに対してattrib statementを適用することで簡単に設定できる。
+
+ちなみに、変数の順番だけを入れ替えるならばformat Statementでも簡単にできる。[こちらのブログ](https://sas-boubi.blogspot.com/search/label/%E3%82%B9%E3%83%86%E3%83%BC%E3%83%88%E3%83%A1%E3%83%B3%E3%83%88%3A%20FORMAT)が参考になります。
+
+``` sas
+
+data ADSL;
+    set ADSL;
+    attrib 
+        STUDYID   label="Study Identifier"           length=$12  format=$12.
+        USUBJID   label="Unique Subject Identifier"  length=$40  format=$40.
+        SUBJID    label="Subject Identifier"         length=$20  format=$20.
+        AGE       label="Age"                        length=8    format=8.
+        SEX       label="Sex"                        length=$1   format=SEX.
+        TRT01P    label="Planned Treatment for Period 1"  length=$200  format=$200.
+        TRT01A    label="Actual Treatment for Period 1"   length=$200  format=$200.
+        TRT01PN   label="Planned Treatment for Period 1 (N)"  length=8  format=8.
+        TRT01AN   label="Actual Treatment for Period 1 (N)"  length=8  format=8.
+        FASFL     label="Full Analysis Set Flag"     length=$1   format=NYFL.
+    ;
+run;
+```
+
+実際は手入力ですることは人為的ミスの元となるのでマクロ化等で自動化することを推奨するが考え方は上記の通りである。
+
+## Proc format
+
+以下記事が参考になる。 - [PROC FORMAT入門1 : VALUEステートメント](https://sas-boubi.blogspot.com/2018/01/proc-format1-value.html)
+
+PROC FORMATは、SASにおいてユーザー定義フォーマットを作成するプロシージャです。数値や文字データを、より読みやすい形式に変換して表示することができます。 基本構文は以下の通りです。
+
+``` sas
+proc format;
+    value フォーマット名
+        値1 = "ラベル1"
+        値2 = "ラベル2"
+        値3 = "ラベル3";
+run;
+```
+
+文字フォーマットには先頭にドルマークを付けます。
+
+``` sas
+proc format;
+    value trtf
+        1 = "プラセボ"
+        2 = "低用量"
+        3 = "高用量"
+        . = "欠測";
+        
+    value sexf
+        1 = "男性"
+        2 = "女性"
+        . = "不明";
+        
+    value nyf
+        0 = "No"
+        1 = "Yes"
+        . = "Missing";
+run;
+
+proc format;
+    value $sexf
+        "M" = "男性"
+        "F" = "女性"
+        " " = "不明";
+        
+    value $countryfmt
+        "JPN" = "日本"
+        "USA" = "アメリカ合衆国"
+        "GBR" = "イギリス"
+        other = "その他";
+run;
+```
+
+## データセットからのフォーマット作成
+
+### 3.1 CNTLIN=オプションの使用
+
+データセットからフォーマットを作成する場合、特定の変数名を持つデータセットを準備する必要があります。 必要な変数：
+
+-   FMTNAME：フォーマット名
+-   START：変換前の値（開始値）
+-   END：変換前の値（終了値、範囲指定時）
+-   LABEL：変換後のラベル
+-   TYPE：フォーマットタイプ（'N'=数値、'C'=文字）
+
+``` sas
+/* 治療群フォーマット用データセット */
+data trt_fmt;
+    retain fmtname 'trtf' type 'N';
+    input start end label $20.;
+    datalines;
+1 1 プラセボ
+2 2 低用量
+3 3 高用量
+. . 欠測
+;
+run;
+
+/* 性別フォーマット用データセット */
+data sex_fmt;
+    retain fmtname '$sexf' type 'C';
+    input start $1. end $1. label $10.;
+    datalines;
+M M 男性
+F F 女性
+   不明
+;
+run;
+
+/* フォーマットの作成 */
+proc format cntlin=trt_fmt;
+run;
+
+proc format cntlin=sex_fmt;
+run;
+```
+
+PROC FORMATは以下の2つの方法でフォーマットを作成できます：
+
+VALUEステートメント：直接コードに記述する方法。シンプルで直感的 CNTLIN=オプション：データセットから作成する方法。大量のフォーマットや動的な作成に適している
+
+適切なフォーマットの使用により、データの可読性が大幅に向上し、レポート作成時の効率も改善されます。

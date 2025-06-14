@@ -1,7 +1,7 @@
 ---
 title: ""
 author: "坂本航太"
-categories: [SAS,R]
+categories: [github]
 date-modified: "2025-06-14"
 abstract-title: Abstract
 abstract: ""
@@ -44,3 +44,50 @@ format:
 #     keep-tex: true
 editor: visual
 ---
+
+# githubのブログ更新手順について
+
+GitHubでブログを更新する際の標準的な手順は以下の通りです。
+
+## 一括実行
+
+```
+quarto render
+git add .
+git commit -m "新記事追加/編集"
+git push origin main
+```
+
+## Quartoサイトをレンダリング
+なお、quartoが多くなってきた場合、特定のファイルのみでrenderすることも可能である。
+
+```         
+quarto render
+```
+
+
+```         
+quarto render post.qmd
+```
+
+
+## 変更内容をステージングエリアに追加
+
+```         
+git add .
+```
+
+## 変更をコミット
+
+```         
+git commit -m "コミットメッセージ"
+```
+
+
+## リモートリポジトリにプッシュ
+
+```         
+git push origin main
+```
+
+

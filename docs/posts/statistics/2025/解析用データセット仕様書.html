@@ -3923,7 +3923,7 @@ vertical-align: -.125em;
 <h1 data-number="1"><span class="header-section-number">1</span> 解析用データセット仕様書の作成ガイド</h1>
 <section id="はじめに" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="はじめに"><span class="header-section-number">1.1</span> はじめに</h2>
-<p>臨床試験や統計解析プロジェクトにおいて、解析用データセット仕様書は分析の設計図とも言える重要な文書です。本記事では、実用的な解析用データセット仕様書の構成と記載内容について、主要な3つのデータセット（ADSL、ADLB、ADTTE）を例に解説し、さらに仕様書に基づくデータセット作成とバリデーションプロセスについても説明します。</p>
+<p>臨床試験や統計解析プロジェクトにおいて、解析用データセット仕様書は分析の設計図とも言える重要な文書です。本記事では、実用的な解析用データセット仕様書の構成と記載内容について、主要な3つのデータセット（ADSL、ADLB、ADTTE）を例に解説し、さらに仕様書に基づくデータセット作成とバリデーションプロセスについても説明します。探索的解析であっても事前に解析用データセット仕様書を作成することを推奨する。</p>
 </section>
 <section id="仕様書の基本構成" class="level2" data-number="1.2">
 <h2 data-number="1.2" class="anchored" data-anchor-id="仕様書の基本構成"><span class="header-section-number">1.2</span> 仕様書の基本構成</h2>
@@ -4884,43 +4884,6 @@ vertical-align: -.125em;
 <section id="仕様書に基づくプログラム作成" class="level3" data-number="1.8.1">
 <h3 data-number="1.8.1" class="anchored" data-anchor-id="仕様書に基づくプログラム作成"><span class="header-section-number">1.8.1</span> 1. 仕様書に基づくプログラム作成</h3>
 <p>解析用データセット仕様書を読み込み、Specificationシートの定義に従ってSASプログラムを作成します。ADxx_Conversionシートを参照してパラメータ変換処理も実装します。</p>
-</section>
-<section id="adtteプログラム例" class="level3" data-number="1.8.2">
-<h3 data-number="1.8.2" class="anchored" data-anchor-id="adtteプログラム例"><span class="header-section-number">1.8.2</span> 2. ADTTEプログラム例</h3>
-<pre class="sas"><code>/* ADTTE作成例 */
-data adtte;
-    set adsl;
-    
-    /* Overall Survival パラメータ */
-    param = &quot;Overall Survival&quot;;
-    paramcd = &quot;OS&quot;;
-    paramn = 1;
-    
-    /* 解析開始日 */
-    startdt = trtsdt;
-    
-    /* 事象または打ち切りの判定 */
-    if dthfl = &quot;Y&quot; then do;
-        adt = dthdt;
-        cnsr = 0;
-        srcdom = &quot;ADSL&quot;;
-        srcvar = &quot;DTHDT&quot;;
-    end;
-    else do;
-        adt = eosdt;
-        cnsr = 1;
-        srcdom = &quot;ADSL&quot;;
-        srcvar = &quot;EOSDT&quot;;
-    end;
-    
-    /* AVAL計算 */
-    aval = adt - startdt + 1;
-    
-    /* ラベル付与 */
-    label param = &quot;Parameter&quot;
-          paramcd = &quot;Parameter Code&quot;
-          aval = &quot;Analysis Value&quot;;
-run;</code></pre>
 <p>###　参考文献 - <a href="https://sas-user2024.ywstat.jp/download.html?n=74&amp;key=paper">生存時間解析用ADaMデータセット（ADTTE）のソースコード紹介</a></p>
 
 
