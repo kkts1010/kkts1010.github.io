@@ -1,0 +1,407 @@
+---
+title: "SASプログラミング業務のフレームワーク（スライドコピペ）"
+author: "坂本航太"
+categories: [SAS,解析プログラミング]
+date-modified: "2025-06-14"
+abstract-title: Abstract
+abstract: ""
+date: "2025-06-14"
+format:
+  html: 
+    fontsize: normal
+    page-layout: full
+    lang: "ja"
+    encoding: "UTF-8"
+    toc: true
+    toc-depth: 2
+    code-fold: show
+    html-math-method: katex
+    fig-format: svg
+    fig-height: 5
+    fig-width: 9
+    self-contained: true
+    number-sections: true
+    code-block-border-left: true
+    code-line-numbers: false
+    code-overflow: wrap
+    highlight-style: atom-one
+    df-print: tibble
+#   pdf:
+#     documentclass: bxjsarticle
+#     classoption: 
+#       - xelatex
+#       - ja=standard
+#     pdf-engine: xelatex
+#     mainfont: "Times New Roman"
+#     sansfont: "Times New Roman"
+#     monofont: "Courier New"
+#     CJKmainfont: "MS Mincho"  
+#     CJKsansfont: "MS Gothic" 
+#     toc: true
+#     toc-depth: 2
+#     number-sections: true
+#     colorlinks: true
+#     keep-tex: true
+editor: visual
+---
+
+# SASプログラミング業務のフレームワーク
+
+大阪SASユーザー総会の下記資料が大変勉強になるので、自分の備忘録用にコピペさせていただきた。基本的に下記資料をみればよい。
+
+-   [Think Framework](https://www.docswell.com/s/6484025/KNRYRD-2024-03-31-110624#p15)
+
+# SASプログラムのフレームワーク化による効率的な開発手法
+
+## はじめに
+
+SASプログラミングにおいて、毎回同じような処理を一から書くのは非効率的です。本記事では、Yugo Mikiさんの「Think Framework」の知見を参考に、SASプログラムをフレームワーク化することで、開発効率を大幅に向上させる手法について解説します。
+
+## Library vs Framework：根本的な発想の違い
+
+### 従来のLibraryアプローチ
+
+-   **マクロライブラリなどが有名**
+-   ライブラリからマクロやプログラムを参照してプログラム中に利用する
+-   プログラムの再利用に特化した使い方
+-   プログラミングコードを部品化し、組み合わせる事でプログラムを作成する
+
+### 新しいFrameworkアプローチ
+
+-   **SAS LSAFなどが有名。一方、「それって一体何なの？」ってくらい実体が見えない**
+-   一般的な機能を持つ共通コードを持つ
+-   標準的なコードはフレームワークが持ち、要求されるコードの実現にプログラマーのリソースを集中させる事で効率化を達成する
+
+## 「だからどういうことなのさ？」
+
+つまり：
+
+ - **いつも書くコード**はフレームワークに持たせましょう！
+
+\- **いつも使う機能**はフレームワークに持たせましょう！
+
+\- **よく使うマクロ**とかもフレームワークに持たせましょう！
+
+\- **ついでに社内ルール**とかもフレームワークに持たせておきましょう！
+
+ってこと。
+
+**これをSASで良い感じに実現して、快適な開発環境を作りましょう！**
+
+## SASプログラムの要素分析とフレームワーク化判断
+
+### SDTM to ADaM変換の場合
+
+| 処理項目 | 考察 | フレームワーク化判断 |
+|------------------|-----------------|--------------------------------------|
+| Clear log and data | 毎回使う。対象とする。 | ✅ 完全自動化 |
+| Setting macros | 毎回使うところだけ対象とする。 | ⚡ 部分自動化 |
+| Setting library | 毎回違う。出来るだけ一箇所に集約したい。 | 🔧 設定管理 |
+| Setting format | 仕様書のコードリストにあるものは対象とする。 | ✅ 完全自動化 |
+| Import data and files | ファイル名と仕様が毎回違う。やや無理。 | ⚡ テンプレート化 |
+| Merge | 毎回違う。対象外。 | ❌ **プログラマーの腕の見せ所** |
+| Mapping to new variables | 毎回違う。対象外。 | ❌ **プログラマーの腕の見せ所** |
+| Sort | マクロ化してライブラリへ。 | ✅ 共通化 |
+| Drop extra variables | 仕様書から自動取得。 | ✅ メタデータ連携 |
+| Upload | マクロ化してライブラリへ。 | ✅ 共通化 |
+| Header, sections, comments | SOPや手順との兼ね合い。対象とする。 | ✅ テンプレート自動生成 |
+
+### ADaM to TFLs変換の場合
+
+-   Clear log and data
+-   Setting macros
+-   Setting library
+-   Setting format
+-   Import data and files
+-   Merge
+-   Call procedures（プロシージャの呼び出し）
+-   Sort
+-   Make up to requests from mockup（モックアップからのリクエスト作成）
+-   Upload
+-   Header, section, and comments
+
+**🎯 重要な気づき**
+
+**プログラマーに頑張って欲しい所はここ！**（MergeとMapping）
+
+**ということはそれ以外の所はフレームワークに持たせた方がいい！**
+
+## SASによるフレームワーク設計
+
+### 基本コンセプト
+
+-   SASプログラム開発時を想定
+-   SASによるプログラムテンプレート作成の一歩先
+
+### URS（User Requirement Specification）
+
+-   使用するのはBase SASと一般的な外部ファイル（EXCEL）
+-   プログラムからプログラムをcallしても良い
+-   本番実行時のみログを外部に保管
+-   マクロは今回はmacro.sasを毎回includeする
+-   フレームワーク化検討のほぼ全てを実装する
+
+### フレームワーク仕様
+
+#### 全実行プログラム
+
+-   全実行時ログを保管
+
+#### Macro.sas
+
+-   Sort
+-   インポート（proc sort）
+-   エクスポート（proc sort）
+-   仕様書から変数のattribute作成
+-   仕様書からcodelistのformat作成
+-   仕様書からkeepする変数リスト作成
+
+#### Each_dsn.sas
+
+-   Stand aloneで動く
+-   実施時にログ、データセット等をクリアする
+-   社内規則に従ったheader, section, commentを作成する
+
+**プログラムにおける面倒な"いつもの"を持たせておくのがフレームワークです。**
+
+## 実装例とテクニック
+
+### 全実行プログラム：環境分離の巧妙な仕組み
+
+``` sas
+/* 基本的にはマクロで実装 */
+%macro derive(dsn, title);
+   proc printto log = "&path.¥&project._&dsn._log.txt" new;
+   title1 "&project.:&title.";
+   run;
+   
+   %include "&pgpath.¥&dsn..sas";
+   
+   proc printto; 
+   run;
+%mend;
+
+%derive(adsl)
+%derive(adae)
+```
+
+Printtoでincludeを挟むだけで開発環境と本番実行環境を分離できる！ 開発時：それぞれのプログラムで実行。ログはログ画面へ出力される 本番実行時：ログはprinttoで指定したフォルダへ出力される
+
+``` sas
+
+%macro derive(lib, dsn, key, where);
+    proc sort data = &lib..&dsn out = work.&dsn;
+        by &key.;
+        &where.;
+    run;
+%mend;
+
+```
+
+Macroはlibraryにして保管・管理しておくと楽です。今回のmacro.sasはそれ自体がマクロライブラリとして機能します。 フレームワークからライブラリが読み込まれるような仕様にしています。 個別プログラムの構造化 ログクリアとヘッダーの順序問題 常識的に考えるとheaderが先である。だって"head"erだから。でも少し考えてみてもいい。
+
+``` sas
+/* パターン1 */
+dm "log; clear;";
+/* program name : test */
+/* author : anonymous */
+
+/* パターン2 */
+/* program name : test */
+/* author : anonymous */
+dm "log; clear;";
+```
+
+どっちも同じ？ でも少し考えてみてもいい。もし、printtoではなくdmステートメントでログを保存していたら？後者の場合、ログからheaderが消えてしまう。どうやってログを残すかによって使えないパターンがあるので注意しよう。
+
+PhUSE GPPの参考から持ってきました。立派なヘッダーです。 これを作るの時間かかるんじゃない？ → こういうものはフレームワークに持たせましょう。 ちょっと工夫すると結構作れちゃったりするものです。 よく見たら進捗管理ファイル、帳票一覧、ADaM仕様書にほとんどの情報が入っている。
+
+``` sas
+
+/***********************************************************************
+* Project         : Sample Drug, Sample Indication,Study1
+* Program name    : sample.sas
+* Author          : smithb
+* Date created    : 20100816
+* Purpose         : Summarize demographics data for the study.
+* Revision History :
+* Date        Author      Ref     Revision (Date in YYYYMMDD format)
+* 20100818    smithb      1       Removed subjects with who have not been dosed per spec.
+***********************************************************************/
+```
+
+## マクロの使用パターン
+
+マクロはいつもどうやって使う？
+
+``` sas
+
+/* 1. %include statement */
+%include "macro.sas";
+
+/* 2. Set auto compiled macro */
+FILENAME fileref 'the path to the AUTOCALL library';
+OPTIONS MAUTOSOURCE SASAUTOS=(SASAUTOS fileref);
+
+/* 3. Set stored macro */
+LIBNAME mylib 'C:¥temp';
+OPTIONS MSTORED SASMSTORE=mylib;
+```
+
+# マクロをcallしましょう
+
+``` sas
+
+/* 1. %config */
+%config
+
+/* 2. %make_blank_dataset(&dsn.) */
+%make_blank_dataset(&dsn.)
+
+/* 3. %import(analysis, adsl, usubjid, where SAFFL = 'Y') */
+%import(analysis, adsl, usubjid, where SAFFL = 'Y')
+```
+
+こんな感じでつらつらと記載。
+
+libnameなどの設定を一括で。色々クリアする処理を入れる人もいる。 ADaMといったらこれ。個別のattribとか狂気の沙汰としか思えない。 毎回使うわけではない。ただ、あると書き方を覚えなくても良い。（exampleとして載せている）
+
+# セクション構造の標準化
+
+Sectionを設定しよう こっちもこんな感じでつらつらと記載。 どういう作りにするかは社内で共通化すれば良い。
+
+``` sas
+/* 1. /* --- general setting --- */ */
+/* 2. /* --- macro preparation --- */ */
+/* 3. /* --- data preparation --- */ */
+```
+
+# 自動生成による効率化
+
+Call Execute + Metadata Dataset 定番のcall executeとデータセットの合わせ技。 %generateはput statementでsas programをひたすら作ってくれるマクロ。
+
+``` sas
+data _null_;
+    set metadata;
+    call execute('%generate(' || catx(',', parameter1, parameter2) || ')');
+run;
+```
+
+# 実際のcall excuteで作成するプログラム例
+
+``` sas
+/***********************************************************************
+* Project ID      :PM1234
+* Title          :Create a dataset, ADAE
+* Program Name   :d1234_adam_adae.sas
+* Author         :Yugo Miki
+* Date of Creation:2018-06-22
+* Comments       :
+***********************************************************************/
+
+/* --- General Setting --- */
+%let path = %sysfunc(getoption(sysin));
+%include "&path.¥config.sas";
+%include "&path.¥macros.sas";
+
+/* --- Format Setting --- */
+
+/* --- Macros Setting --- */
+%let dsn = adae;
+%let dlabel = Adverse Event Analysis Dataset
+
+/* --- Data preparation --- */
+%import(ana,adsl,usubjid, )
+
+/* --- Main Process --- */
+/* Make blank dataset */
+%make_blank_dataset(adae)
+
+Data &dsn.01;
+    Merge
+        Blank_&dsn.;
+    By usubjid;
+    
+    If 0 then set Blank_&dsn.;
+    Set &dsn.00;
+Run;
+
+/* Drop variables */
+Proc sql noprint;
+    Create table &dsn. As
+        Select
+            &keepstring
+        From &dsn.09
+        Order by &sortkeyc.;
+Quit;
+
+/* Logical Checks */
+%unique_key(&dsn., &sortkey)
+
+/* Upload */
+Proc sort data = &dsn. Out = ana.&dsn.(label = &dlabel);
+    By &sortkey.;
+Run;
+
+*eof;
+```
+
+## 実践的な考察
+
+### 良かった点
+
+-   Headerの記入箇所が少なくて楽
+-   毎回やってた設定が不要になり、ミスもなくなった
+-   余計な設定や処理に悩まされないので、データを見る時間などに作業時間を使えている気がする
+
+### 良くなかった点（正直な評価）
+
+-   簡単なプログラムのはずなんだけどやたらとコードが長い
+-   少しプログラムの構造が変わると、適用できない
+-   開発計画が大きく変わると対応できない
+
+## 組織レベルでの戦略的価値
+
+### 会社としての評価
+
+-   やってみてもいい。
+-   申請や海外に提供するなど、プログラムへの要求が高くなればなるほど威力が出る
+-   会社として基本的なプログラムの書き方やセクションわけなどを決めてしまっても、この方法ならコスト高にならない。むしろ、いつもここにこういう事が書かれていると分かった方が開発、またはそのための教育においても有利。
+
+## フレームワーク化の本質的な価値
+
+### 抽象化レベルの設定
+
+#### 高レベル抽象化（完全自動化）
+
+-   環境設定、ログ管理、基本的なハウスキーピング
+-   一度設定すれば、プログラマーは意識する必要がない
+
+#### 中レベル抽象化（テンプレート化）
+
+-   プログラム構造、ヘッダー、セクション分け
+-   骨格は提供するが、中身はプログラマーが記述
+
+#### 低レベル抽象化（ユーティリティ提供）
+
+-   よく使う処理の関数化
+-   呼び出すかどうかはプログラマーの判断
+
+### 組織的導入戦略
+
+#### 段階的導入アプローチ
+
+1.  **Phase 1: 基盤整備**：標準的なフォルダ構造とユーティリティマクロ
+2.  **Phase 2: テンプレート化**：プログラムテンプレートとヘッダー標準化
+3.  **Phase 3: 自動化拡張**：設定管理の自動化とバリデーション機能
+4.  **Phase 4: 最適化**：継続的な改善とパターンの蓄積
+
+### フレームワーク化の真の価値は：
+
+**🎯 焦点の明確化** 本当に重要な作業（データ変換ロジック、分析手法の選択）に集中できる環境の構築
+
+**🚀 スケーラビリティの確保** 個人の経験や知識に依存しない、組織として継続可能な開発体制
+
+**🔄 継続的改善の文化** 一度作って終わりではなく、常に最適化し続ける仕組み
+
+**🤝 協働の促進** 標準化されたアプローチにより、チームメンバー間の連携と知識共有の促進

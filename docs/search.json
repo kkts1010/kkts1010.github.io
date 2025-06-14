@@ -95,7 +95,7 @@
     "href": "posts/statistics/index.html",
     "title": "Notes",
     "section": "",
-    "text": "githubのブログ更新手順について\n\n\n\ngithub\n\n\n\n\n\n\n2025-06-14\n\n\n\n\n\n\n\nSAS：データセット作成する上でのtips\n\n\n\nSAS\n\n解析プログラミング\n\n\n\n\n\n\n2025-06-14\n\n\n\n\n\n\n\n解析用データセット仕様書\n\n\n\nSAS\n\nR\n\n解析用データセット\n\n\n\n\n\n\n2025-06-14\n\n\n\n\n\n\n\n解析用データセット作成の流れ（フォルダ構造等）\n\n\n\nSAS\n\n解析プログラミング\n\n\n\n\n\n\n2025-06-14\n\n\n\n\n\n\n\n第2相抗がん剤開発及び検証的試験の中間解析\n\n\n\n臨床試験\n\nSAS\n\n\n\n\n\n\n2025-05-24\n\n\n\n\n\n\n\n臨床試験のサンプルサイズ設計\n\n\n\n臨床試験\n\nSAS\n\n\n\n\n\n\n2025-05-17\n\n\n\n\n\nNo matching items"
+    "text": "githubのブログ更新手順について\n\n\n\ngithub\n\n\n\n\n\n\n2025-06-14\n\n\n\n\n\n\n\nSAS：データセット作成する上でのtips\n\n\n\nSAS\n\n解析プログラミング\n\n\n\n\n\n\n2025-06-14\n\n\n\n\n\n\n\nSASプログラミング業務のフレームワーク（スライドコピペ）\n\n\n\nSAS\n\n解析プログラミング\n\n\n\n\n\n\n2025-06-14\n\n\n\n\n\n\n\n解析用データセット仕様書\n\n\n\nSAS\n\nR\n\n解析用データセット\n\n\n\n\n\n\n2025-06-14\n\n\n\n\n\n\n\n解析用データセット作成の流れ（フォルダ構造等）\n\n\n\nSAS\n\n解析プログラミング\n\n\n\n\n\n\n2025-06-14\n\n\n\n\n\n\n\n第2相抗がん剤開発及び検証的試験の中間解析\n\n\n\n臨床試験\n\nSAS\n\n\n\n\n\n\n2025-05-24\n\n\n\n\n\n\n\n臨床試験のサンプルサイズ設計\n\n\n\n臨床試験\n\nSAS\n\n\n\n\n\n\n2025-05-17\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/statistics/2025/解析用データセット仕様書.html",
@@ -196,46 +196,11 @@
     "text": "4.3 生存時間アウトカム\n生存時間アウトカムの場合、サンプルサイズは以下の式で計算できます。以下では優越性を示す検証的試験を想定しています。アウトカムはハザード比として、生存時間解析のノンパラメトリック検定（ログランク検定等）を前提とした例数設計を想定する。例えば生存時間アウトカムとして生存割合（死亡、生存）を前提として例数設計を考える場合、本節に基づく方法での例数設計も考えられるが、より保守的に2値データに基づく例数設計を行うことが望ましい場合もありえます。この違いについては、別記事で説明します。生存時間の例数設計については、SAS user総会のSASプロシジャを用いた生存時間データに対する例数設計の変革が参考になります。\nSASのtwosamplesurvival statementではLakatosの方法が採用されています。これは区分指数分布を前提としており解析的にN = xxの形で表すことはできません。教育的な立場だと、解析的にN = xxの形で表すことができる方法としてFreedmanの方法やSchoenfeldの方法がありますが、上記のSASユーザー総会の資料によると、Lakatosの方法の方が性能が良いことが報告されているそうです。実務上もproc power procedureを用いて、再現可能な状態で例数設計を行うことが望ましいので、基本的にLakatosの方法を採用します。\n生存時間アウトカムに基づく症例数設計では以下のような情報が必要です。特徴的なのは、登録期間とフォローアップ期間の情報が必要な点です。登録期間は、患者さんを試験に登録するための期間であり、フォローアップ期間は、患者さんを追跡するための期間です。これらの情報は、試験のデザインや目的に応じて異なるため、試験統計家と相談して決定することが重要です。 なお、通常登録は一様に登録されると仮定され、一様分布を仮定することがデフォルトです。\n\nS_c(3) = 0.3（対照群Cの3年あたりの生存率）\nS_a(2) = 0.2（実験群Aの3年あたりの生存率）\n登録期間：A = 3年\nフォローアップ期間：F = 2年\nα = 0.05（第一種の過誤、両側）\nβ = 0.2（第二種の過誤）\n\nSASでは以下のように実行します。ここでは、対照群の生存率S_c(3) = 0.3、実験群の生存率S_a(2) = 0.2を想定しています。登録期間は3年、フォローアップ期間は2年としています。これにより、試験のデザインや目的に応じたサンプルサイズを計算することができます。\nproc power;\n    twosamplesurvival test = logrank\n    curve(\"Control\") = 3:0.3\n    curve(\"Experimental\") = 3:0.2\n    groupsurvival = \"Control\" | \"Experimental\"\n    groupweights = (1 1)\n    accrualtime = 3 \n    followuptime = 2\n    ntotal = .\n    power = 0.8\n    alpha = 0.05\n    sides = 2;\nrun;\n通常、生存時間の例数設計で3年間での生存割合20%や、30%ということを仮定できる状況は多くないと思います。例えば第2相試験では1年間の追跡しかしていない場合に3年生存割合を仮定することは難しいです。そこで、通常は生存時間Tが指数分布に従うとして以下の式を用いてハザードを基にサンプルサイズ設計は有用です。ただし、ハザード比は生存時間の分布に依存するため、注意が必要です。生存時間Tが指数分布に従う場合、ハザード比は以下のように表されます。\n\\[\nS(t) = 1-F(t) = exp(-λt) ⇔ λ = -\\frac{log(S(t))}{t}\n\\]\nこの関係を用いて、ある時点tとその時点のKM推定量の結果を用いて各群のハザードを指定してサンプルサイズ計算をする方法は以下となります。\nproc power;\n    twosamplesurvival test = logrank\n    groupsurvexphazards = (0.05 0.01)\n    groupweights = (1 1)\n    accrualtime = 3 \n    followuptime = 2\n    ntotal = .\n    power = 0.8\n    alpha = 0.05\n    sides = 2;\nrun;\n他にも、中央生存時間を用いて計算することもできる。これも生存時間アウトカムに指数分布を仮定すると簡単に示せます。\n\\[\nS(1/2) = exp(-λt) ⇔ λ = -\\frac{log(S(1/2))}{t}\n\\]\nこの関係を用いて、KM推定量の結果を用いて各群の中央生存時間からハザードを推定することもできる。いずれの方法もTに指数分布を仮定している。\n\n4.3.1 参考文献\n\nTwoSsampleSurvival Statement"
   },
   {
-    "objectID": "posts/statistics/2025/github.html",
-    "href": "posts/statistics/2025/github.html",
-    "title": "1 githubのブログ更新手順について",
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Kota Sakamoto",
     "section": "",
-    "text": "GitHubでブログを更新する際の標準的な手順は以下の通りです。\n\n\nquarto render\ngit add .\ngit commit -m \"新記事追加/編集\"\ngit push origin main\n\n\n\nなお、quartoが多くなってきた場合、特定のファイルのみでrenderすることも可能である。\nquarto render\nquarto render post.qmd\n\n\n\ngit add .\n\n\n\ngit commit -m \"コミットメッセージ\"\n\n\n\ngit push origin main"
-  },
-  {
-    "objectID": "posts/statistics/2025/github.html#一括実行",
-    "href": "posts/statistics/2025/github.html#一括実行",
-    "title": "1 githubのブログ更新手順について",
-    "section": "",
-    "text": "quarto render\ngit add .\ngit commit -m \"新記事追加/編集\"\ngit push origin main"
-  },
-  {
-    "objectID": "posts/statistics/2025/github.html#quartoサイトをレンダリング",
-    "href": "posts/statistics/2025/github.html#quartoサイトをレンダリング",
-    "title": "1 githubのブログ更新手順について",
-    "section": "",
-    "text": "なお、quartoが多くなってきた場合、特定のファイルのみでrenderすることも可能である。\nquarto render\nquarto render post.qmd"
-  },
-  {
-    "objectID": "posts/statistics/2025/github.html#変更内容をステージングエリアに追加",
-    "href": "posts/statistics/2025/github.html#変更内容をステージングエリアに追加",
-    "title": "1 githubのブログ更新手順について",
-    "section": "",
-    "text": "git add ."
-  },
-  {
-    "objectID": "posts/statistics/2025/github.html#変更をコミット",
-    "href": "posts/statistics/2025/github.html#変更をコミット",
-    "title": "1 githubのブログ更新手順について",
-    "section": "",
-    "text": "git commit -m \"コミットメッセージ\""
-  },
-  {
-    "objectID": "posts/statistics/2025/github.html#リモートリポジトリにプッシュ",
-    "href": "posts/statistics/2025/github.html#リモートリポジトリにプッシュ",
-    "title": "1 githubのブログ更新手順について",
-    "section": "",
-    "text": "git push origin main"
+    "text": "本サイトは個人の学習記録であり、内容の正確性は保証いたしません。所属組織とは無関係の個人的見解です。\n当サイトのご利用により生じたいかなる損害・トラブルについて当サイトでは一切の責任を負いかねます事をご了承ください。\n所属先\n\n岡山大学病院 新医療研究開発センター データサイエンス部\n\n連絡先\n本ブログ等について、誤り/疑問点がありましたら以下までご連絡ください。\n\nkota.sakamoto0514@gmail.com"
   },
   {
     "objectID": "about.html",
@@ -280,11 +245,123 @@
     "text": "5 所属学会\n\n日本計量生物学会"
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Kota Sakamoto",
+    "objectID": "posts/statistics/2025/github.html",
+    "href": "posts/statistics/2025/github.html",
+    "title": "1 githubのブログ更新手順について",
     "section": "",
-    "text": "本サイトは個人の学習記録であり、内容の正確性は保証いたしません。所属組織とは無関係の個人的見解です。\n当サイトのご利用により生じたいかなる損害・トラブルについて当サイトでは一切の責任を負いかねます事をご了承ください。\n所属先\n\n岡山大学病院 新医療研究開発センター データサイエンス部\n\n連絡先\n本ブログ等について、誤り/疑問点がありましたら以下までご連絡ください。\n\nkota.sakamoto0514@gmail.com"
+    "text": "GitHubでブログを更新する際の標準的な手順は以下の通りです。\n\n\nquarto render\ngit add .\ngit commit -m \"新記事追加/編集\"\ngit push origin main\n\n\n\nなお、quartoが多くなってきた場合、特定のファイルのみでrenderすることも可能である。\nquarto render\nquarto render post.qmd\n\n\n\ngit add .\n\n\n\ngit commit -m \"コミットメッセージ\"\n\n\n\ngit push origin main"
+  },
+  {
+    "objectID": "posts/statistics/2025/github.html#一括実行",
+    "href": "posts/statistics/2025/github.html#一括実行",
+    "title": "1 githubのブログ更新手順について",
+    "section": "",
+    "text": "quarto render\ngit add .\ngit commit -m \"新記事追加/編集\"\ngit push origin main"
+  },
+  {
+    "objectID": "posts/statistics/2025/github.html#quartoサイトをレンダリング",
+    "href": "posts/statistics/2025/github.html#quartoサイトをレンダリング",
+    "title": "1 githubのブログ更新手順について",
+    "section": "",
+    "text": "なお、quartoが多くなってきた場合、特定のファイルのみでrenderすることも可能である。\nquarto render\nquarto render post.qmd"
+  },
+  {
+    "objectID": "posts/statistics/2025/github.html#変更内容をステージングエリアに追加",
+    "href": "posts/statistics/2025/github.html#変更内容をステージングエリアに追加",
+    "title": "1 githubのブログ更新手順について",
+    "section": "",
+    "text": "git add ."
+  },
+  {
+    "objectID": "posts/statistics/2025/github.html#変更をコミット",
+    "href": "posts/statistics/2025/github.html#変更をコミット",
+    "title": "1 githubのブログ更新手順について",
+    "section": "",
+    "text": "git commit -m \"コミットメッセージ\""
+  },
+  {
+    "objectID": "posts/statistics/2025/github.html#リモートリポジトリにプッシュ",
+    "href": "posts/statistics/2025/github.html#リモートリポジトリにプッシュ",
+    "title": "1 githubのブログ更新手順について",
+    "section": "",
+    "text": "git push origin main"
+  },
+  {
+    "objectID": "posts/statistics/2025/SAS_Programの要素.html",
+    "href": "posts/statistics/2025/SAS_Programの要素.html",
+    "title": "SASプログラミング業務のフレームワーク（スライドコピペ）",
+    "section": "",
+    "text": "大阪SASユーザー総会の下記資料が大変勉強になるので、自分の備忘録用にコピペさせていただきた。基本的に下記資料をみればよい。\n\nThink Framework"
+  },
+  {
+    "objectID": "posts/statistics/2025/SAS_Programの要素.html#はじめに",
+    "href": "posts/statistics/2025/SAS_Programの要素.html#はじめに",
+    "title": "SASプログラミング業務のフレームワーク（スライドコピペ）",
+    "section": "2.1 はじめに",
+    "text": "2.1 はじめに\nSASプログラミングにおいて、毎回同じような処理を一から書くのは非効率的です。本記事では、Yugo Mikiさんの「Think Framework」の知見を参考に、SASプログラムをフレームワーク化することで、開発効率を大幅に向上させる手法について解説します。"
+  },
+  {
+    "objectID": "posts/statistics/2025/SAS_Programの要素.html#library-vs-framework根本的な発想の違い",
+    "href": "posts/statistics/2025/SAS_Programの要素.html#library-vs-framework根本的な発想の違い",
+    "title": "SASプログラミング業務のフレームワーク（スライドコピペ）",
+    "section": "2.2 Library vs Framework：根本的な発想の違い",
+    "text": "2.2 Library vs Framework：根本的な発想の違い\n\n2.2.1 従来のLibraryアプローチ\n\nマクロライブラリなどが有名\nライブラリからマクロやプログラムを参照してプログラム中に利用する\nプログラムの再利用に特化した使い方\nプログラミングコードを部品化し、組み合わせる事でプログラムを作成する\n\n\n\n2.2.2 新しいFrameworkアプローチ\n\nSAS LSAFなどが有名。一方、「それって一体何なの？」ってくらい実体が見えない\n一般的な機能を持つ共通コードを持つ\n標準的なコードはフレームワークが持ち、要求されるコードの実現にプログラマーのリソースを集中させる事で効率化を達成する"
+  },
+  {
+    "objectID": "posts/statistics/2025/SAS_Programの要素.html#だからどういうことなのさ",
+    "href": "posts/statistics/2025/SAS_Programの要素.html#だからどういうことなのさ",
+    "title": "SASプログラミング業務のフレームワーク（スライドコピペ）",
+    "section": "2.3 「だからどういうことなのさ？」",
+    "text": "2.3 「だからどういうことなのさ？」\nつまり：\n\nいつも書くコードはフレームワークに持たせましょう！\n\n- いつも使う機能はフレームワークに持たせましょう！\n- よく使うマクロとかもフレームワークに持たせましょう！\n- ついでに社内ルールとかもフレームワークに持たせておきましょう！\nってこと。\nこれをSASで良い感じに実現して、快適な開発環境を作りましょう！"
+  },
+  {
+    "objectID": "posts/statistics/2025/SAS_Programの要素.html#sasプログラムの要素分析とフレームワーク化判断",
+    "href": "posts/statistics/2025/SAS_Programの要素.html#sasプログラムの要素分析とフレームワーク化判断",
+    "title": "SASプログラミング業務のフレームワーク（スライドコピペ）",
+    "section": "2.4 SASプログラムの要素分析とフレームワーク化判断",
+    "text": "2.4 SASプログラムの要素分析とフレームワーク化判断\n\n2.4.1 SDTM to ADaM変換の場合\n\n\n\n\n\n\n\n\n処理項目\n考察\nフレームワーク化判断\n\n\n\n\nClear log and data\n毎回使う。対象とする。\n✅ 完全自動化\n\n\nSetting macros\n毎回使うところだけ対象とする。\n⚡ 部分自動化\n\n\nSetting library\n毎回違う。出来るだけ一箇所に集約したい。\n🔧 設定管理\n\n\nSetting format\n仕様書のコードリストにあるものは対象とする。\n✅ 完全自動化\n\n\nImport data and files\nファイル名と仕様が毎回違う。やや無理。\n⚡ テンプレート化\n\n\nMerge\n毎回違う。対象外。\n❌ プログラマーの腕の見せ所\n\n\nMapping to new variables\n毎回違う。対象外。\n❌ プログラマーの腕の見せ所\n\n\nSort\nマクロ化してライブラリへ。\n✅ 共通化\n\n\nDrop extra variables\n仕様書から自動取得。\n✅ メタデータ連携\n\n\nUpload\nマクロ化してライブラリへ。\n✅ 共通化\n\n\nHeader, sections, comments\nSOPや手順との兼ね合い。対象とする。\n✅ テンプレート自動生成\n\n\n\n\n\n2.4.2 ADaM to TFLs変換の場合\n\nClear log and data\nSetting macros\nSetting library\nSetting format\nImport data and files\nMerge\nCall procedures（プロシージャの呼び出し）\nSort\nMake up to requests from mockup（モックアップからのリクエスト作成）\nUpload\nHeader, section, and comments\n\n🎯 重要な気づき\nプログラマーに頑張って欲しい所はここ！（MergeとMapping）\nということはそれ以外の所はフレームワークに持たせた方がいい！"
+  },
+  {
+    "objectID": "posts/statistics/2025/SAS_Programの要素.html#sasによるフレームワーク設計",
+    "href": "posts/statistics/2025/SAS_Programの要素.html#sasによるフレームワーク設計",
+    "title": "SASプログラミング業務のフレームワーク（スライドコピペ）",
+    "section": "2.5 SASによるフレームワーク設計",
+    "text": "2.5 SASによるフレームワーク設計\n\n2.5.1 基本コンセプト\n\nSASプログラム開発時を想定\nSASによるプログラムテンプレート作成の一歩先\n\n\n\n2.5.2 URS（User Requirement Specification）\n\n使用するのはBase SASと一般的な外部ファイル（EXCEL）\nプログラムからプログラムをcallしても良い\n本番実行時のみログを外部に保管\nマクロは今回はmacro.sasを毎回includeする\nフレームワーク化検討のほぼ全てを実装する\n\n\n\n2.5.3 フレームワーク仕様\n\n2.5.3.1 全実行プログラム\n\n全実行時ログを保管\n\n\n\n2.5.3.2 Macro.sas\n\nSort\nインポート（proc sort）\nエクスポート（proc sort）\n仕様書から変数のattribute作成\n仕様書からcodelistのformat作成\n仕様書からkeepする変数リスト作成\n\n\n\n2.5.3.3 Each_dsn.sas\n\nStand aloneで動く\n実施時にログ、データセット等をクリアする\n社内規則に従ったheader, section, commentを作成する\n\nプログラムにおける面倒な”いつもの”を持たせておくのがフレームワークです。"
+  },
+  {
+    "objectID": "posts/statistics/2025/SAS_Programの要素.html#実装例とテクニック",
+    "href": "posts/statistics/2025/SAS_Programの要素.html#実装例とテクニック",
+    "title": "SASプログラミング業務のフレームワーク（スライドコピペ）",
+    "section": "2.6 実装例とテクニック",
+    "text": "2.6 実装例とテクニック\n\n2.6.1 全実行プログラム：環境分離の巧妙な仕組み\n/* 基本的にはマクロで実装 */\n%macro derive(dsn, title);\n   proc printto log = \"&path.¥&project._&dsn._log.txt\" new;\n   title1 \"&project.:&title.\";\n   run;\n   \n   %include \"&pgpath.¥&dsn..sas\";\n   \n   proc printto; \n   run;\n%mend;\n\n%derive(adsl)\n%derive(adae)\nPrinttoでincludeを挟むだけで開発環境と本番実行環境を分離できる！ 開発時：それぞれのプログラムで実行。ログはログ画面へ出力される 本番実行時：ログはprinttoで指定したフォルダへ出力される\n\n%macro derive(lib, dsn, key, where);\n    proc sort data = &lib..&dsn out = work.&dsn;\n        by &key.;\n        &where.;\n    run;\n%mend;\n\nMacroはlibraryにして保管・管理しておくと楽です。今回のmacro.sasはそれ自体がマクロライブラリとして機能します。 フレームワークからライブラリが読み込まれるような仕様にしています。 個別プログラムの構造化 ログクリアとヘッダーの順序問題 常識的に考えるとheaderが先である。だって”head”erだから。でも少し考えてみてもいい。\n/* パターン1 */\ndm \"log; clear;\";\n/* program name : test */\n/* author : anonymous */\n\n/* パターン2 */\n/* program name : test */\n/* author : anonymous */\ndm \"log; clear;\";\nどっちも同じ？ でも少し考えてみてもいい。もし、printtoではなくdmステートメントでログを保存していたら？後者の場合、ログからheaderが消えてしまう。どうやってログを残すかによって使えないパターンがあるので注意しよう。\nPhUSE GPPの参考から持ってきました。立派なヘッダーです。 これを作るの時間かかるんじゃない？ → こういうものはフレームワークに持たせましょう。 ちょっと工夫すると結構作れちゃったりするものです。 よく見たら進捗管理ファイル、帳票一覧、ADaM仕様書にほとんどの情報が入っている。\n\n/***********************************************************************\n* Project         : Sample Drug, Sample Indication,Study1\n* Program name    : sample.sas\n* Author          : smithb\n* Date created    : 20100816\n* Purpose         : Summarize demographics data for the study.\n* Revision History :\n* Date        Author      Ref     Revision (Date in YYYYMMDD format)\n* 20100818    smithb      1       Removed subjects with who have not been dosed per spec.\n***********************************************************************/"
+  },
+  {
+    "objectID": "posts/statistics/2025/SAS_Programの要素.html#マクロの使用パターン",
+    "href": "posts/statistics/2025/SAS_Programの要素.html#マクロの使用パターン",
+    "title": "SASプログラミング業務のフレームワーク（スライドコピペ）",
+    "section": "2.7 マクロの使用パターン",
+    "text": "2.7 マクロの使用パターン\nマクロはいつもどうやって使う？\n\n/* 1. %include statement */\n%include \"macro.sas\";\n\n/* 2. Set auto compiled macro */\nFILENAME fileref 'the path to the AUTOCALL library';\nOPTIONS MAUTOSOURCE SASAUTOS=(SASAUTOS fileref);\n\n/* 3. Set stored macro */\nLIBNAME mylib 'C:¥temp';\nOPTIONS MSTORED SASMSTORE=mylib;"
+  },
+  {
+    "objectID": "posts/statistics/2025/SAS_Programの要素.html#実践的な考察",
+    "href": "posts/statistics/2025/SAS_Programの要素.html#実践的な考察",
+    "title": "SASプログラミング業務のフレームワーク（スライドコピペ）",
+    "section": "6.1 実践的な考察",
+    "text": "6.1 実践的な考察\n\n6.1.1 良かった点\n\nHeaderの記入箇所が少なくて楽\n毎回やってた設定が不要になり、ミスもなくなった\n余計な設定や処理に悩まされないので、データを見る時間などに作業時間を使えている気がする\n\n\n\n6.1.2 良くなかった点（正直な評価）\n\n簡単なプログラムのはずなんだけどやたらとコードが長い\n少しプログラムの構造が変わると、適用できない\n開発計画が大きく変わると対応できない"
+  },
+  {
+    "objectID": "posts/statistics/2025/SAS_Programの要素.html#組織レベルでの戦略的価値",
+    "href": "posts/statistics/2025/SAS_Programの要素.html#組織レベルでの戦略的価値",
+    "title": "SASプログラミング業務のフレームワーク（スライドコピペ）",
+    "section": "6.2 組織レベルでの戦略的価値",
+    "text": "6.2 組織レベルでの戦略的価値\n\n6.2.1 会社としての評価\n\nやってみてもいい。\n申請や海外に提供するなど、プログラムへの要求が高くなればなるほど威力が出る\n会社として基本的なプログラムの書き方やセクションわけなどを決めてしまっても、この方法ならコスト高にならない。むしろ、いつもここにこういう事が書かれていると分かった方が開発、またはそのための教育においても有利。"
+  },
+  {
+    "objectID": "posts/statistics/2025/SAS_Programの要素.html#フレームワーク化の本質的な価値",
+    "href": "posts/statistics/2025/SAS_Programの要素.html#フレームワーク化の本質的な価値",
+    "title": "SASプログラミング業務のフレームワーク（スライドコピペ）",
+    "section": "6.3 フレームワーク化の本質的な価値",
+    "text": "6.3 フレームワーク化の本質的な価値\n\n6.3.1 抽象化レベルの設定\n\n6.3.1.1 高レベル抽象化（完全自動化）\n\n環境設定、ログ管理、基本的なハウスキーピング\n一度設定すれば、プログラマーは意識する必要がない\n\n\n\n6.3.1.2 中レベル抽象化（テンプレート化）\n\nプログラム構造、ヘッダー、セクション分け\n骨格は提供するが、中身はプログラマーが記述\n\n\n\n6.3.1.3 低レベル抽象化（ユーティリティ提供）\n\nよく使う処理の関数化\n呼び出すかどうかはプログラマーの判断\n\n\n\n\n6.3.2 組織的導入戦略\n\n6.3.2.1 段階的導入アプローチ\n\nPhase 1: 基盤整備：標準的なフォルダ構造とユーティリティマクロ\nPhase 2: テンプレート化：プログラムテンプレートとヘッダー標準化\nPhase 3: 自動化拡張：設定管理の自動化とバリデーション機能\nPhase 4: 最適化：継続的な改善とパターンの蓄積\n\n\n\n\n6.3.3 フレームワーク化の真の価値は：\n🎯 焦点の明確化 本当に重要な作業（データ変換ロジック、分析手法の選択）に集中できる環境の構築\n🚀 スケーラビリティの確保 個人の経験や知識に依存しない、組織として継続可能な開発体制\n🔄 継続的改善の文化 一度作って終わりではなく、常に最適化し続ける仕組み\n🤝 協働の促進 標準化されたアプローチにより、チームメンバー間の連携と知識共有の促進"
   },
   {
     "objectID": "posts/statistics/2025/中間解析.html",
