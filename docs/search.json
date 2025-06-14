@@ -95,7 +95,7 @@
     "href": "posts/statistics/index.html",
     "title": "Notes",
     "section": "",
-    "text": "解析用データセット作成プログラム\n\n\n\n臨床試験\n\nSAS\n\n\n\n\n\n\n2025-06-14\n\n\n\n\n\n\n\n第2相抗がん剤開発及び検証的試験の中間解析\n\n\n\n臨床試験\n\nSAS\n\n\n\n\n\n\n2025-05-24\n\n\n\n\n\n\n\n臨床試験のサンプルサイズ設計\n\n\n\n臨床試験\n\nSAS\n\n\n\n\n\n\n2025-05-17\n\n\n\n\n\nNo matching items"
+    "text": "解析用データセット作成プログラム\n\n\n\nSAS\n\nR\n\n解析用データセット\n\n\n\n\n\n\n2025-06-14\n\n\n\n\n\n\n\n第2相抗がん剤開発及び検証的試験の中間解析\n\n\n\n臨床試験\n\nSAS\n\n\n\n\n\n\n2025-05-24\n\n\n\n\n\n\n\n臨床試験のサンプルサイズ設計\n\n\n\n臨床試験\n\nSAS\n\n\n\n\n\n\n2025-05-17\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/statistics/2025/中間解析.html",
@@ -291,6 +291,55 @@
     "href": "posts/statistics/2025/解析用データセット作成プログラム.html",
     "title": "解析用データセット作成プログラム",
     "section": "",
-    "text": "1 解析用データセット作成について"
+    "text": "臨床試験や統計解析プロジェクトにおいて、解析用データセット仕様書は分析の設計図とも言える重要な文書です。本記事では、実用的な解析用データセット仕様書の構成と記載内容について、主要な3つのデータセット（ADSL、ADLB、ADTTE）を例に解説し、さらに仕様書に基づくデータセット作成とバリデーションプロセスについても説明します。\n\n\n\n解析用データセット仕様書は、主に以下の要素で構成されます：\n\n表紙・改訂履歴：文書管理情報\nDataset Definition：データセットの基本定義\nSpecification：変数の詳細仕様\nADxx_Conversion：パラメータ変換表（ADLB、ADTTE用）\nCodelist：コード値の定義\n\nこれらの情報をExcelファイルの複数シートに整理することで、管理しやすく実用的な仕様書が作成できます。\n\n\n\n変数仕様を記載するSpecificationシートでは、以下の項目を含めることを推奨します：\n\n\n\nVarnum：変数番号（並び順）\nDomain：データセット名（ADSL、ADLB、ADTTE等）\nVariable Name：変数名\nVariable Label：変数ラベル\nType：データタイプ（Char/Num）\nLength：変数長\nDisplay Format：表示フォーマット\nCodelist：コードリスト参照名\nCore：必須度（Req=必須、Perm=任意、Cond=条件付き）\nDefinition：定義・導出方法\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nVarnum\nDomain\nVariable Name\nVariable Label\nType\nLength\nDisplay Format\nCodelist\nCore\nDefinition\n\n\n\n\n1\nADSL\nSTUDYID\nStudy Identifier\nChar\n12\n\n\nReq\nDM.STUDYID\n\n\n2\nADSL\nUSUBJID\nUnique Subject Identifier\nChar\n40\n\n\nReq\nDM.USUBJID\n\n\n3\nADSL\nSUBJID\nSubject Identifier\nChar\n20\n\n\nReq\nDM.SUBJID\n\n\n4\nADSL\nAGE\nAge\nNum\n8\n\n\nReq\nDM.AGE\n\n\n5\nADSL\nSEX\nSex\nChar\n1\n\nSEX\nReq\nDM.SEX\n\n\n6\nADSL\nTRT01P\nPlanned Treatment for Period 1\nChar\n200\n\n\nReq\nARM\n\n\n7\nADSL\nTRT01A\nActual Treatment for Period 1\nChar\n200\n\n\nReq\nACTARM\n\n\n8\nADSL\nTRT01PN\nPlanned Treatment for Period 1 (N)\nNum\n8\n\n\nReq\nDerived from TRT01P\n\n\n9\nADSL\nTRT01AN\nActual Treatment for Period 1 (N)\nNum\n8\n\n\nReq\nDerived from TRT01A\n\n\n10\nADSL\nFASFL\nFull Analysis Set Flag\nChar\n1\n\nNYFL\nReq\nExternal derivation\n\n\n\n\n\n\n\nADLB、ADTTEなどのBDS形式データセットでは、パラメータの変換情報を管理するための専用シートを作成します。\n\n\n\n\n\nPARAM\nPARAMCD\nPARAMN\nAVAL\n\n\n\n\nHbA1c(%)\nHBA1C\n1\ninput(LABデータ)\n\n\nBlood glucose (mg/dL)\nGLU\n2\ninput(LABデータ)\n\n\nBUN (mg/dL)\nBUN\n3\ninput(LABデータ)\n\n\nCreatinine (mg/dL)\nCREAT\n4\ninput(LABデータ)\n\n\nALT (U/L)\nALT\n5\ninput(LABデータ)\n\n\n\n\n\n\n\n\n\nPARAM\nPARAMCD\nPARAMN\nAVAL\n\n\n\n\nOverall Survival\nOS\n1\nADT - STARTDT + 1\n\n\nProgression Free Survival\nPFS\n2\nADT - STARTDT + 1\n\n\nTime to Progression\nTTP\n3\nADT - STARTDT + 1\n\n\nDisease Free Survival\nDFS\n4\nADT - STARTDT + 1\n\n\n\n\n\n\n\n\n\nADTTEは生存時間解析用のデータセットで、以下の特徴があります：\n\n1被験者1パラメータにつき1レコードの構造\n事象の発生時間または打ち切り時間を記録\n複数の解析エンドポイントを1つのデータセットで管理\n\n\n\n\n\n\n複数の事象や打ち切りが同日に発生した場合の優先順位を明確に定義する必要があります。例： - 「10%を超える体重減少」（最優先） - 「5 cmを超える腹囲減少」 - 完了または中止\n\n\n\nAVALは通常、以下の式で計算されます：\nここで： - STARTDT：解析開始日（通常は治療開始日：ADSL.TRTSDT） - ADT：解析日（事象発生日または打ち切り日） - +1：0日目を避けるための調整\n\n\n\n\n事象発生：ADVS.ADTから日付を取得\n打ち切り：ADSL.EOSDTから日付を取得\n\n\n\n\n\nCNSR=0：事象発生\nCNSR=1：打ち切り\n\n\n\n\nADTTEでは元データの追跡可能性が重要です：\n事象採用時： - SRCDOM=“ADVS” - SRCVAR=“ADT” - SRCSEQ=ADVS.ASEQ\n打ち切り時： - SRCDOM=“ADSL” - SRCVAR=“EOSDT” - SRCSEQ=（ブランク）\n\n\n\n\n\nデータセットの組み合わせ：複数のデータセット（ADSL、ADVS等）を適切に結合\n日付の妥当性チェック：論理的に矛盾する日付の検出と処理\n追跡可能性の確保：各レコードの導出元を明確に記録\n複数事象の処理：同一被験者で複数の解析パラメータを生成\n\n\n\n\n\nコード値とその意味を定義するシートです。ADaM Terminology形式で管理します。\n\n\n\n\n\nReference Name\nCode Value\nCode Text\n\n\n\n\nSEXN\n1\n男性\n\n\nSEXN\n2\n女性\n\n\nSEX\nM\nMale\n\n\nSEX\nF\nFemale\n\n\nNYFL\nY\nYes\n\n\nNYFL\nN\nNo\n\n\nAGEU\nYEARS\nYears\n\n\nAGEU\nMONTHS\nMonths\n\n\n\n\n\n\n\n\n\n解析用データセット仕様書を読み込み、Specificationシートの定義に従ってSASプログラムを作成します。ADxx_Conversionシートを参照してパラメータ変換処理も実装します。\n\n\n\n/* ADTTE作成例 */\ndata adtte;\n    set adsl;\n    \n    /* Overall Survival パラメータ */\n    param = \"Overall Survival\";\n    paramcd = \"OS\";\n    paramn = 1;\n    \n    /* 解析開始日 */\n    startdt = trtsdt;\n    \n    /* 事象または打ち切りの判定 */\n    if dthfl = \"Y\" then do;\n        adt = dthdt;\n        cnsr = 0;\n        srcdom = \"ADSL\";\n        srcvar = \"DTHDT\";\n    end;\n    else do;\n        adt = eosdt;\n        cnsr = 1;\n        srcdom = \"ADSL\";\n        srcvar = \"EOSDT\";\n    end;\n    \n    /* AVAL計算 */\n    aval = adt - startdt + 1;\n    \n    /* ラベル付与 */\n    label param = \"Parameter\"\n          paramcd = \"Parameter Code\"\n          aval = \"Analysis Value\";\nrun;"
+  },
+  {
+    "objectID": "posts/statistics/2025/解析用データセット作成プログラム.html#はじめに",
+    "href": "posts/statistics/2025/解析用データセット作成プログラム.html#はじめに",
+    "title": "解析用データセット作成プログラム",
+    "section": "",
+    "text": "臨床試験や統計解析プロジェクトにおいて、解析用データセット仕様書は分析の設計図とも言える重要な文書です。本記事では、実用的な解析用データセット仕様書の構成と記載内容について、主要な3つのデータセット（ADSL、ADLB、ADTTE）を例に解説し、さらに仕様書に基づくデータセット作成とバリデーションプロセスについても説明します。"
+  },
+  {
+    "objectID": "posts/statistics/2025/解析用データセット作成プログラム.html#仕様書の基本構成",
+    "href": "posts/statistics/2025/解析用データセット作成プログラム.html#仕様書の基本構成",
+    "title": "解析用データセット作成プログラム",
+    "section": "",
+    "text": "解析用データセット仕様書は、主に以下の要素で構成されます：\n\n表紙・改訂履歴：文書管理情報\nDataset Definition：データセットの基本定義\nSpecification：変数の詳細仕様\nADxx_Conversion：パラメータ変換表（ADLB、ADTTE用）\nCodelist：コード値の定義\n\nこれらの情報をExcelファイルの複数シートに整理することで、管理しやすく実用的な仕様書が作成できます。"
+  },
+  {
+    "objectID": "posts/statistics/2025/解析用データセット作成プログラム.html#specificationシートの構成",
+    "href": "posts/statistics/2025/解析用データセット作成プログラム.html#specificationシートの構成",
+    "title": "解析用データセット作成プログラム",
+    "section": "",
+    "text": "変数仕様を記載するSpecificationシートでは、以下の項目を含めることを推奨します：\n\n\n\nVarnum：変数番号（並び順）\nDomain：データセット名（ADSL、ADLB、ADTTE等）\nVariable Name：変数名\nVariable Label：変数ラベル\nType：データタイプ（Char/Num）\nLength：変数長\nDisplay Format：表示フォーマット\nCodelist：コードリスト参照名\nCore：必須度（Req=必須、Perm=任意、Cond=条件付き）\nDefinition：定義・導出方法\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nVarnum\nDomain\nVariable Name\nVariable Label\nType\nLength\nDisplay Format\nCodelist\nCore\nDefinition\n\n\n\n\n1\nADSL\nSTUDYID\nStudy Identifier\nChar\n12\n\n\nReq\nDM.STUDYID\n\n\n2\nADSL\nUSUBJID\nUnique Subject Identifier\nChar\n40\n\n\nReq\nDM.USUBJID\n\n\n3\nADSL\nSUBJID\nSubject Identifier\nChar\n20\n\n\nReq\nDM.SUBJID\n\n\n4\nADSL\nAGE\nAge\nNum\n8\n\n\nReq\nDM.AGE\n\n\n5\nADSL\nSEX\nSex\nChar\n1\n\nSEX\nReq\nDM.SEX\n\n\n6\nADSL\nTRT01P\nPlanned Treatment for Period 1\nChar\n200\n\n\nReq\nARM\n\n\n7\nADSL\nTRT01A\nActual Treatment for Period 1\nChar\n200\n\n\nReq\nACTARM\n\n\n8\nADSL\nTRT01PN\nPlanned Treatment for Period 1 (N)\nNum\n8\n\n\nReq\nDerived from TRT01P\n\n\n9\nADSL\nTRT01AN\nActual Treatment for Period 1 (N)\nNum\n8\n\n\nReq\nDerived from TRT01A\n\n\n10\nADSL\nFASFL\nFull Analysis Set Flag\nChar\n1\n\nNYFL\nReq\nExternal derivation"
+  },
+  {
+    "objectID": "posts/statistics/2025/解析用データセット作成プログラム.html#adxx_conversionシート",
+    "href": "posts/statistics/2025/解析用データセット作成プログラム.html#adxx_conversionシート",
+    "title": "解析用データセット作成プログラム",
+    "section": "",
+    "text": "ADLB、ADTTEなどのBDS形式データセットでは、パラメータの変換情報を管理するための専用シートを作成します。\n\n\n\n\n\nPARAM\nPARAMCD\nPARAMN\nAVAL\n\n\n\n\nHbA1c(%)\nHBA1C\n1\ninput(LABデータ)\n\n\nBlood glucose (mg/dL)\nGLU\n2\ninput(LABデータ)\n\n\nBUN (mg/dL)\nBUN\n3\ninput(LABデータ)\n\n\nCreatinine (mg/dL)\nCREAT\n4\ninput(LABデータ)\n\n\nALT (U/L)\nALT\n5\ninput(LABデータ)\n\n\n\n\n\n\n\n\n\nPARAM\nPARAMCD\nPARAMN\nAVAL\n\n\n\n\nOverall Survival\nOS\n1\nADT - STARTDT + 1\n\n\nProgression Free Survival\nPFS\n2\nADT - STARTDT + 1\n\n\nTime to Progression\nTTP\n3\nADT - STARTDT + 1\n\n\nDisease Free Survival\nDFS\n4\nADT - STARTDT + 1"
+  },
+  {
+    "objectID": "posts/statistics/2025/解析用データセット作成プログラム.html#adtteデータセットの詳細",
+    "href": "posts/statistics/2025/解析用データセット作成プログラム.html#adtteデータセットの詳細",
+    "title": "解析用データセット作成プログラム",
+    "section": "",
+    "text": "ADTTEは生存時間解析用のデータセットで、以下の特徴があります：\n\n1被験者1パラメータにつき1レコードの構造\n事象の発生時間または打ち切り時間を記録\n複数の解析エンドポイントを1つのデータセットで管理\n\n\n\n\n\n\n複数の事象や打ち切りが同日に発生した場合の優先順位を明確に定義する必要があります。例： - 「10%を超える体重減少」（最優先） - 「5 cmを超える腹囲減少」 - 完了または中止\n\n\n\nAVALは通常、以下の式で計算されます：\nここで： - STARTDT：解析開始日（通常は治療開始日：ADSL.TRTSDT） - ADT：解析日（事象発生日または打ち切り日） - +1：0日目を避けるための調整\n\n\n\n\n事象発生：ADVS.ADTから日付を取得\n打ち切り：ADSL.EOSDTから日付を取得\n\n\n\n\n\nCNSR=0：事象発生\nCNSR=1：打ち切り\n\n\n\n\nADTTEでは元データの追跡可能性が重要です：\n事象採用時： - SRCDOM=“ADVS” - SRCVAR=“ADT” - SRCSEQ=ADVS.ASEQ\n打ち切り時： - SRCDOM=“ADSL” - SRCVAR=“EOSDT” - SRCSEQ=（ブランク）\n\n\n\n\n\nデータセットの組み合わせ：複数のデータセット（ADSL、ADVS等）を適切に結合\n日付の妥当性チェック：論理的に矛盾する日付の検出と処理\n追跡可能性の確保：各レコードの導出元を明確に記録\n複数事象の処理：同一被験者で複数の解析パラメータを生成"
+  },
+  {
+    "objectID": "posts/statistics/2025/解析用データセット作成プログラム.html#code-listシート",
+    "href": "posts/statistics/2025/解析用データセット作成プログラム.html#code-listシート",
+    "title": "解析用データセット作成プログラム",
+    "section": "",
+    "text": "コード値とその意味を定義するシートです。ADaM Terminology形式で管理します。\n\n\n\n\n\nReference Name\nCode Value\nCode Text\n\n\n\n\nSEXN\n1\n男性\n\n\nSEXN\n2\n女性\n\n\nSEX\nM\nMale\n\n\nSEX\nF\nFemale\n\n\nNYFL\nY\nYes\n\n\nNYFL\nN\nNo\n\n\nAGEU\nYEARS\nYears\n\n\nAGEU\nMONTHS\nMonths"
+  },
+  {
+    "objectID": "posts/statistics/2025/解析用データセット作成プログラム.html#データセット作成プロセス",
+    "href": "posts/statistics/2025/解析用データセット作成プログラム.html#データセット作成プロセス",
+    "title": "解析用データセット作成プログラム",
+    "section": "",
+    "text": "解析用データセット仕様書を読み込み、Specificationシートの定義に従ってSASプログラムを作成します。ADxx_Conversionシートを参照してパラメータ変換処理も実装します。\n\n\n\n/* ADTTE作成例 */\ndata adtte;\n    set adsl;\n    \n    /* Overall Survival パラメータ */\n    param = \"Overall Survival\";\n    paramcd = \"OS\";\n    paramn = 1;\n    \n    /* 解析開始日 */\n    startdt = trtsdt;\n    \n    /* 事象または打ち切りの判定 */\n    if dthfl = \"Y\" then do;\n        adt = dthdt;\n        cnsr = 0;\n        srcdom = \"ADSL\";\n        srcvar = \"DTHDT\";\n    end;\n    else do;\n        adt = eosdt;\n        cnsr = 1;\n        srcdom = \"ADSL\";\n        srcvar = \"EOSDT\";\n    end;\n    \n    /* AVAL計算 */\n    aval = adt - startdt + 1;\n    \n    /* ラベル付与 */\n    label param = \"Parameter\"\n          paramcd = \"Parameter Code\"\n          aval = \"Analysis Value\";\nrun;"
   }
 ]

@@ -3850,8 +3850,9 @@ vertical-align: -.125em;
     <div class="quarto-title column-page-left">
       <h1 class="title">解析用データセット作成プログラム</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">臨床試験</div>
                 <div class="quarto-category">SAS</div>
+                <div class="quarto-category">R</div>
+                <div class="quarto-category">解析用データセット</div>
               </div>
                   </div>
   </div>
@@ -3876,7 +3877,7 @@ vertical-align: -.125em;
       <div>
       <div class="quarto-title-meta-heading">更新日</div>
       <div class="quarto-title-meta-contents">
-        <p class="date-modified">2025年5月18日</p>
+        <p class="date-modified">2025年6月14日</p>
       </div>
     </div>
       
@@ -3897,7 +3898,16 @@ vertical-align: -.125em;
     <h2 id="toc-title">目次</h2>
    
   <ul class="collapse">
-  <li><a href="#解析用データセット作成について" id="toc-解析用データセット作成について" class="nav-link active" data-scroll-target="#解析用データセット作成について"><span class="header-section-number">1</span> 解析用データセット作成について</a></li>
+  <li><a href="#解析用データセット仕様書の作成ガイド" id="toc-解析用データセット仕様書の作成ガイド" class="nav-link active" data-scroll-target="#解析用データセット仕様書の作成ガイド"><span class="header-section-number">1</span> 解析用データセット仕様書の作成ガイド</a>
+  <ul class="collapse">
+  <li><a href="#はじめに" id="toc-はじめに" class="nav-link" data-scroll-target="#はじめに"><span class="header-section-number">1.1</span> はじめに</a></li>
+  <li><a href="#仕様書の基本構成" id="toc-仕様書の基本構成" class="nav-link" data-scroll-target="#仕様書の基本構成"><span class="header-section-number">1.2</span> 仕様書の基本構成</a></li>
+  <li><a href="#specificationシートの構成" id="toc-specificationシートの構成" class="nav-link" data-scroll-target="#specificationシートの構成"><span class="header-section-number">1.3</span> Specificationシートの構成</a></li>
+  <li><a href="#adxx_conversionシート" id="toc-adxx_conversionシート" class="nav-link" data-scroll-target="#adxx_conversionシート"><span class="header-section-number">1.4</span> ADxx_Conversionシート</a></li>
+  <li><a href="#adtteデータセットの詳細" id="toc-adtteデータセットの詳細" class="nav-link" data-scroll-target="#adtteデータセットの詳細"><span class="header-section-number">1.5</span> ADTTEデータセットの詳細</a></li>
+  <li><a href="#code-listシート" id="toc-code-listシート" class="nav-link" data-scroll-target="#code-listシート"><span class="header-section-number">1.6</span> Code Listシート</a></li>
+  <li><a href="#データセット作成プロセス" id="toc-データセット作成プロセス" class="nav-link" data-scroll-target="#データセット作成プロセス"><span class="header-section-number">1.7</span> データセット作成プロセス</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -3908,10 +3918,441 @@ vertical-align: -.125em;
 
 
 
-<section id="解析用データセット作成について" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span> 解析用データセット作成について</h1>
+<section id="解析用データセット仕様書の作成ガイド" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> 解析用データセット仕様書の作成ガイド</h1>
+<section id="はじめに" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="はじめに"><span class="header-section-number">1.1</span> はじめに</h2>
+<p>臨床試験や統計解析プロジェクトにおいて、解析用データセット仕様書は分析の設計図とも言える重要な文書です。本記事では、実用的な解析用データセット仕様書の構成と記載内容について、主要な3つのデータセット（ADSL、ADLB、ADTTE）を例に解説し、さらに仕様書に基づくデータセット作成とバリデーションプロセスについても説明します。</p>
+</section>
+<section id="仕様書の基本構成" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="仕様書の基本構成"><span class="header-section-number">1.2</span> 仕様書の基本構成</h2>
+<p>解析用データセット仕様書は、主に以下の要素で構成されます：</p>
+<ul>
+<li><strong>表紙・改訂履歴</strong>：文書管理情報</li>
+<li><strong>Dataset Definition</strong>：データセットの基本定義</li>
+<li><strong>Specification</strong>：変数の詳細仕様</li>
+<li><strong>ADxx_Conversion</strong>：パラメータ変換表（ADLB、ADTTE用）</li>
+<li><strong>Codelist</strong>：コード値の定義</li>
+</ul>
+<p>これらの情報をExcelファイルの複数シートに整理することで、管理しやすく実用的な仕様書が作成できます。</p>
+</section>
+<section id="specificationシートの構成" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="specificationシートの構成"><span class="header-section-number">1.3</span> Specificationシートの構成</h2>
+<p>変数仕様を記載するSpecificationシートでは、以下の項目を含めることを推奨します：</p>
+<section id="基本項目" class="level3" data-number="1.3.1">
+<h3 data-number="1.3.1" class="anchored" data-anchor-id="基本項目"><span class="header-section-number">1.3.1</span> 基本項目</h3>
+<ul>
+<li><strong>Varnum</strong>：変数番号（並び順）</li>
+<li><strong>Domain</strong>：データセット名（ADSL、ADLB、ADTTE等）</li>
+<li><strong>Variable Name</strong>：変数名</li>
+<li><strong>Variable Label</strong>：変数ラベル</li>
+<li><strong>Type</strong>：データタイプ（Char/Num）</li>
+<li><strong>Length</strong>：変数長</li>
+<li><strong>Display Format</strong>：表示フォーマット</li>
+<li><strong>Codelist</strong>：コードリスト参照名</li>
+<li><strong>Core</strong>：必須度（Req=必須、Perm=任意、Cond=条件付き）</li>
+<li><strong>Definition</strong>：定義・導出方法</li>
+</ul>
+</section>
+<section id="specificationシート例" class="level3" data-number="1.3.2">
+<h3 data-number="1.3.2" class="anchored" data-anchor-id="specificationシート例"><span class="header-section-number">1.3.2</span> Specificationシート例</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 14%">
+<col style="width: 15%">
+<col style="width: 5%">
+<col style="width: 7%">
+<col style="width: 15%">
+<col style="width: 9%">
+<col style="width: 5%">
+<col style="width: 11%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Varnum</th>
+<th>Domain</th>
+<th>Variable Name</th>
+<th>Variable Label</th>
+<th>Type</th>
+<th>Length</th>
+<th>Display Format</th>
+<th>Codelist</th>
+<th>Core</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>ADSL</td>
+<td>STUDYID</td>
+<td>Study Identifier</td>
+<td>Char</td>
+<td>12</td>
+<td></td>
+<td></td>
+<td>Req</td>
+<td>DM.STUDYID</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>ADSL</td>
+<td>USUBJID</td>
+<td>Unique Subject Identifier</td>
+<td>Char</td>
+<td>40</td>
+<td></td>
+<td></td>
+<td>Req</td>
+<td>DM.USUBJID</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>ADSL</td>
+<td>SUBJID</td>
+<td>Subject Identifier</td>
+<td>Char</td>
+<td>20</td>
+<td></td>
+<td></td>
+<td>Req</td>
+<td>DM.SUBJID</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>ADSL</td>
+<td>AGE</td>
+<td>Age</td>
+<td>Num</td>
+<td>8</td>
+<td></td>
+<td></td>
+<td>Req</td>
+<td>DM.AGE</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>ADSL</td>
+<td>SEX</td>
+<td>Sex</td>
+<td>Char</td>
+<td>1</td>
+<td></td>
+<td>SEX</td>
+<td>Req</td>
+<td>DM.SEX</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>ADSL</td>
+<td>TRT01P</td>
+<td>Planned Treatment for Period 1</td>
+<td>Char</td>
+<td>200</td>
+<td></td>
+<td></td>
+<td>Req</td>
+<td>ARM</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>ADSL</td>
+<td>TRT01A</td>
+<td>Actual Treatment for Period 1</td>
+<td>Char</td>
+<td>200</td>
+<td></td>
+<td></td>
+<td>Req</td>
+<td>ACTARM</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>ADSL</td>
+<td>TRT01PN</td>
+<td>Planned Treatment for Period 1 (N)</td>
+<td>Num</td>
+<td>8</td>
+<td></td>
+<td></td>
+<td>Req</td>
+<td>Derived from TRT01P</td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td>ADSL</td>
+<td>TRT01AN</td>
+<td>Actual Treatment for Period 1 (N)</td>
+<td>Num</td>
+<td>8</td>
+<td></td>
+<td></td>
+<td>Req</td>
+<td>Derived from TRT01A</td>
+</tr>
+<tr class="even">
+<td>10</td>
+<td>ADSL</td>
+<td>FASFL</td>
+<td>Full Analysis Set Flag</td>
+<td>Char</td>
+<td>1</td>
+<td></td>
+<td>NYFL</td>
+<td>Req</td>
+<td>External derivation</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="adxx_conversionシート" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="adxx_conversionシート"><span class="header-section-number">1.4</span> ADxx_Conversionシート</h2>
+<p>ADLB、ADTTEなどのBDS形式データセットでは、パラメータの変換情報を管理するための専用シートを作成します。</p>
+<section id="adlb_conversionシート例" class="level3" data-number="1.4.1">
+<h3 data-number="1.4.1" class="anchored" data-anchor-id="adlb_conversionシート例"><span class="header-section-number">1.4.1</span> ADLB_Conversionシート例</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>PARAM</th>
+<th>PARAMCD</th>
+<th>PARAMN</th>
+<th>AVAL</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>HbA1c(%)</td>
+<td>HBA1C</td>
+<td>1</td>
+<td>input(LABデータ)</td>
+</tr>
+<tr class="even">
+<td>Blood glucose (mg/dL)</td>
+<td>GLU</td>
+<td>2</td>
+<td>input(LABデータ)</td>
+</tr>
+<tr class="odd">
+<td>BUN (mg/dL)</td>
+<td>BUN</td>
+<td>3</td>
+<td>input(LABデータ)</td>
+</tr>
+<tr class="even">
+<td>Creatinine (mg/dL)</td>
+<td>CREAT</td>
+<td>4</td>
+<td>input(LABデータ)</td>
+</tr>
+<tr class="odd">
+<td>ALT (U/L)</td>
+<td>ALT</td>
+<td>5</td>
+<td>input(LABデータ)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="adtte_conversionシート例" class="level3" data-number="1.4.2">
+<h3 data-number="1.4.2" class="anchored" data-anchor-id="adtte_conversionシート例"><span class="header-section-number">1.4.2</span> ADTTE_Conversionシート例</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>PARAM</th>
+<th>PARAMCD</th>
+<th>PARAMN</th>
+<th>AVAL</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Overall Survival</td>
+<td>OS</td>
+<td>1</td>
+<td>ADT - STARTDT + 1</td>
+</tr>
+<tr class="even">
+<td>Progression Free Survival</td>
+<td>PFS</td>
+<td>2</td>
+<td>ADT - STARTDT + 1</td>
+</tr>
+<tr class="odd">
+<td>Time to Progression</td>
+<td>TTP</td>
+<td>3</td>
+<td>ADT - STARTDT + 1</td>
+</tr>
+<tr class="even">
+<td>Disease Free Survival</td>
+<td>DFS</td>
+<td>4</td>
+<td>ADT - STARTDT + 1</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="adtteデータセットの詳細" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="adtteデータセットの詳細"><span class="header-section-number">1.5</span> ADTTEデータセットの詳細</h2>
+<section id="adtteの特徴" class="level3" data-number="1.5.1">
+<h3 data-number="1.5.1" class="anchored" data-anchor-id="adtteの特徴"><span class="header-section-number">1.5.1</span> ADTTEの特徴</h3>
+<p>ADTTEは生存時間解析用のデータセットで、以下の特徴があります：</p>
+<ul>
+<li><strong>1被験者1パラメータにつき1レコード</strong>の構造</li>
+<li><strong>事象の発生時間</strong>または<strong>打ち切り時間</strong>を記録</li>
+<li><strong>複数の解析エンドポイント</strong>を1つのデータセットで管理</li>
+</ul>
+</section>
+<section id="adtte作成時の重要な考慮事項" class="level3" data-number="1.5.2">
+<h3 data-number="1.5.2" class="anchored" data-anchor-id="adtte作成時の重要な考慮事項"><span class="header-section-number">1.5.2</span> ADTTE作成時の重要な考慮事項</h3>
+<section id="事象の優先順位" class="level4" data-number="1.5.2.1">
+<h4 data-number="1.5.2.1" class="anchored" data-anchor-id="事象の優先順位"><span class="header-section-number">1.5.2.1</span> 1. 事象の優先順位</h4>
+<p>複数の事象や打ち切りが同日に発生した場合の優先順位を明確に定義する必要があります。例： - 「10%を超える体重減少」（最優先） - 「5 cmを超える腹囲減少」 - 完了または中止</p>
+</section>
+<section id="avalの計算方法" class="level4" data-number="1.5.2.2">
+<h4 data-number="1.5.2.2" class="anchored" data-anchor-id="avalの計算方法"><span class="header-section-number">1.5.2.2</span> 2. AVALの計算方法</h4>
+<p>AVALは通常、以下の式で計算されます：</p>
+<p>ここで： - <strong>STARTDT</strong>：解析開始日（通常は治療開始日：ADSL.TRTSDT） - <strong>ADT</strong>：解析日（事象発生日または打ち切り日） - <strong>+1</strong>：0日目を避けるための調整</p>
+</section>
+<section id="事象データの取得元" class="level4" data-number="1.5.2.3">
+<h4 data-number="1.5.2.3" class="anchored" data-anchor-id="事象データの取得元"><span class="header-section-number">1.5.2.3</span> 3. 事象データの取得元</h4>
+<ul>
+<li><strong>事象発生</strong>：ADVS.ADTから日付を取得</li>
+<li><strong>打ち切り</strong>：ADSL.EOSDTから日付を取得</li>
+</ul>
+</section>
+<section id="cnsrフラグの設定" class="level4" data-number="1.5.2.4">
+<h4 data-number="1.5.2.4" class="anchored" data-anchor-id="cnsrフラグの設定"><span class="header-section-number">1.5.2.4</span> 4. CNSRフラグの設定</h4>
+<ul>
+<li><strong>CNSR=0</strong>：事象発生</li>
+<li><strong>CNSR=1</strong>：打ち切り</li>
+</ul>
+</section>
+<section id="ソースデータの追跡srcdom-srcvar-srcseq" class="level4" data-number="1.5.2.5">
+<h4 data-number="1.5.2.5" class="anchored" data-anchor-id="ソースデータの追跡srcdom-srcvar-srcseq"><span class="header-section-number">1.5.2.5</span> 5. ソースデータの追跡（SRCDOM, SRCVAR, SRCSEQ）</h4>
+<p>ADTTEでは元データの追跡可能性が重要です：</p>
+<p><strong>事象採用時</strong>： - SRCDOM=“ADVS” - SRCVAR=“ADT” - SRCSEQ=ADVS.ASEQ</p>
+<p><strong>打ち切り時</strong>： - SRCDOM=“ADSL” - SRCVAR=“EOSDT” - SRCSEQ=（ブランク）</p>
+</section>
+</section>
+<section id="adtteプログラミングのポイント" class="level3" data-number="1.5.3">
+<h3 data-number="1.5.3" class="anchored" data-anchor-id="adtteプログラミングのポイント"><span class="header-section-number">1.5.3</span> ADTTEプログラミングのポイント</h3>
+<ol type="1">
+<li><strong>データセットの組み合わせ</strong>：複数のデータセット（ADSL、ADVS等）を適切に結合</li>
+<li><strong>日付の妥当性チェック</strong>：論理的に矛盾する日付の検出と処理</li>
+<li><strong>追跡可能性の確保</strong>：各レコードの導出元を明確に記録</li>
+<li><strong>複数事象の処理</strong>：同一被験者で複数の解析パラメータを生成</li>
+</ol>
+</section>
+</section>
+<section id="code-listシート" class="level2" data-number="1.6">
+<h2 data-number="1.6" class="anchored" data-anchor-id="code-listシート"><span class="header-section-number">1.6</span> Code Listシート</h2>
+<p>コード値とその意味を定義するシートです。ADaM Terminology形式で管理します。</p>
+<section id="code-listシート構成" class="level3" data-number="1.6.1">
+<h3 data-number="1.6.1" class="anchored" data-anchor-id="code-listシート構成"><span class="header-section-number">1.6.1</span> Code Listシート構成</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Reference Name</th>
+<th>Code Value</th>
+<th>Code Text</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>SEXN</td>
+<td>1</td>
+<td>男性</td>
+</tr>
+<tr class="even">
+<td>SEXN</td>
+<td>2</td>
+<td>女性</td>
+</tr>
+<tr class="odd">
+<td>SEX</td>
+<td>M</td>
+<td>Male</td>
+</tr>
+<tr class="even">
+<td>SEX</td>
+<td>F</td>
+<td>Female</td>
+</tr>
+<tr class="odd">
+<td>NYFL</td>
+<td>Y</td>
+<td>Yes</td>
+</tr>
+<tr class="even">
+<td>NYFL</td>
+<td>N</td>
+<td>No</td>
+</tr>
+<tr class="odd">
+<td>AGEU</td>
+<td>YEARS</td>
+<td>Years</td>
+</tr>
+<tr class="even">
+<td>AGEU</td>
+<td>MONTHS</td>
+<td>Months</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="データセット作成プロセス" class="level2" data-number="1.7">
+<h2 data-number="1.7" class="anchored" data-anchor-id="データセット作成プロセス"><span class="header-section-number">1.7</span> データセット作成プロセス</h2>
+<section id="仕様書に基づくプログラム作成" class="level3" data-number="1.7.1">
+<h3 data-number="1.7.1" class="anchored" data-anchor-id="仕様書に基づくプログラム作成"><span class="header-section-number">1.7.1</span> 1. 仕様書に基づくプログラム作成</h3>
+<p>解析用データセット仕様書を読み込み、Specificationシートの定義に従ってSASプログラムを作成します。ADxx_Conversionシートを参照してパラメータ変換処理も実装します。</p>
+</section>
+<section id="adtteプログラム例" class="level3" data-number="1.7.2">
+<h3 data-number="1.7.2" class="anchored" data-anchor-id="adtteプログラム例"><span class="header-section-number">1.7.2</span> 2. ADTTEプログラム例</h3>
+<pre class="sas"><code>/* ADTTE作成例 */
+data adtte;
+    set adsl;
+    
+    /* Overall Survival パラメータ */
+    param = &quot;Overall Survival&quot;;
+    paramcd = &quot;OS&quot;;
+    paramn = 1;
+    
+    /* 解析開始日 */
+    startdt = trtsdt;
+    
+    /* 事象または打ち切りの判定 */
+    if dthfl = &quot;Y&quot; then do;
+        adt = dthdt;
+        cnsr = 0;
+        srcdom = &quot;ADSL&quot;;
+        srcvar = &quot;DTHDT&quot;;
+    end;
+    else do;
+        adt = eosdt;
+        cnsr = 1;
+        srcdom = &quot;ADSL&quot;;
+        srcvar = &quot;EOSDT&quot;;
+    end;
+    
+    /* AVAL計算 */
+    aval = adt - startdt + 1;
+    
+    /* ラベル付与 */
+    label param = &quot;Parameter&quot;
+          paramcd = &quot;Parameter Code&quot;
+          aval = &quot;Analysis Value&quot;;
+run;</code></pre>
 
 
+</section>
+</section>
 </section>
 
 </main> <!-- /main -->
