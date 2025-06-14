@@ -19,7 +19,7 @@ title: "Web Tools"
 -   [EMA Biostatistics guidelines](https://www.ema.europa.eu/en/human-regulatory-overview/research-and-development/scientific-guidelines/clinical-efficacy-safety-guidelines/biostatistics#topics)
 -   [EMA Real-world evidence guidelines](https://www.ema.europa.eu/en/human-regulatory-overview/research-development/scientific-guidelines/clinical-efficacy-safety-guidelines/real-world-evidence)
 -   [CDISC ADaM](https://www.cdisc.org/standards/foundational/adam)
-- [Statistical Analysi Plan(Australian Clinical Trials)](https://clinicaltrialsalliance.org.au/resource/statistical-analysis-plan/)
+-   [Statistical Analysi Plan(Australian Clinical Trials)](https://clinicaltrialsalliance.org.au/resource/statistical-analysis-plan/)
 
 ## 統計
 
@@ -57,17 +57,18 @@ title: "Web Tools"
 -   [はじめよう！R（小杉考司先生）](https://kosugitti.github.io/slides/TokyoR117/RforBeginner.html#r%E3%82%92%E3%81%95%E3%82%8F%E3%81%A3%E3%81%A6%E3%81%BF%E3%81%BE%E3%81%97%E3%82%87%E3%81%86)
 -   [気軽にRでWebサイト](https://shohei-doi.github.io/academic-website/get-started.html)
 -   [Rではじめようモダンなデータ分析](https://book.mynavi.jp/manatee/series/detail/id=54225)
+-   [私たちのR](https://www.jaysong.net/RBook/)
 
 ## SASプログラミング
 
 -   [SASユーザー会](https://www.sas.com/ja_jp/usergroups.html)
--   [SASユーザー総会 論文集アーカイブ](https://sites.google.com/view/sas-japan-user-group-archive/%E3%83%9B%E3%83%BC%E3%83%A0)
--[SAS Forumユーザー会 2006](https://www.sas.com/offices/asiapacific/japan/usergroups/technical06/appendix.html)
+-   [SASユーザー総会 論文集アーカイブ](https://sites.google.com/view/sas-japan-user-group-archive/%E3%83%9B%E3%83%BC%E3%83%A0) -[SAS Forumユーザー会 2006](https://www.sas.com/offices/asiapacific/japan/usergroups/technical06/appendix.html)
 -   [大阪SAS勉強会](https://sites.google.com/view/osakasasbenkyokai/%E3%83%9B%E3%83%BC%E3%83%A0)
 -   [データステップ100万回　SAS新手一生](https://sas-tumesas.blogspot.com/)
 -   [晴れ時々SAS](https://dengonmemo.blogspot.com/p/blog-page.html)
 -   [我輩はブロガーではない。ネタもまだない](https://japelin.hatenablog.com/entry/2025/05/03/210416)
 -   [データサイエンス100本ノック（構造化データ加工編）のSAS版](https://github.com/Nikkei-R-DataScience/sas-100knocks-preprocess/blob/main/answer/sas100knocks.ipynb)
+-   [RTFファイルをPDF化するDDEプログラム](https://sasonediver.blog.fc2.com/blog-entry-342.html)
 
 ## 研究関連
 
@@ -76,17 +77,14 @@ title: "Web Tools"
 ## 論文
 
 -   [Ten Simple Rules for Reproducible Computational Research](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1003285)
+-   [山本先生_LatexによるBibTeXにおけるbibファイルの書き方](https://mathlandscape.com/latex-bib/)
 
-## その他
+## ブログ関係
 
 -   [長島健悟先生のブログ](https://nshi.jp/)
 -   [KRSK先生のブログ](https://www.krsk-phs.com/)
 -   [司馬先生のブログ](https://162348.github.io/)
 -   [Yanagimoto先生のブログ](https://zenn.dev/nicetak)
--   [すうがくぶんか株式会社](https://sugakubunka.com/)
--   [Quarto](https://quarto.org/)
--   [Git公式書籍（日本語](https://git-scm.com/book/ja/v2)
--   [Excelシートの一括変換 note](https://note.com/office_haru/n/n35ab7211eece)
 
 ## 論文雑誌
 
@@ -95,10 +93,21 @@ title: "Web Tools"
 -   [Journal of Epideimology](https://jeaweb.jp/journal/issues/jstage/index.html)
 -   [Statistics in Medicine](https://onlinelibrary.wiley.com/loi/10970258)
 -   [Pharmaceutical Statistics](https://onlinelibrary.wiley.com/toc/15391612/current)
+-   [すうがくぶんか株式会社](https://sugakubunka.com/)
+-   [Quarto](https://quarto.org/)
+-  [Git公式書籍（日本語](https://git-scm.com/book/ja/v2)」
+
 
 ## Quartoブログ
 
 -   [tutorial](https://ivelasq.quarto.pub/building-a-blog-with-quarto/intro.html)
-- [Building a blog with Quarto](https://qiita.com/Qiita/items/c686397e4a0f4f11683d)
-- [Markdown記法チート](https://qiita.com/Qiita/items/c686397e4a0f4f11683d)
+-   [Building a blog with Quarto](https://qiita.com/Qiita/items/c686397e4a0f4f11683d)
+-   [Markdown記法チート](https://qiita.com/Qiita/items/c686397e4a0f4f11683d)
+
+## Tips
+-   [Excelシートの一括変換 note](https://note.com/office_haru/n/n35ab7211eece)
+-   [ExcelファイルをまとめてPDFファイルに変換したい](https://zenn.dev/takaha4k/articles/a0980bea89b883)
+-   [複数のExcelファイルを一括でPDFファイルに変換する方法](https://kouritsukafiles.com/convert-excelfiles-to-pdf/)
+-   [メモ帳だけで作成！複数のExcelファイルをPDFに一括変換](https://skainoblog.com/pdftoexcel/)
+-   [WinMerge日本語版](https://winmergejp.bitbucket.io/)
 

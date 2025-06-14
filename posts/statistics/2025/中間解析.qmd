@@ -114,7 +114,7 @@ Simonデザインは、抗がん剤第2相試験において、2値アウトカ�
 
 Rでclinfunc packageを利用する例は以下となります。以下の例では無効閾値p0に0.1,期待奏効閾値に0.3として、片側有意水準5%、検出力80%の元での症例数計算を実施した。
 
-``` {r}
+```{r}
 library(clinfun)
 # Simonのデザイン（Minmax,Optimalを両方）
 simon <- clinfun::ph2simon(pu = 0.1 , pa = 0.3 , ep1 = 0.05 , ep2 = 0.08, nmax=100)
