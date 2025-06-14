@@ -8,7 +8,7 @@
 
 <meta name="author" content="坂本航太">
 
-<title>github – Kota Sakamoto</title>
+<title>解析用データセット作成の流れ（フォルダ構造等） – Kota Sakamoto</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -3848,9 +3848,10 @@ vertical-align: -.125em;
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-page-left">
-      
+      <h1 class="title">解析用データセット作成の流れ（フォルダ構造等）</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">github</div>
+                <div class="quarto-category">SAS</div>
+                <div class="quarto-category">解析プログラミング</div>
               </div>
                   </div>
   </div>
@@ -3890,13 +3891,21 @@ vertical-align: -.125em;
     <h2 id="toc-title">目次</h2>
    
   <ul class="collapse">
-  <li><a href="#githubのブログ更新手順について" id="toc-githubのブログ更新手順について" class="nav-link active" data-scroll-target="#githubのブログ更新手順について"><span class="header-section-number">1</span> githubのブログ更新手順について</a>
+  <li><a href="#解析用データセット作成の流れフォルダ構造等" id="toc-解析用データセット作成の流れフォルダ構造等" class="nav-link active" data-scroll-target="#解析用データセット作成の流れフォルダ構造等"><span class="header-section-number">1</span> 解析用データセット作成の流れ（フォルダ構造等）</a>
   <ul class="collapse">
-  <li><a href="#一括実行" id="toc-一括実行" class="nav-link" data-scroll-target="#一括実行"><span class="header-section-number">1.1</span> 一括実行</a></li>
-  <li><a href="#quartoサイトをレンダリング" id="toc-quartoサイトをレンダリング" class="nav-link" data-scroll-target="#quartoサイトをレンダリング"><span class="header-section-number">1.2</span> Quartoサイトをレンダリング</a></li>
-  <li><a href="#変更内容をステージングエリアに追加" id="toc-変更内容をステージングエリアに追加" class="nav-link" data-scroll-target="#変更内容をステージングエリアに追加"><span class="header-section-number">1.3</span> 変更内容をステージングエリアに追加</a></li>
-  <li><a href="#変更をコミット" id="toc-変更をコミット" class="nav-link" data-scroll-target="#変更をコミット"><span class="header-section-number">1.4</span> 変更をコミット</a></li>
-  <li><a href="#リモートリポジトリにプッシュ" id="toc-リモートリポジトリにプッシュ" class="nav-link" data-scroll-target="#リモートリポジトリにプッシュ"><span class="header-section-number">1.5</span> リモートリポジトリにプッシュ</a></li>
+  <li><a href="#はじめに" id="toc-はじめに" class="nav-link" data-scroll-target="#はじめに"><span class="header-section-number">1.1</span> はじめに</a></li>
+  <li><a href="#基本的なフォルダ構成" id="toc-基本的なフォルダ構成" class="nav-link" data-scroll-target="#基本的なフォルダ構成"><span class="header-section-number">1.2</span> 基本的なフォルダ構成</a></li>
+  <li><a href="#解析用データセット作成に特化したフォルダ構成" id="toc-解析用データセット作成に特化したフォルダ構成" class="nav-link" data-scroll-target="#解析用データセット作成に特化したフォルダ構成"><span class="header-section-number">1.3</span> 解析用データセット作成に特化したフォルダ構成</a></li>
+  <li><a href="#プログラムの日付管理とバージョン管理" id="toc-プログラムの日付管理とバージョン管理" class="nav-link" data-scroll-target="#プログラムの日付管理とバージョン管理"><span class="header-section-number">1.4</span> プログラムの日付管理とバージョン管理</a></li>
+  <li><a href="#自動的な実行日時記録" id="toc-自動的な実行日時記録" class="nav-link" data-scroll-target="#自動的な実行日時記録"><span class="header-section-number">1.5</span> 自動的な実行日時記録</a></li>
+  <li><a href="#実践的な運用のコツ" id="toc-実践的な運用のコツ" class="nav-link" data-scroll-target="#実践的な運用のコツ"><span class="header-section-number">1.6</span> 実践的な運用のコツ</a></li>
+  <li><a href="#settingフォルダについて" id="toc-settingフォルダについて" class="nav-link" data-scroll-target="#settingフォルダについて"><span class="header-section-number">1.7</span> Settingフォルダについて</a></li>
+  </ul></li>
+  <li><a href="#sasデータハンドリング" id="toc-sasデータハンドリング" class="nav-link" data-scroll-target="#sasデータハンドリング"><span class="header-section-number">2</span> SASデータハンドリング</a>
+  <ul class="collapse">
+  <li><a href="#attrib-statement" id="toc-attrib-statement" class="nav-link" data-scroll-target="#attrib-statement"><span class="header-section-number">2.1</span> Attrib statement</a></li>
+  <li><a href="#proc-format" id="toc-proc-format" class="nav-link" data-scroll-target="#proc-format"><span class="header-section-number">2.2</span> Proc format</a></li>
+  <li><a href="#データセットからのフォーマット作成" id="toc-データセットからのフォーマット作成" class="nav-link" data-scroll-target="#データセットからのフォーマット作成"><span class="header-section-number">2.3</span> データセットからのフォーマット作成</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -3908,35 +3917,323 @@ vertical-align: -.125em;
 
 
 
-<section id="githubのブログ更新手順について" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span> githubのブログ更新手順について</h1>
-<p>GitHubでブログを更新する際の標準的な手順は以下の通りです。</p>
-<section id="一括実行" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="一括実行"><span class="header-section-number">1.1</span> 一括実行</h2>
-<pre><code>quarto render
-git add .
-git commit -m &quot;新記事追加/編集&quot;
-git push origin main</code></pre>
+<section id="解析用データセット作成の流れフォルダ構造等" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> 解析用データセット作成の流れ（フォルダ構造等）</h1>
+<p>効率的なフォルダ構成でプロジェクトを管理する</p>
+<section id="はじめに" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="はじめに"><span class="header-section-number">1.1</span> はじめに</h2>
+<p>SAS（Statistical Analysis System）を使ったデータ分析プロジェクトにおいて、最初に決めるべき重要な要素の一つがフォルダ構成です。適切なフォルダ構成を設定することで、プロジェクトの管理が格段に楽になり、チームでの作業効率も向上します。</p>
+<p>多くのSAS初心者は、とりあえずデスクトップやマイドキュメントにファイルを保存してしまいがちですが、プロジェクトが進むにつれて「あのファイルはどこに保存したっけ？」「これは最新バージョン？」といった問題に直面することになります。</p>
 </section>
-<section id="quartoサイトをレンダリング" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="quartoサイトをレンダリング"><span class="header-section-number">1.2</span> Quartoサイトをレンダリング</h2>
-<p>なお、quartoが多くなってきた場合、特定のファイルのみでrenderすることも可能である。</p>
-<pre><code>quarto render</code></pre>
-<pre><code>quarto render post.qmd</code></pre>
+<section id="基本的なフォルダ構成" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="基本的なフォルダ構成"><span class="header-section-number">1.2</span> 基本的なフォルダ構成</h2>
+<p>SASプログラミングを実施する際は、フォルダ構成をまず設定します。</p>
+<p>ここでは、実際の業務で使用されている標準的な構成例を紹介します。</p>
+<p>任意のプロジェクトフォルダに対して以下のようなフォルダを作成します。テンプレートを作成しておくのが便利でしょう。</p>
+<ul>
+<li>Input</li>
+<li>Log</li>
+<li>Output</li>
+<li>Prg</li>
+<li>Setting</li>
+<li>Spec</li>
+</ul>
+<section id="各フォルダの役割" class="level3" data-number="1.2.1">
+<h3 data-number="1.2.1" class="anchored" data-anchor-id="各フォルダの役割"><span class="header-section-number">1.2.1</span> 各フォルダの役割</h3>
+<p><strong>Input</strong>：分析に使用する元データを格納</p>
+<ul>
+<li><p>外部から受け取ったCSVファイル、Excelファイル -</p></li>
+<li><p>データベースから抽出した生データ</p></li>
+<li><p>既存のSASデータセット</p></li>
+</ul>
+<p><strong>Log</strong>：SASプログラムの実行ログを保存</p>
+<ul>
+<li><p>プログラム実行時に出力されるログファイル</p></li>
+<li><p>エラーメッセージや警告の記録</p></li>
+<li><p>処理時間やデータ件数の確認用</p></li>
+</ul>
+<p><strong>Output</strong>：分析結果や成果物を保存</p>
+<ul>
+<li><p>作成されたSASデータセット</p></li>
+<li><p>データ品質チェック結果</p></li>
+</ul>
+<p><strong>Prg</strong>：SASプログラムファイル（.sas）を格納</p>
+<ul>
+<li><p>データ処理プログラム（1_xx、2_xxのように実行するプログラムの順番が分かる方が望ましい）</p></li>
+<li><p>データクリーニングプログラム</p></li>
+<li><p>派生変数作成プログラム</p></li>
+</ul>
+<p><strong>Setting</strong>：</p>
+<ul>
+<li><p>設定ファイルや共通処理を保存</p></li>
+<li><p>よく使用するマクロ定義</p></li>
+<li><p>プロジェクト固有の設定</p></li>
+</ul>
+<p><strong>Spec</strong>：仕様書や設計書類を格納</p>
+<ul>
+<li>解析用データセット仕様書</li>
+</ul>
 </section>
-<section id="変更内容をステージングエリアに追加" class="level2" data-number="1.3">
-<h2 data-number="1.3" class="anchored" data-anchor-id="変更内容をステージングエリアに追加"><span class="header-section-number">1.3</span> 変更内容をステージングエリアに追加</h2>
-<pre><code>git add .</code></pre>
 </section>
-<section id="変更をコミット" class="level2" data-number="1.4">
-<h2 data-number="1.4" class="anchored" data-anchor-id="変更をコミット"><span class="header-section-number">1.4</span> 変更をコミット</h2>
-<pre><code>git commit -m &quot;コミットメッセージ&quot;</code></pre>
+<section id="解析用データセット作成に特化したフォルダ構成" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="解析用データセット作成に特化したフォルダ構成"><span class="header-section-number">1.3</span> 解析用データセット作成に特化したフォルダ構成</h2>
+<p>実際のプロジェクトでは、解析用データセット作成プログラミングと、解析プログラミングはフォルダを分けることを推奨しています。</p>
+<p>ここでは、解析用データセット作成に焦点を当てたフォルダ構成について詳しく説明します。</p>
+<section id="データセット作成フォルダ構成" class="level3" data-number="1.3.1">
+<h3 data-number="1.3.1" class="anchored" data-anchor-id="データセット作成フォルダ構成"><span class="header-section-number">1.3.1</span> データセット作成フォルダ構成</h3>
+<p>解析用データセット作成用のフォルダ構成例：</p>
+<ul>
+<li>Project/</li>
+<li>Input/
+<ul>
+<li>Raw_Data/ # 生データ（CSV、Excel等）</li>
+<li>External/ # 外部参照データ、マスタ情報</li>
+</ul></li>
+<li>Log/ # データ処理ログ</li>
+<li>Output/ # 作成されたSASデータセット</li>
+<li>Prg/ # データ処理プログラム</li>
+<li>Setting/ # 設定ファイル、マクロ</li>
+</ul>
 </section>
-<section id="リモートリポジトリにプッシュ" class="level2" data-number="1.5">
-<h2 data-number="1.5" class="anchored" data-anchor-id="リモートリポジトリにプッシュ"><span class="header-section-number">1.5</span> リモートリポジトリにプッシュ</h2>
-<pre><code>git push origin main</code></pre>
+<section id="具体的な作業内容" class="level3" data-number="1.3.2">
+<h3 data-number="1.3.2" class="anchored" data-anchor-id="具体的な作業内容"><span class="header-section-number">1.3.2</span> 具体的な作業内容</h3>
+<p><strong>データ取り込み（PROC IMPORT）</strong></p>
+<ul>
+<li><p>CSVファイルやExcelファイルからSASデータセットへの変換</p></li>
+<li><p>文字エンコーディングの統一</p></li>
+<li><p>変数名の標準化</p></li>
+</ul>
+<p><strong>データクリーニング</strong></p>
+<ul>
+<li><p>欠損値の処理（削除、補完、フラグ付け）</p></li>
+<li><p>外れ値の検出と処理</p></li>
+<li><p>重複レコードの確認と処理</p></li>
+<li><p>データ型の統一</p></li>
+</ul>
+<p><strong>派生変数の作成</strong></p>
+<ul>
+<li><p>年齢の計算（生年月日から）</p></li>
+<li><p>カテゴリ変数の作成（連続変数の区分化）</p></li>
+<li><p>合計値や比率の計算</p></li>
+<li><p>フラグ変数の作成</p></li>
+</ul>
+<p><strong>データの品質チェック</strong></p>
+<ul>
+<li><p>PROC FREQ による度数分布の確認</p></li>
+<li><p>PROC MEANS による基本統計量の確認</p></li>
+<li><p>データ件数の確認</p></li>
+<li><p>変数ごとの欠損値率の確認</p></li>
+</ul>
+</section>
+</section>
+<section id="プログラムの日付管理とバージョン管理" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="プログラムの日付管理とバージョン管理"><span class="header-section-number">1.4</span> プログラムの日付管理とバージョン管理</h2>
+<p>SASプログラミングにおいて、プログラムの更新履歴を管理することは非常に重要です。特にデータ処理では、どの時点のプログラムで作成されたデータセットなのかを明確にする必要があります。</p>
+<section id="ファイル名による日付管理" class="level3" data-number="1.4.1">
+<h3 data-number="1.4.1" class="anchored" data-anchor-id="ファイル名による日付管理"><span class="header-section-number">1.4.1</span> ファイル名による日付管理</h3>
+<p>データセット作成プログラムの命名例</p>
+<ul>
+<li><p>01_data_import_20250614.sas # 初回作成</p></li>
+<li><p>01_data_import_20250615.sas # 修正版</p></li>
+<li><p>01_data_import_20250620.sas # 最新版</p></li>
+<li><p>02_data_cleaning_20250614.sas # データクリーニング</p></li>
+<li><p>03_variable_creation_20250615.sas # 派生変数作成</p></li>
+<li><p>04_quality_check_20250620.sas # 品質チェック</p></li>
+</ul>
+</section>
+<section id="プログラム内でのヘッダーコメント管理" class="level3" data-number="1.4.2">
+<h3 data-number="1.4.2" class="anchored" data-anchor-id="プログラム内でのヘッダーコメント管理"><span class="header-section-number">1.4.2</span> プログラム内でのヘッダーコメント管理</h3>
+<p>各SASプログラムの冒頭には、以下のような標準的なヘッダーを記述することを必須とします。</p>
+<pre class="sas"><code>/*=================================
+プログラム名: 01_data_import.sas
+プロジェクト: プロジェクト名
+作成者      : 山田太郎
+作成日      : 2025/06/14
+最終更新日  : 2025/06/20
+バージョン  : v1.2
+目的        : 顧客アンケートデータの取り込みとクリーニング
+
+入力データ  : Raw_Data/survey_data.csv
+出力データ  : Output/cleaned_survey.sas7bdat
+
+更新履歴:
+v1.0 2025/06/14 初回作成
+v1.1 2025/06/15 欠損値処理ロジック追加
+v1.2 2025/06/20 外れ値検出機能追加
+=================================*/
 
 
+
+
+*---------------------- EOF （プログラム名.sas） ------------------------------- ;</code></pre>
+</section>
+</section>
+<section id="自動的な実行日時記録" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="自動的な実行日時記録"><span class="header-section-number">1.5</span> 自動的な実行日時記録</h2>
+<p>プログラム実行時に、実行日時をログに記録する仕組みを組み込むことも有効です：</p>
+<pre class="sas"><code>/* 実行開始時刻を記録 */
+%let start_time = %sysfunc(datetime());
+%put NOTE: データセット作成開始 - %sysfunc(datetime(), datetime19.);
+
+/* データ取り込み処理 */
+proc import datafile=&quot;Input/Raw_Data/survey_data.csv&quot;
+    out=work.raw_data
+    dbms=csv replace;
+    getnames=yes;
+run;
+
+/* 実行終了時刻を記録 */
+%let end_time = %sysfunc(datetime());
+%let elapsed_time = %sysevalf(&amp;end_time - &amp;start_time);
+%put NOTE: データセット作成終了 - %sysfunc(datetime(), datetime19.);
+%put NOTE: 実行時間: %sysfunc(&amp;elapsed_time, time8.);
+%put NOTE: 処理件数: %sysfunc(attrn(open(work.raw_data), nobs));</code></pre>
+</section>
+<section id="実践的な運用のコツ" class="level2" data-number="1.6">
+<h2 data-number="1.6" class="anchored" data-anchor-id="実践的な運用のコツ"><span class="header-section-number">1.6</span> 実践的な運用のコツ</h2>
+<p>ログファイルの活用 データ処理では、どのような処理が行われたかを正確に記録することが重要です：</p>
+<pre class="sas"><code>/* ログファイルの出力先を指定（日付付き） */
+%let today = %sysfunc(today(), yymmddn8.);
+proc printto log=&quot;Log/data_creation_&amp;today..log&quot;;
+run;
+
+/* データ処理 */
+/* ... */
+
+/* ログ出力を元に戻す */
+proc printto;
+run;</code></pre>
+</section>
+<section id="settingフォルダについて" class="level2" data-number="1.7">
+<h2 data-number="1.7" class="anchored" data-anchor-id="settingフォルダについて"><span class="header-section-number">1.7</span> Settingフォルダについて</h2>
+<p>Settingフォルダでは、事前に解析用データセット仕様書のinputするファイル情報やPath、InputデータのPaht、OutputデータのPathを指定しておく。これを作成しておくことで、第3者に解析用データセット作成プログラムを提供した際でも、このSettingフォルダのPathだけを更新することで、再現可能な状態がすぐに作ることができる。</p>
+<p>Excelファイルには以下の3つの要素を設定します。：</p>
+<ul>
+<li><strong>パス（Path）</strong>：ファイルの保存場所</li>
+<li><strong>ファイル名</strong>：Excelファイル名</li>
+<li><strong>シート名</strong>：参照するワークシート名</li>
+</ul>
+</section>
+</section>
+<section id="sasデータハンドリング" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> SASデータハンドリング</h1>
+<section id="attrib-statement" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="attrib-statement"><span class="header-section-number">2.1</span> Attrib statement</h2>
+<p>具体的なプログラミングについては、別記事で解説をするが、ここでは解析用データセットを作成する上で大事なAttrib Statementについて解説する。</p>
+<p>以下記事が参考になる。</p>
+<ul>
+<li><a href="https://sas-tumesas.blogspot.com/2014/01/attrib.html">ATTRIBステートメント</a></li>
+<li><a href="https://sas-boubi.blogspot.com/search/label/%E3%82%B9%E3%83%86%E3%83%BC%E3%83%88%E3%83%A1%E3%83%B3%E3%83%88%3A%20ATTRIB">変数属性を定義した空のデータセットを作成する方法【まとめ】</a></li>
+</ul>
+<p>解析用データ仕様書にて、各変数のLabel、Length、formatを指定する必要がある。 その際に、解析用データセットに対してattrib statementを適用することで簡単に設定できる。</p>
+<p>ちなみに、変数の順番だけを入れ替えるならばformat Statementでも簡単にできる。<a href="https://sas-boubi.blogspot.com/search/label/%E3%82%B9%E3%83%86%E3%83%BC%E3%83%88%E3%83%A1%E3%83%B3%E3%83%88%3A%20FORMAT">こちらのブログ</a>が参考になります。</p>
+<pre class="sas"><code>
+data ADSL;
+    set ADSL;
+    attrib 
+        STUDYID   label=&quot;Study Identifier&quot;           length=$12  format=$12.
+        USUBJID   label=&quot;Unique Subject Identifier&quot;  length=$40  format=$40.
+        SUBJID    label=&quot;Subject Identifier&quot;         length=$20  format=$20.
+        AGE       label=&quot;Age&quot;                        length=8    format=8.
+        SEX       label=&quot;Sex&quot;                        length=$1   format=SEX.
+        TRT01P    label=&quot;Planned Treatment for Period 1&quot;  length=$200  format=$200.
+        TRT01A    label=&quot;Actual Treatment for Period 1&quot;   length=$200  format=$200.
+        TRT01PN   label=&quot;Planned Treatment for Period 1 (N)&quot;  length=8  format=8.
+        TRT01AN   label=&quot;Actual Treatment for Period 1 (N)&quot;  length=8  format=8.
+        FASFL     label=&quot;Full Analysis Set Flag&quot;     length=$1   format=NYFL.
+    ;
+run;</code></pre>
+<p>実際は手入力ですることは人為的ミスの元となるのでマクロ化等で自動化することを推奨するが考え方は上記の通りである。</p>
+</section>
+<section id="proc-format" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="proc-format"><span class="header-section-number">2.2</span> Proc format</h2>
+<p>以下記事が参考になる。 - <a href="https://sas-boubi.blogspot.com/2018/01/proc-format1-value.html">PROC FORMAT入門1 : VALUEステートメント</a></p>
+<p>PROC FORMATは、SASにおいてユーザー定義フォーマットを作成するプロシージャです。数値や文字データを、より読みやすい形式に変換して表示することができます。 基本構文は以下の通りです。</p>
+<pre class="sas"><code>proc format;
+    value フォーマット名
+        値1 = &quot;ラベル1&quot;
+        値2 = &quot;ラベル2&quot;
+        値3 = &quot;ラベル3&quot;;
+run;</code></pre>
+<p>文字フォーマットには先頭にドルマークを付けます。</p>
+<pre class="sas"><code>proc format;
+    value trtf
+        1 = &quot;プラセボ&quot;
+        2 = &quot;低用量&quot;
+        3 = &quot;高用量&quot;
+        . = &quot;欠測&quot;;
+        
+    value sexf
+        1 = &quot;男性&quot;
+        2 = &quot;女性&quot;
+        . = &quot;不明&quot;;
+        
+    value nyf
+        0 = &quot;No&quot;
+        1 = &quot;Yes&quot;
+        . = &quot;Missing&quot;;
+run;
+
+proc format;
+    value $sexf
+        &quot;M&quot; = &quot;男性&quot;
+        &quot;F&quot; = &quot;女性&quot;
+        &quot; &quot; = &quot;不明&quot;;
+        
+    value $countryfmt
+        &quot;JPN&quot; = &quot;日本&quot;
+        &quot;USA&quot; = &quot;アメリカ合衆国&quot;
+        &quot;GBR&quot; = &quot;イギリス&quot;
+        other = &quot;その他&quot;;
+run;</code></pre>
+</section>
+<section id="データセットからのフォーマット作成" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="データセットからのフォーマット作成"><span class="header-section-number">2.3</span> データセットからのフォーマット作成</h2>
+<section id="cntlinオプションの使用" class="level3" data-number="2.3.1">
+<h3 data-number="2.3.1" class="anchored" data-anchor-id="cntlinオプションの使用"><span class="header-section-number">2.3.1</span> 3.1 CNTLIN=オプションの使用</h3>
+<p>データセットからフォーマットを作成する場合、特定の変数名を持つデータセットを準備する必要があります。 必要な変数：</p>
+<ul>
+<li>FMTNAME：フォーマット名</li>
+<li>START：変換前の値（開始値）</li>
+<li>END：変換前の値（終了値、範囲指定時）</li>
+<li>LABEL：変換後のラベル</li>
+<li>TYPE：フォーマットタイプ（‘N’=数値、‘C’=文字）</li>
+</ul>
+<pre class="sas"><code>/* 治療群フォーマット用データセット */
+data trt_fmt;
+    retain fmtname &#39;trtf&#39; type &#39;N&#39;;
+    input start end label $20.;
+    datalines;
+1 1 プラセボ
+2 2 低用量
+3 3 高用量
+. . 欠測
+;
+run;
+
+/* 性別フォーマット用データセット */
+data sex_fmt;
+    retain fmtname &#39;$sexf&#39; type &#39;C&#39;;
+    input start $1. end $1. label $10.;
+    datalines;
+M M 男性
+F F 女性
+   不明
+;
+run;
+
+/* フォーマットの作成 */
+proc format cntlin=trt_fmt;
+run;
+
+proc format cntlin=sex_fmt;
+run;</code></pre>
+<p>PROC FORMATは以下の2つの方法でフォーマットを作成できます：</p>
+<p>VALUEステートメント：直接コードに記述する方法。シンプルで直感的 CNTLIN=オプション：データセットから作成する方法。大量のフォーマットや動的な作成に適している</p>
+<p>適切なフォーマットの使用により、データの可読性が大幅に向上し、レポート作成時の効率も改善されます。</p>
+
+
+</section>
 </section>
 </section>
 

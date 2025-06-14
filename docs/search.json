@@ -31,22 +31,22 @@
     "objectID": "posts/Web_tools/Web_tools.html#rプログラミング海外サイト",
     "href": "posts/Web_tools/Web_tools.html#rプログラミング海外サイト",
     "title": "Web Tools",
-    "section": "4 Rプログラミング（海外サイト）",
-    "text": "4 Rプログラミング（海外サイト）\n\nTidyverse style guide\nR Workflow for Reproducible Data Analysis and Reporting\nBuilding reproducible analytical pipelines with R\nR Workflow（Frank Harrell先生\nReproducible Medical Research with R\nR for Clinical Study Reports and Submission\nAn Introduction to Statistical Programming Methods with R\nTables in Clinical Trials with R\nIntroduction to tern\nWorkshops at rstudio::conf 2022\nTLG Catalog\nIntroduction to {rtables}\nReproducible Environments(Posit社)"
+    "section": "5 Rプログラミング（海外サイト）",
+    "text": "5 Rプログラミング（海外サイト）\n\nTidyverse style guide\nR Workflow for Reproducible Data Analysis and Reporting\nBuilding reproducible analytical pipelines with R\nR Workflow（Frank Harrell先生\nReproducible Medical Research with R\nR for Clinical Study Reports and Submission\nAn Introduction to Statistical Programming Methods with R\nTables in Clinical Trials with R\nIntroduction to tern\nWorkshops at rstudio::conf 2022\nTLG Catalog\nIntroduction to {rtables}\nReproducible Environments(Posit社)"
   },
   {
     "objectID": "posts/Web_tools/Web_tools.html#rプログラミング日本語",
     "href": "posts/Web_tools/Web_tools.html#rプログラミング日本語",
     "title": "Web Tools",
-    "section": "5 Rプログラミング（日本語）",
-    "text": "5 Rプログラミング（日本語）\n\nデータサイエンス100本ノック（構造化データ加工編）をRで解く\nRによる再現可能なデータ分析（瓜生真也先生）\nRによるデータ解析のための前処理（瓜生真也先生）\n次の一歩を踏み出すためのtidyverse入門（瓜生真也先生）\n今日からできる再現可能な論文執筆（国里愛彦先生・竹林由武先生）\nはじめよう！R（小杉考司先生）\n気軽にRでWebサイト\nRではじめようモダンなデータ分析\n私たちのR"
+    "section": "6 Rプログラミング（日本語）",
+    "text": "6 Rプログラミング（日本語）\n\nデータサイエンス100本ノック（構造化データ加工編）をRで解く\nRによる再現可能なデータ分析（瓜生真也先生）\nRによるデータ解析のための前処理（瓜生真也先生）\n次の一歩を踏み出すためのtidyverse入門（瓜生真也先生）\n今日からできる再現可能な論文執筆（国里愛彦先生・竹林由武先生）\nはじめよう！R（小杉考司先生）\n気軽にRでWebサイト\nRではじめようモダンなデータ分析\n私たちのR"
   },
   {
     "objectID": "posts/Web_tools/Web_tools.html#sasプログラミング",
     "href": "posts/Web_tools/Web_tools.html#sasプログラミング",
     "title": "Web Tools",
-    "section": "6 SASプログラミング",
-    "text": "6 SASプログラミング\n\nSASユーザー会\nSASユーザー総会 論文集アーカイブ\nSAS Forumユーザー会 2006\n大阪SAS勉強会\nデータステップ100万回　SAS新手一生\n晴れ時々SAS\n我輩はブロガーではない。ネタもまだない\nデータサイエンス100本ノック（構造化データ加工編）のSAS版\nRTFファイルをPDF化するDDEプログラム"
+    "section": "4 SASプログラミング",
+    "text": "4 SASプログラミング\n\nSAS備忘録\nPharmaceutical Software Users Group\nSASユーザー会\nSASユーザー総会 論文集アーカイブ\nSAS Forumユーザー会 2006\n大阪SAS勉強会\nデータステップ100万回　SAS新手一生\n晴れ時々SAS\n我輩はブロガーではない。ネタもまだない\nデータサイエンス100本ノック（構造化データ加工編）のSAS版\nRTFファイルをPDF化するDDEプログラム"
   },
   {
     "objectID": "posts/Web_tools/Web_tools.html#研究関連",
@@ -95,7 +95,7 @@
     "href": "posts/statistics/index.html",
     "title": "Notes",
     "section": "",
-    "text": "githubのブログ更新手順について\n\n\n\ngithub\n\n\n\n\n\n\n2025-06-14\n\n\n\n\n\n\n\nSASプログラミング入門\n\n\n\nSAS\n\n解析プログラミング\n\n\n\n\n\n\n2025-06-14\n\n\n\n\n\n\n\n解析用データセット仕様書\n\n\n\nSAS\n\nR\n\n解析用データセット\n\n\n\n\n\n\n2025-06-14\n\n\n\n\n\n\n\n第2相抗がん剤開発及び検証的試験の中間解析\n\n\n\n臨床試験\n\nSAS\n\n\n\n\n\n\n2025-05-24\n\n\n\n\n\n\n\n臨床試験のサンプルサイズ設計\n\n\n\n臨床試験\n\nSAS\n\n\n\n\n\n\n2025-05-17\n\n\n\n\n\nNo matching items"
+    "text": "githubのブログ更新手順について\n\n\n\ngithub\n\n\n\n\n\n\n2025-06-14\n\n\n\n\n\n\n\n解析用データセット仕様書\n\n\n\nSAS\n\nR\n\n解析用データセット\n\n\n\n\n\n\n2025-06-14\n\n\n\n\n\n\n\n解析用データセット作成の流れ（フォルダ構造等）\n\n\n\nSAS\n\n解析プログラミング\n\n\n\n\n\n\n2025-06-14\n\n\n\n\n\n\n\n第2相抗がん剤開発及び検証的試験の中間解析\n\n\n\n臨床試験\n\nSAS\n\n\n\n\n\n\n2025-05-24\n\n\n\n\n\n\n\n臨床試験のサンプルサイズ設計\n\n\n\n臨床試験\n\nSAS\n\n\n\n\n\n\n2025-05-17\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/statistics/2025/中間解析.html",
@@ -284,7 +284,7 @@
     "href": "index.html",
     "title": "Kota Sakamoto",
     "section": "",
-    "text": "本サイトは個人の学習記録であり、内容の正確性は保証いたしません。所属組織とは無関係の個人的見解です。\n所属先\n\n岡山大学病院 新医療研究開発センター データサイエンス部\n\n連絡先\n本ブログ等について、誤り/疑問点がありましたら以下までご連絡ください。\n\nkota.sakamoto0514@gmail.com"
+    "text": "本サイトは個人の学習記録であり、内容の正確性は保証いたしません。所属組織とは無関係の個人的見解です。\n当サイトのご利用により生じたいかなる損害・トラブルについて当サイトでは一切の責任を負いかねます事をご了承ください。\n所属先\n\n岡山大学病院 新医療研究開発センター データサイエンス部\n\n連絡先\n本ブログ等について、誤り/疑問点がありましたら以下までご連絡ください。\n\nkota.sakamoto0514@gmail.com"
   },
   {
     "objectID": "about.html",
@@ -333,35 +333,35 @@
     "href": "posts/statistics/2025/github.html",
     "title": "1 githubのブログ更新手順について",
     "section": "",
-    "text": "GitHubでブログを更新する際の標準的な手順は以下の通りです。"
+    "text": "GitHubでブログを更新する際の標準的な手順は以下の通りです。\n\n\nquarto render\ngit add .\ngit commit -m \"新記事追加/編集\"\ngit push origin main\n\n\n\nなお、quartoが多くなってきた場合、特定のファイルのみでrenderすることも可能である。\nquarto render\nquarto render post.qmd\n\n\n\ngit add .\n\n\n\ngit commit -m \"コミットメッセージ\"\n\n\n\ngit push origin main"
   },
   {
     "objectID": "posts/statistics/2025/github.html#quartoサイトをレンダリング",
     "href": "posts/statistics/2025/github.html#quartoサイトをレンダリング",
     "title": "1 githubのブログ更新手順について",
-    "section": "2.1 Quartoサイトをレンダリング",
-    "text": "2.1 Quartoサイトをレンダリング\nなお、quartoが多くなってきた場合、特定のファイルのみでrenderすることも可能である。\nquarto render\nquarto render post.qmd"
+    "section": "",
+    "text": "なお、quartoが多くなってきた場合、特定のファイルのみでrenderすることも可能である。\nquarto render\nquarto render post.qmd"
   },
   {
     "objectID": "posts/statistics/2025/github.html#変更内容をステージングエリアに追加",
     "href": "posts/statistics/2025/github.html#変更内容をステージングエリアに追加",
     "title": "1 githubのブログ更新手順について",
-    "section": "2.2 変更内容をステージングエリアに追加",
-    "text": "2.2 変更内容をステージングエリアに追加\ngit add ."
+    "section": "",
+    "text": "git add ."
   },
   {
     "objectID": "posts/statistics/2025/github.html#変更をコミット",
     "href": "posts/statistics/2025/github.html#変更をコミット",
     "title": "1 githubのブログ更新手順について",
-    "section": "2.3 変更をコミット",
-    "text": "2.3 変更をコミット\ngit commit -m \"コミットメッセージ\""
+    "section": "",
+    "text": "git commit -m \"コミットメッセージ\""
   },
   {
     "objectID": "posts/statistics/2025/github.html#リモートリポジトリにプッシュ",
     "href": "posts/statistics/2025/github.html#リモートリポジトリにプッシュ",
     "title": "1 githubのブログ更新手順について",
-    "section": "2.4 リモートリポジトリにプッシュ",
-    "text": "2.4 リモートリポジトリにプッシュ\ngit push origin main"
+    "section": "",
+    "text": "git push origin main"
   },
   {
     "objectID": "posts/statistics/2025/サンプルサイズ設計.html",
@@ -460,5 +460,89 @@
     "title": "解析用データセット仕様書",
     "section": "",
     "text": "解析用データセット仕様書を読み込み、Specificationシートの定義に従ってSASプログラムを作成します。ADxx_Conversionシートを参照してパラメータ変換処理も実装します。\n###　参考文献 - 生存時間解析用ADaMデータセット（ADTTE）のソースコード紹介"
+  },
+  {
+    "objectID": "posts/statistics/2025/解析用データセット作成の流れ.html",
+    "href": "posts/statistics/2025/解析用データセット作成の流れ.html",
+    "title": "解析用データセット作成の流れ（フォルダ構造等）",
+    "section": "",
+    "text": "効率的なフォルダ構成でプロジェクトを管理する\n\n\nSAS（Statistical Analysis System）を使ったデータ分析プロジェクトにおいて、最初に決めるべき重要な要素の一つがフォルダ構成です。適切なフォルダ構成を設定することで、プロジェクトの管理が格段に楽になり、チームでの作業効率も向上します。\n多くのSAS初心者は、とりあえずデスクトップやマイドキュメントにファイルを保存してしまいがちですが、プロジェクトが進むにつれて「あのファイルはどこに保存したっけ？」「これは最新バージョン？」といった問題に直面することになります。\n\n\n\nSASプログラミングを実施する際は、フォルダ構成をまず設定します。\nここでは、実際の業務で使用されている標準的な構成例を紹介します。\n任意のプロジェクトフォルダに対して以下のようなフォルダを作成します。テンプレートを作成しておくのが便利でしょう。\n\nInput\nLog\nOutput\nPrg\nSetting\nSpec\n\n\n\nInput：分析に使用する元データを格納\n\n外部から受け取ったCSVファイル、Excelファイル -\nデータベースから抽出した生データ\n既存のSASデータセット\n\nLog：SASプログラムの実行ログを保存\n\nプログラム実行時に出力されるログファイル\nエラーメッセージや警告の記録\n処理時間やデータ件数の確認用\n\nOutput：分析結果や成果物を保存\n\n作成されたSASデータセット\nデータ品質チェック結果\n\nPrg：SASプログラムファイル（.sas）を格納\n\nデータ処理プログラム（1_xx、2_xxのように実行するプログラムの順番が分かる方が望ましい）\nデータクリーニングプログラム\n派生変数作成プログラム\n\nSetting：\n\n設定ファイルや共通処理を保存\nよく使用するマクロ定義\nプロジェクト固有の設定\n\nSpec：仕様書や設計書類を格納\n\n解析用データセット仕様書\n\n\n\n\n\n実際のプロジェクトでは、解析用データセット作成プログラミングと、解析プログラミングはフォルダを分けることを推奨しています。\nここでは、解析用データセット作成に焦点を当てたフォルダ構成について詳しく説明します。\n\n\n解析用データセット作成用のフォルダ構成例：\n\nProject/\nInput/\n\nRaw_Data/ # 生データ（CSV、Excel等）\nExternal/ # 外部参照データ、マスタ情報\n\nLog/ # データ処理ログ\nOutput/ # 作成されたSASデータセット\nPrg/ # データ処理プログラム\nSetting/ # 設定ファイル、マクロ\n\n\n\n\nデータ取り込み（PROC IMPORT）\n\nCSVファイルやExcelファイルからSASデータセットへの変換\n文字エンコーディングの統一\n変数名の標準化\n\nデータクリーニング\n\n欠損値の処理（削除、補完、フラグ付け）\n外れ値の検出と処理\n重複レコードの確認と処理\nデータ型の統一\n\n派生変数の作成\n\n年齢の計算（生年月日から）\nカテゴリ変数の作成（連続変数の区分化）\n合計値や比率の計算\nフラグ変数の作成\n\nデータの品質チェック\n\nPROC FREQ による度数分布の確認\nPROC MEANS による基本統計量の確認\nデータ件数の確認\n変数ごとの欠損値率の確認\n\n\n\n\n\nSASプログラミングにおいて、プログラムの更新履歴を管理することは非常に重要です。特にデータ処理では、どの時点のプログラムで作成されたデータセットなのかを明確にする必要があります。\n\n\nデータセット作成プログラムの命名例\n\n01_data_import_20250614.sas # 初回作成\n01_data_import_20250615.sas # 修正版\n01_data_import_20250620.sas # 最新版\n02_data_cleaning_20250614.sas # データクリーニング\n03_variable_creation_20250615.sas # 派生変数作成\n04_quality_check_20250620.sas # 品質チェック\n\n\n\n\n各SASプログラムの冒頭には、以下のような標準的なヘッダーを記述することを必須とします。\n/*=================================\nプログラム名: 01_data_import.sas\nプロジェクト: プロジェクト名\n作成者      : 山田太郎\n作成日      : 2025/06/14\n最終更新日  : 2025/06/20\nバージョン  : v1.2\n目的        : 顧客アンケートデータの取り込みとクリーニング\n\n入力データ  : Raw_Data/survey_data.csv\n出力データ  : Output/cleaned_survey.sas7bdat\n\n更新履歴:\nv1.0 2025/06/14 初回作成\nv1.1 2025/06/15 欠損値処理ロジック追加\nv1.2 2025/06/20 外れ値検出機能追加\n=================================*/\n\n\n\n\n*---------------------- EOF （プログラム名.sas） ------------------------------- ;\n\n\n\n\nプログラム実行時に、実行日時をログに記録する仕組みを組み込むことも有効です：\n/* 実行開始時刻を記録 */\n%let start_time = %sysfunc(datetime());\n%put NOTE: データセット作成開始 - %sysfunc(datetime(), datetime19.);\n\n/* データ取り込み処理 */\nproc import datafile=\"Input/Raw_Data/survey_data.csv\"\n    out=work.raw_data\n    dbms=csv replace;\n    getnames=yes;\nrun;\n\n/* 実行終了時刻を記録 */\n%let end_time = %sysfunc(datetime());\n%let elapsed_time = %sysevalf(&end_time - &start_time);\n%put NOTE: データセット作成終了 - %sysfunc(datetime(), datetime19.);\n%put NOTE: 実行時間: %sysfunc(&elapsed_time, time8.);\n%put NOTE: 処理件数: %sysfunc(attrn(open(work.raw_data), nobs));\n\n\n\nログファイルの活用 データ処理では、どのような処理が行われたかを正確に記録することが重要です：\n/* ログファイルの出力先を指定（日付付き） */\n%let today = %sysfunc(today(), yymmddn8.);\nproc printto log=\"Log/data_creation_&today..log\";\nrun;\n\n/* データ処理 */\n/* ... */\n\n/* ログ出力を元に戻す */\nproc printto;\nrun;\n\n\n\nSettingフォルダでは、事前に解析用データセット仕様書のinputするファイル情報やPath、InputデータのPaht、OutputデータのPathを指定しておく。これを作成しておくことで、第3者に解析用データセット作成プログラムを提供した際でも、このSettingフォルダのPathだけを更新することで、再現可能な状態がすぐに作ることができる。\nExcelファイルには以下の3つの要素を設定します。：\n\nパス（Path）：ファイルの保存場所\nファイル名：Excelファイル名\nシート名：参照するワークシート名"
+  },
+  {
+    "objectID": "posts/statistics/2025/解析用データセット作成の流れ.html#はじめに",
+    "href": "posts/statistics/2025/解析用データセット作成の流れ.html#はじめに",
+    "title": "解析用データセット作成の流れ（フォルダ構造等）",
+    "section": "",
+    "text": "SAS（Statistical Analysis System）を使ったデータ分析プロジェクトにおいて、最初に決めるべき重要な要素の一つがフォルダ構成です。適切なフォルダ構成を設定することで、プロジェクトの管理が格段に楽になり、チームでの作業効率も向上します。\n多くのSAS初心者は、とりあえずデスクトップやマイドキュメントにファイルを保存してしまいがちですが、プロジェクトが進むにつれて「あのファイルはどこに保存したっけ？」「これは最新バージョン？」といった問題に直面することになります。"
+  },
+  {
+    "objectID": "posts/statistics/2025/解析用データセット作成の流れ.html#基本的なフォルダ構成",
+    "href": "posts/statistics/2025/解析用データセット作成の流れ.html#基本的なフォルダ構成",
+    "title": "解析用データセット作成の流れ（フォルダ構造等）",
+    "section": "",
+    "text": "SASプログラミングを実施する際は、フォルダ構成をまず設定します。\nここでは、実際の業務で使用されている標準的な構成例を紹介します。\n任意のプロジェクトフォルダに対して以下のようなフォルダを作成します。テンプレートを作成しておくのが便利でしょう。\n\nInput\nLog\nOutput\nPrg\nSetting\nSpec\n\n\n\nInput：分析に使用する元データを格納\n\n外部から受け取ったCSVファイル、Excelファイル -\nデータベースから抽出した生データ\n既存のSASデータセット\n\nLog：SASプログラムの実行ログを保存\n\nプログラム実行時に出力されるログファイル\nエラーメッセージや警告の記録\n処理時間やデータ件数の確認用\n\nOutput：分析結果や成果物を保存\n\n作成されたSASデータセット\nデータ品質チェック結果\n\nPrg：SASプログラムファイル（.sas）を格納\n\nデータ処理プログラム（1_xx、2_xxのように実行するプログラムの順番が分かる方が望ましい）\nデータクリーニングプログラム\n派生変数作成プログラム\n\nSetting：\n\n設定ファイルや共通処理を保存\nよく使用するマクロ定義\nプロジェクト固有の設定\n\nSpec：仕様書や設計書類を格納\n\n解析用データセット仕様書"
+  },
+  {
+    "objectID": "posts/statistics/2025/解析用データセット作成の流れ.html#解析用データセット作成に特化したフォルダ構成",
+    "href": "posts/statistics/2025/解析用データセット作成の流れ.html#解析用データセット作成に特化したフォルダ構成",
+    "title": "解析用データセット作成の流れ（フォルダ構造等）",
+    "section": "",
+    "text": "実際のプロジェクトでは、解析用データセット作成プログラミングと、解析プログラミングはフォルダを分けることを推奨しています。\nここでは、解析用データセット作成に焦点を当てたフォルダ構成について詳しく説明します。\n\n\n解析用データセット作成用のフォルダ構成例：\n\nProject/\nInput/\n\nRaw_Data/ # 生データ（CSV、Excel等）\nExternal/ # 外部参照データ、マスタ情報\n\nLog/ # データ処理ログ\nOutput/ # 作成されたSASデータセット\nPrg/ # データ処理プログラム\nSetting/ # 設定ファイル、マクロ\n\n\n\n\nデータ取り込み（PROC IMPORT）\n\nCSVファイルやExcelファイルからSASデータセットへの変換\n文字エンコーディングの統一\n変数名の標準化\n\nデータクリーニング\n\n欠損値の処理（削除、補完、フラグ付け）\n外れ値の検出と処理\n重複レコードの確認と処理\nデータ型の統一\n\n派生変数の作成\n\n年齢の計算（生年月日から）\nカテゴリ変数の作成（連続変数の区分化）\n合計値や比率の計算\nフラグ変数の作成\n\nデータの品質チェック\n\nPROC FREQ による度数分布の確認\nPROC MEANS による基本統計量の確認\nデータ件数の確認\n変数ごとの欠損値率の確認"
+  },
+  {
+    "objectID": "posts/statistics/2025/解析用データセット作成の流れ.html#プログラムの日付管理とバージョン管理",
+    "href": "posts/statistics/2025/解析用データセット作成の流れ.html#プログラムの日付管理とバージョン管理",
+    "title": "解析用データセット作成の流れ（フォルダ構造等）",
+    "section": "",
+    "text": "SASプログラミングにおいて、プログラムの更新履歴を管理することは非常に重要です。特にデータ処理では、どの時点のプログラムで作成されたデータセットなのかを明確にする必要があります。\n\n\nデータセット作成プログラムの命名例\n\n01_data_import_20250614.sas # 初回作成\n01_data_import_20250615.sas # 修正版\n01_data_import_20250620.sas # 最新版\n02_data_cleaning_20250614.sas # データクリーニング\n03_variable_creation_20250615.sas # 派生変数作成\n04_quality_check_20250620.sas # 品質チェック\n\n\n\n\n各SASプログラムの冒頭には、以下のような標準的なヘッダーを記述することを必須とします。\n/*=================================\nプログラム名: 01_data_import.sas\nプロジェクト: プロジェクト名\n作成者      : 山田太郎\n作成日      : 2025/06/14\n最終更新日  : 2025/06/20\nバージョン  : v1.2\n目的        : 顧客アンケートデータの取り込みとクリーニング\n\n入力データ  : Raw_Data/survey_data.csv\n出力データ  : Output/cleaned_survey.sas7bdat\n\n更新履歴:\nv1.0 2025/06/14 初回作成\nv1.1 2025/06/15 欠損値処理ロジック追加\nv1.2 2025/06/20 外れ値検出機能追加\n=================================*/\n\n\n\n\n*---------------------- EOF （プログラム名.sas） ------------------------------- ;"
+  },
+  {
+    "objectID": "posts/statistics/2025/解析用データセット作成の流れ.html#自動的な実行日時記録",
+    "href": "posts/statistics/2025/解析用データセット作成の流れ.html#自動的な実行日時記録",
+    "title": "解析用データセット作成の流れ（フォルダ構造等）",
+    "section": "",
+    "text": "プログラム実行時に、実行日時をログに記録する仕組みを組み込むことも有効です：\n/* 実行開始時刻を記録 */\n%let start_time = %sysfunc(datetime());\n%put NOTE: データセット作成開始 - %sysfunc(datetime(), datetime19.);\n\n/* データ取り込み処理 */\nproc import datafile=\"Input/Raw_Data/survey_data.csv\"\n    out=work.raw_data\n    dbms=csv replace;\n    getnames=yes;\nrun;\n\n/* 実行終了時刻を記録 */\n%let end_time = %sysfunc(datetime());\n%let elapsed_time = %sysevalf(&end_time - &start_time);\n%put NOTE: データセット作成終了 - %sysfunc(datetime(), datetime19.);\n%put NOTE: 実行時間: %sysfunc(&elapsed_time, time8.);\n%put NOTE: 処理件数: %sysfunc(attrn(open(work.raw_data), nobs));"
+  },
+  {
+    "objectID": "posts/statistics/2025/解析用データセット作成の流れ.html#実践的な運用のコツ",
+    "href": "posts/statistics/2025/解析用データセット作成の流れ.html#実践的な運用のコツ",
+    "title": "解析用データセット作成の流れ（フォルダ構造等）",
+    "section": "",
+    "text": "ログファイルの活用 データ処理では、どのような処理が行われたかを正確に記録することが重要です：\n/* ログファイルの出力先を指定（日付付き） */\n%let today = %sysfunc(today(), yymmddn8.);\nproc printto log=\"Log/data_creation_&today..log\";\nrun;\n\n/* データ処理 */\n/* ... */\n\n/* ログ出力を元に戻す */\nproc printto;\nrun;"
+  },
+  {
+    "objectID": "posts/statistics/2025/解析用データセット作成の流れ.html#settingフォルダについて",
+    "href": "posts/statistics/2025/解析用データセット作成の流れ.html#settingフォルダについて",
+    "title": "解析用データセット作成の流れ（フォルダ構造等）",
+    "section": "",
+    "text": "Settingフォルダでは、事前に解析用データセット仕様書のinputするファイル情報やPath、InputデータのPaht、OutputデータのPathを指定しておく。これを作成しておくことで、第3者に解析用データセット作成プログラムを提供した際でも、このSettingフォルダのPathだけを更新することで、再現可能な状態がすぐに作ることができる。\nExcelファイルには以下の3つの要素を設定します。：\n\nパス（Path）：ファイルの保存場所\nファイル名：Excelファイル名\nシート名：参照するワークシート名"
+  },
+  {
+    "objectID": "posts/statistics/2025/解析用データセット作成の流れ.html#attrib-statement",
+    "href": "posts/statistics/2025/解析用データセット作成の流れ.html#attrib-statement",
+    "title": "解析用データセット作成の流れ（フォルダ構造等）",
+    "section": "2.1 Attrib statement",
+    "text": "2.1 Attrib statement\n具体的なプログラミングについては、別記事で解説をするが、ここでは解析用データセットを作成する上で大事なAttrib Statementについて解説する。\n以下記事が参考になる。\n\nATTRIBステートメント\n変数属性を定義した空のデータセットを作成する方法【まとめ】\n\n解析用データ仕様書にて、各変数のLabel、Length、formatを指定する必要がある。 その際に、解析用データセットに対してattrib statementを適用することで簡単に設定できる。\nちなみに、変数の順番だけを入れ替えるならばformat Statementでも簡単にできる。こちらのブログが参考になります。\n\ndata ADSL;\n    set ADSL;\n    attrib \n        STUDYID   label=\"Study Identifier\"           length=$12  format=$12.\n        USUBJID   label=\"Unique Subject Identifier\"  length=$40  format=$40.\n        SUBJID    label=\"Subject Identifier\"         length=$20  format=$20.\n        AGE       label=\"Age\"                        length=8    format=8.\n        SEX       label=\"Sex\"                        length=$1   format=SEX.\n        TRT01P    label=\"Planned Treatment for Period 1\"  length=$200  format=$200.\n        TRT01A    label=\"Actual Treatment for Period 1\"   length=$200  format=$200.\n        TRT01PN   label=\"Planned Treatment for Period 1 (N)\"  length=8  format=8.\n        TRT01AN   label=\"Actual Treatment for Period 1 (N)\"  length=8  format=8.\n        FASFL     label=\"Full Analysis Set Flag\"     length=$1   format=NYFL.\n    ;\nrun;\n実際は手入力ですることは人為的ミスの元となるのでマクロ化等で自動化することを推奨するが考え方は上記の通りである。"
+  },
+  {
+    "objectID": "posts/statistics/2025/解析用データセット作成の流れ.html#proc-format",
+    "href": "posts/statistics/2025/解析用データセット作成の流れ.html#proc-format",
+    "title": "解析用データセット作成の流れ（フォルダ構造等）",
+    "section": "2.2 Proc format",
+    "text": "2.2 Proc format\n以下記事が参考になる。 - PROC FORMAT入門1 : VALUEステートメント\nPROC FORMATは、SASにおいてユーザー定義フォーマットを作成するプロシージャです。数値や文字データを、より読みやすい形式に変換して表示することができます。 基本構文は以下の通りです。\nproc format;\n    value フォーマット名\n        値1 = \"ラベル1\"\n        値2 = \"ラベル2\"\n        値3 = \"ラベル3\";\nrun;\n文字フォーマットには先頭にドルマークを付けます。\nproc format;\n    value trtf\n        1 = \"プラセボ\"\n        2 = \"低用量\"\n        3 = \"高用量\"\n        . = \"欠測\";\n        \n    value sexf\n        1 = \"男性\"\n        2 = \"女性\"\n        . = \"不明\";\n        \n    value nyf\n        0 = \"No\"\n        1 = \"Yes\"\n        . = \"Missing\";\nrun;\n\nproc format;\n    value $sexf\n        \"M\" = \"男性\"\n        \"F\" = \"女性\"\n        \" \" = \"不明\";\n        \n    value $countryfmt\n        \"JPN\" = \"日本\"\n        \"USA\" = \"アメリカ合衆国\"\n        \"GBR\" = \"イギリス\"\n        other = \"その他\";\nrun;"
+  },
+  {
+    "objectID": "posts/statistics/2025/解析用データセット作成の流れ.html#データセットからのフォーマット作成",
+    "href": "posts/statistics/2025/解析用データセット作成の流れ.html#データセットからのフォーマット作成",
+    "title": "解析用データセット作成の流れ（フォルダ構造等）",
+    "section": "2.3 データセットからのフォーマット作成",
+    "text": "2.3 データセットからのフォーマット作成\n\n2.3.1 3.1 CNTLIN=オプションの使用\nデータセットからフォーマットを作成する場合、特定の変数名を持つデータセットを準備する必要があります。 必要な変数：\n\nFMTNAME：フォーマット名\nSTART：変換前の値（開始値）\nEND：変換前の値（終了値、範囲指定時）\nLABEL：変換後のラベル\nTYPE：フォーマットタイプ（‘N’=数値、‘C’=文字）\n\n/* 治療群フォーマット用データセット */\ndata trt_fmt;\n    retain fmtname 'trtf' type 'N';\n    input start end label $20.;\n    datalines;\n1 1 プラセボ\n2 2 低用量\n3 3 高用量\n. . 欠測\n;\nrun;\n\n/* 性別フォーマット用データセット */\ndata sex_fmt;\n    retain fmtname '$sexf' type 'C';\n    input start $1. end $1. label $10.;\n    datalines;\nM M 男性\nF F 女性\n   不明\n;\nrun;\n\n/* フォーマットの作成 */\nproc format cntlin=trt_fmt;\nrun;\n\nproc format cntlin=sex_fmt;\nrun;\nPROC FORMATは以下の2つの方法でフォーマットを作成できます：\nVALUEステートメント：直接コードに記述する方法。シンプルで直感的 CNTLIN=オプション：データセットから作成する方法。大量のフォーマットや動的な作成に適している\n適切なフォーマットの使用により、データの可読性が大幅に向上し、レポート作成時の効率も改善されます。"
+  },
+  {
+    "objectID": "posts/statistics/2025/github.html#一括実行",
+    "href": "posts/statistics/2025/github.html#一括実行",
+    "title": "1 githubのブログ更新手順について",
+    "section": "",
+    "text": "quarto render\ngit add .\ngit commit -m \"新記事追加/編集\"\ngit push origin main"
   }
 ]
