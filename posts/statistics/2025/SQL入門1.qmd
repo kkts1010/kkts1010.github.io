@@ -1,0 +1,372 @@
+---
+title: "SAS Proc SQL入門1"
+author: "坂本航太"
+categories: [SAS,解析プログラミング]
+date-modified: "2025-06-15"
+abstract-title: Abstract
+abstract: ""
+date: "2025-06-14"
+format:
+  html: 
+    fontsize: normal
+    page-layout: full
+    lang: "ja"
+    encoding: "UTF-8"
+    toc: true
+    toc-depth: 2
+    code-fold: show
+    html-math-method: katex
+    fig-format: svg
+    fig-height: 5
+    fig-width: 9
+    self-contained: true
+    number-sections: true
+    code-block-border-left: true
+    code-line-numbers: false
+    code-overflow: wrap
+    highlight-style: atom-one
+    df-print: tibble
+editor: visual
+---
+
+# SASによるProc SQL入門1
+
+本記事では、SASによる`Proc SQL Procedure`について解説する。参考文献は以下の通りである。
+
+## 参考文献
+
+-   [2022年度SASユーザー総会：臨床試験のデータハンドリングとSQLプロシジャ](https://www.sas.com/ja_jp/events/21/users-group-2021/sessions.html#m=l3-5)
+-   2007年度SASユーザー総会：臨床試験データの加工におけるSAS/Proc SQL の活用事例：データセット併合と図表作成
+-   2007年度SASユーザー総会：SQL プロシジャの利用－安全性の集計を題材に－
+-   2016年度：データハンドリングにおけるSQLプロシジャの利活用 -PROC SQL入門ー
+-   
+
+# SASデータ処理の選択肢を広げる：Proc SQLの活用メリット
+
+製薬業界での臨床試験データ解析において、Data Stepに加えてProc SQLという選択肢を持つことで、より効率的なデータ処理が可能になります。
+
+-   **利点1：併合する各々のデータセットを事前にソートしておく必要がない**
+-   **利点2：データセットの併合と同時にデータをソートすることが可能である**
+-   **利点3：データセットを併合する際に、同じ変数名が存在する場合、単純にデータを上書きしてしまうことはない**
+-   **利点4：集計するための関数を用いることで個々の測定値とオブザベーション方向の平均値を比較することが可能である**
+
+## 利点1：事前ソートが不要
+
+**Data Stepの場合：**
+
+```         
+/* 各データセットを事前にソートする必要がある */
+proc sort data=dataset1; by id; run;
+proc sort data=dataset2; by id; run;
+data merged;
+    merge dataset1 dataset2;
+    by id;
+run;
+```
+
+**Proc SQLの場合：**
+
+```         
+/* ソート不要で直接結合可能 */
+proc sql;
+    create table merged as
+    select * from dataset1 a
+    left join dataset2 b
+    on a.id = b.id;
+quit;
+```
+
+## 利点2：併合と同時にソートが可能
+
+**Proc SQLでは、order byを用いることにより、データセットの併合と同時にデータをソートすることが可能である。そのため、データセットの併合後にProc sortで改めてソートすることはせずに、Proc SQLのみで目的に応じた並び順にすることが可能である。**
+
+```         
+proc sql;
+    create table result as
+    select * from dataset1 a
+    left join dataset2 b
+    on a.id = b.id
+    order by id, visit_date;  /* 結合と同時にソート */
+quit;
+```
+
+## 利点3：同名変数の上書き回避
+
+**Data Stepの問題：** 併合前の2つのデータセットに同じ変数名が存在する場合、データステップでマージするとその変数名のデータは上書きされてしまう
+
+**Proc SQLの解決策：**
+
+```         
+/* 表4.1.5のような状況での外部結合 */
+proc sql;
+    create table result as
+    select a.subject_id, a.sex as patient_sex, a.test_code, a.value,
+           b.sex as reference_sex, b.lower_limit, b.upper_limit
+    from measurement_data a
+    left join reference_data b
+    on a.test_code = b.test_code
+    and (b.sex = '.' or a.sex = b.sex);
+quit;
+```
+
+基準値データセットに「性別」のデータが存在し、かつ測定値データセットの「性別」と他の異なるオブザベーションは結合データセットから削除される
+
+## 利点4：集計関数による個別値と平均値の比較
+
+**従来の方法の問題：** 従来方向のデータの平均値を求めることは、SAS関数のmeanを用いることでデータステップでも可能である。しかし、オブザベーション方向のデータの平均値を求めるためには、Proc MEANSなどの別のプロシジャを用いる必要がある。また、retainステートメントを用いたオブザベーション方向の累計の計算により、データステップでもオブザベーション方向の平均値を求めることは可能であるが、個々の測定値と求めた平均値を比較するためには別工程の処理が必要である。
+
+**Proc SQLの解決策：**
+
+```         
+proc sql;
+    create table comparison as
+    select subjid, paramcd, value,
+           mean(value) as group_mean,
+           value - mean(value) as deviation_from_mean
+    from lab_data
+    group by paramcd;
+quit;
+```
+
+それに対して、Proc SQLでは、集計するための関数を用いることで、**個々の測定値とオブザベーション方向の平均値を比較することが可能となる。**
+
+# Proc SQL構文について
+
+## 基本構文
+
+1つのデータセットを加工して、1つのデータセットを作成する場合の基本的なProc SQLの構文：他にも諸々の指定ができるが、基礎的な事項は以下の通りである。
+
+```         
+Proc SQL ;
+    create table 作成データセット名    as
+    select      元のデータセット名.変数名1,
+                元のデータセット名.変数名2    as  変更後の変数名2
+    from        元のデータセット名
+    where       データ抽出の条件1
+    group by    グループ分け
+    having      データ抽出の条件2
+    order by    ソート変数
+;
+```
+
+複数SQLステートメントのまとめ書き
+
+```         
+proc sql <オプション> ;
+    sqlステートメント1 ;
+    sqlステートメント2 ;
+    sqlステートメント3 ;
+;
+quit;
+```
+
+## 各構文要素の説明
+
+### `create table 作成データセット名 as`
+
+作成するデータセットの名称を定義する。
+
+### `select`
+
+```         
+select  元のデータセット名.変数名1,
+        元のデータセット名.変数名2 as 変更後の変数名2
+```
+
+-   作成するデータセットに保存する変数を定義する（データステップでは`keep`ステートメントに相当）
+
+-   元のデータセットにおける変数名を指定した後に「`as`」を加え、変更後の変数名を記載することで、作成するデータセットに保存する変数の変数名を変更することが可能（データステップでは`rename`ステートメントに相当）
+
+-   基本的に作成するデータセットに保存する全ての変数を定義する必要がある
+
+-   元のデータセットに存在する全ての変数をそのまま用いる場合には「`*`」で代用することも可能
+
+-   定義された変数名の順でデータセットが作成されるため、変数の並び順を変更することが簡単
+
+### `from 元のデータセット名`
+
+元のデータセットを指定する（データステップでは`set`ステートメントに相当）。
+
+### `where データ抽出の条件1`
+
+元のデータセットからデータを抽出する条件を指定する。
+
+### `group by グループ分け`
+
+集計する場合などの状況においてグループ分けの条件を設定する。
+
+### `having データ抽出の条件2`
+
+元のデータセットからデータを抽出する条件を指定する。集計するための関数を利用して条件を指定する場合には、「`where`」ではなく「`having`」で指定する。
+
+### `order by ソート変数`
+
+データのソートに用いる変数を指定する。Proc SQLでは、データセット作成と同時にデータをソートすることが可能である。
+
+## Data Stepとの比較
+
+上記のProc SQLで作成したプログラムをデータステップおよびProc SQL以外のプロシジャで作成する場合：
+
+```         
+Data 作成データセット名 ;
+    set 元のデータセット名 ;
+    where       データ抽出の条件1 ;
+    rename      変数名2 = 変更後の変数名2 ;
+    keep        変数名1  変更後の変数名2 ;
+    if          データ抽出の条件2 ;
+run ;
+
+Proc sort data=作成データセット名 ;
+    by ソート変数 ;
+run ;
+```
+
+## Proc SQLの利点
+
+-   **複数の工程を1工程にまとめられる**：プログラム作成においてエラーを少なくするという利点がある
+
+-   **変更箇所の特定が容易**：変更箇所を見つけやすいため、変数名の変更や条件の変更を行なう際に変更漏れを少なくするという利点がある
+
+-   **統一された記法**：Proc SQLでは「`Proc SQL;`」～「`quit`」、データステップでは「`Data`」～「`run;`」、Proc SQL以外のプロシジャでは「`Proc`」～「`run;`」を1工程と表現する
+
+# 各Statementの使い方について
+
+```{markdown}
+/* 付録. SAS プログラム (SAS Ver 9.1 日本語版) */
+
+/* 利用するフォーマットの指定 */
+proc format ;
+    value LBTEST    1 = "総コレステロール"
+                    2 = "LDLコレステロール"  
+                    3 = "HDLコレステロール"
+                    4 = "中性脂肪"         ;
+    value SEX       1 = "M"
+                    2 = "F"                ;
+run ;
+
+/* 測定値データの発生 */
+data WORK1 ;
+    label ID = "被験者" SEX = "性別" LBTESTCD = "項目番号" LBTEST = "項目名" VALUE = "測定値" ;
+    do ID = 1 to 10000 ;
+        SEX = put(ranbin(12345, 1, 0.5) + 1, SEX.) ;
+        do LBTESTCD = 1, 4, 3, 2 ;
+            LBTEST = put(LBTESTCD, LBTEST.) ;
+            do WEEK = 0, 8, 16, 24 ;
+                if LBTESTCD = 1 then VALUE = round(250 - 2  * week + rannor(3568*week) + 10 * rannor(9856) ) ;
+                if LBTESTCD = 2 then VALUE = round(150 - 0.3 * week + rannor(6325*week) + 8 * rannor(1352) ) ;
+                if LBTESTCD = 3 then VALUE = round( 30 + 0.1 * week + rannor(6932*week) + 5 * rannor(8256) ) ;
+                if LBTESTCD = 4 then VALUE = round(180 - 1.2 * week + rannor(1529*week) + 11 * rannor(4526) ) ;
+                output ;
+            end ; end ; end ;
+run ;
+
+/* 基準値データ */
+data NORM ;
+    input LBTESTCD SEX $ LO_NRM HI_NRM ;
+    label LBTESTCD = "項目番号" SEX = "性別" LO_NRM = "下側基準値" HI_NRM = "上側基準値" ;
+cards ;
+1  .  150  220
+4  .   50  145
+2  .   70  130
+3  M   40   85
+3  F   40   95
+;
+run ;
+
+/* 事例1：ソートされていないつのデータセットを結合する */
+
+/***** データステップを用いる場合 *****/
+Proc SORT data=WORK1 out=DATAS1 ;
+    by LBTESTCD SEX ;
+run ;
+data DATAS2a ; set NORM ;
+    /* 性別のところに基準値が入い場合にデータを作成する。面倒には違 */
+    if SEX not in ("", ".") then output ;
+    else        do SEX = "M", "F" ; output ; end ;
+run ;
+Proc SORT data=DATAS2a out=DATAS2 ;
+    by LBTESTCD SEX ;
+run ;
+data DATAS3 ; merge DATAS1 DATAS2 ;
+    by LBTESTCD SEX ;
+run ;
+Proc SORT data=DATAS3 out=DATAS4 ;
+    by ID LBTESTCD WEEK ;
+run ;
+
+/***** Proc SQL を用いる場合 *****/
+Proc SQL ;
+    create table SQL1 as                                    /* 作成するデータセット名を指定 */
+    select  WORK1.ID,
+            WORK1.SEX,
+            WORK1.LBTESTCD,
+            WORK1.LBTEST,
+            WORK1.WEEK,
+            WORK1.VALUE,
+            NORM.LO_NRM,
+            NORM.HI_NRM                                     /* 作成する項目名を指定 */
+    from    WORK1 left join NORM                           /* WORK1にNORMを条件付で結合する */
+    on      WORK1.LBTESTCD = NORM.LBTESTCD                 /* 項目のコードが一致する場合 */
+    where   NORM.SEX in ("", ".") or
+            WORK1.SEX = NORM.SEX                           /* 基準値で性別が無い、性別ごとのデータを結合する */
+    order by ID, LBTESTCD, WEEK                            /* データセット作成と同時にデータを並び替える */
+    ;
+quit ;
+
+Proc COMPARE BASE=SQL1 COMPARE=DATAS4 ;
+    title "事例1：Proc SQLを用いて作成したデータセットとデータステップで作成したデータセットの比較" ;
+run ; title ;
+
+/* 事例2：関数時の測定値から算出されたサブグループ集団のデータを抽出する */
+
+/***** データステップを用いる場合 *****/
+Proc SORT data=WORK1 out=DATAS11 ;
+    by ID LBTESTCD WEEK ;
+run ;
+/* 関数時データから各平均値を求める */
+Proc MEANS data=WORK1 ;
+    where   LBTESTCD = 1 and WEEK = 0 ;                   /* 関数時の総コレステロール値でサブグループを対象 */
+    by      LBTESTCD ;
+    var     VALUE ;
+    output out=PMEAN mean=MEAN ;                           /* 各にデータセットを作成 */
+run ;
+data null ; set PMEAN ;
+    call symput("PMEAN", MEAN) ;                          /* 条件に用いる値をマクロ変数としてデータ化 */
+run ;
+data SUBJ ; set DATAS11 ;
+    where   LBTESTCD = 1 and WEEK =0 ;                    /* 関数時の総コレステロール値のデータのみを抽出 */
+    by      LBTESTCD ;
+    if      WEEK = 0 and VALUE > &PMEAN ;                 /* 関数時の測定値が平均値より大きい被験者の件数 */
+run ;
+data DATAS12 ; merge DATAS11 SUBJ(keep=ID in=a) ;
+    by ID ;
+    if a ;                                                /* inデータセットオプションで必要な被験者のみを特定 */
+run ;
+Proc SORT data=DATAS12 out=DATAS13 ;
+    by LBTESTCD ID WEEK ;                                 /* 利用する順番でソート */
+run ;
+
+/***** Proc SQL を用いる場合 *****/
+Proc SQL ;
+    create table SQL11 as                                 /* 作成するデータセットを指定 */
+    select  WORK1.ID,
+            WORK1.SEX,
+            WORK1.LBTESTCD,
+            WORK1.LBTEST,
+            WORK1.WEEK,
+            WORK1.VALUE                                   /* 作成する項目名を指定 */
+    from    WORK1
+    where   ID in
+            (select ID                                    /* 抽出する被験者を指定 */
+             from   WORK1
+             where  WEEK = 0 and LBTESTCD = 1            /* 抽出する条件を指定 */
+             having VALUE > avg(VALUE) )                  /* 抽出する条件を指定 */
+    order by LBTESTCD, ID, WEEK
+    ;
+quit ;
+
+Proc COMPARE BASE=SQL11 COMPARE=DATAS13 ;
+    title "事例2：Proc SQLを用いて作成したデータセットとデータステップで作成したデータセットの比較" ;
+run ; title ;
+
+```

@@ -26,22 +26,6 @@ format:
     code-overflow: wrap
     highlight-style: atom-one
     df-print: tibble
-#   pdf:
-#     documentclass: bxjsarticle
-#     classoption: 
-#       - xelatex
-#       - ja=standard
-#     pdf-engine: xelatex
-#     mainfont: "Times New Roman"
-#     sansfont: "Times New Roman"
-#     monofont: "Courier New"
-#     CJKmainfont: "MS Mincho"  
-#     CJKsansfont: "MS Gothic" 
-#     toc: true
-#     toc-depth: 2
-#     number-sections: true
-#     colorlinks: true
-#     keep-tex: true
 editor: visual
 ---
 
@@ -50,6 +34,14 @@ editor: visual
 ## はじめに
 
 臨床試験や統計解析プロジェクトにおいて、解析用データセット仕様書は分析の設計図とも言える重要な文書です。本記事では、実用的な解析用データセット仕様書の構成と記載内容について、主要な3つのデータセット（ADSL、ADLB、ADTTE）を例に解説し、さらに仕様書に基づくデータセット作成とバリデーションプロセスについても説明します。探索的解析であっても事前に解析用データセット仕様書を作成することを推奨する。
+
+## 参考文献
+
+-   SASユーザー総会2014年度：SASとExcelを用いたCDISCADaM標準における作業効率化の試み
+
+-   SASユーザー総会2013年度：ライブラリ参照と名前の定義を利用して EXCELファイルへの柔軟なデータ入出力を実現する 解析結果のレポーティングからセルオートマトンまで
+
+-   SASユーザー総会2010年度：“Standard Template Programs"の開発
 
 ## 仕様書の基本構成
 
