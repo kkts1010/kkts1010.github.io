@@ -29,6 +29,9 @@ website:
      - icon : twitter
        href : https://twitter.com/kkt_1010
 
+execute:
+  engine: knitr
+
 format:
   html:
     mainfont: "BIZ UDPGothic"
@@ -45,6 +48,4 @@ format:
     toc-title: "目次"
     abstract-title: "概要"
 
-
 editor: visual
-
