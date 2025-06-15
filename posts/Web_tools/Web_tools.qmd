@@ -72,6 +72,7 @@ title: "Web Tools"
 -   [気軽にRでWebサイト](https://shohei-doi.github.io/academic-website/get-started.html)
 -   [Rではじめようモダンなデータ分析](https://book.mynavi.jp/manatee/series/detail/id=54225)
 -   [私たちのR](https://www.jaysong.net/RBook/)
+-   [Rプログラムの個人ブログ](https://t-arae.blog/)
 
 ## 研究関連
 
