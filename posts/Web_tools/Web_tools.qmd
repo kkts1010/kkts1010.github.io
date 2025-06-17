@@ -89,6 +89,7 @@ title: "Web Tools"
 -   [KRSK先生のブログ](https://www.krsk-phs.com/)
 -   [司馬先生のブログ](https://162348.github.io/)
 -   [Yanagimoto先生のブログ](https://zenn.dev/nicetak)
+-   [すきとほるさんのブログ](https://nothing-without-poison.com/)
 
 ## 論文雑誌
 

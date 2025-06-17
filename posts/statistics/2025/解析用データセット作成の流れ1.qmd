@@ -149,7 +149,7 @@ SASプログラミングにおいて、プログラムの更新履歴を管理�
 
 各SASプログラムの冒頭には、以下のような標準的なヘッダーを記述することを必須とします。
 
-```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /*=================================
 プログラム名: 01_data_import.sas
 プロジェクト: プロジェクト名
@@ -178,7 +178,7 @@ v1.2 2025/06/20 外れ値検出機能追加
 
 プログラム実行時に、実行日時をログに記録する仕組みを組み込むことも有効です：
 
-```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 実行開始時刻を記録 */
 %let start_time = %sysfunc(datetime());
 %put NOTE: データセット作成開始 - %sysfunc(datetime(), datetime19.);
@@ -202,7 +202,7 @@ run;
 
 ログファイルの活用 データ処理では、どのような処理が行われたかを正確に記録することが重要です：
 
-```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* ログファイルの出力先を指定（日付付き） */
 %let today = %sysfunc(today(), yymmddn8.);
 proc printto log="Log/data_creation_&today..log";
@@ -241,7 +241,7 @@ Excelファイルには以下の3つの要素を設定します。：
 
 ちなみに、変数の順番だけを入れ替えるならばformat Statementでも簡単にできる。[こちらのブログ](https://sas-boubi.blogspot.com/search/label/%E3%82%B9%E3%83%86%E3%83%BC%E3%83%88%E3%83%A1%E3%83%B3%E3%83%88%3A%20FORMAT)が参考になります。
 
-```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 data ADSL;
     set ADSL;
     attrib 
@@ -267,7 +267,7 @@ run;
 
 PROC FORMATは、SASにおいてユーザー定義フォーマットを作成するプロシージャです。数値や文字データを、より読みやすい形式に変換して表示することができます。 基本構文は以下の通りです。
 
-```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 proc format;
     value フォーマット名
         値1 = "ラベル1"
@@ -278,7 +278,7 @@ run;
 
 文字フォーマットには先頭にドルマークを付けます。
 
-```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 proc format;
     value trtf
         1 = "プラセボ"
@@ -323,7 +323,7 @@ run;
 -   LABEL：変換後のラベル
 -   TYPE：フォーマットタイプ（'N'=数値、'C'=文字）
 
-```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 治療群フォーマット用データセット */
 data trt_fmt;
     retain fmtname 'trtf' type 'N';
@@ -383,27 +383,31 @@ VALUEステートメント：直接コードに記述する方法。シンプル
 
         -   Prg
 
-            -   yyyymmdd（開発中）
+            -   develop
 
-                -   ADSL
+                -   yyyymmdd
 
-                -   ADLB
+                    -   ADSL
 
-                -   ADTTE
+                    -   ADLB
 
-            -   yyyymmdd_固定（最後に作成する）
+                    -   ADTTE
 
-                -   ADSL
+            -   Fix
 
-                -   ADLB
+                -   yyyymmdd
 
-                -   ADTTE
+                    -   ADSL
+
+                    -   ADLB
+
+                    -   ADTTE
 
         -   Macro
 
-        -   Setting（LogやOutput、仕様書のPathを指定するもの、sasのlibname引用先）
+        -   Setting
 
-        -   Spec（解析データセット仕様書）
+        -   Spec
 
             -   v1.0
 
@@ -411,47 +415,47 @@ VALUEステートメント：直接コードに記述する方法。シンプル
 
     -   Analysis Program
 
-        -   Input
-
-            -   Mock-up
-
-            -   SAP
-
         -   Log
 
         -   Output
 
         -   Prg
 
-            -   yyyymmdd（開発中）
+            -   develop
 
-                -   Table1.sas
+                -   yyyymmdd
 
-                -   Table2.sas
+                    -   Table1.sas
 
-                -   Supplementary_Figure1.sas
+                    -   Table2.sas
 
-                -   TFL14_1_4_2.sas
+                    -   Supplementary_Figure1.sas
 
-            -   yyyymmdd_固定
+                    -   TFL14_1_4_2.sas
 
-                -   Table1.sas
+            -   Fix
 
-                -   Table2.sas
+                -   yyyymmdd
 
-                -   Supplementary_Figure1.sas
+                    -   Table1.sas
 
-                -   TFL14_1_4_2.sas
+                    -   Table2.sas
+
+                    -   Supplementary_Figure1.sas
+
+                    -   TFL14_1_4_2.sas
 
         -   Macro
 
-        -   Setting（LogやOutput、仕様書のPathを指定するもの、sasのlibname引用先）
+        -   Setting
 
-        -   Spec（解析プログラム仕様書、臨床試験の場合は作成する。論文投稿の5TFL程度であれば作成しない）
+        -   Spec
 
             -   v1.0
 
             -   v2.0
+
+    -   .project（Rの場合）
 
 基本的に上記のフォルダ構成でプロジェクトを運用することとする。RであってもSASであっても同じものとする。
 
