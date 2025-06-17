@@ -95,189 +95,343 @@
     "href": "posts/statistics/index.html",
     "title": "Notes",
     "section": "",
-    "text": "Markdown記法について\n\n\n\nMarkdown\n\n\n\n\n\n\n2025-06-15\n\n\n\n\n\n\n\nSQL入門1\n\n\n\nSAS\n\n解析プログラミング\n\n\n\n\n\n\n2025-06-15\n\n\n\n\n\n\n\ngithubのブログ更新手順について\n\n\n\ngithub\n\n\n\n\n\n\n2025-06-14\n\n\n\n\n\n\n\nSASプログラミング業務のフレームワーク\n\n\n\nSAS\n\n解析プログラミング\n\n\n\n\n\n\n2025-06-14\n\n\n\n\n\n\n\nSASマクロ入門1\n\n\n\nSAS\n\n解析プログラミング\n\n\n\n\n\n\n2025-06-14\n\n\n\n\n\n\n\n解析用データセット仕様書\n\n\n\nSAS\n\nR\n\n解析用データセット\n\n\n\n\n\n\n2025-06-14\n\n\n\n\n\n\n\n解析用データセット作成の流れ（フォルダ構造等）\n\n\n\nSAS\n\n解析プログラミング\n\n\n\n\n\n\n2025-06-14\n\n\n\n\n\n\n\n第2相抗がん剤開発及び検証的試験の中間解析\n\n\n\n臨床試験\n\nSAS\n\n\n\n\n\n\n2025-05-24\n\n\n\n\n\n\n\n臨床試験のサンプルサイズ設計\n\n\n\n臨床試験\n\nSAS\n\n\n\n\n\n\n2025-05-17\n\n\n\n\n\nNo matching items"
+    "text": "SASプログラミングTips1\n\n\n\nSAS\n\n解析プログラミング\n\n\n\n\n\n\n2025-06-16\n\n\n\n\n\n\n\n解析用データセット作成の流れ2\n\n\n\nSAS\n\n解析プログラミング\n\n\n\n\n\n\n2025-06-16\n\n\n\n\n\n\n\nMarkdown記法について\n\n\n\nMarkdown\n\n\n\n\n\n\n2025-06-15\n\n\n\n\n\n\n\nSQL入門1\n\n\n\nSAS\n\n解析プログラミング\n\n\n\n\n\n\n2025-06-15\n\n\n\n\n\n\n\ngithubのブログ更新手順について\n\n\n\ngithub\n\n\n\n\n\n\n2025-06-14\n\n\n\n\n\n\n\nSASプログラミング業務のフレームワーク\n\n\n\nSAS\n\n解析プログラミング\n\n\n\n\n\n\n2025-06-14\n\n\n\n\n\n\n\nSASマクロ入門1\n\n\n\nSAS\n\n解析プログラミング\n\n\n\n\n\n\n2025-06-14\n\n\n\n\n\n\n\n解析用データセット仕様書\n\n\n\nSAS\n\nR\n\n解析用データセット\n\n\n\n\n\n\n2025-06-14\n\n\n\n\n\n\n\n解析用データセット作成の流れ1（フォルダ構造等）\n\n\n\nSAS\n\n解析プログラミング\n\n\n\n\n\n\n2025-06-14\n\n\n\n\n\n\n\n第2相抗がん剤開発及び検証的試験の中間解析\n\n\n\n臨床試験\n\nSAS\n\n\n\n\n\n\n2025-05-24\n\n\n\n\n\n\n\n臨床試験のサンプルサイズ設計\n\n\n\n臨床試験\n\nSAS\n\n\n\n\n\n\n2025-05-17\n\n\n\n\n\nNo matching items"
   },
   {
-    "objectID": "posts/statistics/2025/解析用データセット仕様書.html",
-    "href": "posts/statistics/2025/解析用データセット仕様書.html",
-    "title": "解析用データセット仕様書",
+    "objectID": "posts/statistics/2025/解析用データセット作成の流れ1.html",
+    "href": "posts/statistics/2025/解析用データセット作成の流れ1.html",
+    "title": "解析用データセット作成の流れ1（フォルダ構造等）",
     "section": "",
-    "text": "臨床試験や統計解析プロジェクトにおいて、解析用データセット仕様書は分析の設計図とも言える重要な文書です。本記事では、実用的な解析用データセット仕様書の構成と記載内容について、主要な3つのデータセット（ADSL、ADLB、ADTTE）を例に解説し、さらに仕様書に基づくデータセット作成とバリデーションプロセスについても説明します。探索的解析であっても事前に解析用データセット仕様書を作成することを推奨する。\n\n\n\n\nSASユーザー総会2014年度：SASとExcelを用いたCDISCADaM標準における作業効率化の試み\nSASユーザー総会2013年度：ライブラリ参照と名前の定義を利用して EXCELファイルへの柔軟なデータ入出力を実現する 解析結果のレポーティングからセルオートマトンまで\nSASユーザー総会2010年度：“Standard Template Programs”の開発\n\n\n\n\n解析用データセット仕様書は、主に以下の要素で構成されます：\n\n表紙・改訂履歴：文書管理情報\nDataset Definition：データセットの基本定義\nSpecification：変数の詳細仕様\nADLB_PARAM / ADTTE_PARAM：パラメータ定義表（ADLB、ADTTE用）\nCodelist：コード値の定義\n\nこれらの情報をExcelファイルの複数シートに整理することで、管理しやすく実用的な仕様書が作成できます。\n\n\n\n変数仕様を記載するSpecificationシートでは、以下の項目を含めることを推奨します：\n\n\n\nVarnum：変数番号（並び順）\nDomain：データセット名（ADSL、ADLB、ADTTE等）\nVariable Name：変数名\nVariable Label：変数ラベル\nType：データタイプ（Char/Num）\nLength：変数長\nDisplay Format：表示フォーマット\nCodelist：コードリスト参照名\nCore：必須度（Req=必須、Perm=任意、Cond=条件付き）\nDefinition：定義・導出方法\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nVarnum\nDomain\nVariable Name\nVariable Label\nType\nLength\nDisplay Format\nCodelist\nCore\nDefinition\n\n\n\n\n1\nADSL\nSTUDYID\nStudy Identifier\nChar\n12\n\n\nReq\nDM.STUDYID\n\n\n2\nADSL\nUSUBJID\nUnique Subject Identifier\nChar\n40\n\n\nReq\nDM.USUBJID\n\n\n3\nADSL\nSUBJID\nSubject Identifier\nChar\n20\n\n\nReq\nDM.SUBJID\n\n\n4\nADSL\nAGE\nAge\nNum\n8\n\n\nReq\nDM.AGE\n\n\n5\nADSL\nSEX\nSex\nChar\n1\n\nSEX\nReq\nDM.SEX\n\n\n6\nADSL\nTRT01P\nPlanned Treatment for Period 1\nChar\n200\n\n\nReq\nARM\n\n\n7\nADSL\nTRT01A\nActual Treatment for Period 1\nChar\n200\n\n\nReq\nACTARM\n\n\n8\nADSL\nTRT01PN\nPlanned Treatment for Period 1 (N)\nNum\n8\n\n\nReq\nDerived from TRT01P\n\n\n9\nADSL\nTRT01AN\nActual Treatment for Period 1 (N)\nNum\n8\n\n\nReq\nDerived from TRT01A\n\n\n10\nADSL\nFASFL\nFull Analysis Set Flag\nChar\n1\n\nNYFL\nReq\nExternal derivation\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nVarnum\nDomain\nVariable Name\nVariable Label\nType\nLength\nDisplay Format\nCodelist\nCore\nDefinition\n\n\n\n\n1\nADLB\nSTUDYID\nStudy Identifier\nChar\n12\n\n\nReq\nDM.STUDYID\n\n\n2\nADLB\nUSUBJID\nUnique Subject Identifier\nChar\n40\n\n\nReq\nDM.USUBJID\n\n\n3\nADLB\nSUBJID\nSubject Identifier\nChar\n20\n\n\nReq\nDM.SUBJID\n\n\n4\nADLB\nAGE\nAge\nNum\n8\n\n\nReq\nDM.AGE\n\n\n5\nADLB\nSEX\nSex\nChar\n1\n\nSEX\nReq\nDM.SEX\n\n\n6\nADLB\nTRT01P\nPlanned Treatment for Period 1\nChar\n200\n\n\nReq\nARM\n\n\n7\nADLB\nTRT01A\nActual Treatment for Period 1\nChar\n200\n\n\nReq\nACTARM\n\n\n8\nADLB\nPARAM\nParameter\nChar\n200\n\n\nReq\nParameter description\n\n\n9\nADLB\nPARAMCD\nParameter Code\nChar\n8\n\n\nReq\nParameter short name\n\n\n10\nADLB\nPARAMN\nParameter (N)\nNum\n8\n\n\nReq\nNumeric representation of PARAM\n\n\n11\nADLB\nAVISIT\nAnalysis Visit\nChar\n200\n\n\nReq\nAnalysis visit description\n\n\n12\nADLB\nAVISITN\nAnalysis Visit (N)\nNum\n8\n\n\nReq\nNumeric representation of AVISIT\n\n\n13\nADLB\nAVAL\nAnalysis Value\nNum\n8\n\n\nReq\nNumeric analysis value\n\n\n14\nADLB\nAVALC\nAnalysis Value (C)\nChar\n200\n\n\nCond\nCharacter analysis value\n\n\n15\nADLB\nBASE\nBaseline Value\nNum\n8\n\n\nPerm\nBaseline analysis value\n\n\n16\nADLB\nBASEC\nBaseline Value (C)\nChar\n200\n\n\nPerm\nBaseline character value\n\n\n17\nADLB\nCHG\nChange from Baseline\nNum\n8\n\n\nPerm\nAVAL - BASE\n\n\n18\nADLB\nPCHG\nPercent Change from Baseline\nNum\n8\n\n\nPerm\n((AVAL-BASE)/BASE)*100\n\n\n19\nADLB\nAVALCAT1\nAnalysis Value Category 1\nChar\n200\n\n\nPerm\nCategorization of AVAL\n\n\n20\nADLB\nAVALCAT1N\nAnalysis Value Category 1 (N)\nNum\n8\n\n\nPerm\nNumeric representation of AVALCAT1\n\n\n21\nADLB\nPCHGCAT1\nPercent Chg from Baseline Category 1\nChar\n200\n\n\nPerm\nCategorization of PCHG\n\n\n22\nADLB\nPCHGCAT1N\nPercent Chg from Baseline Category 1 (N)\nNum\n8\n\n\nPerm\nNumeric representation of PCHGCAT1\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nVarnum\nDomain\nVariable Name\nVariable Label\nType\nLength\nDisplay Format\nCodelist\nCore\nDefinition\n\n\n\n\n1\nADTTE\nSTUDYID\nStudy Identifier\nChar\n12\n\n\nReq\nDM.STUDYID\n\n\n2\nADTTE\nUSUBJID\nUnique Subject Identifier\nChar\n40\n\n\nReq\nDM.USUBJID\n\n\n3\nADTTE\nSUBJID\nSubject Identifier\nChar\n20\n\n\nReq\nDM.SUBJID\n\n\n4\nADTTE\nAGE\nAge\nNum\n8\n\n\nReq\nDM.AGE\n\n\n5\nADTTE\nSEX\nSex\nChar\n1\n\nSEX\nReq\nDM.SEX\n\n\n6\nADTTE\nTRT01P\nPlanned Treatment for Period 1\nChar\n200\n\n\nReq\nARM\n\n\n7\nADTTE\nTRT01A\nActual Treatment for Period 1\nChar\n200\n\n\nReq\nACTARM\n\n\n8\nADTTE\nPARAM\nParameter\nChar\n200\n\n\nReq\nAnalysis parameter description\n\n\n9\nADTTE\nPARAMCD\nParameter Code\nChar\n8\n\n\nReq\nAnalysis parameter short name\n\n\n10\nADTTE\nPARAMN\nParameter (N)\nNum\n8\n\n\nReq\nNumeric representation of PARAM\n\n\n11\nADTTE\nAVAL\nAnalysis Value\nNum\n8\n\n\nReq\nTime to event in days\n\n\n12\nADTTE\nSTARTDT\nTime to Event Origin Date\nNum\n8\ne8601da.\n\nReq\nAnalysis start date\n\n\n13\nADTTE\nADT\nAnalysis Date\nNum\n8\ne8601da.\n\nReq\nEvent or censoring date\n\n\n14\nADTTE\nCNSR\nCensor\nNum\n8\n\n\nReq\nCensoring flag (0=event, 1=censor)\n\n\n15\nADTTE\nEVNTDESC\nEvent or Censoring Description\nChar\n200\n\n\nPerm\nDescription of event or censoring\n\n\n16\nADTTE\nSRCDOM\nSource Data\nChar\n8\n\n\nPerm\nSource domain\n\n\n17\nADTTE\nSRCVAR\nSource Variable\nChar\n8\n\n\nPerm\nSource variable\n\n\n18\nADTTE\nSRCSEQ\nSource Sequence Number\nNum\n8\n\n\nPerm\nSource sequence number\n\n\n\n\n\n\n\nADLB、ADTTEなどのBDS形式データセットでは、パラメータの定義情報を管理するための専用シートを作成します。\n\n\n\n\n\nPARAM\nPARAMCD\nPARAMN\nAVAL\n\n\n\n\nHbA1c(%)\nHBA1C\n1\ninput(LABデータ)\n\n\nBlood glucose (mg/dL)\nGLU\n2\ninput(LABデータ)\n\n\nBUN (mg/dL)\nBUN\n3\ninput(LABデータ)\n\n\nCreatinine (mg/dL)\nCREAT\n4\ninput(LABデータ)\n\n\nALT (U/L)\nALT\n5\ninput(LABデータ)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPARAM\nPARAMCD\nPARAMN\nAVAL\n\n\n\n\nWeight/Waist Circumference Loss\nWTWCLOSS\n1\nADT - STARTDT + 1\n\n\nOverall Survival\nOS\n2\nADT - STARTDT + 1\n\n\nProgression Free Survival\nPFS\n3\nADT - STARTDT + 1\n\n\nTime to Progression\nTTP\n4\nADT - STARTDT + 1\n\n\n\n\n\n\n\n\n\nADLBでは数値解析値（AVAL）に基づいて、様々なカテゴリ変数を作成します：\n\n\n解析値のカテゴリ化変数で、例えば正常範囲の判定などに使用： - “NORMAL” / “ABNORMAL” - “LOW” / “NORMAL” / “HIGH”\n\n\n\nベースラインからの変化率のカテゴリ化変数： - “&gt;30% increase” / “±30%” / “&gt;30% decrease”\n\n\n\n\n解析用の時点定義で、スケジュール通りの時点名： - “Baseline” (AVISITN=0) - “Week 4” (AVISITN=4) - “Week 12” (AVISITN=12) - “End of Treatment” (AVISITN=99)\n\n\n\n\n\n\nADTTEは生存時間解析用のデータセットで、以下の特徴があります：\n\n1被験者1パラメータにつき1レコードの構造\n事象の発生時間または打ち切り時間を記録\n複数の解析エンドポイントを1つのデータセットで管理\n\n\n\n\n\n\n複数の事象や打ち切りが同日に発生した場合の優先順位を明確に定義する必要があります。\n\n\n\nAVALは通常、以下の式で計算されます：\nここで： - STARTDT：解析開始日（通常は治療開始日：ADSL.TRTSDT） - ADT：解析日（事象発生日または打ち切り日） - +1：0日目を避けるための調整\n\n\n\n\n事象発生：ADVS.ADTから日付を取得\n打ち切り：ADSL.EOSDTから日付を取得\n\n\n\n\n\nCNSR=0：事象発生\nCNSR=1：打ち切り\n\n\n\n\nADTTEでは元データの追跡可能性が重要です：\n事象採用時： - SRCDOM=“ADVS” - SRCVAR=“ADT” - SRCSEQ=ADVS.ASEQ\n打ち切り時： - SRCDOM=“ADSL” - SRCVAR=“EOSDT” - SRCSEQ=（ブランク）\n\n\n\n\n\nデータセットの組み合わせ：複数のデータセット（ADSL、ADVS等）を適切に結合\n日付の妥当性チェック：論理的に矛盾する日付の検出と処理\n追跡可能性の確保：各レコードの導出元を明確に記録\n複数事象の処理：同一被験者で複数の解析パラメータを生成\n\n\n\n\n\nコード値とその意味を定義するシートです。ADaM Terminology形式で管理します。\n\n\n\n\n\nReference Name\nCode Value\nCode Text\n\n\n\n\nSEXN\n1\n男性\n\n\nSEXN\n2\n女性\n\n\nSEX\nM\nMale\n\n\nSEX\nF\nFemale\n\n\nNYFL\nY\nYes\n\n\nNYFL\nN\nNo\n\n\nAGEU\nYEARS\nYears\n\n\nAGEU\nMONTHS\nMonths\n\n\n\n\n\n\n\n\n\n解析用データセット仕様書を読み込み、Specificationシートの定義に従ってSASプログラムを作成します。ADxx_Conversionシートを参照してパラメータ変換処理も実装します。\n###　参考文献 - 生存時間解析用ADaMデータセット（ADTTE）のソースコード紹介"
+    "text": "効率的なフォルダ構成でプロジェクトを管理する\n\n\nSAS（Statistical Analysis System）を使ったデータ分析プロジェクトにおいて、最初に決めるべき重要な要素の一つがフォルダ構成です。適切なフォルダ構成を設定することで、プロジェクトの管理が格段に楽になり、チームでの作業効率も向上します。\n多くのSAS初心者は、とりあえずデスクトップやマイドキュメントにファイルを保存してしまいがちですが、プロジェクトが進むにつれて「あのファイルはどこに保存したっけ？」「これは最新バージョン？」といった問題に直面することになります。\n\n\n\n\nSASユーザー総会2014年度：PMDAへの承認申請時 CDISC標準電子データ提出に向けた社内標準のリモデリング（塩野義製薬）\n\n\n\n\nSASプログラミングを実施する際は、フォルダ構成をまず設定します。ここでは、実際の業務で使用することができそうな標準的な構成例を紹介します。 任意のプロジェクトフォルダに対して以下のようなフォルダを作成します。テンプレートを作成しておくのが便利でしょう。もしくはProjectフォルダを作成して、自動でフォルダを作成するSASプログラムを準備しておくこともよいかもしれません。ここでの例は、あくまで1つの例であり、より使いやすくなるようなフォルダ構成に変更しても差し支えない。なお、このフォルダ構成はTLF作成のプログラムにおいても引用できる可能性がある。、TLFの解析を踏まえたフォルダ構成は別途提案する。\n\nInput\nLog\nOutput\nPrg\nSetting\nSpec\n\n\n\nInput：分析に使用する元データを格納\n\n外部から受け取ったCSVファイル、Excelファイル -\nデータベースから抽出した生データ\n既存のSASデータセット\n\nLog：SASプログラムの実行ログを保存\n\nプログラム実行時に出力されるログファイル\nエラーメッセージや警告の記録\n処理時間やデータ件数の確認用\n\nOutput：分析結果や成果物を保存\n\n作成されたSASデータセット\nデータ品質チェック結果\n\nPrg：SASプログラムファイル（.sas）を格納\n\nデータ処理プログラム（1_xx、2_xxのように実行するプログラムの順番が分かる方が望ましい）\nデータクリーニングプログラム\n派生変数作成プログラム\n\nSetting：\n\n設定ファイルや共通処理を保存\nよく使用するマクロ定義\nプロジェクト固有の設定\n\nSpec：仕様書や設計書類を格納\n\n解析用データセット仕様書\n\n\n\n\n\n実際のプロジェクトでは、解析用データセット作成プログラミングと、解析プログラミングはフォルダを分けることを推奨しています。\nここでは、解析用データセット作成に焦点を当てたフォルダ構成について詳しく説明します。\n\n\n解析用データセット作成用のフォルダ構成例：\n\nProject/\nInput/\n\nRaw_Data/ # 生データ（CSV、Excel等）\nExternal/ # 外部参照データ、マスタ情報\n\nLog/ # データ処理ログ\nOutput/ # 作成されたSASデータセット\nPrg/ # データ処理プログラム\nSetting/ # 設定ファイル、マクロ\n\n\n\n\nデータ取り込み（PROC IMPORT）\n\n解析用データ仕様書に基づいて、変数のlength,format,labelが入った空データセット（メタデータ）を作成する。\n文字エンコーディングの統一\n変数名の標準化\n\nデータクリーニング\n\n欠損値の処理（削除、補完、フラグ付け）\n重複レコードの確認と処理\nデータ型の統一\n\n派生変数の作成\n\n年齢の計算（生年月日から）\nカテゴリ変数の作成（連続変数の区分化）\n合計値や比率の計算\nフラグ変数の作成\n\n\n\n\n\nSASプログラミングにおいて、プログラムの更新履歴を管理することは非常に重要です。特にデータ処理では、どの時点のプログラムで作成されたデータセットなのかを明確にする必要があります。\n\n\nデータセット作成プログラムの命名例\n\n01_data_import_20250614.sas # 初回作成\n01_data_import_20250615.sas # 修正版\n01_data_import_20250620.sas # 最新版\n02_data_cleaning_20250614.sas # データクリーニング\n03_variable_creation_20250615.sas # 派生変数作成\n04_quality_check_20250620.sas # 品質チェック\n\n\n\n\n各SASプログラムの冒頭には、以下のような標準的なヘッダーを記述することを必須とします。\n/*=================================\nプログラム名: 01_data_import.sas\nプロジェクト: プロジェクト名\n作成者      : 山田太郎\n作成日      : 2025/06/14\n最終更新日  : 2025/06/20\nバージョン  : v1.2\n目的        : 顧客アンケートデータの取り込みとクリーニング\n\n入力データ  : Raw_Data/survey_data.csv\n出力データ  : Output/cleaned_survey.sas7bdat\n\n更新履歴:\nv1.0 2025/06/14 初回作成\nv1.1 2025/06/15 欠損値処理ロジック追加\nv1.2 2025/06/20 外れ値検出機能追加\n=================================*/\n\n\n\n\n*---------------------- EOF （プログラム名.sas） ------------------------------- ;\n\n\n\n\nプログラム実行時に、実行日時をログに記録する仕組みを組み込むことも有効です：\n/* 実行開始時刻を記録 */\n%let start_time = %sysfunc(datetime());\n%put NOTE: データセット作成開始 - %sysfunc(datetime(), datetime19.);\n\n/* データ取り込み処理 */\nproc import datafile=\"Input/Raw_Data/survey_data.csv\"\n    out=work.raw_data\n    dbms=csv replace;\n    getnames=yes;\nrun;\n\n/* 実行終了時刻を記録 */\n%let end_time = %sysfunc(datetime());\n%let elapsed_time = %sysevalf(&end_time - &start_time);\n%put NOTE: データセット作成終了 - %sysfunc(datetime(), datetime19.);\n%put NOTE: 実行時間: %sysfunc(&elapsed_time, time8.);\n%put NOTE: 処理件数: %sysfunc(attrn(open(work.raw_data), nobs));\n\n\n\nログファイルの活用 データ処理では、どのような処理が行われたかを正確に記録することが重要です：\n/* ログファイルの出力先を指定（日付付き） */\n%let today = %sysfunc(today(), yymmddn8.);\nproc printto log=\"Log/data_creation_&today..log\";\nrun;\n\n/* データ処理 */\n/* ... */\n\n/* ログ出力を元に戻す */\nproc printto;\nrun;\n\n\n\nSettingフォルダでは、事前に解析用データセット仕様書のinputするファイル情報やPath、InputデータのPaht、OutputデータのPathを指定しておく。これを作成しておくことで、第3者に解析用データセット作成プログラムを提供した際でも、このSettingフォルダのPathだけを更新することで、再現可能な状態がすぐに作ることができる。\nExcelファイルには以下の3つの要素を設定します。：\n\nパス（Path）：ファイルの保存場所\nファイル名：Excelファイル名\nシート名：参照するワークシート名"
   },
   {
-    "objectID": "posts/statistics/2025/解析用データセット仕様書.html#はじめに",
-    "href": "posts/statistics/2025/解析用データセット仕様書.html#はじめに",
-    "title": "解析用データセット仕様書",
+    "objectID": "posts/statistics/2025/解析用データセット作成の流れ1.html#はじめに",
+    "href": "posts/statistics/2025/解析用データセット作成の流れ1.html#はじめに",
+    "title": "解析用データセット作成の流れ1（フォルダ構造等）",
     "section": "",
-    "text": "臨床試験や統計解析プロジェクトにおいて、解析用データセット仕様書は分析の設計図とも言える重要な文書です。本記事では、実用的な解析用データセット仕様書の構成と記載内容について、主要な3つのデータセット（ADSL、ADLB、ADTTE）を例に解説し、さらに仕様書に基づくデータセット作成とバリデーションプロセスについても説明します。探索的解析であっても事前に解析用データセット仕様書を作成することを推奨する。"
+    "text": "SAS（Statistical Analysis System）を使ったデータ分析プロジェクトにおいて、最初に決めるべき重要な要素の一つがフォルダ構成です。適切なフォルダ構成を設定することで、プロジェクトの管理が格段に楽になり、チームでの作業効率も向上します。\n多くのSAS初心者は、とりあえずデスクトップやマイドキュメントにファイルを保存してしまいがちですが、プロジェクトが進むにつれて「あのファイルはどこに保存したっけ？」「これは最新バージョン？」といった問題に直面することになります。"
   },
   {
-    "objectID": "posts/statistics/2025/解析用データセット仕様書.html#参考文献",
-    "href": "posts/statistics/2025/解析用データセット仕様書.html#参考文献",
-    "title": "解析用データセット仕様書",
+    "objectID": "posts/statistics/2025/解析用データセット作成の流れ1.html#参考文献",
+    "href": "posts/statistics/2025/解析用データセット作成の流れ1.html#参考文献",
+    "title": "解析用データセット作成の流れ1（フォルダ構造等）",
     "section": "",
-    "text": "SASユーザー総会2014年度：SASとExcelを用いたCDISCADaM標準における作業効率化の試み\nSASユーザー総会2013年度：ライブラリ参照と名前の定義を利用して EXCELファイルへの柔軟なデータ入出力を実現する 解析結果のレポーティングからセルオートマトンまで\nSASユーザー総会2010年度：“Standard Template Programs”の開発"
+    "text": "SASユーザー総会2014年度：PMDAへの承認申請時 CDISC標準電子データ提出に向けた社内標準のリモデリング（塩野義製薬）"
   },
   {
-    "objectID": "posts/statistics/2025/解析用データセット仕様書.html#仕様書の基本構成",
-    "href": "posts/statistics/2025/解析用データセット仕様書.html#仕様書の基本構成",
-    "title": "解析用データセット仕様書",
+    "objectID": "posts/statistics/2025/解析用データセット作成の流れ1.html#解析用データセット作成における基本的なフォルダ構成案",
+    "href": "posts/statistics/2025/解析用データセット作成の流れ1.html#解析用データセット作成における基本的なフォルダ構成案",
+    "title": "解析用データセット作成の流れ1（フォルダ構造等）",
     "section": "",
-    "text": "解析用データセット仕様書は、主に以下の要素で構成されます：\n\n表紙・改訂履歴：文書管理情報\nDataset Definition：データセットの基本定義\nSpecification：変数の詳細仕様\nADLB_PARAM / ADTTE_PARAM：パラメータ定義表（ADLB、ADTTE用）\nCodelist：コード値の定義\n\nこれらの情報をExcelファイルの複数シートに整理することで、管理しやすく実用的な仕様書が作成できます。"
+    "text": "SASプログラミングを実施する際は、フォルダ構成をまず設定します。ここでは、実際の業務で使用することができそうな標準的な構成例を紹介します。 任意のプロジェクトフォルダに対して以下のようなフォルダを作成します。テンプレートを作成しておくのが便利でしょう。もしくはProjectフォルダを作成して、自動でフォルダを作成するSASプログラムを準備しておくこともよいかもしれません。ここでの例は、あくまで1つの例であり、より使いやすくなるようなフォルダ構成に変更しても差し支えない。なお、このフォルダ構成はTLF作成のプログラムにおいても引用できる可能性がある。、TLFの解析を踏まえたフォルダ構成は別途提案する。\n\nInput\nLog\nOutput\nPrg\nSetting\nSpec\n\n\n\nInput：分析に使用する元データを格納\n\n外部から受け取ったCSVファイル、Excelファイル -\nデータベースから抽出した生データ\n既存のSASデータセット\n\nLog：SASプログラムの実行ログを保存\n\nプログラム実行時に出力されるログファイル\nエラーメッセージや警告の記録\n処理時間やデータ件数の確認用\n\nOutput：分析結果や成果物を保存\n\n作成されたSASデータセット\nデータ品質チェック結果\n\nPrg：SASプログラムファイル（.sas）を格納\n\nデータ処理プログラム（1_xx、2_xxのように実行するプログラムの順番が分かる方が望ましい）\nデータクリーニングプログラム\n派生変数作成プログラム\n\nSetting：\n\n設定ファイルや共通処理を保存\nよく使用するマクロ定義\nプロジェクト固有の設定\n\nSpec：仕様書や設計書類を格納\n\n解析用データセット仕様書"
   },
   {
-    "objectID": "posts/statistics/2025/解析用データセット仕様書.html#specificationシートの構成",
-    "href": "posts/statistics/2025/解析用データセット仕様書.html#specificationシートの構成",
-    "title": "解析用データセット仕様書",
+    "objectID": "posts/statistics/2025/解析用データセット作成の流れ1.html#解析用データセット作成に特化したフォルダ構成",
+    "href": "posts/statistics/2025/解析用データセット作成の流れ1.html#解析用データセット作成に特化したフォルダ構成",
+    "title": "解析用データセット作成の流れ1（フォルダ構造等）",
     "section": "",
-    "text": "変数仕様を記載するSpecificationシートでは、以下の項目を含めることを推奨します：\n\n\n\nVarnum：変数番号（並び順）\nDomain：データセット名（ADSL、ADLB、ADTTE等）\nVariable Name：変数名\nVariable Label：変数ラベル\nType：データタイプ（Char/Num）\nLength：変数長\nDisplay Format：表示フォーマット\nCodelist：コードリスト参照名\nCore：必須度（Req=必須、Perm=任意、Cond=条件付き）\nDefinition：定義・導出方法\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nVarnum\nDomain\nVariable Name\nVariable Label\nType\nLength\nDisplay Format\nCodelist\nCore\nDefinition\n\n\n\n\n1\nADSL\nSTUDYID\nStudy Identifier\nChar\n12\n\n\nReq\nDM.STUDYID\n\n\n2\nADSL\nUSUBJID\nUnique Subject Identifier\nChar\n40\n\n\nReq\nDM.USUBJID\n\n\n3\nADSL\nSUBJID\nSubject Identifier\nChar\n20\n\n\nReq\nDM.SUBJID\n\n\n4\nADSL\nAGE\nAge\nNum\n8\n\n\nReq\nDM.AGE\n\n\n5\nADSL\nSEX\nSex\nChar\n1\n\nSEX\nReq\nDM.SEX\n\n\n6\nADSL\nTRT01P\nPlanned Treatment for Period 1\nChar\n200\n\n\nReq\nARM\n\n\n7\nADSL\nTRT01A\nActual Treatment for Period 1\nChar\n200\n\n\nReq\nACTARM\n\n\n8\nADSL\nTRT01PN\nPlanned Treatment for Period 1 (N)\nNum\n8\n\n\nReq\nDerived from TRT01P\n\n\n9\nADSL\nTRT01AN\nActual Treatment for Period 1 (N)\nNum\n8\n\n\nReq\nDerived from TRT01A\n\n\n10\nADSL\nFASFL\nFull Analysis Set Flag\nChar\n1\n\nNYFL\nReq\nExternal derivation\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nVarnum\nDomain\nVariable Name\nVariable Label\nType\nLength\nDisplay Format\nCodelist\nCore\nDefinition\n\n\n\n\n1\nADLB\nSTUDYID\nStudy Identifier\nChar\n12\n\n\nReq\nDM.STUDYID\n\n\n2\nADLB\nUSUBJID\nUnique Subject Identifier\nChar\n40\n\n\nReq\nDM.USUBJID\n\n\n3\nADLB\nSUBJID\nSubject Identifier\nChar\n20\n\n\nReq\nDM.SUBJID\n\n\n4\nADLB\nAGE\nAge\nNum\n8\n\n\nReq\nDM.AGE\n\n\n5\nADLB\nSEX\nSex\nChar\n1\n\nSEX\nReq\nDM.SEX\n\n\n6\nADLB\nTRT01P\nPlanned Treatment for Period 1\nChar\n200\n\n\nReq\nARM\n\n\n7\nADLB\nTRT01A\nActual Treatment for Period 1\nChar\n200\n\n\nReq\nACTARM\n\n\n8\nADLB\nPARAM\nParameter\nChar\n200\n\n\nReq\nParameter description\n\n\n9\nADLB\nPARAMCD\nParameter Code\nChar\n8\n\n\nReq\nParameter short name\n\n\n10\nADLB\nPARAMN\nParameter (N)\nNum\n8\n\n\nReq\nNumeric representation of PARAM\n\n\n11\nADLB\nAVISIT\nAnalysis Visit\nChar\n200\n\n\nReq\nAnalysis visit description\n\n\n12\nADLB\nAVISITN\nAnalysis Visit (N)\nNum\n8\n\n\nReq\nNumeric representation of AVISIT\n\n\n13\nADLB\nAVAL\nAnalysis Value\nNum\n8\n\n\nReq\nNumeric analysis value\n\n\n14\nADLB\nAVALC\nAnalysis Value (C)\nChar\n200\n\n\nCond\nCharacter analysis value\n\n\n15\nADLB\nBASE\nBaseline Value\nNum\n8\n\n\nPerm\nBaseline analysis value\n\n\n16\nADLB\nBASEC\nBaseline Value (C)\nChar\n200\n\n\nPerm\nBaseline character value\n\n\n17\nADLB\nCHG\nChange from Baseline\nNum\n8\n\n\nPerm\nAVAL - BASE\n\n\n18\nADLB\nPCHG\nPercent Change from Baseline\nNum\n8\n\n\nPerm\n((AVAL-BASE)/BASE)*100\n\n\n19\nADLB\nAVALCAT1\nAnalysis Value Category 1\nChar\n200\n\n\nPerm\nCategorization of AVAL\n\n\n20\nADLB\nAVALCAT1N\nAnalysis Value Category 1 (N)\nNum\n8\n\n\nPerm\nNumeric representation of AVALCAT1\n\n\n21\nADLB\nPCHGCAT1\nPercent Chg from Baseline Category 1\nChar\n200\n\n\nPerm\nCategorization of PCHG\n\n\n22\nADLB\nPCHGCAT1N\nPercent Chg from Baseline Category 1 (N)\nNum\n8\n\n\nPerm\nNumeric representation of PCHGCAT1\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nVarnum\nDomain\nVariable Name\nVariable Label\nType\nLength\nDisplay Format\nCodelist\nCore\nDefinition\n\n\n\n\n1\nADTTE\nSTUDYID\nStudy Identifier\nChar\n12\n\n\nReq\nDM.STUDYID\n\n\n2\nADTTE\nUSUBJID\nUnique Subject Identifier\nChar\n40\n\n\nReq\nDM.USUBJID\n\n\n3\nADTTE\nSUBJID\nSubject Identifier\nChar\n20\n\n\nReq\nDM.SUBJID\n\n\n4\nADTTE\nAGE\nAge\nNum\n8\n\n\nReq\nDM.AGE\n\n\n5\nADTTE\nSEX\nSex\nChar\n1\n\nSEX\nReq\nDM.SEX\n\n\n6\nADTTE\nTRT01P\nPlanned Treatment for Period 1\nChar\n200\n\n\nReq\nARM\n\n\n7\nADTTE\nTRT01A\nActual Treatment for Period 1\nChar\n200\n\n\nReq\nACTARM\n\n\n8\nADTTE\nPARAM\nParameter\nChar\n200\n\n\nReq\nAnalysis parameter description\n\n\n9\nADTTE\nPARAMCD\nParameter Code\nChar\n8\n\n\nReq\nAnalysis parameter short name\n\n\n10\nADTTE\nPARAMN\nParameter (N)\nNum\n8\n\n\nReq\nNumeric representation of PARAM\n\n\n11\nADTTE\nAVAL\nAnalysis Value\nNum\n8\n\n\nReq\nTime to event in days\n\n\n12\nADTTE\nSTARTDT\nTime to Event Origin Date\nNum\n8\ne8601da.\n\nReq\nAnalysis start date\n\n\n13\nADTTE\nADT\nAnalysis Date\nNum\n8\ne8601da.\n\nReq\nEvent or censoring date\n\n\n14\nADTTE\nCNSR\nCensor\nNum\n8\n\n\nReq\nCensoring flag (0=event, 1=censor)\n\n\n15\nADTTE\nEVNTDESC\nEvent or Censoring Description\nChar\n200\n\n\nPerm\nDescription of event or censoring\n\n\n16\nADTTE\nSRCDOM\nSource Data\nChar\n8\n\n\nPerm\nSource domain\n\n\n17\nADTTE\nSRCVAR\nSource Variable\nChar\n8\n\n\nPerm\nSource variable\n\n\n18\nADTTE\nSRCSEQ\nSource Sequence Number\nNum\n8\n\n\nPerm\nSource sequence number"
+    "text": "実際のプロジェクトでは、解析用データセット作成プログラミングと、解析プログラミングはフォルダを分けることを推奨しています。\nここでは、解析用データセット作成に焦点を当てたフォルダ構成について詳しく説明します。\n\n\n解析用データセット作成用のフォルダ構成例：\n\nProject/\nInput/\n\nRaw_Data/ # 生データ（CSV、Excel等）\nExternal/ # 外部参照データ、マスタ情報\n\nLog/ # データ処理ログ\nOutput/ # 作成されたSASデータセット\nPrg/ # データ処理プログラム\nSetting/ # 設定ファイル、マクロ\n\n\n\n\nデータ取り込み（PROC IMPORT）\n\n解析用データ仕様書に基づいて、変数のlength,format,labelが入った空データセット（メタデータ）を作成する。\n文字エンコーディングの統一\n変数名の標準化\n\nデータクリーニング\n\n欠損値の処理（削除、補完、フラグ付け）\n重複レコードの確認と処理\nデータ型の統一\n\n派生変数の作成\n\n年齢の計算（生年月日から）\nカテゴリ変数の作成（連続変数の区分化）\n合計値や比率の計算\nフラグ変数の作成"
   },
   {
-    "objectID": "posts/statistics/2025/解析用データセット仕様書.html#paramシート",
-    "href": "posts/statistics/2025/解析用データセット仕様書.html#paramシート",
-    "title": "解析用データセット仕様書",
+    "objectID": "posts/statistics/2025/解析用データセット作成の流れ1.html#プログラムの日付管理とバージョン管理",
+    "href": "posts/statistics/2025/解析用データセット作成の流れ1.html#プログラムの日付管理とバージョン管理",
+    "title": "解析用データセット作成の流れ1（フォルダ構造等）",
     "section": "",
-    "text": "ADLB、ADTTEなどのBDS形式データセットでは、パラメータの定義情報を管理するための専用シートを作成します。\n\n\n\n\n\nPARAM\nPARAMCD\nPARAMN\nAVAL\n\n\n\n\nHbA1c(%)\nHBA1C\n1\ninput(LABデータ)\n\n\nBlood glucose (mg/dL)\nGLU\n2\ninput(LABデータ)\n\n\nBUN (mg/dL)\nBUN\n3\ninput(LABデータ)\n\n\nCreatinine (mg/dL)\nCREAT\n4\ninput(LABデータ)\n\n\nALT (U/L)\nALT\n5\ninput(LABデータ)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPARAM\nPARAMCD\nPARAMN\nAVAL\n\n\n\n\nWeight/Waist Circumference Loss\nWTWCLOSS\n1\nADT - STARTDT + 1\n\n\nOverall Survival\nOS\n2\nADT - STARTDT + 1\n\n\nProgression Free Survival\nPFS\n3\nADT - STARTDT + 1\n\n\nTime to Progression\nTTP\n4\nADT - STARTDT + 1"
+    "text": "SASプログラミングにおいて、プログラムの更新履歴を管理することは非常に重要です。特にデータ処理では、どの時点のプログラムで作成されたデータセットなのかを明確にする必要があります。\n\n\nデータセット作成プログラムの命名例\n\n01_data_import_20250614.sas # 初回作成\n01_data_import_20250615.sas # 修正版\n01_data_import_20250620.sas # 最新版\n02_data_cleaning_20250614.sas # データクリーニング\n03_variable_creation_20250615.sas # 派生変数作成\n04_quality_check_20250620.sas # 品質チェック\n\n\n\n\n各SASプログラムの冒頭には、以下のような標準的なヘッダーを記述することを必須とします。\n/*=================================\nプログラム名: 01_data_import.sas\nプロジェクト: プロジェクト名\n作成者      : 山田太郎\n作成日      : 2025/06/14\n最終更新日  : 2025/06/20\nバージョン  : v1.2\n目的        : 顧客アンケートデータの取り込みとクリーニング\n\n入力データ  : Raw_Data/survey_data.csv\n出力データ  : Output/cleaned_survey.sas7bdat\n\n更新履歴:\nv1.0 2025/06/14 初回作成\nv1.1 2025/06/15 欠損値処理ロジック追加\nv1.2 2025/06/20 外れ値検出機能追加\n=================================*/\n\n\n\n\n*---------------------- EOF （プログラム名.sas） ------------------------------- ;"
   },
   {
-    "objectID": "posts/statistics/2025/解析用データセット仕様書.html#adlbデータセットの重要な変数",
-    "href": "posts/statistics/2025/解析用データセット仕様書.html#adlbデータセットの重要な変数",
-    "title": "解析用データセット仕様書",
+    "objectID": "posts/statistics/2025/解析用データセット作成の流れ1.html#自動的な実行日時記録",
+    "href": "posts/statistics/2025/解析用データセット作成の流れ1.html#自動的な実行日時記録",
+    "title": "解析用データセット作成の流れ1（フォルダ構造等）",
     "section": "",
-    "text": "ADLBでは数値解析値（AVAL）に基づいて、様々なカテゴリ変数を作成します：\n\n\n解析値のカテゴリ化変数で、例えば正常範囲の判定などに使用： - “NORMAL” / “ABNORMAL” - “LOW” / “NORMAL” / “HIGH”\n\n\n\nベースラインからの変化率のカテゴリ化変数： - “&gt;30% increase” / “±30%” / “&gt;30% decrease”\n\n\n\n\n解析用の時点定義で、スケジュール通りの時点名： - “Baseline” (AVISITN=0) - “Week 4” (AVISITN=4) - “Week 12” (AVISITN=12) - “End of Treatment” (AVISITN=99)"
+    "text": "プログラム実行時に、実行日時をログに記録する仕組みを組み込むことも有効です：\n/* 実行開始時刻を記録 */\n%let start_time = %sysfunc(datetime());\n%put NOTE: データセット作成開始 - %sysfunc(datetime(), datetime19.);\n\n/* データ取り込み処理 */\nproc import datafile=\"Input/Raw_Data/survey_data.csv\"\n    out=work.raw_data\n    dbms=csv replace;\n    getnames=yes;\nrun;\n\n/* 実行終了時刻を記録 */\n%let end_time = %sysfunc(datetime());\n%let elapsed_time = %sysevalf(&end_time - &start_time);\n%put NOTE: データセット作成終了 - %sysfunc(datetime(), datetime19.);\n%put NOTE: 実行時間: %sysfunc(&elapsed_time, time8.);\n%put NOTE: 処理件数: %sysfunc(attrn(open(work.raw_data), nobs));"
   },
   {
-    "objectID": "posts/statistics/2025/解析用データセット仕様書.html#adtteデータセットの詳細",
-    "href": "posts/statistics/2025/解析用データセット仕様書.html#adtteデータセットの詳細",
-    "title": "解析用データセット仕様書",
+    "objectID": "posts/statistics/2025/解析用データセット作成の流れ1.html#実践的な運用のコツ",
+    "href": "posts/statistics/2025/解析用データセット作成の流れ1.html#実践的な運用のコツ",
+    "title": "解析用データセット作成の流れ1（フォルダ構造等）",
     "section": "",
-    "text": "ADTTEは生存時間解析用のデータセットで、以下の特徴があります：\n\n1被験者1パラメータにつき1レコードの構造\n事象の発生時間または打ち切り時間を記録\n複数の解析エンドポイントを1つのデータセットで管理\n\n\n\n\n\n\n複数の事象や打ち切りが同日に発生した場合の優先順位を明確に定義する必要があります。\n\n\n\nAVALは通常、以下の式で計算されます：\nここで： - STARTDT：解析開始日（通常は治療開始日：ADSL.TRTSDT） - ADT：解析日（事象発生日または打ち切り日） - +1：0日目を避けるための調整\n\n\n\n\n事象発生：ADVS.ADTから日付を取得\n打ち切り：ADSL.EOSDTから日付を取得\n\n\n\n\n\nCNSR=0：事象発生\nCNSR=1：打ち切り\n\n\n\n\nADTTEでは元データの追跡可能性が重要です：\n事象採用時： - SRCDOM=“ADVS” - SRCVAR=“ADT” - SRCSEQ=ADVS.ASEQ\n打ち切り時： - SRCDOM=“ADSL” - SRCVAR=“EOSDT” - SRCSEQ=（ブランク）\n\n\n\n\n\nデータセットの組み合わせ：複数のデータセット（ADSL、ADVS等）を適切に結合\n日付の妥当性チェック：論理的に矛盾する日付の検出と処理\n追跡可能性の確保：各レコードの導出元を明確に記録\n複数事象の処理：同一被験者で複数の解析パラメータを生成"
+    "text": "ログファイルの活用 データ処理では、どのような処理が行われたかを正確に記録することが重要です：\n/* ログファイルの出力先を指定（日付付き） */\n%let today = %sysfunc(today(), yymmddn8.);\nproc printto log=\"Log/data_creation_&today..log\";\nrun;\n\n/* データ処理 */\n/* ... */\n\n/* ログ出力を元に戻す */\nproc printto;\nrun;"
   },
   {
-    "objectID": "posts/statistics/2025/解析用データセット仕様書.html#code-listシート",
-    "href": "posts/statistics/2025/解析用データセット仕様書.html#code-listシート",
-    "title": "解析用データセット仕様書",
+    "objectID": "posts/statistics/2025/解析用データセット作成の流れ1.html#settingフォルダについて",
+    "href": "posts/statistics/2025/解析用データセット作成の流れ1.html#settingフォルダについて",
+    "title": "解析用データセット作成の流れ1（フォルダ構造等）",
     "section": "",
-    "text": "コード値とその意味を定義するシートです。ADaM Terminology形式で管理します。\n\n\n\n\n\nReference Name\nCode Value\nCode Text\n\n\n\n\nSEXN\n1\n男性\n\n\nSEXN\n2\n女性\n\n\nSEX\nM\nMale\n\n\nSEX\nF\nFemale\n\n\nNYFL\nY\nYes\n\n\nNYFL\nN\nNo\n\n\nAGEU\nYEARS\nYears\n\n\nAGEU\nMONTHS\nMonths"
+    "text": "Settingフォルダでは、事前に解析用データセット仕様書のinputするファイル情報やPath、InputデータのPaht、OutputデータのPathを指定しておく。これを作成しておくことで、第3者に解析用データセット作成プログラムを提供した際でも、このSettingフォルダのPathだけを更新することで、再現可能な状態がすぐに作ることができる。\nExcelファイルには以下の3つの要素を設定します。：\n\nパス（Path）：ファイルの保存場所\nファイル名：Excelファイル名\nシート名：参照するワークシート名"
   },
   {
-    "objectID": "posts/statistics/2025/解析用データセット仕様書.html#データセット作成プロセス",
-    "href": "posts/statistics/2025/解析用データセット仕様書.html#データセット作成プロセス",
-    "title": "解析用データセット仕様書",
+    "objectID": "posts/statistics/2025/解析用データセット作成の流れ1.html#attrib-statement",
+    "href": "posts/statistics/2025/解析用データセット作成の流れ1.html#attrib-statement",
+    "title": "解析用データセット作成の流れ1（フォルダ構造等）",
+    "section": "2.1 Attrib statement",
+    "text": "2.1 Attrib statement\n具体的なプログラミングについては、別記事で解説をするが、ここでは解析用データセットを作成する上で大事なAttrib Statementについて解説する。\n以下記事が参考になる。\n\nATTRIBステートメント\n変数属性を定義した空のデータセットを作成する方法【まとめ】\n\n解析用データ仕様書にて、各変数のLabel、Length、formatを指定する必要がある。 その際に、解析用データセットに対してattrib statementを適用することで簡単に設定できる。\nちなみに、変数の順番だけを入れ替えるならばformat Statementでも簡単にできる。こちらのブログが参考になります。\n\ndata ADSL;\n    set ADSL;\n    attrib \n        STUDYID   label=\"Study Identifier\"           length=$12  format=$12.\n        USUBJID   label=\"Unique Subject Identifier\"  length=$40  format=$40.\n        SUBJID    label=\"Subject Identifier\"         length=$20  format=$20.\n        AGE       label=\"Age\"                        length=8    format=8.\n        SEX       label=\"Sex\"                        length=$1   format=SEX.\n        TRT01P    label=\"Planned Treatment for Period 1\"  length=$200  format=$200.\n        TRT01A    label=\"Actual Treatment for Period 1\"   length=$200  format=$200.\n        TRT01PN   label=\"Planned Treatment for Period 1 (N)\"  length=8  format=8.\n        TRT01AN   label=\"Actual Treatment for Period 1 (N)\"  length=8  format=8.\n        FASFL     label=\"Full Analysis Set Flag\"     length=$1   format=NYFL.\n    ;\nrun;\n実際は手入力ですることは人為的ミスの元となるのでマクロ化等で自動化することを推奨するが考え方は上記の通りである。"
+  },
+  {
+    "objectID": "posts/statistics/2025/解析用データセット作成の流れ1.html#proc-format",
+    "href": "posts/statistics/2025/解析用データセット作成の流れ1.html#proc-format",
+    "title": "解析用データセット作成の流れ1（フォルダ構造等）",
+    "section": "2.2 Proc format",
+    "text": "2.2 Proc format\n以下記事が参考になる。 - PROC FORMAT入門1 : VALUEステートメント\nPROC FORMATは、SASにおいてユーザー定義フォーマットを作成するプロシージャです。数値や文字データを、より読みやすい形式に変換して表示することができます。 基本構文は以下の通りです。\nproc format;\n    value フォーマット名\n        値1 = \"ラベル1\"\n        値2 = \"ラベル2\"\n        値3 = \"ラベル3\";\nrun;\n文字フォーマットには先頭にドルマークを付けます。\nproc format;\n    value trtf\n        1 = \"プラセボ\"\n        2 = \"低用量\"\n        3 = \"高用量\"\n        . = \"欠測\";\n        \n    value sexf\n        1 = \"男性\"\n        2 = \"女性\"\n        . = \"不明\";\n        \n    value nyf\n        0 = \"No\"\n        1 = \"Yes\"\n        . = \"Missing\";\nrun;\n\nproc format;\n    value $sexf\n        \"M\" = \"男性\"\n        \"F\" = \"女性\"\n        \" \" = \"不明\";\n        \n    value $countryfmt\n        \"JPN\" = \"日本\"\n        \"USA\" = \"アメリカ合衆国\"\n        \"GBR\" = \"イギリス\"\n        other = \"その他\";\nrun;"
+  },
+  {
+    "objectID": "posts/statistics/2025/解析用データセット作成の流れ1.html#データセットからのフォーマット作成",
+    "href": "posts/statistics/2025/解析用データセット作成の流れ1.html#データセットからのフォーマット作成",
+    "title": "解析用データセット作成の流れ1（フォルダ構造等）",
+    "section": "2.3 データセットからのフォーマット作成",
+    "text": "2.3 データセットからのフォーマット作成\n\n2.3.1 3.1 CNTLIN=オプションの使用\nデータセットからフォーマットを作成する場合、特定の変数名を持つデータセットを準備する必要があります。 必要な変数：\n\nFMTNAME：フォーマット名\nSTART：変換前の値（開始値）\nEND：変換前の値（終了値、範囲指定時）\nLABEL：変換後のラベル\nTYPE：フォーマットタイプ（‘N’=数値、‘C’=文字）\n\n/* 治療群フォーマット用データセット */\ndata trt_fmt;\n    retain fmtname 'trtf' type 'N';\n    input start end label $20.;\n    datalines;\n1 1 プラセボ\n2 2 低用量\n3 3 高用量\n. . 欠測\n;\nrun;\n\n/* 性別フォーマット用データセット */\ndata sex_fmt;\n    retain fmtname '$sexf' type 'C';\n    input start $1. end $1. label $10.;\n    datalines;\nM M 男性\nF F 女性\n   不明\n;\nrun;\n\n/* フォーマットの作成 */\nproc format cntlin=trt_fmt;\nrun;\n\nproc format cntlin=sex_fmt;\nrun;\nPROC FORMATは以下の2つの方法でフォーマットを作成できます：\nVALUEステートメント：直接コードに記述する方法。シンプルで直感的 CNTLIN=オプション：データセットから作成する方法。大量のフォーマットや動的な作成に適している\n適切なフォーマットの使用により、データの可読性が大幅に向上し、レポート作成時の効率も改善されます。"
+  },
+  {
+    "objectID": "posts/statistics/2025/中間解析.html",
+    "href": "posts/statistics/2025/中間解析.html",
+    "title": "第2相抗がん剤開発及び検証的試験の中間解析",
     "section": "",
-    "text": "解析用データセット仕様書を読み込み、Specificationシートの定義に従ってSASプログラムを作成します。ADxx_Conversionシートを参照してパラメータ変換処理も実装します。\n###　参考文献 - 生存時間解析用ADaMデータセット（ADTTE）のソースコード紹介"
+    "text": "中間解析は、試験の進行中にデータを評価し、治療効果や安全性に関する情報を得るために行われます。これにより、試験の進行状況を把握し、必要に応じて試験デザインやプロトコルを調整することができます。 中間解析は、特に以下の目的で実施されます。\n\n治療効果の初期評価: 中間解析は、治療効果の初期評価を行うために使用されます。これにより、治療が有効であるかどうかを早期に判断することができます。\n安全性の評価: 中間解析は、安全性に関する情報を収集するためにも使用されます。これにより、治療が安全であるかどうかを早期に判断することができます。\n早期終了の判断: 中間解析の結果に基づいて、試験を早期に終了するかどうか（無効中止や有効中止）を判断することができます。これにより、無駄なリソースを節約することができます。\n倫理的な配慮: 中間解析は、倫理的な配慮からも重要です。治療が有効でない場合や安全性に問題がある場合、試験を早期に終了することで、被験者の安全を確保することができます。\nリソースの最適化: 中間解析は、試験の進行状況を把握し、リソースを最適化するためにも使用されます。これにより、試験の効率を向上させることができます。\n\n本記事では、以下の内容について説明します。\n\n抗がん剤第2相における2値アウトカムの中間解析\n\nSimonの最適法\nSimonのMinmax法\nFlemingデザイン\nBayes流の方法\n\n検証的試験における中間解析\n\nO’Brien-Flemingデザイン\nPocockデザイン\nLan-DeMetsデザイン（α spending function）\n\n\n\n\n\n抗がん剤第2相試験においては、治療効果を評価するために2値アウトカム（例: 完全奏効、部分奏効、無効など）が使用されます。中間解析は、これらのアウトカムを評価するために行われます。試験統計家として試験計画時に中間解析を実施する必要があるかを考えておく必要があります。\nこれらの資料が参考になります。\n\n山本先生：SASユーザー総会2010\n\nまた、基本的に本節での手法はSASのProc power等のプロシジャで簡単に実装されていません。SASで実行する場合は、ネットからマクロを活用するか、社内でSASマクロを開発しておく必要があります。若干ハードルが高いかもしれないですが、SASでサンプルサイズ設計マクロを開発しておき、RやWebサイトの計算結果との一致をもってQCを行うことができるので、開発しておくことをお勧めします。\n\n\n\nこの節での記法について導入します。検証的試験における中間解析では別途記法を定義します。\n\np : 奏効確率（主要評価項目）\np_0 : 閾値奏効確率（p が p_0 以下の場合，薬剤は無効と判断）\np_1 : 期待奏効確率（p が p_1 以上の場合，薬剤は有効かもしれないと判断）\n\\alpha : 第 I 種の過誤確率（一般的に0.05と規定）\n\\beta : 第 II 種の過誤確率（一般的に0.20と規定）\n\n\n\n\n仮説検定は片側検定として以下のように定義する。\n\nH_0 : p \\leq p_0\nH_1 : p &gt; p_1"
   },
   {
-    "objectID": "posts/statistics/2025/サンプルサイズ設計.html",
-    "href": "posts/statistics/2025/サンプルサイズ設計.html",
-    "title": "臨床試験のサンプルサイズ設計",
+    "objectID": "posts/statistics/2025/中間解析.html#中間解析の目的",
+    "href": "posts/statistics/2025/中間解析.html#中間解析の目的",
+    "title": "第2相抗がん剤開発及び検証的試験の中間解析",
     "section": "",
-    "text": "本書は、頻繁に利用されるサンプルサイズ設計SASプログラムをまとめます。実務において、本記事のSASプログラムをコピーして利用することのみを念頭に置いています。数学的な導出は省略します。"
+    "text": "中間解析は、試験の進行中にデータを評価し、治療効果や安全性に関する情報を得るために行われます。これにより、試験の進行状況を把握し、必要に応じて試験デザインやプロトコルを調整することができます。 中間解析は、特に以下の目的で実施されます。\n\n治療効果の初期評価: 中間解析は、治療効果の初期評価を行うために使用されます。これにより、治療が有効であるかどうかを早期に判断することができます。\n安全性の評価: 中間解析は、安全性に関する情報を収集するためにも使用されます。これにより、治療が安全であるかどうかを早期に判断することができます。\n早期終了の判断: 中間解析の結果に基づいて、試験を早期に終了するかどうか（無効中止や有効中止）を判断することができます。これにより、無駄なリソースを節約することができます。\n倫理的な配慮: 中間解析は、倫理的な配慮からも重要です。治療が有効でない場合や安全性に問題がある場合、試験を早期に終了することで、被験者の安全を確保することができます。\nリソースの最適化: 中間解析は、試験の進行状況を把握し、リソースを最適化するためにも使用されます。これにより、試験の効率を向上させることができます。\n\n本記事では、以下の内容について説明します。\n\n抗がん剤第2相における2値アウトカムの中間解析\n\nSimonの最適法\nSimonのMinmax法\nFlemingデザイン\nBayes流の方法\n\n検証的試験における中間解析\n\nO’Brien-Flemingデザイン\nPocockデザイン\nLan-DeMetsデザイン（α spending function）"
   },
   {
-    "objectID": "posts/statistics/2025/サンプルサイズ設計.html#値アウトカム",
-    "href": "posts/statistics/2025/サンプルサイズ設計.html#値アウトカム",
-    "title": "臨床試験のサンプルサイズ設計",
-    "section": "3.1 2値アウトカム",
-    "text": "3.1 2値アウトカム\n単群試験で2値アウトカムの場合、サンプルサイズは、\\(P0\\)（閾値奏効割合）、\\(P1\\)（期待奏効割合）、\\(α\\)（第一種の過誤確率）、\\(β\\)（第二種の過誤確率）を事前に仮定することで計算できます。閾値奏効割合とは、これ以上の奏効割合がなければ治療効果がない（開発中止をしたい）と考えられる割合のことです。期待奏効割合とは、治療効果があると考えられる割合（次相に進みたい程度）のことです。これらの割合は臨床仮説や先行研究に基づいて決定するため、試験統計家がコメントすることはあまりありません。ICHガイドラインに準じて、SASプログラムは全て両側検定として両側有意水準5%としています。これは、なお、ICH E9では以下のような記載があります。すなわち、GCP準拠の治験においては原則として以下の記載に準じて試験計画を考える必要があります。\n「規制上の観点から、本ガイドラインの施行に伴い、原則として片側仮説を検証する場合は2.5％、両側仮説の場合は5％とすることとした。」\nなお、ICH E9にはQ＆AがありQ2で有意水準について言及されている。\n\n\n\n\n\n\nQ2\n\n\n\n片側検定又は両側検定のどちらを用いるか、またそこでの有意水準をいくらにすべき かを、優越性試験と非劣性試験のそれぞれで説明願いたい。\n(答) ガイドラインでは、同等性を示す場合には両側信頼区間、非劣性試験では片側信頼 区間による解析を行うことが記載されているが、一般には推測を片側と考えるか両側 と考えるかには議論があり一概に決められるものではないとされている。また、有意 水準についても、個々の試験において適切な基準を設定すべきである旨の記載がある。 しかしながら、推論を片側とするか両側とするかにより統計的な判断に大きな差異 が生じることは規制上の観点から望ましくない。また、一方で、臨床試験における有 効性の評価では、検定により有意差があるか否かを判断するだけでなく、試験治療効 果の大きさ(比較群間の差の大きさ)がどの程度であるかを推定することも重要である。 そこで、今後は、検証的試験においては、仮説の検定においてどちらの方法を用いる 場合であっても、効果の推定には95％信頼係数の両側信頼区間を用い、検定の際の有水準は、これによる判断との整合性を図るため、優越性試験、非劣性試験のいずれにおいても、片側2.5％又は両側5％とすることを原則とする。用量反応試験についても、用量反応性を示すことにより薬剤の有効性を検証するような試験においては上記と同様である。ただし、適切な説明ができるのであれば、より強固な有効性の根拠を 示すために有意水準を厳しくする、稀少疾病用医薬品にみられる例のように十分な被 験者を集めることが困難な場合は有意水準を緩くする、などの措置をとってもよい。 なお、生物学的同等性試験については、「後発医薬品の生物学的同等性試験ガイドライン(平成9年12月22日医薬審第487号)」により、90％信頼係数の両側信頼区間を用いるとされているが、臨床効果を指標に標準製剤との同等性を検証しようとする場合(臨床的同等性試験)は、上記と同様に95％信頼係数の両側信頼区間を用いることを原則とする。\n\n\n　特に重要なのは、「適切な説明ができるのであれば、より強固な有効性の根拠を示すために有意水準を厳しくする、稀少疾病用医薬品にみられる例のように十分な被験者を集めることが困難な場合は有意水準を緩くする、などの措置をとってもよい。」の記載である。すなわち、両側10%や片側5%も、きちんと説明をして納得していただければ許容されるということである。これらの【5%か2.5%か】の議論については、以下のJCOGプロトコールマニュアルにも記載がある。\n\n\n\n\n\n\nJCOGプロトコール\n\n\n\n国立がん研究センターでの第2相相当の臨床試験では、片側検定を用いることもありえます。これは、標準治療 vs 試験治療であり、少なくとも試験治療が標準治療より劣っているとは考えておらず、片側検定の方が適切と考えられるからです。 JCOGのプロトコールマニュアルのURLは以下です。 JCOGプロトコールマニュアル\n\n\n試験計画時の例：\n\n\\(p0\\) = 0.1（閾値奏効割合）\n\\(p1\\) = 0.3（期待奏効割合）\n\\(α\\) = 0.05（第一種の過誤、片側）\n\\(β\\) = 0.2（第二種の過誤）\n\n以下は、正規近似を用いたサンプルサイズ計算の例です。 連続修正は行いません。正規近似に基づく症例数設計では、H0における\\(p0\\)を用いて分散が計算されている点に注意してください。数理統計学を学ばれた方からみるとスコア検定に基づく方法に相当します。Wald検定に基づく例数設計とすると\\(p1\\)を用いて分散が計算されることになります。中間解析を勉強するとWald検定に基づく方法でサンプルサイズ設計がされることもあると気付きます。中間解析では検定統計量間の相関を考えるため、漸近正規性を仮定したサンプルサイズ設計をするためWald型の統計量を利用します。\n　実務上では、抗がん剤の単群試験では中間解析を事前に規定して、2項分布に基づいてに基づいて無効中止や有効中止を考慮したくなる場面が多いです。それは患者さんにとっての倫理性や開発戦略の観点からも重要な要素です。中間解析を行う場合、無効中止や有効中止の基準を事前に規定する必要があります。無効中止や有効中止の基準は、試験の目的やデザインに応じて異なるため、試験統計家と相談して決定することが重要です。無効中止や有効中止の基準を事前に規定することで、試験の透明性が向上し、倫理的な問題を回避することができます。そのような場合は、単純な2値データの割合のサンプルサイズ設計では実施できず、適切な試験統計家がSimonの2段階デザインやFlemingの2段階デザインを用いて例数設計がなされます。また、単群試験において、ベイズ流の例数設計も提案されていることから、ベイズ流例数設計も考慮していただきたい。なお、中間解析やベイズ流例数設計は常に必要ではなく、SASでの実装はシンプルではないため、ここでは割愛します。別記事で説明します。\n通常の単群試験の例数設計は以下のように行います。以下のSASプログラムは、対照群のリスクp0 = 0.1、実験群のリスクp1 = 0.3、リスク差 = 0.2を想定しています。なお、sides = 2は両側検定を意味します。片側検定を行う場合は、sides = 1としてください。\nproc power;\nonesamplefreq test=z\n    method = normal\n    sides = 2\n    alpha = 0.05\n    nullproportion = 0.1\n    proportion = 0.3\n    ntotal = .\n    power = 0.8;\nrun;\n対象者数が多い場合（シミュレーションによる確認要です）、上記の正規分布に基づく方法でも良いと考えます。しかし、一般的に2項分布による正確な検定に基づく症例数設計を利用することが標準的な方法です。理由は正規近似による例数設計が二項分布の中心極限定理を用いているため、あくまで対象者数が十分多い状況における中心極限定理を仮定しているためです。中心極限定理を利用せず、2項分布を用いて症例数設計をするSASプログラムは以下です。\n先ほどと異なり、test = exactを指定しています。これにより、2項分布に基づく正確な検定が行われます。これにより、サンプルサイズ計算がより正確になります。また、plotオプションを使用して、サンプルサイズに対する検出力の変化を視覚化しています。これにより、必要なサンプルサイズをより直感的に理解できます。\nproc power;\n    onesamplefreq test=exact\n        sides = 2\n        alpha = 0.05\n        nullproportion = 0.1\n        proportion = 0.3\n        ntotal = 30.\n        power = .;\n        plot x = n min =2 max = 100 step = 1 yopts = (ref  = 0.8);\nrun;\nExact法に基づく症例数設計では、検出力は単調増加にならず、test = normalと異なり、N = xxのように数値が出力されません。そのため、SASの出力を結果を見ながら、目標とする検出力を満たす最小の整数値 or 目標とする検出力を満たす最大の整数値とします。個人的には、より保守的であるため後者を推奨します。実際、より大きなサンプルサイズを選ぶことで、検出力の目標値をより確実に達成できる可能性が高まります。ただし、リソースの制約がある場合は、目標検出力を満たす最小の症例数を選ぶことも実用的な選択肢となり得ます。どちらのアプローチを取るかは、研究の目的やリソースの制約によって相談の上、決定してください。\n\n3.1.1 参考文献\n\nOneSampleFreq Statement"
-  },
-  {
-    "objectID": "posts/statistics/2025/サンプルサイズ設計.html#連続量アウトカム",
-    "href": "posts/statistics/2025/サンプルサイズ設計.html#連続量アウトカム",
-    "title": "臨床試験のサンプルサイズ設計",
-    "section": "4.1 連続量アウトカム",
-    "text": "4.1 連続量アウトカム\n連続量アウトカムの場合、サンプルサイズは以下の式で計算できます。 以下では優越性を示す検証的試験を想定しています。 twosamplemeans test = diffを用いて、2群間の平均値の差を検定する方法を想定しています。以下では、対照群の平均値μ0 = 0、実験群の平均値μ1 = 0.5、標準偏差σ = 1を想定しています。\nproc power;\n    twosamplemeans test=diff\n        meandiff = 0.5\n        stddev = 1\n        alpha = 0.05\n        power = 0.8\n        nptotal = .;\nrun;\n複数の状況をまとめて計算する場合は、以下のようにします。\nproc power;\n    twosamplemeans test=diff\n        meandiff = 0.5 , 1 , 1.5\n        stddev = 1 , 2 , 3\n        alpha = 0.05\n        power = 0.8\n        ntotal = .;\nrun;\n　平均値の差の検定は一般的であり、連続量のアウトカムを用いた試験では最も多く利用される方法です。平均値の差の検定は、通常、正規分布に従うと仮定される連続量データに適用されます。連続量アウトカムにおける経時測定データのサンプルサイズ設計が求められることもあるかと思います。その場合、最終観察時点における平均値の差を検定する方法として上記のプログラムを利用することが保守的で望ましいと考えます。例数設計としてはt検定に基づきより保守的なサンプルサイズ設計をする。統計解析においては、共分散分析やMMRMなどの同じEstimandを推定する方法で、より検出力の高い解析方法を適用することが治験の分野では求められると考えます。\n\n4.1.1 参考文献\nTwoSampleMeans Statement"
-  },
-  {
-    "objectID": "posts/statistics/2025/サンプルサイズ設計.html#値アウトカム-1",
-    "href": "posts/statistics/2025/サンプルサイズ設計.html#値アウトカム-1",
-    "title": "臨床試験のサンプルサイズ設計",
-    "section": "4.2 2値アウトカム",
-    "text": "4.2 2値アウトカム\n2値アウトカムの場合、サンプルサイズは以下の式で計算できます。リスク差（割合の差）に基づいて優越性を検討することを想定しています。p0を対照群のリスク、p1を実験群のリスクとします。リスク差は、対照群のリスクp0に基づいて計算されるため、対照群のp0を指定する必要があります。以下では、対照群のリスクp0 = 0.1、実験群のリスクp1 = 0.3、リスク差 = 0.2を想定しています。\n\np0 = 0.1（対照群の和依頼）\np1 = 0.3（実験群の割合）\nα = 0.05（第一種の過誤、両側）\nβ = 0.2（第二種の過誤）\n\nSASプログラムは以下となります。ここでは、対照群のリスク及びリスク差を指定している。リスク差は、対照群のp0に基づいて計算されるため、対照群のp0を指定する必要があります。\nproc power;\ntwosamplefreq test=pchi\n    sides = 2\n    alpha = 0.05\n    refproportion = 0.1\n    proportiondiff = 0.2\n    npergroup = .\n    power = 0.8;\nrun;\n\n4.2.1 参考文献\n\nTWOSAMPLEFREQ Statement"
-  },
-  {
-    "objectID": "posts/statistics/2025/サンプルサイズ設計.html#生存時間アウトカム",
-    "href": "posts/statistics/2025/サンプルサイズ設計.html#生存時間アウトカム",
-    "title": "臨床試験のサンプルサイズ設計",
-    "section": "4.3 生存時間アウトカム",
-    "text": "4.3 生存時間アウトカム\n生存時間アウトカムの場合、サンプルサイズは以下の式で計算できます。以下では優越性を示す検証的試験を想定しています。アウトカムはハザード比として、生存時間解析のノンパラメトリック検定（ログランク検定等）を前提とした例数設計を想定する。例えば生存時間アウトカムとして生存割合（死亡、生存）を前提として例数設計を考える場合、本節に基づく方法での例数設計も考えられるが、より保守的に2値データに基づく例数設計を行うことが望ましい場合もありえます。この違いについては、別記事で説明します。生存時間の例数設計については、SAS user総会のSASプロシジャを用いた生存時間データに対する例数設計の変革が参考になります。\nSASのtwosamplesurvival statementではLakatosの方法が採用されています。これは区分指数分布を前提としており解析的にN = xxの形で表すことはできません。教育的な立場だと、解析的にN = xxの形で表すことができる方法としてFreedmanの方法やSchoenfeldの方法がありますが、上記のSASユーザー総会の資料によると、Lakatosの方法の方が性能が良いことが報告されているそうです。実務上もproc power procedureを用いて、再現可能な状態で例数設計を行うことが望ましいので、基本的にLakatosの方法を採用します。\n生存時間アウトカムに基づく症例数設計では以下のような情報が必要です。特徴的なのは、登録期間とフォローアップ期間の情報が必要な点です。登録期間は、患者さんを試験に登録するための期間であり、フォローアップ期間は、患者さんを追跡するための期間です。これらの情報は、試験のデザインや目的に応じて異なるため、試験統計家と相談して決定することが重要です。 なお、通常登録は一様に登録されると仮定され、一様分布を仮定することがデフォルトです。\n\nS_c(3) = 0.3（対照群Cの3年あたりの生存率）\nS_a(2) = 0.2（実験群Aの3年あたりの生存率）\n登録期間：A = 3年\nフォローアップ期間：F = 2年\nα = 0.05（第一種の過誤、両側）\nβ = 0.2（第二種の過誤）\n\nSASでは以下のように実行します。ここでは、対照群の生存率S_c(3) = 0.3、実験群の生存率S_a(2) = 0.2を想定しています。登録期間は3年、フォローアップ期間は2年としています。これにより、試験のデザインや目的に応じたサンプルサイズを計算することができます。\nproc power;\n    twosamplesurvival test = logrank\n    curve(\"Control\") = 3:0.3\n    curve(\"Experimental\") = 3:0.2\n    groupsurvival = \"Control\" | \"Experimental\"\n    groupweights = (1 1)\n    accrualtime = 3 \n    followuptime = 2\n    ntotal = .\n    power = 0.8\n    alpha = 0.05\n    sides = 2;\nrun;\n通常、生存時間の例数設計で3年間での生存割合20%や、30%ということを仮定できる状況は多くないと思います。例えば第2相試験では1年間の追跡しかしていない場合に3年生存割合を仮定することは難しいです。そこで、通常は生存時間Tが指数分布に従うとして以下の式を用いてハザードを基にサンプルサイズ設計は有用です。ただし、ハザード比は生存時間の分布に依存するため、注意が必要です。生存時間Tが指数分布に従う場合、ハザード比は以下のように表されます。\n\\[\nS(t) = 1-F(t) = exp(-λt) ⇔ λ = -\\frac{log(S(t))}{t}\n\\]\nこの関係を用いて、ある時点tとその時点のKM推定量の結果を用いて各群のハザードを指定してサンプルサイズ計算をする方法は以下となります。\nproc power;\n    twosamplesurvival test = logrank\n    groupsurvexphazards = (0.05 0.01)\n    groupweights = (1 1)\n    accrualtime = 3 \n    followuptime = 2\n    ntotal = .\n    power = 0.8\n    alpha = 0.05\n    sides = 2;\nrun;\n他にも、中央生存時間を用いて計算することもできる。これも生存時間アウトカムに指数分布を仮定すると簡単に示せます。\n\\[\nS(1/2) = exp(-λt) ⇔ λ = -\\frac{log(S(1/2))}{t}\n\\]\nこの関係を用いて、KM推定量の結果を用いて各群の中央生存時間からハザードを推定することもできる。いずれの方法もTに指数分布を仮定している。\n\n4.3.1 参考文献\n\nTwoSsampleSurvival Statement"
-  },
-  {
-    "objectID": "posts/statistics/2025/SASマクロ入門1.html",
-    "href": "posts/statistics/2025/SASマクロ入門1.html",
-    "title": "SASマクロ入門1",
+    "objectID": "posts/statistics/2025/中間解析.html#抗がん剤第2相における2値アウトカムの中間解析",
+    "href": "posts/statistics/2025/中間解析.html#抗がん剤第2相における2値アウトカムの中間解析",
+    "title": "第2相抗がん剤開発及び検証的試験の中間解析",
     "section": "",
-    "text": "本記事では、2022年SASユーザー総会の森田氏の「マクロのすすめ～SASにプログラムをかいてもらおう～」の文章を写経したものである。個人の勉強記録であるため、基本的には元の資料を参考にしていただきたい。\n\n\n基礎的な事項で参考になるものはいつも通り、以下のブログである。特に実務上で重要だが知られていないデータステップで変数をマクロ化するcall syputx、データステップ外で関数を使えるようにする%sysfuncはきちんと理解したい。また、マクロ言語入門9で紹介されている&macro_variable.の.は常に記載する、もしくは記載しない等を組織/個人開発で統一しておくことが望ましい。\n\nマクロ言語入門1：マクロ変数とは【%LET】\nマクロ言語入門2：マクロの登録と実行【%MACRO、%MEND】\nマクロ言語入門3：パラメータの設定【定位置パラメータ】\nマクロ言語入門4：パラメータの設定【キーワードパラメータ】\nマクロ言語入門5：クォート処理【%STR関数】\nマクロ言語入門6：クォート処理【%BQUOTE関数】\nマクロ言語入門7：マクロ内でのループ処理【%DO】\nマクロ言語入門8：マクロ内での条件分岐処理【%IF】\nマクロ言語入門9：マクロ変数とドット\nマクロ言語入門10：マクロ変数と&&\nマクロ言語入門11：演算評価 【%EVAL、%SYSEVALF】\n値をマクロ変数に格納する「CALL SYMPUTX」その1\nデータステップ外で関数を使えるようにする「%SYSFUNC」その１\n森岡 裕, %if-%then-%doのオープンコードでの利用と9.4以降のSASマクロ拡張点について, SASユーザー総会論文集, 2021.\n本本 早紀, クォート処理及びスコープへの理解を深める, SASユーザー総会論文集, 2019, p141-150\n竹田 真, 佐藤 智美, 社内マクロライブラリの構築について, SASユーザー総会論文集, 2001, p37-44\n柳沢 健太郎, 常吉 華奈, 山本 典子, 臨床試験における集計解析用 SASプログラムの標準化, SASユーザー総会論文集, 2004, p37-44\n田村 洋介, SASマクロライブラリの開発/管理/運用, SASユーザー総会論文集, 2007, p123-134\n“How to organize your SAS projects in Git”, SAS Blogs, 2020-11-10\n“Good Programming Practice In Macro Development”, PhUSE Advance Hub, 2021-09-21\nRon Cody, Cody’s Data Cleaning Techniques Using SAS, SAS Press, 2017, 234p\n市橋 里絵, 江口 幸子, 渡邊 大丞, 月田 あづき, “Standard Template Programs”の開発, SASユーザー総会論文集, 2010, p381-383\n\nまた、他にも応用上の使い方等は以下が参考になる。 - Compareプロシジャの結果が一致か不一致か、何が不一致かをマクロ変数で取得する話 なお、私が知る限りProc Compare Procedureの解説文献は、2022年度のSASユーザー総会資料のCOMPAREプロシジャの便利な使い方がおすすめである。Proc Compare Procedureについては別記事で解説する。"
+    "text": "抗がん剤第2相試験においては、治療効果を評価するために2値アウトカム（例: 完全奏効、部分奏効、無効など）が使用されます。中間解析は、これらのアウトカムを評価するために行われます。試験統計家として試験計画時に中間解析を実施する必要があるかを考えておく必要があります。\nこれらの資料が参考になります。\n\n山本先生：SASユーザー総会2010\n\nまた、基本的に本節での手法はSASのProc power等のプロシジャで簡単に実装されていません。SASで実行する場合は、ネットからマクロを活用するか、社内でSASマクロを開発しておく必要があります。若干ハードルが高いかもしれないですが、SASでサンプルサイズ設計マクロを開発しておき、RやWebサイトの計算結果との一致をもってQCを行うことができるので、開発しておくことをお勧めします。"
   },
   {
-    "objectID": "posts/statistics/2025/SASマクロ入門1.html#参考ブログ",
-    "href": "posts/statistics/2025/SASマクロ入門1.html#参考ブログ",
-    "title": "SASマクロ入門1",
+    "objectID": "posts/statistics/2025/中間解析.html#パラメータの定義",
+    "href": "posts/statistics/2025/中間解析.html#パラメータの定義",
+    "title": "第2相抗がん剤開発及び検証的試験の中間解析",
     "section": "",
-    "text": "基礎的な事項で参考になるものはいつも通り、以下のブログである。特に実務上で重要だが知られていないデータステップで変数をマクロ化するcall syputx、データステップ外で関数を使えるようにする%sysfuncはきちんと理解したい。また、マクロ言語入門9で紹介されている&macro_variable.の.は常に記載する、もしくは記載しない等を組織/個人開発で統一しておくことが望ましい。\n\nマクロ言語入門1：マクロ変数とは【%LET】\nマクロ言語入門2：マクロの登録と実行【%MACRO、%MEND】\nマクロ言語入門3：パラメータの設定【定位置パラメータ】\nマクロ言語入門4：パラメータの設定【キーワードパラメータ】\nマクロ言語入門5：クォート処理【%STR関数】\nマクロ言語入門6：クォート処理【%BQUOTE関数】\nマクロ言語入門7：マクロ内でのループ処理【%DO】\nマクロ言語入門8：マクロ内での条件分岐処理【%IF】\nマクロ言語入門9：マクロ変数とドット\nマクロ言語入門10：マクロ変数と&&\nマクロ言語入門11：演算評価 【%EVAL、%SYSEVALF】\n値をマクロ変数に格納する「CALL SYMPUTX」その1\nデータステップ外で関数を使えるようにする「%SYSFUNC」その１\n森岡 裕, %if-%then-%doのオープンコードでの利用と9.4以降のSASマクロ拡張点について, SASユーザー総会論文集, 2021.\n本本 早紀, クォート処理及びスコープへの理解を深める, SASユーザー総会論文集, 2019, p141-150\n竹田 真, 佐藤 智美, 社内マクロライブラリの構築について, SASユーザー総会論文集, 2001, p37-44\n柳沢 健太郎, 常吉 華奈, 山本 典子, 臨床試験における集計解析用 SASプログラムの標準化, SASユーザー総会論文集, 2004, p37-44\n田村 洋介, SASマクロライブラリの開発/管理/運用, SASユーザー総会論文集, 2007, p123-134\n“How to organize your SAS projects in Git”, SAS Blogs, 2020-11-10\n“Good Programming Practice In Macro Development”, PhUSE Advance Hub, 2021-09-21\nRon Cody, Cody’s Data Cleaning Techniques Using SAS, SAS Press, 2017, 234p\n市橋 里絵, 江口 幸子, 渡邊 大丞, 月田 あづき, “Standard Template Programs”の開発, SASユーザー総会論文集, 2010, p381-383\n\nまた、他にも応用上の使い方等は以下が参考になる。 - Compareプロシジャの結果が一致か不一致か、何が不一致かをマクロ変数で取得する話 なお、私が知る限りProc Compare Procedureの解説文献は、2022年度のSASユーザー総会資料のCOMPAREプロシジャの便利な使い方がおすすめである。Proc Compare Procedureについては別記事で解説する。"
+    "text": "この節での記法について導入します。検証的試験における中間解析では別途記法を定義します。\n\np : 奏効確率（主要評価項目）\np_0 : 閾値奏効確率（p が p_0 以下の場合，薬剤は無効と判断）\np_1 : 期待奏効確率（p が p_1 以上の場合，薬剤は有効かもしれないと判断）\n\\alpha : 第 I 種の過誤確率（一般的に0.05と規定）\n\\beta : 第 II 種の過誤確率（一般的に0.20と規定）"
   },
   {
-    "objectID": "posts/statistics/2025/SASマクロ入門1.html#マクロはsasにプログラムを書いてもらうための機能",
-    "href": "posts/statistics/2025/SASマクロ入門1.html#マクロはsasにプログラムを書いてもらうための機能",
-    "title": "SASマクロ入門1",
-    "section": "2.1 マクロはSASにプログラムを書いてもらうための機能",
-    "text": "2.1 マクロはSASにプログラムを書いてもらうための機能\nマクロは、簡単に言うとテキストの置換機能である。Aという文字列をBという文字列に置き換える機能である。そして、このテキスト置換機能がたいへん役に立つ。なぜなら、プログラミング業務では、似たような解析やデータハンドリングを繰り返し行っている場合が多いからである。例えば、他のプロジェクトと同じ解析を行う、対象のデータセット名だけが異なる、対象データの抽出条件だけが異なる、処理対象の変数だけが異なる、設定値やオプション指定だけが異なる、出力形式（行数や列数、ファイル形式など）だけが異なる。こういった場合、各解析のSASプログラムの大部分が重複することになり、差異が生じるのは、ほんの一部となる。つまり、基準となるプログラムをコピー&ペーストで複製して、変更が必要な箇所だけをテキスト置換すれば済む場合が多い。この基準となるプログラムの設定とテキスト置換をSASプログラムで実現するための機能がマクロである。マクロがプログラムを書いてくれるのである。"
+    "objectID": "posts/statistics/2025/中間解析.html#仮説検定",
+    "href": "posts/statistics/2025/中間解析.html#仮説検定",
+    "title": "第2相抗がん剤開発及び検証的試験の中間解析",
+    "section": "",
+    "text": "仮説検定は片側検定として以下のように定義する。\n\nH_0 : p \\leq p_0\nH_1 : p &gt; p_1"
   },
   {
-    "objectID": "posts/statistics/2025/SASマクロ入門1.html#マクロの仕組み",
-    "href": "posts/statistics/2025/SASマクロ入門1.html#マクロの仕組み",
-    "title": "SASマクロ入門1",
-    "section": "2.2 マクロの仕組み",
-    "text": "2.2 マクロの仕組み\n私たちの書いたSASプログラムは、SASのコンパイラによって解釈され、実行される。このとき、実はSASには二種類のコンパイラがある。\n1. マクロを解析・実行するマクロプロセッサ、\n2. DATAステップおよびPROCステップを解析・実行するコンパイラである。\nSASプログラムをサブミットすると、まず、①マクロプロセッサがマクロ部分だけを解析・実行し、DATAステップまたはPROCステップの命令だけのプログラムを作成する。その後、②のコンパイラによって、マクロ部分が解析された後のプログラムを実行する。"
+    "objectID": "posts/statistics/2025/中間解析.html#arguments",
+    "href": "posts/statistics/2025/中間解析.html#arguments",
+    "title": "第2相抗がん剤開発及び検証的試験の中間解析",
+    "section": "2.1 Arguments",
+    "text": "2.1 Arguments\n\n\n\n\n\n\n\nパラメータ\n説明\n\n\n\n\npu\nunacceptable response rate; baseline response rate that needs to be exceeded for treatment to be deemed promising\n\n\npa\nresponse rate that is desirable; should be larger than pu\n\n\nep1\nthreshold for the probability of declaring drug desirable under pu (target type 1 error rate); between 0 and 1\n\n\nep2\nthreshold for the probability of rejecting the drug under pa (target type 2 error rate); between 0 and 1\n\n\nnmax\nmaximum total sample size (default 100; can be at most 1000)\n\n\nx\nobject returned by ph2simon\n\n\n…\narguments to be passed onto plot and print commands called within"
   },
   {
-    "objectID": "posts/statistics/2025/SASマクロ入門1.html#マクロ変数を使う",
-    "href": "posts/statistics/2025/SASマクロ入門1.html#マクロ変数を使う",
-    "title": "SASマクロ入門1",
-    "section": "2.3 マクロ変数を使う",
-    "text": "2.3 マクロ変数を使う\n本章では、マクロの基本的な機能であるマクロ変数について概説する。シンプルな機能ながら応用場面は多い。マクロ変数を習得するだけでもプログラミングの効率化や品質向上が期待できる。\n\n2.3.1 マクロ変数とは\nマクロ変数はテキストを格納する容れものである。マクロ変数に格納したテキストはプログラム中で参照できる。マクロプロセッサは、SASプログラム内でマクロ変数の参照箇所を見つけると、そのマクロ変数に格納したテキストに置き換える。テキストファイルで行う一括置換をSASに実行してもらうイメージである。\n\n\n2.3.2 マクロ変数の作成と参照\nマクロ変数は%letステートメントを利用して作成する。\n%let マクロ変数名 = 格納したい値;\nマクロ変数名は最大32文字、最初の文字は英字またはアンダースコア、その後の文字は英字・数字・アンダースコアが使用可能である。また大文字と小文字は区別されない。設定値AF、DMS、SQL、SYSは該当する自動マクロ変数と名前が重複する可能性があるため、避けたほうがよい。\n%let greeting = Hello World;\n%put &greeting.;\n%put 「Hello World」と表示;\n\n%let year = 40;\n%let comment = おめでとうございます;\n%put SASユーザー総会&year.周年&comment.;\n%put 「SASユーザー総会40周年おめでとうございます」と表示;\n\n%let anavar = age; /* マクロ変数&anavarを定義し、ageという値を格納 */\n\n/* 単変量解析; */\nproc univariate data = sashelp.class;\nvar &anavar.; /* マクロプロセッサによって&age.に置換される */\nclass sex;\nrun;\n\n/* 単変量解析(bee-swarm plot)を作成; */\nproc sgplot data = sashelp.class;\nvbox &anavar. / category = sex nofill nooutliers;\nscatter y = &anavar. x = sex / jitter;\nrun;\nマクロ変数により、プログラムに一貫性を持たせることができる。例えば、追加解析や仕様変更により、年齢(age)ではなく体重(weight)の解析を行いたい場合は、%let anavarの定義部分だけを変更するだけで済む。人の手を介することで修正漏れやミスタイプのリスクがある。\nまた、CALL SYMPUTXルーチンを利用すれば、DATAステップでデータセットの変数の内容をマクロ変数に格納できる。次章で説明する制御構文と併せて、データセットの内容に応じて、プログラムを変更させることが可能になり、プログラムに柔軟性を与えられる。\ncall symputx('マクロ変数名', 格納したい値(DATAステップの変数名));\n\n/* 男女別の生徒数を数えて、それぞれをマクロ変数に格納する; */\nproc freq data = sashelp.class noprint;\ntables sex / out = out1;\nrun;\n\ndata _null_;\nset out1;\nif sex = \"男子\" then call symputx('N_Male', count);\nif sex = \"女子\" then call symputx('N_Female', count);\nrun;\n\n/* マクロ変数の値をログに出力して確認; */\n%put N_Male = &N_Male N_Female = &N_Female;/* 「N_Male : 10 N_Female : 9」と出力; */\nまた、SQLプロシジャのINTO句を利用して、データセットの変数の内容をマクロ変数に格納することも可能である。\nproc sql;\nselect 変数名1, 変数名2, ..., 変数名N\ninto :マクロ変数名1, :マクロ変数名2, ..., :マクロ変数名N\nfrom データセット名;\nquit;\n\nproc sql noprint;\ncreate table work.class as\nselect *\nfrom sashelp.class\nrun;\nquit;\n\n%put &sqlobs.; /* proc sqlで直近に処理したデータ(OBS数)を格納; */\n\n\n2.3.3 マクロ変数は文字型変数\nマクロ変数は、DATAステップと違って、すべて文字型変数として扱われる。このため、マクロプロセッサに数値演算をさせるような場面では、注意が必要である。数値の場合は%eval関数、小数を含む場合は%sysevalf関数に演算式を渡す必要がある。（ただし、%evalと%sysevalfは、演算のおよそについても調査した上で利用しないと）\n%let not5 = 1 + 4;\n%put &not5.; /* 「1 + 4」と表示; */\n\n%let equal5 = %eval(1 + 4);\n%put &equal5.; /* 「5」と表示; */\n\n%let not5 = 1.5 + 3.5;\n%put &not5.; /* 「1.5 + 3.5」と表示; */\n\n%let equal5 = %sysevalf(1.5 + 3.5);\n%put &equal5.; /* 「5」と表示; */\n\n%let not5 = %eval(1.5 + 3.5); /* %evalは整数計算だけなのでエラーとなる */\nなお、格納されるテキストによってマクロ変数の変数は自動的に調整されるため、データセットの文字型変数のように長さを気にする必要はない（ただし、SAS9.4の最大長は65,534文字である）。\n\n\n2.3.4 自動マクロ変数\nマクロプロセッサが自動的に作成する自動マクロ変数もある。自動マクロ変数は、実行環境の確認、プログラム実行時の表示などに利用できる。いくつか例を示す。\n\n\n\n\n\n\n\n自動マクロ変数名\n内容\n\n\n\n\nSYSVER\nSASのバージョンを格納（例：9.4）\n\n\nSYSDATEP\nSAS セッションの開始日をDATEフォーマットで格納（例：01SEP2022）\n\n\nSYSLAST\nSAS セッションで直近に作成したデータセットを格納（例：WORK.CLASS）\n\n\nSYSUSERID\n現在のSAS プロセスのユーザーIDを格納（例：morita.yusuke）"
+    "objectID": "posts/statistics/2025/中間解析.html#value",
+    "href": "posts/statistics/2025/中間解析.html#value",
+    "title": "第2相抗がん剤開発及び検証的試験の中間解析",
+    "section": "2.2 Value",
+    "text": "2.2 Value\nph2simon returns a list with pu, pa, alpha, beta and nmax as above and:\n\n\n\n\n\n\n\n出力\n説明\n\n\n\n\nout\nmatrix of best 2 stage designs for each value of total sample size n. The 6 columns in the matrix are:\n\n\n\n\n\n\nカラム\n説明\n\n\n\n\nr1\nnumber of responses needed to exceeded in first stage\n\n\nn1\nnumber of subjects treated in first stage\n\n\nr\nnumber of responses needed to exceeded at the end of trial\n\n\nn\ntotal number of subjects to be treated in the trial\n\n\nEN(pu)\nexpected number of patients in the trial under pu\n\n\nPET(pu)\nprobability of stopping after the first stage under pu\n\n\n\nTrial is stopped early if &lt;= r1 responses are seen in the first stage and treatment is considered desirable only when &gt;r responses seen."
   },
   {
-    "objectID": "posts/statistics/2025/SASマクロ入門1.html#マクロプログラムを使う",
-    "href": "posts/statistics/2025/SASマクロ入門1.html#マクロプログラムを使う",
-    "title": "SASマクロ入門1",
-    "section": "2.4 マクロプログラムを使う",
-    "text": "2.4 マクロプログラムを使う\n本章では、マクロの主要機能であるマクロプログラムについて概説する。前章のマクロ変数とマクロプログラムを組み合わせることで、より複雑なプログラムをマクロプロセッサに書いてもらうことができる。\n\n2.4.1 マクロプログラムとは\nマクロプログラムもマクロ変数と同様に、テキスト置換を行う機能である。マクロ変数は、プログラム中の変数名、データセット名、オプションまたは短いテキストの置換に用いられる場合が多い。一方、マクロプログラムは、あるまとまった単位のSAS プログラムへの置換に利用されるものであり、マクロ変数と組み合わせることで、また、制御構文を使用することで、さまざまなプログラムをマクロプロセッサに手軽に作成してもらうことができる。\n\n\n2.4.2 マクロプログラムの作成・呼び出し方法\nマクロプログラムは%macroおよび%mendステートメントを利用して作成する。\n%macro マクロプログラム名; （簡略したいテキスト） %mend マクロプログラム名;\nマクロプログラム名は最大32文字、最初の文字は英字またはアンダースコア、その後の文字は英字・数字・アンダースコアが使用可能である。\n\n\n2.4.3 マクロプログラムの特徴\n\n2.4.3.1 呼び出し時にマクロ変数を受け取ることができる\n基準となるプログラムをコピー&ペーストして、一部分を書き換えたい場合があ る。この基準となるプログラムをマクロプログラム内に格納して、書き換えたい箇所を呼び出し時に受け取れるマクロ変数として、マクロプログラムに指定できる。このマクロプログラム呼び出し時に受け取るマクロ変数をマクロパラメータという。マクロパラメータも、ユーザーが任意の名前を設定可能で、そのマクロプログラム内で参照可能なマクロ変数となる。マクロパラメータとしてデータセット名(dsn)および変数名(var)を指定する例を以下に示す。\n/* 呼び出し時にマクロパラメータを指定; */\n%macro univariate2(dsn, var); /* マクロ名の後にマクロパラメータを設定; */\n\nproc univariate data = &dsn.;\nvar &var.;\nclass sex;\nrun;\n\n%mend;\n\n/* 呼び出し時にマクロパラメータを指定して実行; */\n%univariate2(dsn=sashelp.class, var=age)\n%univariate2(dsn=sashelp.class, var=weight)\n%univariate2(dsn=sashelp.class, var=height)\nまた、マクロパラメータに予め既定値を与えることもできる。この既定値をもつマクロパラメータをキーワードパラメータという。キーワードパラメータは呼び出し時に指定しなければ、既定値が自動的に設定される。したがって、ほぼ毎回同じパラメータで実行する可能性があるパラメータはキーワードパラメータとして宣言すとよい。\n\n\n2.4.3.2 制御構文が使える\nDATAステップでは、条件分岐のIFステートメント、反復処理のDOステートメントが使用できる。マクロ言語にも同様に%ifステートメント、%doステートメントが用意されており、データセットの内容やマクロパラメータの内容に応じて、マクロプロセッサの動作を変更できる。これら制御構文はマクロ変数にはない機能で、マクロプログラムに柔軟性を与える機能の一つとなっている。\n制御構文の例として、条件分岐の%ifステートメントについて説明する。\n%if 条件文 %then %do;\n(条件文がTrueの場合の処理)\n%end;\n%else %if 条件文 %then %do;\n(条件文がTrueの場合の処理)\n%end;\n%else %do;\n(全条件文をも不満足している場合の処理)\n%end;\nなお、上記のdsn および var のように、既定値を持たないマクロパラメータを位置パラメータという。\nまた、DATAステップでは、条件分岐から反復処理の%doステートメントについて説明する。\n%macro list_by_4years(startyr, endyr);\n    title1 \"Customer List of &yr. to &endyr.\";\n    proc print data = work.customer;\n        where &yr. &lt;= year &lt;= &endyr., &by 4;\n        var year customer_revenue;\n    run;\n    title1 \"Customer List of 2000 to 2003\";\n    proc print data = work.customer;\n        where 2000 &lt;= year &lt;= 2003;\n        var year customer_revenue;\n    run;\n    title1 \"Customer List of 2004 to 2007\";\n    proc print data = work.customer;\n        where 2004 &lt;= year &lt;= 2007;\n        var year customer_revenue;\n    run;\n%mend;\n\n%list_by_4years(startyr=1996, endyr=2007)\nマクロの制御構文には、他にも%do-%while、%do-%until等がある。しかし、初心者のうちは%ifと%doの2つを事実としても余りがない。%ifと%doもマクロプロセッサに対する命令である。一方、DATAステップのコンパイラに対する命令であり、データセットの変数の内容を変更することになる。ただし、%ifと%do%sysevalfは、SAS9.4 M5からマクロプログラム内部でなくても（オープンコードで）%if%then%else等を使えるようになった。2021年のSASユーザー総会の発表資料に詳細が記載されている。\n\n\n\n2.4.4 マクロ関数\n字句SASで用意されたマクロ関数を利用できる。これらのマクロ関数は、マクロプロセッサによって実行されるマクロプログラムである。DATAステップでデータセットを編集するために利用される関数と同名・同機能であっても異なるものであることに留意されたい。以下にマクロ関数の一例を示す。\n\n\n\n\n\n\n\nマクロ関数名\n説明\n\n\n\n\n%upcase(文字列) / %lowcase(文字列)\n文字列を大文字/小文字に変換する\n\n\n%trim(文字列)\n文字列の末尾の余分なスペース文字を取り除く\n\n\n%index(文字列1, 文字列2)\n文字列1の中に文字列2が含まれていれば、最初の位置(何文字目)を返す。文字列2が含まれていなければ0を返す\n\n\n%sysfunc(関数名)\nDATAステップの関数をマクロプロセッサから使用する\n\n\n\n\n\n2.4.5 マクロ変数のスコープ\nマクロ変数にもスコープ、つまりプログラム中で参照可能な範囲がある。スコープによってglobal マクロ変数とlocal マクロ変数に区分される。global マクロ変数は、プログラムのどこからでも値を参照可能である。一方、local 変数は、その変数が宣言されたマクロプログラム内部でのみ値を参照可能である。\n/* マクロ変数のスコープ; */\n%global global_var; /* グローバルマクロ変数を宣言; */\n\n%macro global_local;\n    %let local_var = ローカル変数です; /* このマクロ内部だけで有効期間; */\n    %let global_var = グローバル変数です;\n%mend;\n\n%global_local /* マクロを実行; */\n\n%put &global_var.; /* グローバル変数なので、マクロ外でも参照可能; */\n%put &local_var.; /* マクロ外なでマイナ一ルで、変数を参照できない; */\n初心者のうちは、スコープを意識する機会はさほど無いかもしれない。しかし、チームでマクロプログラムを分担して構築する場合、マクロプログラムで構築されるシステムを利用する際は、マクロ変数の衝突を避けるため、マクロ変数のスコープに留意が必要となる。（local マクロ変数を明示的に作成するためのlocal ステートメントが用意されている。）"
+    "objectID": "posts/statistics/2025/中間解析.html#methods",
+    "href": "posts/statistics/2025/中間解析.html#methods",
+    "title": "第2相抗がん剤開発及び検証的試験の中間解析",
+    "section": "2.3 Methods",
+    "text": "2.3 Methods\n\nprint(ph2simon): formats and returns the minimax, optimal and any admissible designs.\nplot(ph2simon): plots the expected sample size against the maximum sample size as in Jung et al., 2001"
   },
   {
-    "objectID": "posts/statistics/2025/SASマクロ入門1.html#マクロをデバッグする",
-    "href": "posts/statistics/2025/SASマクロ入門1.html#マクロをデバッグする",
-    "title": "SASマクロ入門1",
-    "section": "2.5 5. マクロをデバッグする",
-    "text": "2.5 5. マクロをデバッグする\n本節で同じ章にまとめ」で、マクロを書けばバグが生じる。したがって、マクロを効率的にデバッグする技術を重要である。以下に、マクロプロセッサが、マクロプログラムを生じさせたのかを知ることが有用である。このため、マクロのデバッグを効率的に行うためのオプションが用意されている。以下に、よく使用するオプションの例を示す。\n\n\n\n\n\n\n\nオプション名\n内容\n\n\n\n\nMPRINT\nマクロプロセッサによって生成されるSAS プログラムをSAS ログに表示する\n\n\nMLOGIC\nマクロプロセッサがマクロパラメータにどのような値を受け取ったか、%if条件分岐を True/Falseのどちらに判断したか、マクロの開始点と終了点をSASログに表示する\n\n\nSYMBOLGEN\nマクロプロセッサが、マクロ変数をどの値に置き換えたかSAS ログに表示する\n\n\n\nこれらのオプションを指定することで、SAS ログにマクロプロセッサからの情報が出力されるようになる。しかし、上記オプションを指定してもSAS ログを読み解くのが困難な場合もある。その場合、mfileオプションでマクロプロセッサが出力したプログラム全体を別ファイルとして出力することも可能である。（マクロの学習にも活用できる。）"
+    "objectID": "posts/statistics/2025/中間解析.html#実務に応用する際において",
+    "href": "posts/statistics/2025/中間解析.html#実務に応用する際において",
+    "title": "第2相抗がん剤開発及び検証的試験の中間解析",
+    "section": "2.4 実務に応用する際において",
+    "text": "2.4 実務に応用する際において\nSimonのMinmax、SimonのOptimanデザインのいずれの方法においても、「薬剤が無効な場合に早期中止を判断するための2段階デザイン無効な場合の期待患者数/を最小にしたい」という無効中止のみを考えた試験デザインである。 すなわち、Rの出力結果から、第1段階目のn1人において、r1人未満の奏効例数であれば、試験を無効中止とするようなデザインである。Rのパッケージで症例数設計をする場合、この数値が正しいことを試験統計家としてValidationをしておく必要はある。"
   },
   {
-    "objectID": "posts/statistics/2025/SASマクロ入門1.html#マクロをライブラリとして整理して活用する",
-    "href": "posts/statistics/2025/SASマクロ入門1.html#マクロをライブラリとして整理して活用する",
-    "title": "SASマクロ入門1",
-    "section": "2.6 6. マクロをライブラリとして整理して活用する",
-    "text": "2.6 6. マクロをライブラリとして整理して活用する\n作成したマクロは積極的に活用したほうがよい。一度制作したマクロプログラム、別の活用場面では思いがけずれなく再現全文が現在の場合がある。つまり、マクロはほとんど常設され、品質も向上していく。そこで本章では、作成したマクロプログラムをライブラリとして整理し、プログラムから呼び出し可能にする方法について説明する。\n以下にマクロライブラリを作成する手順を示す。\n\nマクロを格納するフォルダを用意する。（フォルダは複数あってもよい）\n各マクロプログラムを個別ファイルに格納していうフォルダに保存する。 このとき、ファイル名はマクロ名と同じにする必要がある。（マクロ名.sas とする）\nマクロを呼び出す側のプログラムで、以下のMAUTOSOURCE及びSASAUTOSの2つのオプションを指定する。このとき、SASAUTOSに（1）のフォルダを指定する。\n\n/* マクロをライブラリとして活用する; */\noptions mautosource sasautos=(sasautos, \"C:\\sasYearlyMacros\");\n/* （1）の sasautos内容ないこと; */\noptions mautosource sasautos=(sasautos, \"C:\\sasYearlyMacros\" \"C:\\sasYearMacros\");\nこれで、マクロライブラリ中のマクロプログラムが呼び出し可能になる。\nまた、本章では触れないが、継続として共有するライブラリを整備・活用した事例は、過去のSASユーザー総会の複数の発表がある。\nまた、SAS9.4 M6 以降、WebページのバージョンProgramming Tool であるGitHub との連携機能が搭載されている。GitHub上でマクロファイルのバージョン管理を行い、SASから直接GitHub上のマクロプログラムをinclude可能になっている。多くのオープンソースマクロがGitHub上で管理・公開されており、GitHub上での連携機能について今後の発展が注目される。"
+    "objectID": "posts/statistics/2025/中間解析.html#数学的背景について",
+    "href": "posts/statistics/2025/中間解析.html#数学的背景について",
+    "title": "第2相抗がん剤開発及び検証的試験の中間解析",
+    "section": "2.5 数学的背景について",
+    "text": "2.5 数学的背景について\n別記事で解説します。"
   },
   {
-    "objectID": "posts/statistics/2025/SASマクロ入門1.html#マクロのコツ",
-    "href": "posts/statistics/2025/SASマクロ入門1.html#マクロのコツ",
-    "title": "SASマクロ入門1",
-    "section": "2.7 マクロのコツ",
-    "text": "2.7 マクロのコツ\nどんな項目もで正しく場合ほど拡張を発想する。本章ではマクロを作成する際に留意したいポイントを説明する。筆者にして筆者の経験に価値たけ書もあるかもしれない。PhUSE6が「Good Programming Practice In Macro Development」を公開しており、マクロ開発に関する考査ずべきポイントを学ぶことができる。なお、機械のコーディングルールやガイドラインがある場合には、それらを優先されたい。\n\n2.7.1 マクロでコードの重複を排除する\nマクロによりコードの重複部分を削減し、プログラム全体をコンパクトに保つのがポイントである。そのために、マクロ化する際には、どのようなポイントで構成するか、マクロのパラメータをどこに配置するかマクロ作成時の設計が大式である。しかし、このためには、一定の実装経験を積んで、マクロプロセッサに作成させたコードのイメージが持てるように下はないと無難い趣もある。まずはマクロを含まないプログラムを作成してから、重複部分をマクロ化していくというアプローチがある。いずれにせよコードの重複部分はマクロ化を考慮するポイントである。\n\n\n2.7.2 マクロの機能と入出力を明示する\nそのマクロプログラムが、どんな機能を提供するマクロか、出力は何か、入力は何かの3点を明示することは、便利でマクロを作成するうえで重要である。そのマクロプログラムのマクロパラメータとして明示する。そのマクロパラメータも馴染みやすいネーミングを心掛けたい。また、コメントも適切に活用して必要な情報を補記するべき利用を使用して説明する。以下に、データクリーニングの名前(Cody’s Data Cleaning Techniques Using SAS）に掲載されたもののマクロプログラムの冒頭部分である。\n\n\n2.7.3 マクロの機能と入出力を明示する\nそのマクロプログラムが、どんな機能を提供するマクロか、出力は何か、入力は何かの3点を明示することは、便利でマクロを作成するうえで重要である。そのマクロプログラムのマクロパラメータとして明示する。そのマクロパラメータも馴染みやすいネーミングを心掛けたい。また、コメントも適切に活用して必要な情報を補記するべき利用を使用して説明する。以下に、データクリーニングの名前(Cody’s Data Cleaning Techniques Using SAS）に掲載されたもののマクロプログラムの冒頭部分である。\n%macro auto_outliers(\n    Dsn=,       /* Data set name */\n    ID=,        /* Name of ID variable */ \n    Var_list=,  /* List of variables to check */\n    Trim=1,     /* Trim criterion */\n    N_sd=2      /* Number of standard deviations */\n);\nコメントの細部もあるがAuto_Outliersマクロは外れ値を検出するマクロであることが読み取れる。入力として、対象データセット名(Dsn)、オブザベーションのID変数名(ID)、外れ値を抽出したい対象変数名(Var_list)、統計的な判断基準であるTrim_N_sd)を指定すればよいことがわかる。数章では、外れ値の統計基準やプログラムの詳細より、当初マクロプログラムからできることがわかる。したがって方がユーザーにより使いやすかっただいられる（Auto,はプログラム内部からできること）。\n\n\n2.7.4 マクロの内部をブラックボックス化し、抽象化する\n細部は基本原理は「プログラムの内部アルゴリズムを知らずとも、マクロプログラムの機能を利用可能にすること」である。これはプロシジャで用いるイメージに近い。例えば、私たちは SORT プロシジャに入力かのデータセット名とソート変数を指定すれば、プロシジャ内部のソートアルゴリズムを意識することなく目的を達成できる。このように、マクロプログラムを作成する際は、ユーザーにマクロの内部を意識させない形式をイメージすべきである。\nやや哲学的な内容になるが、優れたマクロは、その出力だけを実行された課題が魅力を呈しない。マクロの内部にソート順を含めてカテゴリーゼットは変更しないようにする。また、マクロの内部だけで作成する一時的なデータセットを削除しなければ、ユーザーは、そのマクロ内部の構造する必要がないらならない。また、「文今後、新を適時」の結構で、マクロの終了時にマクロ内部で作成したworkデータセットを削除することもある。\n\n\n2.7.5 マクロプログラムはなるべくシンプルを保つ\nプログラム設計の原則に「分割して統治する」および「Keep it simple, stupid」があり、マクロプログラムもなるべくシンプルに保つことを推奨する。これは、マクロプログラムの汎用性を高めることと方針テンションスピ方向にあることも分かいている。また、新たにマクロプログラムを作成する際は、既存のマクロプログラムの入力方法を工夫すれば詳細なプロ先はせずとも済まない、あるいは既存のシンプルなマクロプログラムを利用して（呼び出して）作成できないか構想すべき場合がある。品質は既存されたシンプルのマクロプログラムを利用すれば、マクロプログラム全体のコードを予備し、かつ新たに作成するマクロプログラムの品質も維持しようといううがい対象である。\n\n\n2.7.6 コードの読みやすさや理解のしやすさにも配慮する\nマクロを書けば、いろいろな場面で活用できるようになるが、SASにプログラムを書いてもらうのが楽しくなり、%や&が使いびう複雑なプログラムになる場合がある。もちろん、そのことは体はマクロを理解している範囲であり、マクロプロセッサも文法的に問題ないよう限りは説明に動いてくれる。一方で、保存する他のプログラマや求人の自分がプログラムを読み機会もあり、コードの読みやすさや理解のしやすさを保持して、あえてマクロ化しない（マクロ化しすぎない）という判断場合もある。\nまた、マクロプログラミングでも、DATAステップ同様にネーミングが重要である。インデント（字下げ）を適切に行い、マクロの条件分岐や反復構造などを把握しやすくする、効果的にコメントを入れるなど、コードの読みやすさについても心掛けたい。\n\n\n2.7.7 小さく始める\n小さく始めて、少しずつ理解するのが習得のコツである。最初はマクロ変数を使うところからでもよい。基本プログラムによく変更する部分だけをマクロ変数化して、プラクマの電用管理を設定可能にする、先行するすプロジェクトの設定を改めてせることも多いし、実はここまででも十分な効果が着込まれる場合がある。また、簡単なマクロプログラムを作成する際給与も設ける。マクロを作成する手順として、まずマクロを含まないプログラムを作成し、少しずつマクロ化していくアプローチが推奨されている。これによりマクロプロセッサに命令があるかが明り分けすされる。"
+    "objectID": "posts/statistics/2025/中間解析.html#試験概要",
+    "href": "posts/statistics/2025/中間解析.html#試験概要",
+    "title": "第2相抗がん剤開発及び検証的試験の中間解析",
+    "section": "6.1 試験概要",
+    "text": "6.1 試験概要\n今回設計した臨床試験の基本パラメータと解析計画をまとめました。この試験では2段階の逐次デザインを採用し、中間解析で早期中止の可能性を検討します。"
   },
   {
-    "objectID": "posts/statistics/2025/SASマクロ入門1.html#マクロの実例",
-    "href": "posts/statistics/2025/SASマクロ入門1.html#マクロの実例",
-    "title": "SASマクロ入門1",
-    "section": "2.8 マクロの実例",
-    "text": "2.8 マクロの実例\n筆者らが業務で実際に作成したマクロプログラムを紹介する。筆者で簡切と練習する事例であり、なるべく小題のプログラム編集で対応できるよう意図している。\n\n2.8.1 特定のフォルダ内のSASデータセットを1つのExcelファイルに変換する\nSASデータセットをデータセット別にシートを分けてExcelファイルに変換してほしいと依頼を受ける。もちろんデータセットの教だけprocexportまたはsetステートメントを記述してもよいのだが、そのような縮り返し処理はマクロ化したときに自動転するのがよい。なお、以下でマクロプログラムが直後されたフォルダ内のSASデータセットを、同フォルダに既定のExcelファイルを指定する必要がある。\n%macro sas2xlsx;\n\n    /* データセット一覧を取得する */\n    proc sql noprint;\n        select memname into :dsname1-\n        from dictionary.tables\n        where libname = \"SAS\";\n    quit;\n\n    do i = 1 to &sqlobs.;\n\n        data work.&&&dsname&i..;\n            set sas.&&&dsname&i..;\n        run;\n\n    %end;\n\n%mend;\n上記マクロでは、現在でデータセットのあるフォルダを出力先のExcelファイルに指定する必要がある。そこで、上記マクロプログラムが配置されたフォルダ内のSASデータセットを、同フォルダに既定のExcelファイルとして出力するようにプログラムを変更すれば、条件ごとにプログラムを編集する必要がなくなる。（もちろん不測の事象が生じする能性があるため、SASログ確認および出力ファイルの確認は時う。）\n\n\n2.8.2 特定のフォルダ内のSASデータセットをXPTファイルに一括変換する\n医療機関医療品の承認申請では、原則として申請電子データ提出が求められており、既導データをXPT形式で提出する必要がある。このためSASデータセットをXPT形式に変換する機会がよくある。なお、以下ではfilel.sasという名前でマクロプログラムを保存し、指定したデータセットが配置されたフォルダに配置してくれる。細部の具い事例である。\n/* 指定フォルダ内のSASデータセットをXPTファイルに一括変換する; */\noption nofmterr nologic print symbol;\n%let xpt = %str(C:\\workXpt);  \n%let sas = %str(C:\\workXsas); \n\nlibname _sas \"&sas.\";\nlibname _xpt xport \"&sas.\";\n\n%macro sas2xpt(sptdir, sasdir);\n\n/* ～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～; */\n/* ファイル一覧を取得する; */\n/* ～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～; */\n%filelist(\n    directory=%superq(sasdir), /* Directory to read */\n    out=_sas,                  /* Output data set to create */\n    extensions=sas7bdat        /* Space delimited extensions to include. Not case\n                                sensitive. Leave blank or set other based on extension */\n)\n\n/* ファイル一覧を読み込む; */\nproc sql noprint;\n    select dsname into :_dsname1 - \n    from _sas;\nquit;\n\n/* 各ファイルがない場合は終了する; */\n%if &sqlobs. = 0 %then %return;\n\nlibname _sas %superq(sasdir)\" access=readonly;\n\n%do i = 1 to &sqlobs.;\n/* ～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～; */\n/* SAS7BDATをXPTに変換する; */\n/* ～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～; */\nlibname _xpt xport \"&sptdir\\&&&_dsname&i..&_xpt\";\ndata _xpt.&&&_dsname&i..;\n    set _sas.&&&_dsname&i..;\nrun;\n%end;\n\n/* ～～～～～～終了処理～～～～～～; */\nlibname _sas clear;\nlibname _xpt clear;\nproc datasets library=work nolist;\n    delete _sas;\nquit;\nrun;\nquit;\n\n%mend;\n\n%sas2xpt(sptdir=%superq(xpt), sasdir=%superq(sas))"
+    "objectID": "posts/statistics/2025/中間解析.html#試験設計パラメータ",
+    "href": "posts/statistics/2025/中間解析.html#試験設計パラメータ",
+    "title": "第2相抗がん剤開発及び検証的試験の中間解析",
+    "section": "6.2 試験設計パラメータ",
+    "text": "6.2 試験設計パラメータ\n\n\n\n項目\n設定値\n\n\n\n\n登録期間\n2年\n\n\n追跡期間\n5年\n\n\n目標症例数\n126.7例（2群計128例）63.25例/年\n\n\n期待イベント数\n96.5例（対照群: 55.4例、治療群: 41.1例）"
   },
   {
-    "objectID": "posts/statistics/2025/SASマクロ入門1.html#終わりに",
-    "href": "posts/statistics/2025/SASマクロ入門1.html#終わりに",
-    "title": "SASマクロ入門1",
-    "section": "2.9 終わりに",
-    "text": "2.9 終わりに\nマクロ言語を対象にマクロの基礎から応用、そして利用のコツを概説した。マクロプロセッサにプログラムを書いてもらうライブラリ化により大量軸な共通化に及ぶまで、マクロは様々な場面で雄用いと感じてもらえれば幸いしたい。しかし、一度にすべてを理解する必要はなく、筆者ももともくさんのトライ&エラーを経験し、必要に迫られながら時間をかけてレットたという自分求むのが実情である。やがり理解できる自然に身につくき交鎖に考え、引用文献もご参照頂ければ幸いである。マクロプロセッサは、そこと出番を待っている。"
+    "objectID": "posts/statistics/2025/中間解析.html#解析スケジュール",
+    "href": "posts/statistics/2025/中間解析.html#解析スケジュール",
+    "title": "第2相抗がん剤開発及び検証的試験の中間解析",
+    "section": "6.3 解析スケジュール",
+    "text": "6.3 解析スケジュール\n\n6.3.1 中間解析（第1段階）\n\n実施時期: 試験開始から3年後（2.92年）\n期待イベント数: 48.3例（対照群: 30.4例、治療群: 17.9例）\n\n\n\n6.3.2 最終解析（第2段階）\n\n実施時期: 全症例の追跡完了後\n期待イベント数: 96.5例"
+  },
+  {
+    "objectID": "posts/statistics/2025/中間解析.html#統計的判定基準",
+    "href": "posts/statistics/2025/中間解析.html#統計的判定基準",
+    "title": "第2相抗がん剤開発及び検証的試験の中間解析",
+    "section": "6.4 統計的判定基準",
+    "text": "6.4 統計的判定基準\n\n\n\n\n\n\n\n\n\n解析段階\n統計量\n判定基準\n結論\n\n\n\n\n中間解析\nZ₁ &gt; 2.96259\n有効性境界を超過\n有効中止\n\n\n\nZ₁ &lt; 0.86994\n無効性境界を下回る\n無効中止\n\n\n\n0.86994 ≤ Z₁ ≤ 2.96259\n境界値の間\n試験継続\n\n\n最終解析\nZ₂ &gt; 1.89189\n有効性境界を超過\n有効"
+  },
+  {
+    "objectID": "posts/statistics/2025/中間解析.html#まとめ",
+    "href": "posts/statistics/2025/中間解析.html#まとめ",
+    "title": "第2相抗がん剤開発及び検証的試験の中間解析",
+    "section": "6.5 まとめ",
+    "text": "6.5 まとめ\nこの逐次デザインにより、試験の途中で明確な結果が得られた場合には早期中止が可能となり、患者さんの負担軽減と試験の効率化が期待できます。特に、中間解析時点で強い有効性が示された場合や、逆に無効性が明らかになった場合には、倫理的観点からも適切な判断ができる設計となっている。\nこの後は、Proc lifetest Procedure等で実際に解析を行い推定値に基づくZ統計量を算出した上で、Proc Seqtest Procedureで中間解析の結果を評価することとなる。"
+  },
+  {
+    "objectID": "posts/statistics/2025/SQL入門1.html",
+    "href": "posts/statistics/2025/SQL入門1.html",
+    "title": "SQL入門1",
+    "section": "",
+    "text": "本記事では、SASによるProc SQL Procedureについて解説する。参考文献は以下の通りである。\n\n\n\n2022年度SASユーザー総会：臨床試験のデータハンドリングとSQLプロシジャ\n2007年度SASユーザー総会：臨床試験データの加工におけるSAS/Proc SQL の活用事例：データセット併合と図表作成\n2007年度SASユーザー総会：SQL プロシジャの利用－安全性の集計を題材に－\n2016年度：データハンドリングにおけるSQLプロシジャの利活用 -PROC SQL入門ー"
+  },
+  {
+    "objectID": "posts/statistics/2025/SQL入門1.html#参考文献",
+    "href": "posts/statistics/2025/SQL入門1.html#参考文献",
+    "title": "SQL入門1",
+    "section": "",
+    "text": "2022年度SASユーザー総会：臨床試験のデータハンドリングとSQLプロシジャ\n2007年度SASユーザー総会：臨床試験データの加工におけるSAS/Proc SQL の活用事例：データセット併合と図表作成\n2007年度SASユーザー総会：SQL プロシジャの利用－安全性の集計を題材に－\n2016年度：データハンドリングにおけるSQLプロシジャの利活用 -PROC SQL入門ー"
+  },
+  {
+    "objectID": "posts/statistics/2025/SQL入門1.html#利点1事前ソートが不要",
+    "href": "posts/statistics/2025/SQL入門1.html#利点1事前ソートが不要",
+    "title": "SQL入門1",
+    "section": "2.1 利点1：事前ソートが不要",
+    "text": "2.1 利点1：事前ソートが不要\nData Stepの場合：\n/* 各データセットを事前にソートする必要がある */\nproc sort data=dataset1; by id; run;\nproc sort data=dataset2; by id; run;\ndata merged;\n    merge dataset1 dataset2;\n    by id;\nrun;\nProc SQLの場合：\n/* ソート不要で直接結合可能 */\nproc sql;\n    create table merged as\n    select * from dataset1 a\n    left join dataset2 b\n    on a.id = b.id;\nquit;"
+  },
+  {
+    "objectID": "posts/statistics/2025/SQL入門1.html#利点2併合と同時にソートが可能",
+    "href": "posts/statistics/2025/SQL入門1.html#利点2併合と同時にソートが可能",
+    "title": "SQL入門1",
+    "section": "2.2 利点2：併合と同時にソートが可能",
+    "text": "2.2 利点2：併合と同時にソートが可能\nProc SQLでは、order byを用いることにより、データセットの併合と同時にデータをソートすることが可能である。そのため、データセットの併合後にProc sortで改めてソートすることはせずに、Proc SQLのみで目的に応じた並び順にすることが可能である。\nproc sql;\n    create table result as\n    select * from dataset1 a\n    left join dataset2 b\n    on a.id = b.id\n    order by id, visit_date;  /* 結合と同時にソート */\nquit;"
+  },
+  {
+    "objectID": "posts/statistics/2025/SQL入門1.html#利点3同名変数の上書き回避",
+    "href": "posts/statistics/2025/SQL入門1.html#利点3同名変数の上書き回避",
+    "title": "SQL入門1",
+    "section": "2.3 利点3：同名変数の上書き回避",
+    "text": "2.3 利点3：同名変数の上書き回避\nData Stepの問題： 併合前の2つのデータセットに同じ変数名が存在する場合、データステップでマージするとその変数名のデータは上書きされてしまう\nProc SQLの解決策：\n/* 表4.1.5のような状況での外部結合 */\nproc sql;\n    create table result as\n    select a.subject_id, a.sex as patient_sex, a.test_code, a.value,\n           b.sex as reference_sex, b.lower_limit, b.upper_limit\n    from measurement_data a\n    left join reference_data b\n    on a.test_code = b.test_code\n    and (b.sex = '.' or a.sex = b.sex);\nquit;\n基準値データセットに「性別」のデータが存在し、かつ測定値データセットの「性別」と他の異なるオブザベーションは結合データセットから削除される"
+  },
+  {
+    "objectID": "posts/statistics/2025/SQL入門1.html#利点4集計関数による個別値と平均値の比較",
+    "href": "posts/statistics/2025/SQL入門1.html#利点4集計関数による個別値と平均値の比較",
+    "title": "SQL入門1",
+    "section": "2.4 利点4：集計関数による個別値と平均値の比較",
+    "text": "2.4 利点4：集計関数による個別値と平均値の比較\n従来の方法の問題： 従来方向のデータの平均値を求めることは、SAS関数のmeanを用いることでデータステップでも可能である。しかし、オブザベーション方向のデータの平均値を求めるためには、Proc MEANSなどの別のプロシジャを用いる必要がある。また、retainステートメントを用いたオブザベーション方向の累計の計算により、データステップでもオブザベーション方向の平均値を求めることは可能であるが、個々の測定値と求めた平均値を比較するためには別工程の処理が必要である。\nProc SQLの解決策：\nproc sql;\n    create table comparison as\n    select subjid, paramcd, value,\n           mean(value) as group_mean,\n           value - mean(value) as deviation_from_mean\n    from lab_data\n    group by paramcd;\nquit;\nそれに対して、Proc SQLでは、集計するための関数を用いることで、個々の測定値とオブザベーション方向の平均値を比較することが可能となる。"
+  },
+  {
+    "objectID": "posts/statistics/2025/SQL入門1.html#基本構文",
+    "href": "posts/statistics/2025/SQL入門1.html#基本構文",
+    "title": "SQL入門1",
+    "section": "3.1 基本構文",
+    "text": "3.1 基本構文\n1つのデータセットを加工して、1つのデータセットを作成する場合の基本的なProc SQLの構文：他にも諸々の指定ができるが、基礎的な事項は以下の通りである。\nProc SQL ;\n    create table 作成データセット名    as\n    select      元のデータセット名.変数名1,\n                元のデータセット名.変数名2    as  変更後の変数名2\n    from        元のデータセット名\n    where       データ抽出の条件1\n    group by    グループ分け\n    having      データ抽出の条件2\n    order by    ソート変数\n;\n複数SQLステートメントのまとめ書き\nproc sql &lt;オプション&gt; ;\n    sqlステートメント1 ;\n    sqlステートメント2 ;\n    sqlステートメント3 ;\n;\nquit;"
+  },
+  {
+    "objectID": "posts/statistics/2025/SQL入門1.html#各構文要素の説明",
+    "href": "posts/statistics/2025/SQL入門1.html#各構文要素の説明",
+    "title": "SQL入門1",
+    "section": "3.2 各構文要素の説明",
+    "text": "3.2 各構文要素の説明\n\n3.2.1 create table 作成データセット名 as\n作成するデータセットの名称を定義する。\n\n\n3.2.2 select\nselect  元のデータセット名.変数名1,\n        元のデータセット名.変数名2 as 変更後の変数名2\n\n作成するデータセットに保存する変数を定義する（データステップではkeepステートメントに相当）\n元のデータセットにおける変数名を指定した後に「as」を加え、変更後の変数名を記載することで、作成するデータセットに保存する変数の変数名を変更することが可能（データステップではrenameステートメントに相当）\n基本的に作成するデータセットに保存する全ての変数を定義する必要がある\n元のデータセットに存在する全ての変数をそのまま用いる場合には「*」で代用することも可能\n定義された変数名の順でデータセットが作成されるため、変数の並び順を変更することが簡単\n\n\n\n3.2.3 from 元のデータセット名\n元のデータセットを指定する（データステップではsetステートメントに相当）。\n\n\n3.2.4 where データ抽出の条件1\n元のデータセットからデータを抽出する条件を指定する。\n\n\n3.2.5 group by グループ分け\n集計する場合などの状況においてグループ分けの条件を設定する。\n\n\n3.2.6 having データ抽出の条件2\n元のデータセットからデータを抽出する条件を指定する。集計するための関数を利用して条件を指定する場合には、「where」ではなく「having」で指定する。\n\n\n3.2.7 order by ソート変数\nデータのソートに用いる変数を指定する。Proc SQLでは、データセット作成と同時にデータをソートすることが可能である。"
+  },
+  {
+    "objectID": "posts/statistics/2025/SQL入門1.html#data-stepとの比較",
+    "href": "posts/statistics/2025/SQL入門1.html#data-stepとの比較",
+    "title": "SQL入門1",
+    "section": "3.3 Data Stepとの比較",
+    "text": "3.3 Data Stepとの比較\n上記のProc SQLで作成したプログラムをデータステップおよびProc SQL以外のプロシジャで作成する場合：\nData 作成データセット名 ;\n    set 元のデータセット名 ;\n    where       データ抽出の条件1 ;\n    rename      変数名2 = 変更後の変数名2 ;\n    keep        変数名1  変更後の変数名2 ;\n    if          データ抽出の条件2 ;\nrun ;\n\nProc sort data=作成データセット名 ;\n    by ソート変数 ;\nrun ;"
+  },
+  {
+    "objectID": "posts/statistics/2025/SQL入門1.html#proc-sqlの利点",
+    "href": "posts/statistics/2025/SQL入門1.html#proc-sqlの利点",
+    "title": "SQL入門1",
+    "section": "3.4 Proc SQLの利点",
+    "text": "3.4 Proc SQLの利点\n\n複数の工程を1工程にまとめられる：プログラム作成においてエラーを少なくするという利点がある\n変更箇所の特定が容易：変更箇所を見つけやすいため、変数名の変更や条件の変更を行なう際に変更漏れを少なくするという利点がある\n統一された記法：Proc SQLでは「Proc SQL;」～「quit」、データステップでは「Data」～「run;」、Proc SQL以外のプロシジャでは「Proc」～「run;」を1工程と表現する"
+  },
+  {
+    "objectID": "posts/statistics/2025/SASプログラミング業務のフレームワーク.html",
+    "href": "posts/statistics/2025/SASプログラミング業務のフレームワーク.html",
+    "title": "SASプログラミング業務のフレームワーク",
+    "section": "",
+    "text": "大阪SASユーザー総会の下記資料が大変勉強になるので、自分の備忘録用にコピペさせていただきた。基本的に下記資料をみればよい。\n\nThink Framework"
+  },
+  {
+    "objectID": "posts/statistics/2025/SASプログラミング業務のフレームワーク.html#はじめに",
+    "href": "posts/statistics/2025/SASプログラミング業務のフレームワーク.html#はじめに",
+    "title": "SASプログラミング業務のフレームワーク",
+    "section": "2.1 はじめに",
+    "text": "2.1 はじめに\nSASプログラミングにおいて、毎回同じような処理を一から書くのは非効率的です。本記事では、Yugo Mikiさんの「Think Framework」の知見を参考に、SASプログラムをフレームワーク化することで、開発効率を大幅に向上させる手法について解説します。"
+  },
+  {
+    "objectID": "posts/statistics/2025/SASプログラミング業務のフレームワーク.html#library-vs-framework根本的な発想の違い",
+    "href": "posts/statistics/2025/SASプログラミング業務のフレームワーク.html#library-vs-framework根本的な発想の違い",
+    "title": "SASプログラミング業務のフレームワーク",
+    "section": "2.2 Library vs Framework：根本的な発想の違い",
+    "text": "2.2 Library vs Framework：根本的な発想の違い\n\n2.2.1 従来のLibraryアプローチ\n\nマクロライブラリなどが有名\nライブラリからマクロやプログラムを参照してプログラム中に利用する\nプログラムの再利用に特化した使い方\nプログラミングコードを部品化し、組み合わせる事でプログラムを作成する\n\n\n\n2.2.2 新しいFrameworkアプローチ\n\nSAS LSAFなどが有名。一方、「それって一体何なの？」ってくらい実体が見えない\n一般的な機能を持つ共通コードを持つ\n標準的なコードはフレームワークが持ち、要求されるコードの実現にプログラマーのリソースを集中させる事で効率化を達成する"
+  },
+  {
+    "objectID": "posts/statistics/2025/SASプログラミング業務のフレームワーク.html#だからどういうことなのさ",
+    "href": "posts/statistics/2025/SASプログラミング業務のフレームワーク.html#だからどういうことなのさ",
+    "title": "SASプログラミング業務のフレームワーク",
+    "section": "2.3 「だからどういうことなのさ？」",
+    "text": "2.3 「だからどういうことなのさ？」\nつまり：\n\nいつも書くコードはフレームワークに持たせましょう！\n\n- いつも使う機能はフレームワークに持たせましょう！\n- よく使うマクロとかもフレームワークに持たせましょう！\n- ついでに社内ルールとかもフレームワークに持たせておきましょう！\nってこと。\nこれをSASで良い感じに実現して、快適な開発環境を作りましょう！"
+  },
+  {
+    "objectID": "posts/statistics/2025/SASプログラミング業務のフレームワーク.html#sasプログラムの要素分析とフレームワーク化判断",
+    "href": "posts/statistics/2025/SASプログラミング業務のフレームワーク.html#sasプログラムの要素分析とフレームワーク化判断",
+    "title": "SASプログラミング業務のフレームワーク",
+    "section": "2.4 SASプログラムの要素分析とフレームワーク化判断",
+    "text": "2.4 SASプログラムの要素分析とフレームワーク化判断\n\n2.4.1 SDTM to ADaM変換の場合\n\n\n\n\n\n\n\n\n処理項目\n考察\nフレームワーク化判断\n\n\n\n\nClear log and data\n毎回使う。対象とする。\n✅ 完全自動化\n\n\nSetting macros\n毎回使うところだけ対象とする。\n⚡ 部分自動化\n\n\nSetting library\n毎回違う。出来るだけ一箇所に集約したい。\n🔧 設定管理\n\n\nSetting format\n仕様書のコードリストにあるものは対象とする。\n✅ 完全自動化\n\n\nImport data and files\nファイル名と仕様が毎回違う。やや無理。\n⚡ テンプレート化\n\n\nMerge\n毎回違う。対象外。\n❌ プログラマーの腕の見せ所\n\n\nMapping to new variables\n毎回違う。対象外。\n❌ プログラマーの腕の見せ所\n\n\nSort\nマクロ化してライブラリへ。\n✅ 共通化\n\n\nDrop extra variables\n仕様書から自動取得。\n✅ メタデータ連携\n\n\nUpload\nマクロ化してライブラリへ。\n✅ 共通化\n\n\nHeader, sections, comments\nSOPや手順との兼ね合い。対象とする。\n✅ テンプレート自動生成\n\n\n\n\n\n2.4.2 ADaM to TFLs変換の場合\n\nClear log and data\nSetting macros\nSetting library\nSetting format\nImport data and files\nMerge\nCall procedures（プロシージャの呼び出し）\nSort\nMake up to requests from mockup（モックアップからのリクエスト作成）\nUpload\nHeader, section, and comments\n\n🎯 重要な気づき\nプログラマーに頑張って欲しい所はここ！（MergeとMapping）\nということはそれ以外の所はフレームワークに持たせた方がいい！"
+  },
+  {
+    "objectID": "posts/statistics/2025/SASプログラミング業務のフレームワーク.html#sasによるフレームワーク設計",
+    "href": "posts/statistics/2025/SASプログラミング業務のフレームワーク.html#sasによるフレームワーク設計",
+    "title": "SASプログラミング業務のフレームワーク",
+    "section": "2.5 SASによるフレームワーク設計",
+    "text": "2.5 SASによるフレームワーク設計\n\n2.5.1 基本コンセプト\n\nSASプログラム開発時を想定\nSASによるプログラムテンプレート作成の一歩先\n\n\n\n2.5.2 URS（User Requirement Specification）\n\n使用するのはBase SASと一般的な外部ファイル（EXCEL）\nプログラムからプログラムをcallしても良い\n本番実行時のみログを外部に保管\nマクロは今回はmacro.sasを毎回includeする\nフレームワーク化検討のほぼ全てを実装する\n\n\n\n2.5.3 フレームワーク仕様\n\n2.5.3.1 全実行プログラム\n\n全実行時ログを保管\n\n\n\n2.5.3.2 Macro.sas\n\nSort\nインポート（proc sort）\nエクスポート（proc sort）\n仕様書から変数のattribute作成\n仕様書からcodelistのformat作成\n仕様書からkeepする変数リスト作成\n\n\n\n2.5.3.3 Each_dsn.sas\n\nStand aloneで動く\n実施時にログ、データセット等をクリアする\n社内規則に従ったheader, section, commentを作成する\n\nプログラムにおける面倒な”いつもの”を持たせておくのがフレームワークです。"
+  },
+  {
+    "objectID": "posts/statistics/2025/SASプログラミング業務のフレームワーク.html#実装例とテクニック",
+    "href": "posts/statistics/2025/SASプログラミング業務のフレームワーク.html#実装例とテクニック",
+    "title": "SASプログラミング業務のフレームワーク",
+    "section": "2.6 実装例とテクニック",
+    "text": "2.6 実装例とテクニック\n\n2.6.1 全実行プログラム：環境分離の巧妙な仕組み\n/* 基本的にはマクロで実装 */\n%macro derive(dsn, title);\n   proc printto log = \"&path.¥&project._&dsn._log.txt\" new;\n   title1 \"&project.:&title.\";\n   run;\n   \n   %include \"&pgpath.¥&dsn..sas\";\n   \n   proc printto; \n   run;\n%mend;\n\n%derive(adsl)\n%derive(adae)\nPrinttoでincludeを挟むだけで開発環境と本番実行環境を分離できる！ 開発時：それぞれのプログラムで実行。ログはログ画面へ出力される 本番実行時：ログはprinttoで指定したフォルダへ出力される\n\n%macro derive(lib, dsn, key, where);\n    proc sort data = &lib..&dsn out = work.&dsn;\n        by &key.;\n        &where.;\n    run;\n%mend;\nMacroはlibraryにして保管・管理しておくと楽です。今回のmacro.sasはそれ自体がマクロライブラリとして機能します。 フレームワークからライブラリが読み込まれるような仕様にしています。 個別プログラムの構造化 ログクリアとヘッダーの順序問題 常識的に考えるとheaderが先である。だって”head”erだから。でも少し考えてみてもいい。\n/* パターン1 */\ndm \"log; clear;\";\n/* program name : test */\n/* author : anonymous */\n\n/* パターン2 */\n/* program name : test */\n/* author : anonymous */\ndm \"log; clear;\";\nどっちも同じ？ でも少し考えてみてもいい。もし、printtoではなくdmステートメントでログを保存していたら？後者の場合、ログからheaderが消えてしまう。どうやってログを残すかによって使えないパターンがあるので注意しよう。\nPhUSE GPPの参考から持ってきました。立派なヘッダーです。 これを作るの時間かかるんじゃない？ → こういうものはフレームワークに持たせましょう。 ちょっと工夫すると結構作れちゃったりするものです。 よく見たら進捗管理ファイル、帳票一覧、ADaM仕様書にほとんどの情報が入っている。\n\n/***********************************************************************\n* Project         : Sample Drug, Sample Indication,Study1\n* Program name    : sample.sas\n* Author          : smithb\n* Date created    : 20100816\n* Purpose         : Summarize demographics data for the study.\n* Revision History :\n* Date        Author      Ref     Revision (Date in YYYYMMDD format)\n* 20100818    smithb      1       Removed subjects with who have not been dosed per spec.\n***********************************************************************/"
+  },
+  {
+    "objectID": "posts/statistics/2025/SASプログラミング業務のフレームワーク.html#マクロの使用パターン",
+    "href": "posts/statistics/2025/SASプログラミング業務のフレームワーク.html#マクロの使用パターン",
+    "title": "SASプログラミング業務のフレームワーク",
+    "section": "2.7 マクロの使用パターン",
+    "text": "2.7 マクロの使用パターン\nマクロはいつもどうやって使う？\n\n/* 1. %include statement */\n%include \"macro.sas\";\n\n/* 2. Set auto compiled macro */\nFILENAME fileref 'the path to the AUTOCALL library';\nOPTIONS MAUTOSOURCE SASAUTOS=(SASAUTOS fileref);\n\n/* 3. Set stored macro */\nLIBNAME mylib 'C:¥temp';\nOPTIONS MSTORED SASMSTORE=mylib;"
+  },
+  {
+    "objectID": "posts/statistics/2025/SASプログラミング業務のフレームワーク.html#実践的な考察",
+    "href": "posts/statistics/2025/SASプログラミング業務のフレームワーク.html#実践的な考察",
+    "title": "SASプログラミング業務のフレームワーク",
+    "section": "6.1 実践的な考察",
+    "text": "6.1 実践的な考察\n\n6.1.1 良かった点\n\nHeaderの記入箇所が少なくて楽\n毎回やってた設定が不要になり、ミスもなくなった\n余計な設定や処理に悩まされないので、データを見る時間などに作業時間を使えている気がする\n\n\n\n6.1.2 良くなかった点（正直な評価）\n\n簡単なプログラムのはずなんだけどやたらとコードが長い\n少しプログラムの構造が変わると、適用できない\n開発計画が大きく変わると対応できない"
+  },
+  {
+    "objectID": "posts/statistics/2025/SASプログラミング業務のフレームワーク.html#組織レベルでの戦略的価値",
+    "href": "posts/statistics/2025/SASプログラミング業務のフレームワーク.html#組織レベルでの戦略的価値",
+    "title": "SASプログラミング業務のフレームワーク",
+    "section": "6.2 組織レベルでの戦略的価値",
+    "text": "6.2 組織レベルでの戦略的価値\n\n6.2.1 会社としての評価\n\nやってみてもいい。\n申請や海外に提供するなど、プログラムへの要求が高くなればなるほど威力が出る\n会社として基本的なプログラムの書き方やセクションわけなどを決めてしまっても、この方法ならコスト高にならない。むしろ、いつもここにこういう事が書かれていると分かった方が開発、またはそのための教育においても有利。"
+  },
+  {
+    "objectID": "posts/statistics/2025/SASプログラミング業務のフレームワーク.html#フレームワーク化の本質的な価値",
+    "href": "posts/statistics/2025/SASプログラミング業務のフレームワーク.html#フレームワーク化の本質的な価値",
+    "title": "SASプログラミング業務のフレームワーク",
+    "section": "6.3 フレームワーク化の本質的な価値",
+    "text": "6.3 フレームワーク化の本質的な価値\n\n6.3.1 抽象化レベルの設定\n\n6.3.1.1 高レベル抽象化（完全自動化）\n\n環境設定、ログ管理、基本的なハウスキーピング\n一度設定すれば、プログラマーは意識する必要がない\n\n\n\n6.3.1.2 中レベル抽象化（テンプレート化）\n\nプログラム構造、ヘッダー、セクション分け\n骨格は提供するが、中身はプログラマーが記述\n\n\n\n6.3.1.3 低レベル抽象化（ユーティリティ提供）\n\nよく使う処理の関数化\n呼び出すかどうかはプログラマーの判断\n\n\n\n\n6.3.2 組織的導入戦略\n\n6.3.2.1 段階的導入アプローチ\n\nPhase 1: 基盤整備：標準的なフォルダ構造とユーティリティマクロ\nPhase 2: テンプレート化：プログラムテンプレートとヘッダー標準化\nPhase 3: 自動化拡張：設定管理の自動化とバリデーション機能\nPhase 4: 最適化：継続的な改善とパターンの蓄積\n\n\n\n\n6.3.3 フレームワーク化の真の価値は：\n🎯 焦点の明確化 本当に重要な作業（データ変換ロジック、分析手法の選択）に集中できる環境の構築\n🚀 スケーラビリティの確保 個人の経験や知識に依存しない、組織として継続可能な開発体制\n🔄 継続的改善の文化 一度作って終わりではなく、常に最適化し続ける仕組み\n🤝 協働の促進 標準化されたアプローチにより、チームメンバー間の連携と知識共有の促進"
   },
   {
     "objectID": "posts/statistics/2025/Markdown記法1.html",
@@ -504,332 +658,325 @@
     "text": "git push origin main"
   },
   {
-    "objectID": "posts/statistics/2025/SASプログラミング業務のフレームワーク.html",
-    "href": "posts/statistics/2025/SASプログラミング業務のフレームワーク.html",
-    "title": "SASプログラミング業務のフレームワーク",
+    "objectID": "posts/statistics/2025/SASプログラミングTips1.html",
+    "href": "posts/statistics/2025/SASプログラミングTips1.html",
+    "title": "SASプログラミングTips1",
     "section": "",
-    "text": "大阪SASユーザー総会の下記資料が大変勉強になるので、自分の備忘録用にコピペさせていただきた。基本的に下記資料をみればよい。\n\nThink Framework"
+    "text": "本記事では、実務上便利なSASプログラミングのTipsを紹介する。"
   },
   {
-    "objectID": "posts/statistics/2025/SASプログラミング業務のフレームワーク.html#はじめに",
-    "href": "posts/statistics/2025/SASプログラミング業務のフレームワーク.html#はじめに",
-    "title": "SASプログラミング業務のフレームワーク",
-    "section": "2.1 はじめに",
-    "text": "2.1 はじめに\nSASプログラミングにおいて、毎回同じような処理を一から書くのは非効率的です。本記事では、Yugo Mikiさんの「Think Framework」の知見を参考に、SASプログラムをフレームワーク化することで、開発効率を大幅に向上させる手法について解説します。"
+    "objectID": "posts/statistics/2025/SASプログラミングTips1.html#プログラム解説",
+    "href": "posts/statistics/2025/SASプログラミングTips1.html#プログラム解説",
+    "title": "SASプログラミングTips1",
+    "section": "2.1 プログラム解説",
+    "text": "2.1 プログラム解説\nこのSASプログラムは現在の日時を取得し、異なる形式でマクロ変数に格納するコードです。\n処理の流れ：\n\n%sysfunc(datetime())で現在日時を数値形式で取得\ndate()とtime()で日付・時刻を個別に取得\nput()関数でフォーマット適用（日付：YYYY/MM/DD、時刻：HH:MM:SS）\ncompress()で区切り文字を除去（日付：YYYYMMDD、時刻：HHMMSS）\ncall symput()で4つのマクロ変数を作成\n\n作成されるマクロ変数：\n\n&StDates：2025/06/16（スラッシュ付き日付）\n&StDate：20250616（スラッシュなし日付）\n&StTimes：14:30:25（コロン付き時刻）\n&StTime：143025（コロンなし時刻）\n\n用途： ログファイル名生成、バックアップのタイムスタンプ、処理開始時刻の記録など、バッチ処理でよく使用される汎用的なコードです。"
   },
   {
-    "objectID": "posts/statistics/2025/SASプログラミング業務のフレームワーク.html#library-vs-framework根本的な発想の違い",
-    "href": "posts/statistics/2025/SASプログラミング業務のフレームワーク.html#library-vs-framework根本的な発想の違い",
-    "title": "SASプログラミング業務のフレームワーク",
-    "section": "2.2 Library vs Framework：根本的な発想の違い",
-    "text": "2.2 Library vs Framework：根本的な発想の違い\n\n2.2.1 従来のLibraryアプローチ\n\nマクロライブラリなどが有名\nライブラリからマクロやプログラムを参照してプログラム中に利用する\nプログラムの再利用に特化した使い方\nプログラミングコードを部品化し、組み合わせる事でプログラムを作成する\n\n\n\n2.2.2 新しいFrameworkアプローチ\n\nSAS LSAFなどが有名。一方、「それって一体何なの？」ってくらい実体が見えない\n一般的な機能を持つ共通コードを持つ\n標準的なコードはフレームワークが持ち、要求されるコードの実現にプログラマーのリソースを集中させる事で効率化を達成する"
+    "objectID": "posts/statistics/2025/SASプログラミングTips1.html#プログラム解説-1",
+    "href": "posts/statistics/2025/SASプログラミングTips1.html#プログラム解説-1",
+    "title": "SASプログラミングTips1",
+    "section": "3.1 プログラム解説",
+    "text": "3.1 プログラム解説\nこのSASプログラムは、実行中のプログラムの場所を自動判定し、プロジェクトの標準フォルダ構造に基づいて各種パスを動的に設定する汎用的なパス管理コードです。\n\n3.1.1 実行パス取得マクロ\n最初の部分では、現在実行中のSASプログラムの完全パスを取得するマクロを定義しています。このマクロは実行環境に関係なく動作するよう設計されており、バッチ実行時はGETOPTION(SYSIN)関数を、対話的実行時はSAS_EXECFILEPATH環境変数を使用します。IF文による条件分岐により、どちらの環境でも確実にプログラムパスを取得できる仕組みになっています。\n\n\n3.1.2 階層パス解析\n次に、取得したフルパスから階層構造を解析し、プロジェクト内での相対位置を把握する処理を行います。SCAN関数とQSUBSTR関数を組み合わせて、パスを階層別に分解します。PROGRAM_NAMEには実行中のプログラム名（拡張子なし）、CURRENT_DIRには現在のディレクトリの完全パス、PARENT_DIRには1つ上の階層ディレクトリのパス、PROJECT_ROOTにはプロジェクトルートディレクトリのパス（2つ上の階層）がそれぞれ格納されます。\n\n各変数の役割：\n\nPROGRAM_NAME：実行中のプログラム名（拡張子なし）\nCURRENT_DIR：現在のディレクトリの完全パス\nPARENT_DIR：1つ上の階層ディレクトリのパス\nPROJECT_ROOT：プロジェクトルートディレクトリのパス（2つ上の階層）\n\n\n\n\n3.1.3 標準パス自動生成\n最後のデータステップでは、プロジェクト標準フォルダ構造に基づいて必要なパスを自動生成します。CAT関数でPROJECT_ROOTを基準として各フォルダパスを結合し、CALL SYMPUTX文でマクロ変数として定義します。生データ格納用のINPUT_RAW、外部データ格納用のINPUT_EXT、出力ファイル格納用のOUTPUT_PATH、ログファイル格納用のLOG_PATH、マクロファイル格納用のMACRO_PATH、設定ファイル格納用のSETTING_PATH、仕様書格納用のSPEC_PATHが設定されます。\n設定されるパス：\n\nINPUT_RAW：生データ（Raw data）格納パス\nINPUT_EXT：外部データ（External data）格納パス\nOUTPUT_PATH：出力ファイル格納パス\nLOG_PATH：ログファイル格納パス\nMACRO_PATH：マクロファイル格納パス\nSETTING_PATH：設定ファイル格納パス\nSPEC_PATH：仕様書格納パス\n\n\n\n3.1.4 活用メリット\nこのコードをプロジェクトの各SASプログラム冒頭に配置することで、プロジェクトフォルダの移動や環境変更時にパス設定の修正が不要になります。チーム開発での設定統一と保守性向上を実現でき、どのサブフォルダからプログラムを実行しても、常に正しいプロジェクトルートを基準とした一貫したパス管理が可能になります。手動でのパス設定ミスを防ぎ、開発効率の向上にも寄与します。"
   },
   {
-    "objectID": "posts/statistics/2025/SASプログラミング業務のフレームワーク.html#だからどういうことなのさ",
-    "href": "posts/statistics/2025/SASプログラミング業務のフレームワーク.html#だからどういうことなのさ",
-    "title": "SASプログラミング業務のフレームワーク",
-    "section": "2.3 「だからどういうことなのさ？」",
-    "text": "2.3 「だからどういうことなのさ？」\nつまり：\n\nいつも書くコードはフレームワークに持たせましょう！\n\n- いつも使う機能はフレームワークに持たせましょう！\n- よく使うマクロとかもフレームワークに持たせましょう！\n- ついでに社内ルールとかもフレームワークに持たせておきましょう！\nってこと。\nこれをSASで良い感じに実現して、快適な開発環境を作りましょう！"
+    "objectID": "posts/statistics/2025/SASプログラミングTips1.html#プログラム解説-2",
+    "href": "posts/statistics/2025/SASプログラミングTips1.html#プログラム解説-2",
+    "title": "SASプログラミングTips1",
+    "section": "4.1 プログラム解説",
+    "text": "4.1 プログラム解説\nこのSASマクロは、指定されたディレクトリパスが存在しない場合に、必要な階層構造を含めて自動的にフォルダを作成する汎用的なディレクトリ作成マクロです。\n\n4.1.1 マクロの動作原理\nマクロは再帰的なアルゴリズムを採用しており、深い階層のフォルダ構造でも一度の呼び出しで全ての必要なディレクトリを作成できます。まず入力されたパスを親ディレクトリ部分と最終フォルダ名に分解し、指定されたパスが存在するかをチェックします。存在しない場合、親ディレクトリの存在も確認し、親ディレクトリが存在しなければマクロが自分自身を呼び出して上位階層から順次作成していきます。\n\n\n4.1.2 パス解析のロジック\nSTRIP関数で入力パスの前後空白を除去した後、SUBSTR関数とSCAN関数を組み合わせてパスを分解します。SCAN関数でパス区切り文字（バックスラッシュ）を基準に最終フォルダ名を抽出し、SUBSTR関数で親ディレクトリ部分を切り出します。この処理により、どのような深さのパスでも正確に階層構造を解析できます。\n\n\n4.1.3 条件分岐による効率的な処理\nFILEEXIST関数による存在チェックを各段階で実行し、既に存在するディレクトリに対しては何も処理を行いません。これにより無駄な処理を避け、既存の構造を保護しながら必要な部分のみを作成します。実際のフォルダ作成はDCREATE関数で実行され、作成結果は戻り値で確認できます。\n\n\n4.1.4 プロジェクト管理での活用\nこのマクロを前回のパス設定コードと組み合わせることで、プロジェクト開始時のフォルダ構造セットアップを完全自動化できます。新しい環境でプロジェクトを開始する際や、チームメンバーが初めてプロジェクトに参加する際に、手動でフォルダを作成する手間を省き、標準的なフォルダ構造を確実に構築できます。\n\n\n4.1.5 エラー処理と保守性\nマクロはエラーハンドリングも考慮されており、作成に失敗した場合でも処理が停止することなく、次の処理に進みます。また、既存のフォルダ構造に影響を与えることなく、必要な部分のみを安全に追加できる設計になっています。プロジェクトの成長に合わせて新しいフォルダが必要になった場合も、このマクロを呼び出すだけで簡単に対応できます"
   },
   {
-    "objectID": "posts/statistics/2025/SASプログラミング業務のフレームワーク.html#sasプログラムの要素分析とフレームワーク化判断",
-    "href": "posts/statistics/2025/SASプログラミング業務のフレームワーク.html#sasプログラムの要素分析とフレームワーク化判断",
-    "title": "SASプログラミング業務のフレームワーク",
-    "section": "2.4 SASプログラムの要素分析とフレームワーク化判断",
-    "text": "2.4 SASプログラムの要素分析とフレームワーク化判断\n\n2.4.1 SDTM to ADaM変換の場合\n\n\n\n\n\n\n\n\n処理項目\n考察\nフレームワーク化判断\n\n\n\n\nClear log and data\n毎回使う。対象とする。\n✅ 完全自動化\n\n\nSetting macros\n毎回使うところだけ対象とする。\n⚡ 部分自動化\n\n\nSetting library\n毎回違う。出来るだけ一箇所に集約したい。\n🔧 設定管理\n\n\nSetting format\n仕様書のコードリストにあるものは対象とする。\n✅ 完全自動化\n\n\nImport data and files\nファイル名と仕様が毎回違う。やや無理。\n⚡ テンプレート化\n\n\nMerge\n毎回違う。対象外。\n❌ プログラマーの腕の見せ所\n\n\nMapping to new variables\n毎回違う。対象外。\n❌ プログラマーの腕の見せ所\n\n\nSort\nマクロ化してライブラリへ。\n✅ 共通化\n\n\nDrop extra variables\n仕様書から自動取得。\n✅ メタデータ連携\n\n\nUpload\nマクロ化してライブラリへ。\n✅ 共通化\n\n\nHeader, sections, comments\nSOPや手順との兼ね合い。対象とする。\n✅ テンプレート自動生成\n\n\n\n\n\n2.4.2 ADaM to TFLs変換の場合\n\nClear log and data\nSetting macros\nSetting library\nSetting format\nImport data and files\nMerge\nCall procedures（プロシージャの呼び出し）\nSort\nMake up to requests from mockup（モックアップからのリクエスト作成）\nUpload\nHeader, section, and comments\n\n🎯 重要な気づき\nプログラマーに頑張って欲しい所はここ！（MergeとMapping）\nということはそれ以外の所はフレームワークに持たせた方がいい！"
+    "objectID": "posts/statistics/2025/SASプログラミングTips1.html#プログラム解説-3",
+    "href": "posts/statistics/2025/SASプログラミングTips1.html#プログラム解説-3",
+    "title": "SASプログラミングTips1",
+    "section": "5.1 プログラム解説",
+    "text": "5.1 プログラム解説\nこのSASプログラムは、実行日ベースのプログラム管理フォルダを自動作成する汎用的なコードです。\n\n5.1.1 基本的な仕組み\nまず現在の日付をYYYYMMDD形式で取得し、実行中のプログラムパスからプロジェクトルートを自動判定します。その後、プロジェクトルート配下のPrgフォルダ内に実行日付のサブフォルダ（例：Prg\\20250616）を作成します。\n\n\n5.1.2 日付ベースフォルダ管理の利点\nこのシステムにより、プログラムの実行履歴を日付別に整理できます。同じプログラムを異なる日に実行しても結果が混在せず、過去の実行内容を簡単に追跡できます。特に開発段階では、日々の変更内容を時系列で管理できるため、問題発生時の原因特定や以前のバージョンへの戻しが容易になります。\n\n\n5.1.3 自動ディレクトリ作成の活用\ncreate_dir_structureマクロの再帰処理により、深い階層構造でも一度の呼び出しで必要なフォルダが全て作成されます。既存フォルダの存在チェック機能により、重複実行しても安全で、チーム開発での環境差異も自動的に解決されます。\nこのコードをプログラム冒頭に配置することで、実行のたびに適切な作業フォルダが準備され、プロジェクトの標準化と履歴管理を同時に実現できます。"
   },
   {
-    "objectID": "posts/statistics/2025/SASプログラミング業務のフレームワーク.html#sasによるフレームワーク設計",
-    "href": "posts/statistics/2025/SASプログラミング業務のフレームワーク.html#sasによるフレームワーク設計",
-    "title": "SASプログラミング業務のフレームワーク",
-    "section": "2.5 SASによるフレームワーク設計",
-    "text": "2.5 SASによるフレームワーク設計\n\n2.5.1 基本コンセプト\n\nSASプログラム開発時を想定\nSASによるプログラムテンプレート作成の一歩先\n\n\n\n2.5.2 URS（User Requirement Specification）\n\n使用するのはBase SASと一般的な外部ファイル（EXCEL）\nプログラムからプログラムをcallしても良い\n本番実行時のみログを外部に保管\nマクロは今回はmacro.sasを毎回includeする\nフレームワーク化検討のほぼ全てを実装する\n\n\n\n2.5.3 フレームワーク仕様\n\n2.5.3.1 全実行プログラム\n\n全実行時ログを保管\n\n\n\n2.5.3.2 Macro.sas\n\nSort\nインポート（proc sort）\nエクスポート（proc sort）\n仕様書から変数のattribute作成\n仕様書からcodelistのformat作成\n仕様書からkeepする変数リスト作成\n\n\n\n2.5.3.3 Each_dsn.sas\n\nStand aloneで動く\n実施時にログ、データセット等をクリアする\n社内規則に従ったheader, section, commentを作成する\n\nプログラムにおける面倒な”いつもの”を持たせておくのがフレームワークです。"
+    "objectID": "posts/statistics/2025/SASプログラミングTips1.html#プログラム解説-4",
+    "href": "posts/statistics/2025/SASプログラミングTips1.html#プログラム解説-4",
+    "title": "SASプログラミングTips1",
+    "section": "6.1 プログラム解説",
+    "text": "6.1 プログラム解説\nこのコードは、FILENAME文とINCLUDE文を組み合わせて、特定フォルダ内の複数のSASファイルを効率的に読み込む汎用的な手法です。\n\n6.1.1 FILENAME文による論理参照の設定\nFILENAME文で論理名「MACROLIB」を定義し、マクロ変数で指定されたフォルダパスを割り当てます。これにより、以降の処理では物理的なフォルダパスではなく、論理名を使用してファイルにアクセスできるようになります。\n\n\n6.1.2 INCLUDE文による選択的ファイル読み込み\n各INCLUDE文では、論理名に続けて括弧内にファイル名を指定することで、指定フォルダ内の特定ファイルを読み込みます。この記法により、フォルダ内の全ファイルではなく、必要なファイルのみを選択的に読み込むことが可能です。\n\n\n6.1.3 この手法の優位性\n従来の絶対パス指定と比較して、コードの保守性と可読性が大幅に向上します。フォルダパスの変更時は最初のFILENAME文のみを修正すれば良く、同一フォルダ内の複数ファイルを扱う際の記述量も削減されます。また、論理名を使用することで、プラットフォーム間でのパス記法の違いも吸収できます。\n\n\n6.1.4 応用範囲\nこの手法は、マクロライブラリの管理以外にも、設定ファイルの読み込み、データセットの一括処理、プログラムの分割実行など、様々な場面で活用できます。プロジェクトの規模が大きくなり、複数のファイルを体系的に管理する必要がある場合に特に有効な手法です。"
   },
   {
-    "objectID": "posts/statistics/2025/SASプログラミング業務のフレームワーク.html#実装例とテクニック",
-    "href": "posts/statistics/2025/SASプログラミング業務のフレームワーク.html#実装例とテクニック",
-    "title": "SASプログラミング業務のフレームワーク",
-    "section": "2.6 実装例とテクニック",
-    "text": "2.6 実装例とテクニック\n\n2.6.1 全実行プログラム：環境分離の巧妙な仕組み\n/* 基本的にはマクロで実装 */\n%macro derive(dsn, title);\n   proc printto log = \"&path.¥&project._&dsn._log.txt\" new;\n   title1 \"&project.:&title.\";\n   run;\n   \n   %include \"&pgpath.¥&dsn..sas\";\n   \n   proc printto; \n   run;\n%mend;\n\n%derive(adsl)\n%derive(adae)\nPrinttoでincludeを挟むだけで開発環境と本番実行環境を分離できる！ 開発時：それぞれのプログラムで実行。ログはログ画面へ出力される 本番実行時：ログはprinttoで指定したフォルダへ出力される\n\n%macro derive(lib, dsn, key, where);\n    proc sort data = &lib..&dsn out = work.&dsn;\n        by &key.;\n        &where.;\n    run;\n%mend;\nMacroはlibraryにして保管・管理しておくと楽です。今回のmacro.sasはそれ自体がマクロライブラリとして機能します。 フレームワークからライブラリが読み込まれるような仕様にしています。 個別プログラムの構造化 ログクリアとヘッダーの順序問題 常識的に考えるとheaderが先である。だって”head”erだから。でも少し考えてみてもいい。\n/* パターン1 */\ndm \"log; clear;\";\n/* program name : test */\n/* author : anonymous */\n\n/* パターン2 */\n/* program name : test */\n/* author : anonymous */\ndm \"log; clear;\";\nどっちも同じ？ でも少し考えてみてもいい。もし、printtoではなくdmステートメントでログを保存していたら？後者の場合、ログからheaderが消えてしまう。どうやってログを残すかによって使えないパターンがあるので注意しよう。\nPhUSE GPPの参考から持ってきました。立派なヘッダーです。 これを作るの時間かかるんじゃない？ → こういうものはフレームワークに持たせましょう。 ちょっと工夫すると結構作れちゃったりするものです。 よく見たら進捗管理ファイル、帳票一覧、ADaM仕様書にほとんどの情報が入っている。\n\n/***********************************************************************\n* Project         : Sample Drug, Sample Indication,Study1\n* Program name    : sample.sas\n* Author          : smithb\n* Date created    : 20100816\n* Purpose         : Summarize demographics data for the study.\n* Revision History :\n* Date        Author      Ref     Revision (Date in YYYYMMDD format)\n* 20100818    smithb      1       Removed subjects with who have not been dosed per spec.\n***********************************************************************/"
+    "objectID": "posts/statistics/2025/SASプログラミングTips1.html#プログラム解説-5",
+    "href": "posts/statistics/2025/SASプログラミングTips1.html#プログラム解説-5",
+    "title": "SASプログラミングTips1",
+    "section": "7.1 プログラム解説",
+    "text": "7.1 プログラム解説\nこのSASプログラムは、メタデータを基にして解析プログラムのテンプレートを動的に生成する自動化システムです。\n\n7.1.1 プログラム生成マクロの構造\ncreate_pgマクロは、プログラム名、テーブル名、解析対象集団の3つのパラメータを受け取り、指定されたフォルダに新しいSASプログラムファイルを作成します。FILENAME文で出力先ファイルを指定し、FILE文とPUT文を使用してプログラムのヘッダー部分を標準化されたフォーマットで出力します。\n\n\n7.1.2 標準化されたヘッダー生成\n各生成プログラムには、プロジェクト情報、プログラム説明、解析対象集団、バージョン情報、履歴管理欄を含む統一フォーマットのヘッダーが自動挿入されます。これにより、手動作成時に発生しがちな記載漏れや形式の不統一を防ぎ、プロジェクト全体でのドキュメント品質を保証します。\n\n\n7.1.3 メタデータ駆動型の一括生成\n最後のデータステップでは、OUT2データセットに格納されたメタデータを読み込み、CALL EXECUTE文を使用してマクロを動的に実行します。CATS関数でマクロ呼び出し文を構築し、データセットの各レコードに対して個別のプログラムファイルを生成します。\n\n\n7.1.4 自動化の利点とメリット\nこの手法により、数十から数百の解析プログラムを一度に生成できるため、大規模プロジェクトでの開発効率が大幅に向上します。メタデータの変更時も該当部分のみを修正して再実行すれば、全プログラムに変更が反映されるため、保守性も高くなります。また、ヒューマンエラーの削減と品質の均一化も実現できます。"
   },
   {
-    "objectID": "posts/statistics/2025/SASプログラミング業務のフレームワーク.html#マクロの使用パターン",
-    "href": "posts/statistics/2025/SASプログラミング業務のフレームワーク.html#マクロの使用パターン",
-    "title": "SASプログラミング業務のフレームワーク",
-    "section": "2.7 マクロの使用パターン",
-    "text": "2.7 マクロの使用パターン\nマクロはいつもどうやって使う？\n\n/* 1. %include statement */\n%include \"macro.sas\";\n\n/* 2. Set auto compiled macro */\nFILENAME fileref 'the path to the AUTOCALL library';\nOPTIONS MAUTOSOURCE SASAUTOS=(SASAUTOS fileref);\n\n/* 3. Set stored macro */\nLIBNAME mylib 'C:¥temp';\nOPTIONS MSTORED SASMSTORE=mylib;"
+    "objectID": "posts/statistics/2025/SASプログラミングTips1.html#cats関数",
+    "href": "posts/statistics/2025/SASプログラミングTips1.html#cats関数",
+    "title": "SASプログラミングTips1",
+    "section": "8.1 1. CATS関数",
+    "text": "8.1 1. CATS関数\n機能： 複数の文字列を連結し、各引数の前後の空白を自動削除\ndata example1;\n    name = \"田中\";\n    id = \"001\";\n    dept = \"営業部\";\n    \n    /* 従来の方法 */\n    result1 = trim(name) || trim(id) || trim(dept);\n    \n    /* CATS関数を使用 */\n    result2 = cats(name, id, dept);\n    \n    put result1= result2=;\nrun;\n出力： result1=田中001営業部 result2=田中001営業部\nCATS関数は自動的に前後の空白を削除するため、TRIMやLEFT関数が不要になり、コードがシンプルになります。"
   },
   {
-    "objectID": "posts/statistics/2025/SASプログラミング業務のフレームワーク.html#実践的な考察",
-    "href": "posts/statistics/2025/SASプログラミング業務のフレームワーク.html#実践的な考察",
-    "title": "SASプログラミング業務のフレームワーク",
-    "section": "6.1 実践的な考察",
-    "text": "6.1 実践的な考察\n\n6.1.1 良かった点\n\nHeaderの記入箇所が少なくて楽\n毎回やってた設定が不要になり、ミスもなくなった\n余計な設定や処理に悩まされないので、データを見る時間などに作業時間を使えている気がする\n\n\n\n6.1.2 良くなかった点（正直な評価）\n\n簡単なプログラムのはずなんだけどやたらとコードが長い\n少しプログラムの構造が変わると、適用できない\n開発計画が大きく変わると対応できない"
+    "objectID": "posts/statistics/2025/SASプログラミングTips1.html#catx関数",
+    "href": "posts/statistics/2025/SASプログラミングTips1.html#catx関数",
+    "title": "SASプログラミングTips1",
+    "section": "8.2 2. CATX関数",
+    "text": "8.2 2. CATX関数\n機能： 指定した区切り文字で複数の文字列を連結\ndata example2;\n    year = 2025;\n    month = 6;\n    day = 16;\n    \n    /* 日付文字列の作成 */\n    date_slash = catx(\"/\", year, month, day);\n    date_hyphen = catx(\"-\", year, month, day);\n    \n    /* CSVフォーマットの作成 */\n    csv_line = catx(\",\", \"田中太郎\", 30, \"東京都\");\n    \n    put date_slash= date_hyphen= csv_line=;\nrun;\n出力： date_slash=2025/6/16 date_hyphen=2025-6-16 csv_line=田中太郎,30,東京都"
   },
   {
-    "objectID": "posts/statistics/2025/SASプログラミング業務のフレームワーク.html#組織レベルでの戦略的価値",
-    "href": "posts/statistics/2025/SASプログラミング業務のフレームワーク.html#組織レベルでの戦略的価値",
-    "title": "SASプログラミング業務のフレームワーク",
-    "section": "6.2 組織レベルでの戦略的価値",
-    "text": "6.2 組織レベルでの戦略的価値\n\n6.2.1 会社としての評価\n\nやってみてもいい。\n申請や海外に提供するなど、プログラムへの要求が高くなればなるほど威力が出る\n会社として基本的なプログラムの書き方やセクションわけなどを決めてしまっても、この方法ならコスト高にならない。むしろ、いつもここにこういう事が書かれていると分かった方が開発、またはそのための教育においても有利。"
+    "objectID": "posts/statistics/2025/SASプログラミングTips1.html#whichnwhichc関数",
+    "href": "posts/statistics/2025/SASプログラミングTips1.html#whichnwhichc関数",
+    "title": "SASプログラミングTips1",
+    "section": "8.3 3. WHICHN・WHICHC関数",
+    "text": "8.3 3. WHICHN・WHICHC関数\n機能： 指定した値がリストの何番目にあるかを返す\ndata ae_severity;\n    input pt $ severity $;\n    \n    /* 重篤度レベルをコード化 */\n    severity_code = whichc(severity, \"軽度\", \"中等度\", \"重度\", \"重篤\");\n    \n    /* グレード分類への変換 */\n    ctcae_grade = whichc(severity, \"Grade1\", \"Grade2\", \"Grade3\", \"Grade4\", \"Grade5\");\n    \ndatalines;\n頭痛 軽度\n発熱 中等度\n呼吸困難 重度\n;\nrun;\npt=頭痛 severity=軽度 severity_code=1 ctcae_grade=0\npt=発熱 severity=中等度 severity_code=2 ctcae_grade=0\npt=呼吸困難 severity=重度 severity_code=3 ctcae_grade=0\n\nseverity_code：指定したリスト内での位置を返す\n\n“軽度” → 1番目 → 1\n“中等度” → 2番目 → 2\n“重度” → 3番目 → 3\n\n\n\n\nctcae_grade：CTCAEグレード用のリストにマッチしないため全て0\n\nデータの”軽度”、“中等度”、“重度”は”Grade1”、“Grade2”等とマッチしない\nマッチしない場合はWHICHC関数は0を返す"
   },
   {
-    "objectID": "posts/statistics/2025/SASプログラミング業務のフレームワーク.html#フレームワーク化の本質的な価値",
-    "href": "posts/statistics/2025/SASプログラミング業務のフレームワーク.html#フレームワーク化の本質的な価値",
-    "title": "SASプログラミング業務のフレームワーク",
-    "section": "6.3 フレームワーク化の本質的な価値",
-    "text": "6.3 フレームワーク化の本質的な価値\n\n6.3.1 抽象化レベルの設定\n\n6.3.1.1 高レベル抽象化（完全自動化）\n\n環境設定、ログ管理、基本的なハウスキーピング\n一度設定すれば、プログラマーは意識する必要がない\n\n\n\n6.3.1.2 中レベル抽象化（テンプレート化）\n\nプログラム構造、ヘッダー、セクション分け\n骨格は提供するが、中身はプログラマーが記述\n\n\n\n6.3.1.3 低レベル抽象化（ユーティリティ提供）\n\nよく使う処理の関数化\n呼び出すかどうかはプログラマーの判断\n\n\n\n\n6.3.2 組織的導入戦略\n\n6.3.2.1 段階的導入アプローチ\n\nPhase 1: 基盤整備：標準的なフォルダ構造とユーティリティマクロ\nPhase 2: テンプレート化：プログラムテンプレートとヘッダー標準化\nPhase 3: 自動化拡張：設定管理の自動化とバリデーション機能\nPhase 4: 最適化：継続的な改善とパターンの蓄積\n\n\n\n\n6.3.3 フレームワーク化の真の価値は：\n🎯 焦点の明確化 本当に重要な作業（データ変換ロジック、分析手法の選択）に集中できる環境の構築\n🚀 スケーラビリティの確保 個人の経験や知識に依存しない、組織として継続可能な開発体制\n🔄 継続的改善の文化 一度作って終わりではなく、常に最適化し続ける仕組み\n🤝 協働の促進 標準化されたアプローチにより、チームメンバー間の連携と知識共有の促進"
+    "objectID": "posts/statistics/2025/SASプログラミングTips1.html#choosenchoosec関数",
+    "href": "posts/statistics/2025/SASプログラミングTips1.html#choosenchoosec関数",
+    "title": "SASプログラミングTips1",
+    "section": "8.4 4. CHOOSEN・CHOOSEC関数",
+    "text": "8.4 4. CHOOSEN・CHOOSEC関数\n機能： インデックス番号に基づいてリストから値を選択\ndata example4;\n    do i = 1 to 4;\n        /* 数値版：CHOOSEN */\n        threshold = choosen(i, 60, 70, 80, 90);\n        \n        /* 文字版：CHOOSEC */\n        grade = choosec(i, \"D\", \"C\", \"B\", \"A\");\n        \n        put i= threshold= grade=;\n    end;\nrun;\n出力： i=1 threshold=60 grade=D i=2 threshold=70 grade=C i=3 threshold=80 grade=B i=4 threshold=90 grade=A\n・Y番目のXの値を返す。\n・第2引数以降に数値型の変数または値を指定する場合はCHOOSEN関数を用いる。\n・第2引数以降に文字型の変数または値を指定する場合はCHOOSEC関数を用いる。"
   },
   {
-    "objectID": "posts/statistics/2025/SQL入門1.html",
-    "href": "posts/statistics/2025/SQL入門1.html",
-    "title": "SQL入門1",
+    "objectID": "posts/statistics/2025/SASプログラミングTips1.html#coalescecoalescec関数",
+    "href": "posts/statistics/2025/SASプログラミングTips1.html#coalescecoalescec関数",
+    "title": "SASプログラミングTips1",
+    "section": "8.5 5. COALESCE・COALESCEC関数",
+    "text": "8.5 5. COALESCE・COALESCEC関数\n機能： 最初の非欠損値を返す\n/* サンプルデータの作成 */\ndata sample_data;\n    input ID X1 $ X2 $ X3 $;\n    datalines;\n1 AA    BB\n2    CC DD\n3       EE\n4 FF    \n5          \n6 GG HH II\n;\nrun;\n\n/* 方法1: IF-ELSE文を使用 */\ndata result1;\n    set sample_data;\n    length Y $2.;\n    if X1^=\"\" then Y=X1;\n    else if X2^=\"\" then Y=X2;\n    else if X3^=\"\" then Y=X3;\nrun;\n\n/* 方法2: COALESCEC関数を使用 */\ndata result2;\n    set sample_data;\n    length Y $2.;\n    Y = coalescec(X1, X2, X3);\nrun;\nポイント：\n\nこの関数は「引数のうち最初に欠損値以外で登場する値を返す」という機能を持っています。\nCOALESCE： 数値の場合、欠損値（.）をスキップして最初の有効な値（85）を返す\nCOALESCEC： 文字の場合、空白をスキップして最初の有効な文字列を返す"
+  },
+  {
+    "objectID": "posts/statistics/2025/SASプログラミングTips1.html#vvaluevvaluex関数",
+    "href": "posts/statistics/2025/SASプログラミングTips1.html#vvaluevvaluex関数",
+    "title": "SASプログラミングTips1",
+    "section": "8.6 6. VVALUE・VVALUEX関数",
+    "text": "8.6 6. VVALUE・VVALUEX関数\n機能： フォーマットが適用された値を文字列として取得\ndata DT1;\n  format X yymmdd10.;\n  X = '13jun2017'd;\nrun;\n\n\ndata DT2;\n  set DT1;\n  length Y $20.;\n  Y = put( X, yymmdd10.);\nrun;\n\n\ndata DT2;\n  set DT1;\n  length Y1 Y2 $20.;\n\n  /* vvalue関数を使った例 */\n  Y1 = vvalue( X );\n\n  /* vvaluex関数を使った例 */\n  Y2 = vvaluex( \"X\" );\n\nrun;\n\nY1 = vvalue( X )：「 vvalue( X ) 」で変数Xに割り当てられているFORMAT「YYMMDD10.」を使って文字変換した値「2017-06-13」を返しています。\nY2 = vvaluex( “X” );vvaluex も vvalue と同じ機能を持っているのですが、違いは以下の通り。\nvvalue( X )      … 変数名を指定\nvvaluex( “X” )  … 変数名を表す文字値を指定\nつまり、「 vvaluex( “X” ) 」で変数Xに割り当てられているFORMAT「YYMMDD10.」を使って文字変換した値「2017-06-13」を返しています。"
+  },
+  {
+    "objectID": "posts/statistics/2025/SASプログラミングTips1.html#cmiss関数",
+    "href": "posts/statistics/2025/SASプログラミングTips1.html#cmiss関数",
+    "title": "SASプログラミングTips1",
+    "section": "8.7 7. CMISS関数",
+    "text": "8.7 7. CMISS関数\n機能： 欠損値の個数をカウント\ndata example7;\n    input name $ age height weight;\n    \n    missing_count = cmiss(age, height, weight);\n    complete_data = (missing_count = 0);\n    \n    put name= missing_count= complete_data=;\n    \ndatalines;\n田中 25 170 65\n佐藤 . 165 .\n山田 30 . 70\n;\nrun;\n出力： name=田中 missing_count=0 complete_data=1 name=佐藤 missing_count=2 complete_data=0 name=山田 missing_count=1 complete_data=0"
+  },
+  {
+    "objectID": "posts/statistics/2025/SASプログラミングTips1.html#ifnifc関数",
+    "href": "posts/statistics/2025/SASプログラミングTips1.html#ifnifc関数",
+    "title": "SASプログラミングTips1",
+    "section": "8.8 8. IFN・IFC関数",
+    "text": "8.8 8. IFN・IFC関数\n機能： 条件に基づいて値を返す三項演算子\n\ndata DT1;\n   length X1 $10.;\n   X1=\"YES\"; output;\n   X1=\"NO\"; output;\nrun;\n\n#Before\ndata DT2;\n   set DT1;\n   if X1 = \"YES\" then X2=1;\n   else  X2=0;\nrun;\n\n#After\ndata DT2;\n   set DT1;\n   X2 = ifn(X1=\"YES\",1,0);\nrun;\nRのifelse関数みたいな気持ち。"
+  },
+  {
+    "objectID": "posts/statistics/2025/SASプログラミングTips1.html#call-missing",
+    "href": "posts/statistics/2025/SASプログラミングTips1.html#call-missing",
+    "title": "SASプログラミングTips1",
+    "section": "8.9 9. CALL MISSING",
+    "text": "8.9 9. CALL MISSING\n機能： 複数の変数を一度に欠損値に設定\ndata example9;\n    name = \"田中\";\n    age = 25;\n    score = 85;\n    \n    /* 条件に応じて全データを欠損値に */\n    if age &lt; 20 then call missing(of name age score);\n    \n    put name= age= score=;\nrun;\nこのSASコードはCALL MISSINGルーチンを使って、条件に応じて複数の変数を一度に欠損値に設定する例です。"
+  },
+  {
+    "objectID": "posts/statistics/2025/SASプログラミングTips1.html#call-symputx",
+    "href": "posts/statistics/2025/SASプログラミングTips1.html#call-symputx",
+    "title": "SASプログラミングTips1",
+    "section": "8.10 10. CALL SYMPUTX",
+    "text": "8.10 10. CALL SYMPUTX\n機能： データステップ内でマクロ変数を作成・更新\ndata example10;\n    input dept $ sales;\n    \n    /* 部門別に動的にマクロ変数を作成 */\n    call symputx(cats(\"sales_\", dept), sales);\n    \n    /* 最大売上をマクロ変数に格納 */\n    retain max_sales;\n    if _n_ = 1 then max_sales = sales;\n    else max_sales = max(max_sales, sales);\n\n   if  _EOF then call symputx(\"OBS\", _N_);\n    \ndatalines;\n営業 1200\n技術 800\n総務 300\n;\nrun;\n\n/* データステップ終了後に最大値を取得 */\ndata _null_;\n    set example10 end=last;\n    retain max_sales;\n    if _n_ = 1 then max_sales = sales;\n    else max_sales = max(max_sales, sales);\n    if last then call symputx(\"max_sales_total\", max_sales);\nrun;\n\n%put &sales_営業 &sales_技術 &sales_総務;\n%put &max_sales_total;\n出力： 1200 800 300 1200\nこれらの関数を使いこなすことで、SASプログラミングの効率と可読性が大幅に向上します。特にデータクリーニングや条件分岐処理において威力を発揮する関数群です。"
+  },
+  {
+    "objectID": "posts/statistics/2025/SASマクロ入門1.html",
+    "href": "posts/statistics/2025/SASマクロ入門1.html",
+    "title": "SASマクロ入門1",
     "section": "",
-    "text": "本記事では、SASによるProc SQL Procedureについて解説する。参考文献は以下の通りである。\n\n\n\n2022年度SASユーザー総会：臨床試験のデータハンドリングとSQLプロシジャ\n2007年度SASユーザー総会：臨床試験データの加工におけるSAS/Proc SQL の活用事例：データセット併合と図表作成\n2007年度SASユーザー総会：SQL プロシジャの利用－安全性の集計を題材に－\n2016年度：データハンドリングにおけるSQLプロシジャの利活用 -PROC SQL入門ー"
+    "text": "本記事では、2022年SASユーザー総会の森田氏の「マクロのすすめ～SASにプログラムをかいてもらおう～」の文章を写経したものである。個人の勉強記録であるため、基本的には元の資料を参考にしていただきたい。\n\n\n基礎的な事項で参考になるものはいつも通り、以下のブログである。特に実務上で重要だが知られていないデータステップで変数をマクロ化するcall syputx、データステップ外で関数を使えるようにする%sysfuncはきちんと理解したい。また、マクロ言語入門9で紹介されている&macro_variable.の.は常に記載する、もしくは記載しない等を組織/個人開発で統一しておくことが望ましい。\n\nマクロ言語入門1：マクロ変数とは【%LET】\nマクロ言語入門2：マクロの登録と実行【%MACRO、%MEND】\nマクロ言語入門3：パラメータの設定【定位置パラメータ】\nマクロ言語入門4：パラメータの設定【キーワードパラメータ】\nマクロ言語入門5：クォート処理【%STR関数】\nマクロ言語入門6：クォート処理【%BQUOTE関数】\nマクロ言語入門7：マクロ内でのループ処理【%DO】\nマクロ言語入門8：マクロ内での条件分岐処理【%IF】\nマクロ言語入門9：マクロ変数とドット\nマクロ言語入門10：マクロ変数と&&\nマクロ言語入門11：演算評価 【%EVAL、%SYSEVALF】\n値をマクロ変数に格納する「CALL SYMPUTX」その1\nデータステップ外で関数を使えるようにする「%SYSFUNC」その１\n森岡 裕, %if-%then-%doのオープンコードでの利用と9.4以降のSASマクロ拡張点について, SASユーザー総会論文集, 2021.\n本本 早紀, クォート処理及びスコープへの理解を深める, SASユーザー総会論文集, 2019, p141-150\n竹田 真, 佐藤 智美, 社内マクロライブラリの構築について, SASユーザー総会論文集, 2001, p37-44\n柳沢 健太郎, 常吉 華奈, 山本 典子, 臨床試験における集計解析用 SASプログラムの標準化, SASユーザー総会論文集, 2004, p37-44\n田村 洋介, SASマクロライブラリの開発/管理/運用, SASユーザー総会論文集, 2007, p123-134\n“How to organize your SAS projects in Git”, SAS Blogs, 2020-11-10\n“Good Programming Practice In Macro Development”, PhUSE Advance Hub, 2021-09-21\nRon Cody, Cody’s Data Cleaning Techniques Using SAS, SAS Press, 2017, 234p\n市橋 里絵, 江口 幸子, 渡邊 大丞, 月田 あづき, “Standard Template Programs”の開発, SASユーザー総会論文集, 2010, p381-383\n\nまた、他にも応用上の使い方等は以下が参考になる。 - Compareプロシジャの結果が一致か不一致か、何が不一致かをマクロ変数で取得する話 なお、私が知る限りProc Compare Procedureの解説文献は、2022年度のSASユーザー総会資料のCOMPAREプロシジャの便利な使い方がおすすめである。Proc Compare Procedureについては別記事で解説する。"
   },
   {
-    "objectID": "posts/statistics/2025/SQL入門1.html#参考文献",
-    "href": "posts/statistics/2025/SQL入門1.html#参考文献",
-    "title": "SQL入門1",
+    "objectID": "posts/statistics/2025/SASマクロ入門1.html#参考ブログ",
+    "href": "posts/statistics/2025/SASマクロ入門1.html#参考ブログ",
+    "title": "SASマクロ入門1",
     "section": "",
-    "text": "2022年度SASユーザー総会：臨床試験のデータハンドリングとSQLプロシジャ\n2007年度SASユーザー総会：臨床試験データの加工におけるSAS/Proc SQL の活用事例：データセット併合と図表作成\n2007年度SASユーザー総会：SQL プロシジャの利用－安全性の集計を題材に－\n2016年度：データハンドリングにおけるSQLプロシジャの利活用 -PROC SQL入門ー"
+    "text": "基礎的な事項で参考になるものはいつも通り、以下のブログである。特に実務上で重要だが知られていないデータステップで変数をマクロ化するcall syputx、データステップ外で関数を使えるようにする%sysfuncはきちんと理解したい。また、マクロ言語入門9で紹介されている&macro_variable.の.は常に記載する、もしくは記載しない等を組織/個人開発で統一しておくことが望ましい。\n\nマクロ言語入門1：マクロ変数とは【%LET】\nマクロ言語入門2：マクロの登録と実行【%MACRO、%MEND】\nマクロ言語入門3：パラメータの設定【定位置パラメータ】\nマクロ言語入門4：パラメータの設定【キーワードパラメータ】\nマクロ言語入門5：クォート処理【%STR関数】\nマクロ言語入門6：クォート処理【%BQUOTE関数】\nマクロ言語入門7：マクロ内でのループ処理【%DO】\nマクロ言語入門8：マクロ内での条件分岐処理【%IF】\nマクロ言語入門9：マクロ変数とドット\nマクロ言語入門10：マクロ変数と&&\nマクロ言語入門11：演算評価 【%EVAL、%SYSEVALF】\n値をマクロ変数に格納する「CALL SYMPUTX」その1\nデータステップ外で関数を使えるようにする「%SYSFUNC」その１\n森岡 裕, %if-%then-%doのオープンコードでの利用と9.4以降のSASマクロ拡張点について, SASユーザー総会論文集, 2021.\n本本 早紀, クォート処理及びスコープへの理解を深める, SASユーザー総会論文集, 2019, p141-150\n竹田 真, 佐藤 智美, 社内マクロライブラリの構築について, SASユーザー総会論文集, 2001, p37-44\n柳沢 健太郎, 常吉 華奈, 山本 典子, 臨床試験における集計解析用 SASプログラムの標準化, SASユーザー総会論文集, 2004, p37-44\n田村 洋介, SASマクロライブラリの開発/管理/運用, SASユーザー総会論文集, 2007, p123-134\n“How to organize your SAS projects in Git”, SAS Blogs, 2020-11-10\n“Good Programming Practice In Macro Development”, PhUSE Advance Hub, 2021-09-21\nRon Cody, Cody’s Data Cleaning Techniques Using SAS, SAS Press, 2017, 234p\n市橋 里絵, 江口 幸子, 渡邊 大丞, 月田 あづき, “Standard Template Programs”の開発, SASユーザー総会論文集, 2010, p381-383\n\nまた、他にも応用上の使い方等は以下が参考になる。 - Compareプロシジャの結果が一致か不一致か、何が不一致かをマクロ変数で取得する話 なお、私が知る限りProc Compare Procedureの解説文献は、2022年度のSASユーザー総会資料のCOMPAREプロシジャの便利な使い方がおすすめである。Proc Compare Procedureについては別記事で解説する。"
   },
   {
-    "objectID": "posts/statistics/2025/SQL入門1.html#利点1事前ソートが不要",
-    "href": "posts/statistics/2025/SQL入門1.html#利点1事前ソートが不要",
-    "title": "SQL入門1",
-    "section": "2.1 利点1：事前ソートが不要",
-    "text": "2.1 利点1：事前ソートが不要\nData Stepの場合：\n/* 各データセットを事前にソートする必要がある */\nproc sort data=dataset1; by id; run;\nproc sort data=dataset2; by id; run;\ndata merged;\n    merge dataset1 dataset2;\n    by id;\nrun;\nProc SQLの場合：\n/* ソート不要で直接結合可能 */\nproc sql;\n    create table merged as\n    select * from dataset1 a\n    left join dataset2 b\n    on a.id = b.id;\nquit;"
+    "objectID": "posts/statistics/2025/SASマクロ入門1.html#マクロはsasにプログラムを書いてもらうための機能",
+    "href": "posts/statistics/2025/SASマクロ入門1.html#マクロはsasにプログラムを書いてもらうための機能",
+    "title": "SASマクロ入門1",
+    "section": "2.1 マクロはSASにプログラムを書いてもらうための機能",
+    "text": "2.1 マクロはSASにプログラムを書いてもらうための機能\nマクロは、簡単に言うとテキストの置換機能である。Aという文字列をBという文字列に置き換える機能である。そして、このテキスト置換機能がたいへん役に立つ。なぜなら、プログラミング業務では、似たような解析やデータハンドリングを繰り返し行っている場合が多いからである。例えば、他のプロジェクトと同じ解析を行う、対象のデータセット名だけが異なる、対象データの抽出条件だけが異なる、処理対象の変数だけが異なる、設定値やオプション指定だけが異なる、出力形式（行数や列数、ファイル形式など）だけが異なる。こういった場合、各解析のSASプログラムの大部分が重複することになり、差異が生じるのは、ほんの一部となる。つまり、基準となるプログラムをコピー&ペーストで複製して、変更が必要な箇所だけをテキスト置換すれば済む場合が多い。この基準となるプログラムの設定とテキスト置換をSASプログラムで実現するための機能がマクロである。マクロがプログラムを書いてくれるのである。"
   },
   {
-    "objectID": "posts/statistics/2025/SQL入門1.html#利点2併合と同時にソートが可能",
-    "href": "posts/statistics/2025/SQL入門1.html#利点2併合と同時にソートが可能",
-    "title": "SQL入門1",
-    "section": "2.2 利点2：併合と同時にソートが可能",
-    "text": "2.2 利点2：併合と同時にソートが可能\nProc SQLでは、order byを用いることにより、データセットの併合と同時にデータをソートすることが可能である。そのため、データセットの併合後にProc sortで改めてソートすることはせずに、Proc SQLのみで目的に応じた並び順にすることが可能である。\nproc sql;\n    create table result as\n    select * from dataset1 a\n    left join dataset2 b\n    on a.id = b.id\n    order by id, visit_date;  /* 結合と同時にソート */\nquit;"
+    "objectID": "posts/statistics/2025/SASマクロ入門1.html#マクロの仕組み",
+    "href": "posts/statistics/2025/SASマクロ入門1.html#マクロの仕組み",
+    "title": "SASマクロ入門1",
+    "section": "2.2 マクロの仕組み",
+    "text": "2.2 マクロの仕組み\n私たちの書いたSASプログラムは、SASのコンパイラによって解釈され、実行される。このとき、実はSASには二種類のコンパイラがある。\n1. マクロを解析・実行するマクロプロセッサ、\n2. DATAステップおよびPROCステップを解析・実行するコンパイラである。\nSASプログラムをサブミットすると、まず、①マクロプロセッサがマクロ部分だけを解析・実行し、DATAステップまたはPROCステップの命令だけのプログラムを作成する。その後、②のコンパイラによって、マクロ部分が解析された後のプログラムを実行する。"
   },
   {
-    "objectID": "posts/statistics/2025/SQL入門1.html#利点3同名変数の上書き回避",
-    "href": "posts/statistics/2025/SQL入門1.html#利点3同名変数の上書き回避",
-    "title": "SQL入門1",
-    "section": "2.3 利点3：同名変数の上書き回避",
-    "text": "2.3 利点3：同名変数の上書き回避\nData Stepの問題： 併合前の2つのデータセットに同じ変数名が存在する場合、データステップでマージするとその変数名のデータは上書きされてしまう\nProc SQLの解決策：\n/* 表4.1.5のような状況での外部結合 */\nproc sql;\n    create table result as\n    select a.subject_id, a.sex as patient_sex, a.test_code, a.value,\n           b.sex as reference_sex, b.lower_limit, b.upper_limit\n    from measurement_data a\n    left join reference_data b\n    on a.test_code = b.test_code\n    and (b.sex = '.' or a.sex = b.sex);\nquit;\n基準値データセットに「性別」のデータが存在し、かつ測定値データセットの「性別」と他の異なるオブザベーションは結合データセットから削除される"
+    "objectID": "posts/statistics/2025/SASマクロ入門1.html#マクロ変数を使う",
+    "href": "posts/statistics/2025/SASマクロ入門1.html#マクロ変数を使う",
+    "title": "SASマクロ入門1",
+    "section": "2.3 マクロ変数を使う",
+    "text": "2.3 マクロ変数を使う\n本章では、マクロの基本的な機能であるマクロ変数について概説する。シンプルな機能ながら応用場面は多い。マクロ変数を習得するだけでもプログラミングの効率化や品質向上が期待できる。\n\n2.3.1 マクロ変数とは\nマクロ変数はテキストを格納する容れものである。マクロ変数に格納したテキストはプログラム中で参照できる。マクロプロセッサは、SASプログラム内でマクロ変数の参照箇所を見つけると、そのマクロ変数に格納したテキストに置き換える。テキストファイルで行う一括置換をSASに実行してもらうイメージである。\n\n\n2.3.2 マクロ変数の作成と参照\nマクロ変数は%letステートメントを利用して作成する。\n%let マクロ変数名 = 格納したい値;\nマクロ変数名は最大32文字、最初の文字は英字またはアンダースコア、その後の文字は英字・数字・アンダースコアが使用可能である。また大文字と小文字は区別されない。設定値AF、DMS、SQL、SYSは該当する自動マクロ変数と名前が重複する可能性があるため、避けたほうがよい。\n%let greeting = Hello World;\n%put &greeting.;\n%put 「Hello World」と表示;\n\n%let year = 40;\n%let comment = おめでとうございます;\n%put SASユーザー総会&year.周年&comment.;\n%put 「SASユーザー総会40周年おめでとうございます」と表示;\n\n%let anavar = age; /* マクロ変数&anavarを定義し、ageという値を格納 */\n\n/* 単変量解析; */\nproc univariate data = sashelp.class;\nvar &anavar.; /* マクロプロセッサによって&age.に置換される */\nclass sex;\nrun;\n\n/* 単変量解析(bee-swarm plot)を作成; */\nproc sgplot data = sashelp.class;\nvbox &anavar. / category = sex nofill nooutliers;\nscatter y = &anavar. x = sex / jitter;\nrun;\nマクロ変数により、プログラムに一貫性を持たせることができる。例えば、追加解析や仕様変更により、年齢(age)ではなく体重(weight)の解析を行いたい場合は、%let anavarの定義部分だけを変更するだけで済む。人の手を介することで修正漏れやミスタイプのリスクがある。\nまた、CALL SYMPUTXルーチンを利用すれば、DATAステップでデータセットの変数の内容をマクロ変数に格納できる。次章で説明する制御構文と併せて、データセットの内容に応じて、プログラムを変更させることが可能になり、プログラムに柔軟性を与えられる。\ncall symputx('マクロ変数名', 格納したい値(DATAステップの変数名));\n\n/* 男女別の生徒数を数えて、それぞれをマクロ変数に格納する; */\nproc freq data = sashelp.class noprint;\ntables sex / out = out1;\nrun;\n\ndata _null_;\nset out1;\nif sex = \"男子\" then call symputx('N_Male', count);\nif sex = \"女子\" then call symputx('N_Female', count);\nrun;\n\n/* マクロ変数の値をログに出力して確認; */\n%put N_Male = &N_Male N_Female = &N_Female;/* 「N_Male : 10 N_Female : 9」と出力; */\nまた、SQLプロシジャのINTO句を利用して、データセットの変数の内容をマクロ変数に格納することも可能である。\nproc sql;\nselect 変数名1, 変数名2, ..., 変数名N\ninto :マクロ変数名1, :マクロ変数名2, ..., :マクロ変数名N\nfrom データセット名;\nquit;\n\nproc sql noprint;\ncreate table work.class as\nselect *\nfrom sashelp.class\nrun;\nquit;\n\n%put &sqlobs.; /* proc sqlで直近に処理したデータ(OBS数)を格納; */\n\n\n2.3.3 マクロ変数は文字型変数\nマクロ変数は、DATAステップと違って、すべて文字型変数として扱われる。このため、マクロプロセッサに数値演算をさせるような場面では、注意が必要である。数値の場合は%eval関数、小数を含む場合は%sysevalf関数に演算式を渡す必要がある。（ただし、%evalと%sysevalfは、演算のおよそについても調査した上で利用しないと）\n%let not5 = 1 + 4;\n%put &not5.; /* 「1 + 4」と表示; */\n\n%let equal5 = %eval(1 + 4);\n%put &equal5.; /* 「5」と表示; */\n\n%let not5 = 1.5 + 3.5;\n%put &not5.; /* 「1.5 + 3.5」と表示; */\n\n%let equal5 = %sysevalf(1.5 + 3.5);\n%put &equal5.; /* 「5」と表示; */\n\n%let not5 = %eval(1.5 + 3.5); /* %evalは整数計算だけなのでエラーとなる */\nなお、格納されるテキストによってマクロ変数の変数は自動的に調整されるため、データセットの文字型変数のように長さを気にする必要はない（ただし、SAS9.4の最大長は65,534文字である）。\n\n\n2.3.4 自動マクロ変数\nマクロプロセッサが自動的に作成する自動マクロ変数もある。自動マクロ変数は、実行環境の確認、プログラム実行時の表示などに利用できる。いくつか例を示す。\n\n\n\n\n\n\n\n自動マクロ変数名\n内容\n\n\n\n\nSYSVER\nSASのバージョンを格納（例：9.4）\n\n\nSYSDATEP\nSAS セッションの開始日をDATEフォーマットで格納（例：01SEP2022）\n\n\nSYSLAST\nSAS セッションで直近に作成したデータセットを格納（例：WORK.CLASS）\n\n\nSYSUSERID\n現在のSAS プロセスのユーザーIDを格納（例：morita.yusuke）"
   },
   {
-    "objectID": "posts/statistics/2025/SQL入門1.html#利点4集計関数による個別値と平均値の比較",
-    "href": "posts/statistics/2025/SQL入門1.html#利点4集計関数による個別値と平均値の比較",
-    "title": "SQL入門1",
-    "section": "2.4 利点4：集計関数による個別値と平均値の比較",
-    "text": "2.4 利点4：集計関数による個別値と平均値の比較\n従来の方法の問題： 従来方向のデータの平均値を求めることは、SAS関数のmeanを用いることでデータステップでも可能である。しかし、オブザベーション方向のデータの平均値を求めるためには、Proc MEANSなどの別のプロシジャを用いる必要がある。また、retainステートメントを用いたオブザベーション方向の累計の計算により、データステップでもオブザベーション方向の平均値を求めることは可能であるが、個々の測定値と求めた平均値を比較するためには別工程の処理が必要である。\nProc SQLの解決策：\nproc sql;\n    create table comparison as\n    select subjid, paramcd, value,\n           mean(value) as group_mean,\n           value - mean(value) as deviation_from_mean\n    from lab_data\n    group by paramcd;\nquit;\nそれに対して、Proc SQLでは、集計するための関数を用いることで、個々の測定値とオブザベーション方向の平均値を比較することが可能となる。"
+    "objectID": "posts/statistics/2025/SASマクロ入門1.html#マクロプログラムを使う",
+    "href": "posts/statistics/2025/SASマクロ入門1.html#マクロプログラムを使う",
+    "title": "SASマクロ入門1",
+    "section": "2.4 マクロプログラムを使う",
+    "text": "2.4 マクロプログラムを使う\n本章では、マクロの主要機能であるマクロプログラムについて概説する。前章のマクロ変数とマクロプログラムを組み合わせることで、より複雑なプログラムをマクロプロセッサに書いてもらうことができる。\n\n2.4.1 マクロプログラムとは\nマクロプログラムもマクロ変数と同様に、テキスト置換を行う機能である。マクロ変数は、プログラム中の変数名、データセット名、オプションまたは短いテキストの置換に用いられる場合が多い。一方、マクロプログラムは、あるまとまった単位のSAS プログラムへの置換に利用されるものであり、マクロ変数と組み合わせることで、また、制御構文を使用することで、さまざまなプログラムをマクロプロセッサに手軽に作成してもらうことができる。\n\n\n2.4.2 マクロプログラムの作成・呼び出し方法\nマクロプログラムは%macroおよび%mendステートメントを利用して作成する。\n%macro マクロプログラム名; （簡略したいテキスト） %mend マクロプログラム名;\nマクロプログラム名は最大32文字、最初の文字は英字またはアンダースコア、その後の文字は英字・数字・アンダースコアが使用可能である。\n\n\n2.4.3 マクロプログラムの特徴\n\n2.4.3.1 呼び出し時にマクロ変数を受け取ることができる\n基準となるプログラムをコピー&ペーストして、一部分を書き換えたい場合があ る。この基準となるプログラムをマクロプログラム内に格納して、書き換えたい箇所を呼び出し時に受け取れるマクロ変数として、マクロプログラムに指定できる。このマクロプログラム呼び出し時に受け取るマクロ変数をマクロパラメータという。マクロパラメータも、ユーザーが任意の名前を設定可能で、そのマクロプログラム内で参照可能なマクロ変数となる。マクロパラメータとしてデータセット名(dsn)および変数名(var)を指定する例を以下に示す。\n/* 呼び出し時にマクロパラメータを指定; */\n%macro univariate2(dsn, var); /* マクロ名の後にマクロパラメータを設定; */\n\nproc univariate data = &dsn.;\nvar &var.;\nclass sex;\nrun;\n\n%mend;\n\n/* 呼び出し時にマクロパラメータを指定して実行; */\n%univariate2(dsn=sashelp.class, var=age)\n%univariate2(dsn=sashelp.class, var=weight)\n%univariate2(dsn=sashelp.class, var=height)\nまた、マクロパラメータに予め既定値を与えることもできる。この既定値をもつマクロパラメータをキーワードパラメータという。キーワードパラメータは呼び出し時に指定しなければ、既定値が自動的に設定される。したがって、ほぼ毎回同じパラメータで実行する可能性があるパラメータはキーワードパラメータとして宣言すとよい。\n\n\n2.4.3.2 制御構文が使える\nDATAステップでは、条件分岐のIFステートメント、反復処理のDOステートメントが使用できる。マクロ言語にも同様に%ifステートメント、%doステートメントが用意されており、データセットの内容やマクロパラメータの内容に応じて、マクロプロセッサの動作を変更できる。これら制御構文はマクロ変数にはない機能で、マクロプログラムに柔軟性を与える機能の一つとなっている。\n制御構文の例として、条件分岐の%ifステートメントについて説明する。\n%if 条件文 %then %do;\n(条件文がTrueの場合の処理)\n%end;\n%else %if 条件文 %then %do;\n(条件文がTrueの場合の処理)\n%end;\n%else %do;\n(全条件文をも不満足している場合の処理)\n%end;\nなお、上記のdsn および var のように、既定値を持たないマクロパラメータを位置パラメータという。\nまた、DATAステップでは、条件分岐から反復処理の%doステートメントについて説明する。\n%macro list_by_4years(startyr, endyr);\n    title1 \"Customer List of &yr. to &endyr.\";\n    proc print data = work.customer;\n        where &yr. &lt;= year &lt;= &endyr., &by 4;\n        var year customer_revenue;\n    run;\n    title1 \"Customer List of 2000 to 2003\";\n    proc print data = work.customer;\n        where 2000 &lt;= year &lt;= 2003;\n        var year customer_revenue;\n    run;\n    title1 \"Customer List of 2004 to 2007\";\n    proc print data = work.customer;\n        where 2004 &lt;= year &lt;= 2007;\n        var year customer_revenue;\n    run;\n%mend;\n\n%list_by_4years(startyr=1996, endyr=2007)\nマクロの制御構文には、他にも%do-%while、%do-%until等がある。しかし、初心者のうちは%ifと%doの2つを事実としても余りがない。%ifと%doもマクロプロセッサに対する命令である。一方、DATAステップのコンパイラに対する命令であり、データセットの変数の内容を変更することになる。ただし、%ifと%do%sysevalfは、SAS9.4 M5からマクロプログラム内部でなくても（オープンコードで）%if%then%else等を使えるようになった。2021年のSASユーザー総会の発表資料に詳細が記載されている。\n\n\n\n2.4.4 マクロ関数\n字句SASで用意されたマクロ関数を利用できる。これらのマクロ関数は、マクロプロセッサによって実行されるマクロプログラムである。DATAステップでデータセットを編集するために利用される関数と同名・同機能であっても異なるものであることに留意されたい。以下にマクロ関数の一例を示す。\n\n\n\n\n\n\n\nマクロ関数名\n説明\n\n\n\n\n%upcase(文字列) / %lowcase(文字列)\n文字列を大文字/小文字に変換する\n\n\n%trim(文字列)\n文字列の末尾の余分なスペース文字を取り除く\n\n\n%index(文字列1, 文字列2)\n文字列1の中に文字列2が含まれていれば、最初の位置(何文字目)を返す。文字列2が含まれていなければ0を返す\n\n\n%sysfunc(関数名)\nDATAステップの関数をマクロプロセッサから使用する\n\n\n\n\n\n2.4.5 マクロ変数のスコープ\nマクロ変数にもスコープ、つまりプログラム中で参照可能な範囲がある。スコープによってglobal マクロ変数とlocal マクロ変数に区分される。global マクロ変数は、プログラムのどこからでも値を参照可能である。一方、local 変数は、その変数が宣言されたマクロプログラム内部でのみ値を参照可能である。\n/* マクロ変数のスコープ; */\n%global global_var; /* グローバルマクロ変数を宣言; */\n\n%macro global_local;\n    %let local_var = ローカル変数です; /* このマクロ内部だけで有効期間; */\n    %let global_var = グローバル変数です;\n%mend;\n\n%global_local /* マクロを実行; */\n\n%put &global_var.; /* グローバル変数なので、マクロ外でも参照可能; */\n%put &local_var.; /* マクロ外なでマイナ一ルで、変数を参照できない; */\n初心者のうちは、スコープを意識する機会はさほど無いかもしれない。しかし、チームでマクロプログラムを分担して構築する場合、マクロプログラムで構築されるシステムを利用する際は、マクロ変数の衝突を避けるため、マクロ変数のスコープに留意が必要となる。（local マクロ変数を明示的に作成するためのlocal ステートメントが用意されている。）"
   },
   {
-    "objectID": "posts/statistics/2025/SQL入門1.html#基本構文",
-    "href": "posts/statistics/2025/SQL入門1.html#基本構文",
-    "title": "SQL入門1",
-    "section": "3.1 基本構文",
-    "text": "3.1 基本構文\n1つのデータセットを加工して、1つのデータセットを作成する場合の基本的なProc SQLの構文：他にも諸々の指定ができるが、基礎的な事項は以下の通りである。\nProc SQL ;\n    create table 作成データセット名    as\n    select      元のデータセット名.変数名1,\n                元のデータセット名.変数名2    as  変更後の変数名2\n    from        元のデータセット名\n    where       データ抽出の条件1\n    group by    グループ分け\n    having      データ抽出の条件2\n    order by    ソート変数\n;\n複数SQLステートメントのまとめ書き\nproc sql &lt;オプション&gt; ;\n    sqlステートメント1 ;\n    sqlステートメント2 ;\n    sqlステートメント3 ;\n;\nquit;"
+    "objectID": "posts/statistics/2025/SASマクロ入門1.html#マクロをデバッグする",
+    "href": "posts/statistics/2025/SASマクロ入門1.html#マクロをデバッグする",
+    "title": "SASマクロ入門1",
+    "section": "2.5 5. マクロをデバッグする",
+    "text": "2.5 5. マクロをデバッグする\n本節で同じ章にまとめ」で、マクロを書けばバグが生じる。したがって、マクロを効率的にデバッグする技術を重要である。以下に、マクロプロセッサが、マクロプログラムを生じさせたのかを知ることが有用である。このため、マクロのデバッグを効率的に行うためのオプションが用意されている。以下に、よく使用するオプションの例を示す。\n\n\n\n\n\n\n\nオプション名\n内容\n\n\n\n\nMPRINT\nマクロプロセッサによって生成されるSAS プログラムをSAS ログに表示する\n\n\nMLOGIC\nマクロプロセッサがマクロパラメータにどのような値を受け取ったか、%if条件分岐を True/Falseのどちらに判断したか、マクロの開始点と終了点をSASログに表示する\n\n\nSYMBOLGEN\nマクロプロセッサが、マクロ変数をどの値に置き換えたかSAS ログに表示する\n\n\n\nこれらのオプションを指定することで、SAS ログにマクロプロセッサからの情報が出力されるようになる。しかし、上記オプションを指定してもSAS ログを読み解くのが困難な場合もある。その場合、mfileオプションでマクロプロセッサが出力したプログラム全体を別ファイルとして出力することも可能である。（マクロの学習にも活用できる。）"
   },
   {
-    "objectID": "posts/statistics/2025/SQL入門1.html#各構文要素の説明",
-    "href": "posts/statistics/2025/SQL入門1.html#各構文要素の説明",
-    "title": "SQL入門1",
-    "section": "3.2 各構文要素の説明",
-    "text": "3.2 各構文要素の説明\n\n3.2.1 create table 作成データセット名 as\n作成するデータセットの名称を定義する。\n\n\n3.2.2 select\nselect  元のデータセット名.変数名1,\n        元のデータセット名.変数名2 as 変更後の変数名2\n\n作成するデータセットに保存する変数を定義する（データステップではkeepステートメントに相当）\n元のデータセットにおける変数名を指定した後に「as」を加え、変更後の変数名を記載することで、作成するデータセットに保存する変数の変数名を変更することが可能（データステップではrenameステートメントに相当）\n基本的に作成するデータセットに保存する全ての変数を定義する必要がある\n元のデータセットに存在する全ての変数をそのまま用いる場合には「*」で代用することも可能\n定義された変数名の順でデータセットが作成されるため、変数の並び順を変更することが簡単\n\n\n\n3.2.3 from 元のデータセット名\n元のデータセットを指定する（データステップではsetステートメントに相当）。\n\n\n3.2.4 where データ抽出の条件1\n元のデータセットからデータを抽出する条件を指定する。\n\n\n3.2.5 group by グループ分け\n集計する場合などの状況においてグループ分けの条件を設定する。\n\n\n3.2.6 having データ抽出の条件2\n元のデータセットからデータを抽出する条件を指定する。集計するための関数を利用して条件を指定する場合には、「where」ではなく「having」で指定する。\n\n\n3.2.7 order by ソート変数\nデータのソートに用いる変数を指定する。Proc SQLでは、データセット作成と同時にデータをソートすることが可能である。"
+    "objectID": "posts/statistics/2025/SASマクロ入門1.html#マクロをライブラリとして整理して活用する",
+    "href": "posts/statistics/2025/SASマクロ入門1.html#マクロをライブラリとして整理して活用する",
+    "title": "SASマクロ入門1",
+    "section": "2.6 6. マクロをライブラリとして整理して活用する",
+    "text": "2.6 6. マクロをライブラリとして整理して活用する\n作成したマクロは積極的に活用したほうがよい。一度制作したマクロプログラム、別の活用場面では思いがけずれなく再現全文が現在の場合がある。つまり、マクロはほとんど常設され、品質も向上していく。そこで本章では、作成したマクロプログラムをライブラリとして整理し、プログラムから呼び出し可能にする方法について説明する。\n以下にマクロライブラリを作成する手順を示す。\n\nマクロを格納するフォルダを用意する。（フォルダは複数あってもよい）\n各マクロプログラムを個別ファイルに格納していうフォルダに保存する。 このとき、ファイル名はマクロ名と同じにする必要がある。（マクロ名.sas とする）\nマクロを呼び出す側のプログラムで、以下のMAUTOSOURCE及びSASAUTOSの2つのオプションを指定する。このとき、SASAUTOSに（1）のフォルダを指定する。\n\n/* マクロをライブラリとして活用する; */\noptions mautosource sasautos=(sasautos, \"C:\\sasYearlyMacros\");\n/* （1）の sasautos内容ないこと; */\noptions mautosource sasautos=(sasautos, \"C:\\sasYearlyMacros\" \"C:\\sasYearMacros\");\nこれで、マクロライブラリ中のマクロプログラムが呼び出し可能になる。\nまた、本章では触れないが、継続として共有するライブラリを整備・活用した事例は、過去のSASユーザー総会の複数の発表がある。\nまた、SAS9.4 M6 以降、WebページのバージョンProgramming Tool であるGitHub との連携機能が搭載されている。GitHub上でマクロファイルのバージョン管理を行い、SASから直接GitHub上のマクロプログラムをinclude可能になっている。多くのオープンソースマクロがGitHub上で管理・公開されており、GitHub上での連携機能について今後の発展が注目される。"
   },
   {
-    "objectID": "posts/statistics/2025/SQL入門1.html#data-stepとの比較",
-    "href": "posts/statistics/2025/SQL入門1.html#data-stepとの比較",
-    "title": "SQL入門1",
-    "section": "3.3 Data Stepとの比較",
-    "text": "3.3 Data Stepとの比較\n上記のProc SQLで作成したプログラムをデータステップおよびProc SQL以外のプロシジャで作成する場合：\nData 作成データセット名 ;\n    set 元のデータセット名 ;\n    where       データ抽出の条件1 ;\n    rename      変数名2 = 変更後の変数名2 ;\n    keep        変数名1  変更後の変数名2 ;\n    if          データ抽出の条件2 ;\nrun ;\n\nProc sort data=作成データセット名 ;\n    by ソート変数 ;\nrun ;"
+    "objectID": "posts/statistics/2025/SASマクロ入門1.html#マクロのコツ",
+    "href": "posts/statistics/2025/SASマクロ入門1.html#マクロのコツ",
+    "title": "SASマクロ入門1",
+    "section": "2.7 マクロのコツ",
+    "text": "2.7 マクロのコツ\nどんな項目もで正しく場合ほど拡張を発想する。本章ではマクロを作成する際に留意したいポイントを説明する。筆者にして筆者の経験に価値たけ書もあるかもしれない。PhUSE6が「Good Programming Practice In Macro Development」を公開しており、マクロ開発に関する考査ずべきポイントを学ぶことができる。なお、機械のコーディングルールやガイドラインがある場合には、それらを優先されたい。\n\n2.7.1 マクロでコードの重複を排除する\nマクロによりコードの重複部分を削減し、プログラム全体をコンパクトに保つのがポイントである。そのために、マクロ化する際には、どのようなポイントで構成するか、マクロのパラメータをどこに配置するかマクロ作成時の設計が大式である。しかし、このためには、一定の実装経験を積んで、マクロプロセッサに作成させたコードのイメージが持てるように下はないと無難い趣もある。まずはマクロを含まないプログラムを作成してから、重複部分をマクロ化していくというアプローチがある。いずれにせよコードの重複部分はマクロ化を考慮するポイントである。\n\n\n2.7.2 マクロの機能と入出力を明示する\nそのマクロプログラムが、どんな機能を提供するマクロか、出力は何か、入力は何かの3点を明示することは、便利でマクロを作成するうえで重要である。そのマクロプログラムのマクロパラメータとして明示する。そのマクロパラメータも馴染みやすいネーミングを心掛けたい。また、コメントも適切に活用して必要な情報を補記するべき利用を使用して説明する。以下に、データクリーニングの名前(Cody’s Data Cleaning Techniques Using SAS）に掲載されたもののマクロプログラムの冒頭部分である。\n\n\n2.7.3 マクロの機能と入出力を明示する\nそのマクロプログラムが、どんな機能を提供するマクロか、出力は何か、入力は何かの3点を明示することは、便利でマクロを作成するうえで重要である。そのマクロプログラムのマクロパラメータとして明示する。そのマクロパラメータも馴染みやすいネーミングを心掛けたい。また、コメントも適切に活用して必要な情報を補記するべき利用を使用して説明する。以下に、データクリーニングの名前(Cody’s Data Cleaning Techniques Using SAS）に掲載されたもののマクロプログラムの冒頭部分である。\n%macro auto_outliers(\n    Dsn=,       /* Data set name */\n    ID=,        /* Name of ID variable */ \n    Var_list=,  /* List of variables to check */\n    Trim=1,     /* Trim criterion */\n    N_sd=2      /* Number of standard deviations */\n);\nコメントの細部もあるがAuto_Outliersマクロは外れ値を検出するマクロであることが読み取れる。入力として、対象データセット名(Dsn)、オブザベーションのID変数名(ID)、外れ値を抽出したい対象変数名(Var_list)、統計的な判断基準であるTrim_N_sd)を指定すればよいことがわかる。数章では、外れ値の統計基準やプログラムの詳細より、当初マクロプログラムからできることがわかる。したがって方がユーザーにより使いやすかっただいられる（Auto,はプログラム内部からできること）。\n\n\n2.7.4 マクロの内部をブラックボックス化し、抽象化する\n細部は基本原理は「プログラムの内部アルゴリズムを知らずとも、マクロプログラムの機能を利用可能にすること」である。これはプロシジャで用いるイメージに近い。例えば、私たちは SORT プロシジャに入力かのデータセット名とソート変数を指定すれば、プロシジャ内部のソートアルゴリズムを意識することなく目的を達成できる。このように、マクロプログラムを作成する際は、ユーザーにマクロの内部を意識させない形式をイメージすべきである。\nやや哲学的な内容になるが、優れたマクロは、その出力だけを実行された課題が魅力を呈しない。マクロの内部にソート順を含めてカテゴリーゼットは変更しないようにする。また、マクロの内部だけで作成する一時的なデータセットを削除しなければ、ユーザーは、そのマクロ内部の構造する必要がないらならない。また、「文今後、新を適時」の結構で、マクロの終了時にマクロ内部で作成したworkデータセットを削除することもある。\n\n\n2.7.5 マクロプログラムはなるべくシンプルを保つ\nプログラム設計の原則に「分割して統治する」および「Keep it simple, stupid」があり、マクロプログラムもなるべくシンプルに保つことを推奨する。これは、マクロプログラムの汎用性を高めることと方針テンションスピ方向にあることも分かいている。また、新たにマクロプログラムを作成する際は、既存のマクロプログラムの入力方法を工夫すれば詳細なプロ先はせずとも済まない、あるいは既存のシンプルなマクロプログラムを利用して（呼び出して）作成できないか構想すべき場合がある。品質は既存されたシンプルのマクロプログラムを利用すれば、マクロプログラム全体のコードを予備し、かつ新たに作成するマクロプログラムの品質も維持しようといううがい対象である。\n\n\n2.7.6 コードの読みやすさや理解のしやすさにも配慮する\nマクロを書けば、いろいろな場面で活用できるようになるが、SASにプログラムを書いてもらうのが楽しくなり、%や&が使いびう複雑なプログラムになる場合がある。もちろん、そのことは体はマクロを理解している範囲であり、マクロプロセッサも文法的に問題ないよう限りは説明に動いてくれる。一方で、保存する他のプログラマや求人の自分がプログラムを読み機会もあり、コードの読みやすさや理解のしやすさを保持して、あえてマクロ化しない（マクロ化しすぎない）という判断場合もある。\nまた、マクロプログラミングでも、DATAステップ同様にネーミングが重要である。インデント（字下げ）を適切に行い、マクロの条件分岐や反復構造などを把握しやすくする、効果的にコメントを入れるなど、コードの読みやすさについても心掛けたい。\n\n\n2.7.7 小さく始める\n小さく始めて、少しずつ理解するのが習得のコツである。最初はマクロ変数を使うところからでもよい。基本プログラムによく変更する部分だけをマクロ変数化して、プラクマの電用管理を設定可能にする、先行するすプロジェクトの設定を改めてせることも多いし、実はここまででも十分な効果が着込まれる場合がある。また、簡単なマクロプログラムを作成する際給与も設ける。マクロを作成する手順として、まずマクロを含まないプログラムを作成し、少しずつマクロ化していくアプローチが推奨されている。これによりマクロプロセッサに命令があるかが明り分けすされる。"
   },
   {
-    "objectID": "posts/statistics/2025/SQL入門1.html#proc-sqlの利点",
-    "href": "posts/statistics/2025/SQL入門1.html#proc-sqlの利点",
-    "title": "SQL入門1",
-    "section": "3.4 Proc SQLの利点",
-    "text": "3.4 Proc SQLの利点\n\n複数の工程を1工程にまとめられる：プログラム作成においてエラーを少なくするという利点がある\n変更箇所の特定が容易：変更箇所を見つけやすいため、変数名の変更や条件の変更を行なう際に変更漏れを少なくするという利点がある\n統一された記法：Proc SQLでは「Proc SQL;」～「quit」、データステップでは「Data」～「run;」、Proc SQL以外のプロシジャでは「Proc」～「run;」を1工程と表現する"
+    "objectID": "posts/statistics/2025/SASマクロ入門1.html#マクロの実例",
+    "href": "posts/statistics/2025/SASマクロ入門1.html#マクロの実例",
+    "title": "SASマクロ入門1",
+    "section": "2.8 マクロの実例",
+    "text": "2.8 マクロの実例\n筆者らが業務で実際に作成したマクロプログラムを紹介する。筆者で簡切と練習する事例であり、なるべく小題のプログラム編集で対応できるよう意図している。\n\n2.8.1 特定のフォルダ内のSASデータセットを1つのExcelファイルに変換する\nSASデータセットをデータセット別にシートを分けてExcelファイルに変換してほしいと依頼を受ける。もちろんデータセットの教だけprocexportまたはsetステートメントを記述してもよいのだが、そのような縮り返し処理はマクロ化したときに自動転するのがよい。なお、以下でマクロプログラムが直後されたフォルダ内のSASデータセットを、同フォルダに既定のExcelファイルを指定する必要がある。\n%macro sas2xlsx;\n\n    /* データセット一覧を取得する */\n    proc sql noprint;\n        select memname into :dsname1-\n        from dictionary.tables\n        where libname = \"SAS\";\n    quit;\n\n    do i = 1 to &sqlobs.;\n\n        data work.&&&dsname&i..;\n            set sas.&&&dsname&i..;\n        run;\n\n    %end;\n\n%mend;\n上記マクロでは、現在でデータセットのあるフォルダを出力先のExcelファイルに指定する必要がある。そこで、上記マクロプログラムが配置されたフォルダ内のSASデータセットを、同フォルダに既定のExcelファイルとして出力するようにプログラムを変更すれば、条件ごとにプログラムを編集する必要がなくなる。（もちろん不測の事象が生じする能性があるため、SASログ確認および出力ファイルの確認は時う。）\n\n\n2.8.2 特定のフォルダ内のSASデータセットをXPTファイルに一括変換する\n医療機関医療品の承認申請では、原則として申請電子データ提出が求められており、既導データをXPT形式で提出する必要がある。このためSASデータセットをXPT形式に変換する機会がよくある。なお、以下ではfilel.sasという名前でマクロプログラムを保存し、指定したデータセットが配置されたフォルダに配置してくれる。細部の具い事例である。\n/* 指定フォルダ内のSASデータセットをXPTファイルに一括変換する; */\noption nofmterr nologic print symbol;\n%let xpt = %str(C:\\workXpt);  \n%let sas = %str(C:\\workXsas); \n\nlibname _sas \"&sas.\";\nlibname _xpt xport \"&sas.\";\n\n%macro sas2xpt(sptdir, sasdir);\n\n/* ～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～; */\n/* ファイル一覧を取得する; */\n/* ～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～; */\n%filelist(\n    directory=%superq(sasdir), /* Directory to read */\n    out=_sas,                  /* Output data set to create */\n    extensions=sas7bdat        /* Space delimited extensions to include. Not case\n                                sensitive. Leave blank or set other based on extension */\n)\n\n/* ファイル一覧を読み込む; */\nproc sql noprint;\n    select dsname into :_dsname1 - \n    from _sas;\nquit;\n\n/* 各ファイルがない場合は終了する; */\n%if &sqlobs. = 0 %then %return;\n\nlibname _sas %superq(sasdir)\" access=readonly;\n\n%do i = 1 to &sqlobs.;\n/* ～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～; */\n/* SAS7BDATをXPTに変換する; */\n/* ～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～; */\nlibname _xpt xport \"&sptdir\\&&&_dsname&i..&_xpt\";\ndata _xpt.&&&_dsname&i..;\n    set _sas.&&&_dsname&i..;\nrun;\n%end;\n\n/* ～～～～～～終了処理～～～～～～; */\nlibname _sas clear;\nlibname _xpt clear;\nproc datasets library=work nolist;\n    delete _sas;\nquit;\nrun;\nquit;\n\n%mend;\n\n%sas2xpt(sptdir=%superq(xpt), sasdir=%superq(sas))"
   },
   {
-    "objectID": "posts/statistics/2025/中間解析.html",
-    "href": "posts/statistics/2025/中間解析.html",
-    "title": "第2相抗がん剤開発及び検証的試験の中間解析",
+    "objectID": "posts/statistics/2025/SASマクロ入門1.html#終わりに",
+    "href": "posts/statistics/2025/SASマクロ入門1.html#終わりに",
+    "title": "SASマクロ入門1",
+    "section": "2.9 終わりに",
+    "text": "2.9 終わりに\nマクロ言語を対象にマクロの基礎から応用、そして利用のコツを概説した。マクロプロセッサにプログラムを書いてもらうライブラリ化により大量軸な共通化に及ぶまで、マクロは様々な場面で雄用いと感じてもらえれば幸いしたい。しかし、一度にすべてを理解する必要はなく、筆者ももともくさんのトライ&エラーを経験し、必要に迫られながら時間をかけてレットたという自分求むのが実情である。やがり理解できる自然に身につくき交鎖に考え、引用文献もご参照頂ければ幸いである。マクロプロセッサは、そこと出番を待っている。"
+  },
+  {
+    "objectID": "posts/statistics/2025/サンプルサイズ設計.html",
+    "href": "posts/statistics/2025/サンプルサイズ設計.html",
+    "title": "臨床試験のサンプルサイズ設計",
     "section": "",
-    "text": "中間解析は、試験の進行中にデータを評価し、治療効果や安全性に関する情報を得るために行われます。これにより、試験の進行状況を把握し、必要に応じて試験デザインやプロトコルを調整することができます。 中間解析は、特に以下の目的で実施されます。\n\n治療効果の初期評価: 中間解析は、治療効果の初期評価を行うために使用されます。これにより、治療が有効であるかどうかを早期に判断することができます。\n安全性の評価: 中間解析は、安全性に関する情報を収集するためにも使用されます。これにより、治療が安全であるかどうかを早期に判断することができます。\n早期終了の判断: 中間解析の結果に基づいて、試験を早期に終了するかどうか（無効中止や有効中止）を判断することができます。これにより、無駄なリソースを節約することができます。\n倫理的な配慮: 中間解析は、倫理的な配慮からも重要です。治療が有効でない場合や安全性に問題がある場合、試験を早期に終了することで、被験者の安全を確保することができます。\nリソースの最適化: 中間解析は、試験の進行状況を把握し、リソースを最適化するためにも使用されます。これにより、試験の効率を向上させることができます。\n\n本記事では、以下の内容について説明します。\n\n抗がん剤第2相における2値アウトカムの中間解析\n\nSimonの最適法\nSimonのMinmax法\nFlemingデザイン\nBayes流の方法\n\n検証的試験における中間解析\n\nO’Brien-Flemingデザイン\nPocockデザイン\nLan-DeMetsデザイン（α spending function）\n\n\n\n\n\n抗がん剤第2相試験においては、治療効果を評価するために2値アウトカム（例: 完全奏効、部分奏効、無効など）が使用されます。中間解析は、これらのアウトカムを評価するために行われます。試験統計家として試験計画時に中間解析を実施する必要があるかを考えておく必要があります。\nこれらの資料が参考になります。\n\n山本先生：SASユーザー総会2010\n\nまた、基本的に本節での手法はSASのProc power等のプロシジャで簡単に実装されていません。SASで実行する場合は、ネットからマクロを活用するか、社内でSASマクロを開発しておく必要があります。若干ハードルが高いかもしれないですが、SASでサンプルサイズ設計マクロを開発しておき、RやWebサイトの計算結果との一致をもってQCを行うことができるので、開発しておくことをお勧めします。\n\n\n\nこの節での記法について導入します。検証的試験における中間解析では別途記法を定義します。\n\np : 奏効確率（主要評価項目）\np_0 : 閾値奏効確率（p が p_0 以下の場合，薬剤は無効と判断）\np_1 : 期待奏効確率（p が p_1 以上の場合，薬剤は有効かもしれないと判断）\n\\alpha : 第 I 種の過誤確率（一般的に0.05と規定）\n\\beta : 第 II 種の過誤確率（一般的に0.20と規定）\n\n\n\n\n仮説検定は片側検定として以下のように定義する。\n\nH_0 : p \\leq p_0\nH_1 : p &gt; p_1"
+    "text": "本書は、頻繁に利用されるサンプルサイズ設計SASプログラムをまとめます。実務において、本記事のSASプログラムをコピーして利用することのみを念頭に置いています。数学的な導出は省略します。"
   },
   {
-    "objectID": "posts/statistics/2025/中間解析.html#中間解析の目的",
-    "href": "posts/statistics/2025/中間解析.html#中間解析の目的",
-    "title": "第2相抗がん剤開発及び検証的試験の中間解析",
+    "objectID": "posts/statistics/2025/サンプルサイズ設計.html#値アウトカム",
+    "href": "posts/statistics/2025/サンプルサイズ設計.html#値アウトカム",
+    "title": "臨床試験のサンプルサイズ設計",
+    "section": "3.1 2値アウトカム",
+    "text": "3.1 2値アウトカム\n単群試験で2値アウトカムの場合、サンプルサイズは、\\(P0\\)（閾値奏効割合）、\\(P1\\)（期待奏効割合）、\\(α\\)（第一種の過誤確率）、\\(β\\)（第二種の過誤確率）を事前に仮定することで計算できます。閾値奏効割合とは、これ以上の奏効割合がなければ治療効果がない（開発中止をしたい）と考えられる割合のことです。期待奏効割合とは、治療効果があると考えられる割合（次相に進みたい程度）のことです。これらの割合は臨床仮説や先行研究に基づいて決定するため、試験統計家がコメントすることはあまりありません。ICHガイドラインに準じて、SASプログラムは全て両側検定として両側有意水準5%としています。これは、なお、ICH E9では以下のような記載があります。すなわち、GCP準拠の治験においては原則として以下の記載に準じて試験計画を考える必要があります。\n「規制上の観点から、本ガイドラインの施行に伴い、原則として片側仮説を検証する場合は2.5％、両側仮説の場合は5％とすることとした。」\nなお、ICH E9にはQ＆AがありQ2で有意水準について言及されている。\n\n\n\n\n\n\nQ2\n\n\n\n片側検定又は両側検定のどちらを用いるか、またそこでの有意水準をいくらにすべき かを、優越性試験と非劣性試験のそれぞれで説明願いたい。\n(答) ガイドラインでは、同等性を示す場合には両側信頼区間、非劣性試験では片側信頼 区間による解析を行うことが記載されているが、一般には推測を片側と考えるか両側 と考えるかには議論があり一概に決められるものではないとされている。また、有意 水準についても、個々の試験において適切な基準を設定すべきである旨の記載がある。 しかしながら、推論を片側とするか両側とするかにより統計的な判断に大きな差異 が生じることは規制上の観点から望ましくない。また、一方で、臨床試験における有 効性の評価では、検定により有意差があるか否かを判断するだけでなく、試験治療効 果の大きさ(比較群間の差の大きさ)がどの程度であるかを推定することも重要である。 そこで、今後は、検証的試験においては、仮説の検定においてどちらの方法を用いる 場合であっても、効果の推定には95％信頼係数の両側信頼区間を用い、検定の際の有水準は、これによる判断との整合性を図るため、優越性試験、非劣性試験のいずれにおいても、片側2.5％又は両側5％とすることを原則とする。用量反応試験についても、用量反応性を示すことにより薬剤の有効性を検証するような試験においては上記と同様である。ただし、適切な説明ができるのであれば、より強固な有効性の根拠を 示すために有意水準を厳しくする、稀少疾病用医薬品にみられる例のように十分な被 験者を集めることが困難な場合は有意水準を緩くする、などの措置をとってもよい。 なお、生物学的同等性試験については、「後発医薬品の生物学的同等性試験ガイドライン(平成9年12月22日医薬審第487号)」により、90％信頼係数の両側信頼区間を用いるとされているが、臨床効果を指標に標準製剤との同等性を検証しようとする場合(臨床的同等性試験)は、上記と同様に95％信頼係数の両側信頼区間を用いることを原則とする。\n\n\n　特に重要なのは、「適切な説明ができるのであれば、より強固な有効性の根拠を示すために有意水準を厳しくする、稀少疾病用医薬品にみられる例のように十分な被験者を集めることが困難な場合は有意水準を緩くする、などの措置をとってもよい。」の記載である。すなわち、両側10%や片側5%も、きちんと説明をして納得していただければ許容されるということである。これらの【5%か2.5%か】の議論については、以下のJCOGプロトコールマニュアルにも記載がある。\n\n\n\n\n\n\nJCOGプロトコール\n\n\n\n国立がん研究センターでの第2相相当の臨床試験では、片側検定を用いることもありえます。これは、標準治療 vs 試験治療であり、少なくとも試験治療が標準治療より劣っているとは考えておらず、片側検定の方が適切と考えられるからです。 JCOGのプロトコールマニュアルのURLは以下です。 JCOGプロトコールマニュアル\n\n\n試験計画時の例：\n\n\\(p0\\) = 0.1（閾値奏効割合）\n\\(p1\\) = 0.3（期待奏効割合）\n\\(α\\) = 0.05（第一種の過誤、片側）\n\\(β\\) = 0.2（第二種の過誤）\n\n以下は、正規近似を用いたサンプルサイズ計算の例です。 連続修正は行いません。正規近似に基づく症例数設計では、H0における\\(p0\\)を用いて分散が計算されている点に注意してください。数理統計学を学ばれた方からみるとスコア検定に基づく方法に相当します。Wald検定に基づく例数設計とすると\\(p1\\)を用いて分散が計算されることになります。中間解析を勉強するとWald検定に基づく方法でサンプルサイズ設計がされることもあると気付きます。中間解析では検定統計量間の相関を考えるため、漸近正規性を仮定したサンプルサイズ設計をするためWald型の統計量を利用します。\n　実務上では、抗がん剤の単群試験では中間解析を事前に規定して、2項分布に基づいてに基づいて無効中止や有効中止を考慮したくなる場面が多いです。それは患者さんにとっての倫理性や開発戦略の観点からも重要な要素です。中間解析を行う場合、無効中止や有効中止の基準を事前に規定する必要があります。無効中止や有効中止の基準は、試験の目的やデザインに応じて異なるため、試験統計家と相談して決定することが重要です。無効中止や有効中止の基準を事前に規定することで、試験の透明性が向上し、倫理的な問題を回避することができます。そのような場合は、単純な2値データの割合のサンプルサイズ設計では実施できず、適切な試験統計家がSimonの2段階デザインやFlemingの2段階デザインを用いて例数設計がなされます。また、単群試験において、ベイズ流の例数設計も提案されていることから、ベイズ流例数設計も考慮していただきたい。なお、中間解析やベイズ流例数設計は常に必要ではなく、SASでの実装はシンプルではないため、ここでは割愛します。別記事で説明します。\n通常の単群試験の例数設計は以下のように行います。以下のSASプログラムは、対照群のリスクp0 = 0.1、実験群のリスクp1 = 0.3、リスク差 = 0.2を想定しています。なお、sides = 2は両側検定を意味します。片側検定を行う場合は、sides = 1としてください。\nproc power;\nonesamplefreq test=z\n    method = normal\n    sides = 2\n    alpha = 0.05\n    nullproportion = 0.1\n    proportion = 0.3\n    ntotal = .\n    power = 0.8;\nrun;\n対象者数が多い場合（シミュレーションによる確認要です）、上記の正規分布に基づく方法でも良いと考えます。しかし、一般的に2項分布による正確な検定に基づく症例数設計を利用することが標準的な方法です。理由は正規近似による例数設計が二項分布の中心極限定理を用いているため、あくまで対象者数が十分多い状況における中心極限定理を仮定しているためです。中心極限定理を利用せず、2項分布を用いて症例数設計をするSASプログラムは以下です。\n先ほどと異なり、test = exactを指定しています。これにより、2項分布に基づく正確な検定が行われます。これにより、サンプルサイズ計算がより正確になります。また、plotオプションを使用して、サンプルサイズに対する検出力の変化を視覚化しています。これにより、必要なサンプルサイズをより直感的に理解できます。\nproc power;\n    onesamplefreq test=exact\n        sides = 2\n        alpha = 0.05\n        nullproportion = 0.1\n        proportion = 0.3\n        ntotal = 30.\n        power = .;\n        plot x = n min =2 max = 100 step = 1 yopts = (ref  = 0.8);\nrun;\nExact法に基づく症例数設計では、検出力は単調増加にならず、test = normalと異なり、N = xxのように数値が出力されません。そのため、SASの出力を結果を見ながら、目標とする検出力を満たす最小の整数値 or 目標とする検出力を満たす最大の整数値とします。個人的には、より保守的であるため後者を推奨します。実際、より大きなサンプルサイズを選ぶことで、検出力の目標値をより確実に達成できる可能性が高まります。ただし、リソースの制約がある場合は、目標検出力を満たす最小の症例数を選ぶことも実用的な選択肢となり得ます。どちらのアプローチを取るかは、研究の目的やリソースの制約によって相談の上、決定してください。\n\n3.1.1 参考文献\n\nOneSampleFreq Statement"
+  },
+  {
+    "objectID": "posts/statistics/2025/サンプルサイズ設計.html#連続量アウトカム",
+    "href": "posts/statistics/2025/サンプルサイズ設計.html#連続量アウトカム",
+    "title": "臨床試験のサンプルサイズ設計",
+    "section": "4.1 連続量アウトカム",
+    "text": "4.1 連続量アウトカム\n連続量アウトカムの場合、サンプルサイズは以下の式で計算できます。 以下では優越性を示す検証的試験を想定しています。 twosamplemeans test = diffを用いて、2群間の平均値の差を検定する方法を想定しています。以下では、対照群の平均値μ0 = 0、実験群の平均値μ1 = 0.5、標準偏差σ = 1を想定しています。\nproc power;\n    twosamplemeans test=diff\n        meandiff = 0.5\n        stddev = 1\n        alpha = 0.05\n        power = 0.8\n        nptotal = .;\nrun;\n複数の状況をまとめて計算する場合は、以下のようにします。\nproc power;\n    twosamplemeans test=diff\n        meandiff = 0.5 , 1 , 1.5\n        stddev = 1 , 2 , 3\n        alpha = 0.05\n        power = 0.8\n        ntotal = .;\nrun;\n　平均値の差の検定は一般的であり、連続量のアウトカムを用いた試験では最も多く利用される方法です。平均値の差の検定は、通常、正規分布に従うと仮定される連続量データに適用されます。連続量アウトカムにおける経時測定データのサンプルサイズ設計が求められることもあるかと思います。その場合、最終観察時点における平均値の差を検定する方法として上記のプログラムを利用することが保守的で望ましいと考えます。例数設計としてはt検定に基づきより保守的なサンプルサイズ設計をする。統計解析においては、共分散分析やMMRMなどの同じEstimandを推定する方法で、より検出力の高い解析方法を適用することが治験の分野では求められると考えます。\n\n4.1.1 参考文献\nTwoSampleMeans Statement"
+  },
+  {
+    "objectID": "posts/statistics/2025/サンプルサイズ設計.html#値アウトカム-1",
+    "href": "posts/statistics/2025/サンプルサイズ設計.html#値アウトカム-1",
+    "title": "臨床試験のサンプルサイズ設計",
+    "section": "4.2 2値アウトカム",
+    "text": "4.2 2値アウトカム\n2値アウトカムの場合、サンプルサイズは以下の式で計算できます。リスク差（割合の差）に基づいて優越性を検討することを想定しています。p0を対照群のリスク、p1を実験群のリスクとします。リスク差は、対照群のリスクp0に基づいて計算されるため、対照群のp0を指定する必要があります。以下では、対照群のリスクp0 = 0.1、実験群のリスクp1 = 0.3、リスク差 = 0.2を想定しています。\n\np0 = 0.1（対照群の和依頼）\np1 = 0.3（実験群の割合）\nα = 0.05（第一種の過誤、両側）\nβ = 0.2（第二種の過誤）\n\nSASプログラムは以下となります。ここでは、対照群のリスク及びリスク差を指定している。リスク差は、対照群のp0に基づいて計算されるため、対照群のp0を指定する必要があります。\nproc power;\ntwosamplefreq test=pchi\n    sides = 2\n    alpha = 0.05\n    refproportion = 0.1\n    proportiondiff = 0.2\n    npergroup = .\n    power = 0.8;\nrun;\n\n4.2.1 参考文献\n\nTWOSAMPLEFREQ Statement"
+  },
+  {
+    "objectID": "posts/statistics/2025/サンプルサイズ設計.html#生存時間アウトカム",
+    "href": "posts/statistics/2025/サンプルサイズ設計.html#生存時間アウトカム",
+    "title": "臨床試験のサンプルサイズ設計",
+    "section": "4.3 生存時間アウトカム",
+    "text": "4.3 生存時間アウトカム\n生存時間アウトカムの場合、サンプルサイズは以下の式で計算できます。以下では優越性を示す検証的試験を想定しています。アウトカムはハザード比として、生存時間解析のノンパラメトリック検定（ログランク検定等）を前提とした例数設計を想定する。例えば生存時間アウトカムとして生存割合（死亡、生存）を前提として例数設計を考える場合、本節に基づく方法での例数設計も考えられるが、より保守的に2値データに基づく例数設計を行うことが望ましい場合もありえます。この違いについては、別記事で説明します。生存時間の例数設計については、SAS user総会のSASプロシジャを用いた生存時間データに対する例数設計の変革が参考になります。\nSASのtwosamplesurvival statementではLakatosの方法が採用されています。これは区分指数分布を前提としており解析的にN = xxの形で表すことはできません。教育的な立場だと、解析的にN = xxの形で表すことができる方法としてFreedmanの方法やSchoenfeldの方法がありますが、上記のSASユーザー総会の資料によると、Lakatosの方法の方が性能が良いことが報告されているそうです。実務上もproc power procedureを用いて、再現可能な状態で例数設計を行うことが望ましいので、基本的にLakatosの方法を採用します。\n生存時間アウトカムに基づく症例数設計では以下のような情報が必要です。特徴的なのは、登録期間とフォローアップ期間の情報が必要な点です。登録期間は、患者さんを試験に登録するための期間であり、フォローアップ期間は、患者さんを追跡するための期間です。これらの情報は、試験のデザインや目的に応じて異なるため、試験統計家と相談して決定することが重要です。 なお、通常登録は一様に登録されると仮定され、一様分布を仮定することがデフォルトです。\n\nS_c(3) = 0.3（対照群Cの3年あたりの生存率）\nS_a(2) = 0.2（実験群Aの3年あたりの生存率）\n登録期間：A = 3年\nフォローアップ期間：F = 2年\nα = 0.05（第一種の過誤、両側）\nβ = 0.2（第二種の過誤）\n\nSASでは以下のように実行します。ここでは、対照群の生存率S_c(3) = 0.3、実験群の生存率S_a(2) = 0.2を想定しています。登録期間は3年、フォローアップ期間は2年としています。これにより、試験のデザインや目的に応じたサンプルサイズを計算することができます。\nproc power;\n    twosamplesurvival test = logrank\n    curve(\"Control\") = 3:0.3\n    curve(\"Experimental\") = 3:0.2\n    groupsurvival = \"Control\" | \"Experimental\"\n    groupweights = (1 1)\n    accrualtime = 3 \n    followuptime = 2\n    ntotal = .\n    power = 0.8\n    alpha = 0.05\n    sides = 2;\nrun;\n通常、生存時間の例数設計で3年間での生存割合20%や、30%ということを仮定できる状況は多くないと思います。例えば第2相試験では1年間の追跡しかしていない場合に3年生存割合を仮定することは難しいです。そこで、通常は生存時間Tが指数分布に従うとして以下の式を用いてハザードを基にサンプルサイズ設計は有用です。ただし、ハザード比は生存時間の分布に依存するため、注意が必要です。生存時間Tが指数分布に従う場合、ハザード比は以下のように表されます。\n\\[\nS(t) = 1-F(t) = exp(-λt) ⇔ λ = -\\frac{log(S(t))}{t}\n\\]\nこの関係を用いて、ある時点tとその時点のKM推定量の結果を用いて各群のハザードを指定してサンプルサイズ計算をする方法は以下となります。\nproc power;\n    twosamplesurvival test = logrank\n    groupsurvexphazards = (0.05 0.01)\n    groupweights = (1 1)\n    accrualtime = 3 \n    followuptime = 2\n    ntotal = .\n    power = 0.8\n    alpha = 0.05\n    sides = 2;\nrun;\n他にも、中央生存時間を用いて計算することもできる。これも生存時間アウトカムに指数分布を仮定すると簡単に示せます。\n\\[\nS(1/2) = exp(-λt) ⇔ λ = -\\frac{log(S(1/2))}{t}\n\\]\nこの関係を用いて、KM推定量の結果を用いて各群の中央生存時間からハザードを推定することもできる。いずれの方法もTに指数分布を仮定している。\n\n4.3.1 参考文献\n\nTwoSsampleSurvival Statement"
+  },
+  {
+    "objectID": "posts/statistics/2025/解析用データセット仕様書.html",
+    "href": "posts/statistics/2025/解析用データセット仕様書.html",
+    "title": "解析用データセット仕様書",
     "section": "",
-    "text": "中間解析は、試験の進行中にデータを評価し、治療効果や安全性に関する情報を得るために行われます。これにより、試験の進行状況を把握し、必要に応じて試験デザインやプロトコルを調整することができます。 中間解析は、特に以下の目的で実施されます。\n\n治療効果の初期評価: 中間解析は、治療効果の初期評価を行うために使用されます。これにより、治療が有効であるかどうかを早期に判断することができます。\n安全性の評価: 中間解析は、安全性に関する情報を収集するためにも使用されます。これにより、治療が安全であるかどうかを早期に判断することができます。\n早期終了の判断: 中間解析の結果に基づいて、試験を早期に終了するかどうか（無効中止や有効中止）を判断することができます。これにより、無駄なリソースを節約することができます。\n倫理的な配慮: 中間解析は、倫理的な配慮からも重要です。治療が有効でない場合や安全性に問題がある場合、試験を早期に終了することで、被験者の安全を確保することができます。\nリソースの最適化: 中間解析は、試験の進行状況を把握し、リソースを最適化するためにも使用されます。これにより、試験の効率を向上させることができます。\n\n本記事では、以下の内容について説明します。\n\n抗がん剤第2相における2値アウトカムの中間解析\n\nSimonの最適法\nSimonのMinmax法\nFlemingデザイン\nBayes流の方法\n\n検証的試験における中間解析\n\nO’Brien-Flemingデザイン\nPocockデザイン\nLan-DeMetsデザイン（α spending function）"
+    "text": "臨床試験や統計解析プロジェクトにおいて、解析用データセット仕様書は分析の設計図とも言える重要な文書です。本記事では、実用的な解析用データセット仕様書の構成と記載内容について、主要な3つのデータセット（ADSL、ADLB、ADTTE）を例に解説し、さらに仕様書に基づくデータセット作成とバリデーションプロセスについても説明します。探索的解析であっても事前に解析用データセット仕様書を作成することを推奨する。\n\n\n\n\nSASユーザー総会2014年度：SASとExcelを用いたCDISCADaM標準における作業効率化の試み（武田薬品、高浪さん：PDFのP351）\nSASユーザー総会2014年度：PMDAへの承認申請時 CDISC標準電子データ提出に向けた社内標準のリモデリング（塩野義製薬：）\nSASユーザー総会2013年度：ライブラリ参照と名前の定義を利用して EXCELファイルへの柔軟なデータ入出力を実現する 解析結果のレポーティングからセルオートマトンまで\nSASユーザー総会2010年度：“Standard Template Programs”の開発\n生存時間解析用ADaMデータセット（ADTTE）のソースコード紹介"
   },
   {
-    "objectID": "posts/statistics/2025/中間解析.html#抗がん剤第2相における2値アウトカムの中間解析",
-    "href": "posts/statistics/2025/中間解析.html#抗がん剤第2相における2値アウトカムの中間解析",
-    "title": "第2相抗がん剤開発及び検証的試験の中間解析",
+    "objectID": "posts/statistics/2025/解析用データセット仕様書.html#はじめに",
+    "href": "posts/statistics/2025/解析用データセット仕様書.html#はじめに",
+    "title": "解析用データセット仕様書",
     "section": "",
-    "text": "抗がん剤第2相試験においては、治療効果を評価するために2値アウトカム（例: 完全奏効、部分奏効、無効など）が使用されます。中間解析は、これらのアウトカムを評価するために行われます。試験統計家として試験計画時に中間解析を実施する必要があるかを考えておく必要があります。\nこれらの資料が参考になります。\n\n山本先生：SASユーザー総会2010\n\nまた、基本的に本節での手法はSASのProc power等のプロシジャで簡単に実装されていません。SASで実行する場合は、ネットからマクロを活用するか、社内でSASマクロを開発しておく必要があります。若干ハードルが高いかもしれないですが、SASでサンプルサイズ設計マクロを開発しておき、RやWebサイトの計算結果との一致をもってQCを行うことができるので、開発しておくことをお勧めします。"
+    "text": "臨床試験や統計解析プロジェクトにおいて、解析用データセット仕様書は分析の設計図とも言える重要な文書です。本記事では、実用的な解析用データセット仕様書の構成と記載内容について、主要な3つのデータセット（ADSL、ADLB、ADTTE）を例に解説し、さらに仕様書に基づくデータセット作成とバリデーションプロセスについても説明します。探索的解析であっても事前に解析用データセット仕様書を作成することを推奨する。"
   },
   {
-    "objectID": "posts/statistics/2025/中間解析.html#パラメータの定義",
-    "href": "posts/statistics/2025/中間解析.html#パラメータの定義",
-    "title": "第2相抗がん剤開発及び検証的試験の中間解析",
+    "objectID": "posts/statistics/2025/解析用データセット仕様書.html#参考文献",
+    "href": "posts/statistics/2025/解析用データセット仕様書.html#参考文献",
+    "title": "解析用データセット仕様書",
     "section": "",
-    "text": "この節での記法について導入します。検証的試験における中間解析では別途記法を定義します。\n\np : 奏効確率（主要評価項目）\np_0 : 閾値奏効確率（p が p_0 以下の場合，薬剤は無効と判断）\np_1 : 期待奏効確率（p が p_1 以上の場合，薬剤は有効かもしれないと判断）\n\\alpha : 第 I 種の過誤確率（一般的に0.05と規定）\n\\beta : 第 II 種の過誤確率（一般的に0.20と規定）"
+    "text": "SASユーザー総会2014年度：SASとExcelを用いたCDISCADaM標準における作業効率化の試み（武田薬品、高浪さん：PDFのP351）\nSASユーザー総会2014年度：PMDAへの承認申請時 CDISC標準電子データ提出に向けた社内標準のリモデリング（塩野義製薬：）\nSASユーザー総会2013年度：ライブラリ参照と名前の定義を利用して EXCELファイルへの柔軟なデータ入出力を実現する 解析結果のレポーティングからセルオートマトンまで\nSASユーザー総会2010年度：“Standard Template Programs”の開発\n生存時間解析用ADaMデータセット（ADTTE）のソースコード紹介"
   },
   {
-    "objectID": "posts/statistics/2025/中間解析.html#仮説検定",
-    "href": "posts/statistics/2025/中間解析.html#仮説検定",
-    "title": "第2相抗がん剤開発及び検証的試験の中間解析",
+    "objectID": "posts/statistics/2025/解析用データセット仕様書.html#例",
+    "href": "posts/statistics/2025/解析用データセット仕様書.html#例",
+    "title": "解析用データセット仕様書",
+    "section": "2.1 例",
+    "text": "2.1 例\nAnalysis Dataset Metadata シート：データセットの一覧\n\n\n\n\n\n\n\n\n\n\n\n\nDataset Name\nDataset Description\nDataset Location\nDataset Structure\nKey Variables of Interest\nClass of Dataset\nDocumentation\n\n\n\n\nADSL\nSubject Population, demographic and baseline characteristics\nADSL.xpt\none record per subject\nUSUBJID\nADSL\nSAP, ADSL.sas\n\n\nADAE\nAdverse Event Analysis Dataset\nADAE.xpt\none record per subject per each AE recorded\nUSUBJID, AESEQ\nADAE\nADAE.sas\n\n\nADEF\nAnalysis Dataset for Efficacy Disease Parameters\nADEF.xpt\n1 record per subject parameter\nUSUBJID, PARAMCD\nBDS\nDictionary used in MedDRA VOL.X\n\n\n\nADSL シート：ADSL データセットの変数一覧（ADAE、ADEF も同様に作成）\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDataset\nVariable Name\nVariable Label\nType\nLength\nDisplay Format\nCodelist/Controlled Term\nCodelist Name\nOrigin\nSource/Derivation\n\n\n\n\nADSL\nSTUDYID\nStudy Identifier\ntext\n200\n$20\n\n\nPredecessor\nDM.STUDYID\n\n\nADSL\nUSUBJID\nUnique Subject Identifier\ntext\n200\n$20\n\n\nPredecessor\nDM.USUBJID\n\n\nADSL\nSUBJID\nSubject Identifier\ntext\n200\n$20\n\n\nPredecessor\nDM.SUBJID\n\n\nADSL\nSITEID\nStudy Site Identifier\ntext\n200\n$3\n\n\nPredecessor\nDM.SITEID\n\n\nADSL\nAGE\nAge\ninteger\n8\n8.0\nAGEU\nAGEU\nPredecessor\nDM.AGE\n\n\nADSL\nAGEU\nAge Units\ntext\n200\n$20\nAGEU\nAGEU\nPredecessor\nDM.AGEU\n\n\nADSL\nSEX\nSex\ntext\n1\n$1\nSEX\nSEX\nPredecessor\nDM.SEX\n\n\nADSL\nSEXN\nSex (N)\ntext\n8\n8.0\nSEXN\nSEXN\nPredecessor\n1=F,FEMALE=M,2=M\n\n\nADSL\nRACE\nRace\ntext\n200\n$200\nRACE\nRACE\nPredecessor\nDM.RACE\n\n\nADSL\nRACEN\nRace (N)\ninteger\n8\n8.0\nRACEN\nRACEN\nAssigned\n1=DM.RACE=“ASIAN”\n\n\n\nCodelist シート：コードリストの一覧\n\n\n\nName\nCodeValue\nCodeText\nData Type\n\n\n\n\nSEX\nF\nFemale\ntext\n\n\nSEX\nM\nMale\ntext\n\n\nSEXN\n1\nMale\ninteger\n\n\nSEXN\n2\nFemale\ninteger\n\n\nAGEU\nYEARS\n\ntext\n\n\nARM\nDrug A\nDrug A\ntext\n\n\nARM\nDrug B\nDrug B\ntext\n\n\nARM\nScreen Failure\nScreen Failure\ntext\n\n\nTRT\nDrug A\nDrug A\ntext\n\n\nTRT\nDrug B\nDrug B\ntext\n\n\nTRTN\n1\nDrug A\ninteger\n\n\nTRTN\n2\nDrug B\ninteger\n\n\n\nValue List シート：解析パラメータの一覧\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nName\nDataset Name\nVariable Name\nVariable Label\nParameter_variable\nComparator\nParameters\nVariable Type\nLength\nDisplay Format\n\n\n\n\n\nADEF\nAVAL\nAnalysis Value\nPARAMCD\nIN\nHEAL\ninteger\n8\n1.0\n\n\n\nAnalysis Results Metadata シート：解析結果メタデータ\n前向きの臨床試験であれば、ここまでAnalysis Result Metadataを作成することは可能であろう。ただし、探索的にデータを解析する場合は事前に解析方法を定義することは難しいように思われる。\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDisplay Identifier\nDisplay Name\nAnalysis\nPopulation\nDataset\nParameter\nReason\nSelection Criteria\nDocumentation\nProgramming Statements\n\n\n\n\nTable14.2.1\n主要評価項目\nFAS\nADEFF\nAVAL\nPre-specified in SAP\nFASFL=“Y” and PARAMCD = 1 and AVISTN = 4\nSAP\nproc format; value TRTFMT 1 = “Drug A” 2 = “Drug B”; run; proc freq data=ADSL ADEF; where FASFL = “Y” and PARAMCD = 1; table AVISTN　TRT AVAL/chisq nocol nopct format TRT01N TRT1FMT.;run;\n\n\nTable2\n副次評価項目\nFAS\nADEFF\nAVAL\nPre-specified in SAP\nPPROTFL=“Y” and PARAMCD = 1 and AVISTN = 4\nSAP\nproc format; value TRTFMT 1 = “Drug A” 2 = “Drug B”; run; proc freq data=ADSL ADEF; where PPROTFL = “Y” and PARAMCD = 1; table AVISTN TRT AVAL/chisq nocol nopct format TRT01N TRT1FMT.;run;"
+  },
+  {
+    "objectID": "posts/statistics/2025/解析用データセット仕様書.html#解析用データセット仕様書の基本構成",
+    "href": "posts/statistics/2025/解析用データセット仕様書.html#解析用データセット仕様書の基本構成",
+    "title": "解析用データセット仕様書",
+    "section": "2.2 解析用データセット仕様書の基本構成",
+    "text": "2.2 解析用データセット仕様書の基本構成\n解析用データセット仕様書は、主に以下の要素で構成されます：\n\n表紙・改訂履歴：文書管理情報\nDataset Definition：データセットの基本定義\nSpecification：変数の詳細仕様\nADLB_PARAM / ADTTE_PARAM：パラメータ定義表（ADLB、ADTTE用）\nCodelist：コード値の定義\n\nこれらの情報をExcelファイルの複数シートに整理することで、管理しやすく実用的な仕様書が作成できます。"
+  },
+  {
+    "objectID": "posts/statistics/2025/解析用データセット仕様書.html#specificationシートの構成",
+    "href": "posts/statistics/2025/解析用データセット仕様書.html#specificationシートの構成",
+    "title": "解析用データセット仕様書",
+    "section": "2.3 Specificationシートの構成",
+    "text": "2.3 Specificationシートの構成\n変数仕様を記載するSpecificationシートでは、以下の項目を含めることを推奨します：\n\n2.3.1 基本項目\n\nVarnum：変数番号（並び順）\nDomain：データセット名（ADSL、ADLB、ADTTE等）\nVariable Name：変数名\nVariable Label：変数ラベル\nType：データタイプ（Char/Num）\nLength：変数長\nDisplay Format：表示フォーマット\nCodelist：コードリスト参照名\nCore：必須度（Req=必須、Perm=任意、Cond=条件付き）\nDefinition：定義・導出方法\n\n\n\n2.3.2 ADSLのSpecificationシート例\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nVarnum\nDomain\nVariable Name\nVariable Label\nType\nLength\nDisplay Format\nCodelist\nCore\nDefinition\n\n\n\n\n1\nADSL\nSTUDYID\nStudy Identifier\nChar\n12\n\n\nReq\nDM.STUDYID\n\n\n2\nADSL\nUSUBJID\nUnique Subject Identifier\nChar\n40\n\n\nReq\nDM.USUBJID\n\n\n3\nADSL\nSUBJID\nSubject Identifier\nChar\n20\n\n\nReq\nDM.SUBJID\n\n\n4\nADSL\nAGE\nAge\nNum\n8\n\n\nReq\nDM.AGE\n\n\n5\nADSL\nSEX\nSex\nChar\n1\n\nSEX\nReq\nDM.SEX\n\n\n6\nADSL\nTRT01P\nPlanned Treatment for Period 1\nChar\n200\n\n\nReq\nARM\n\n\n7\nADSL\nTRT01A\nActual Treatment for Period 1\nChar\n200\n\n\nReq\nACTARM\n\n\n8\nADSL\nTRT01PN\nPlanned Treatment for Period 1 (N)\nNum\n8\n\n\nReq\nDerived from TRT01P\n\n\n9\nADSL\nTRT01AN\nActual Treatment for Period 1 (N)\nNum\n8\n\n\nReq\nDerived from TRT01A\n\n\n10\nADSL\nFASFL\nFull Analysis Set Flag\nChar\n1\n\nNYFL\nReq\nExternal derivation\n\n\n\n\n\n2.3.3 ADLBのSpecificationシート例\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nVarnum\nDomain\nVariable Name\nVariable Label\nType\nLength\nDisplay Format\nCodelist\nCore\nDefinition\n\n\n\n\n1\nADLB\nSTUDYID\nStudy Identifier\nChar\n12\n\n\nReq\nDM.STUDYID\n\n\n2\nADLB\nUSUBJID\nUnique Subject Identifier\nChar\n40\n\n\nReq\nDM.USUBJID\n\n\n3\nADLB\nSUBJID\nSubject Identifier\nChar\n20\n\n\nReq\nDM.SUBJID\n\n\n4\nADLB\nAGE\nAge\nNum\n8\n\n\nReq\nDM.AGE\n\n\n5\nADLB\nSEX\nSex\nChar\n1\n\nSEX\nReq\nDM.SEX\n\n\n6\nADLB\nTRT01P\nPlanned Treatment for Period 1\nChar\n200\n\n\nReq\nARM\n\n\n7\nADLB\nTRT01A\nActual Treatment for Period 1\nChar\n200\n\n\nReq\nACTARM\n\n\n8\nADLB\nPARAM\nParameter\nChar\n200\n\n\nReq\nParameter description\n\n\n9\nADLB\nPARAMCD\nParameter Code\nChar\n8\n\n\nReq\nParameter short name\n\n\n10\nADLB\nPARAMN\nParameter (N)\nNum\n8\n\n\nReq\nNumeric representation of PARAM\n\n\n11\nADLB\nAVISIT\nAnalysis Visit\nChar\n200\n\n\nReq\nAnalysis visit description\n\n\n12\nADLB\nAVISITN\nAnalysis Visit (N)\nNum\n8\n\n\nReq\nNumeric representation of AVISIT\n\n\n13\nADLB\nAVAL\nAnalysis Value\nNum\n8\n\n\nReq\nNumeric analysis value\n\n\n14\nADLB\nAVALC\nAnalysis Value (C)\nChar\n200\n\n\nCond\nCharacter analysis value\n\n\n15\nADLB\nBASE\nBaseline Value\nNum\n8\n\n\nPerm\nBaseline analysis value\n\n\n16\nADLB\nBASEC\nBaseline Value (C)\nChar\n200\n\n\nPerm\nBaseline character value\n\n\n17\nADLB\nCHG\nChange from Baseline\nNum\n8\n\n\nPerm\nAVAL - BASE\n\n\n18\nADLB\nPCHG\nPercent Change from Baseline\nNum\n8\n\n\nPerm\n((AVAL-BASE)/BASE)*100\n\n\n19\nADLB\nAVALCAT1\nAnalysis Value Category 1\nChar\n200\n\n\nPerm\nCategorization of AVAL\n\n\n20\nADLB\nAVALCAT1N\nAnalysis Value Category 1 (N)\nNum\n8\n\n\nPerm\nNumeric representation of AVALCAT1\n\n\n21\nADLB\nPCHGCAT1\nPercent Chg from Baseline Category 1\nChar\n200\n\n\nPerm\nCategorization of PCHG\n\n\n22\nADLB\nPCHGCAT1N\nPercent Chg from Baseline Category 1 (N)\nNum\n8\n\n\nPerm\nNumeric representation of PCHGCAT1\n\n\n\n\n\n2.3.4 ADTTEのSpecificationシート例\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nVarnum\nDomain\nVariable Name\nVariable Label\nType\nLength\nDisplay Format\nCodelist\nCore\nDefinition\n\n\n\n\n1\nADTTE\nSTUDYID\nStudy Identifier\nChar\n12\n\n\nReq\nDM.STUDYID\n\n\n2\nADTTE\nUSUBJID\nUnique Subject Identifier\nChar\n40\n\n\nReq\nDM.USUBJID\n\n\n3\nADTTE\nSUBJID\nSubject Identifier\nChar\n20\n\n\nReq\nDM.SUBJID\n\n\n4\nADTTE\nAGE\nAge\nNum\n8\n\n\nReq\nDM.AGE\n\n\n5\nADTTE\nSEX\nSex\nChar\n1\n\nSEX\nReq\nDM.SEX\n\n\n6\nADTTE\nTRT01P\nPlanned Treatment for Period 1\nChar\n200\n\n\nReq\nARM\n\n\n7\nADTTE\nTRT01A\nActual Treatment for Period 1\nChar\n200\n\n\nReq\nACTARM\n\n\n8\nADTTE\nPARAM\nParameter\nChar\n200\n\n\nReq\nAnalysis parameter description\n\n\n9\nADTTE\nPARAMCD\nParameter Code\nChar\n8\n\n\nReq\nAnalysis parameter short name\n\n\n10\nADTTE\nPARAMN\nParameter (N)\nNum\n8\n\n\nReq\nNumeric representation of PARAM\n\n\n11\nADTTE\nAVAL\nAnalysis Value\nNum\n8\n\n\nReq\nTime to event in days\n\n\n12\nADTTE\nSTARTDT\nTime to Event Origin Date\nNum\n8\ne8601da.\n\nReq\nAnalysis start date\n\n\n13\nADTTE\nADT\nAnalysis Date\nNum\n8\ne8601da.\n\nReq\nEvent or censoring date\n\n\n14\nADTTE\nCNSR\nCensor\nNum\n8\n\n\nReq\nCensoring flag (0=event, 1=censor)\n\n\n15\nADTTE\nEVNTDESC\nEvent or Censoring Description\nChar\n200\n\n\nPerm\nDescription of event or censoring\n\n\n16\nADTTE\nSRCDOM\nSource Data\nChar\n8\n\n\nPerm\nSource domain\n\n\n17\nADTTE\nSRCVAR\nSource Variable\nChar\n8\n\n\nPerm\nSource variable\n\n\n18\nADTTE\nSRCSEQ\nSource Sequence Number\nNum\n8\n\n\nPerm\nSource sequence number"
+  },
+  {
+    "objectID": "posts/statistics/2025/解析用データセット仕様書.html#paramシート",
+    "href": "posts/statistics/2025/解析用データセット仕様書.html#paramシート",
+    "title": "解析用データセット仕様書",
+    "section": "2.4 PARAMシート",
+    "text": "2.4 PARAMシート\nADLB、ADTTEなどのBDS形式データセットでは、パラメータの定義情報を管理するための専用シートを作成します。\n\n2.4.1 ADLB_PARAMシート例\n\n\n\nPARAM\nPARAMCD\nPARAMN\nAVAL\n\n\n\n\nHbA1c(%)\nHBA1C\n1\ninput(LABデータ)\n\n\nBlood glucose (mg/dL)\nGLU\n2\ninput(LABデータ)\n\n\nBUN (mg/dL)\nBUN\n3\ninput(LABデータ)\n\n\nCreatinine (mg/dL)\nCREAT\n4\ninput(LABデータ)\n\n\nALT (U/L)\nALT\n5\ninput(LABデータ)\n\n\n\n\n\n2.4.2 ADTTE_PARAMシート例\n\n\n\n\n\n\n\n\n\nPARAM\nPARAMCD\nPARAMN\nAVAL\n\n\n\n\nWeight/Waist Circumference Loss\nWTWCLOSS\n1\nADT - STARTDT + 1\n\n\nOverall Survival\nOS\n2\nADT - STARTDT + 1\n\n\nProgression Free Survival\nPFS\n3\nADT - STARTDT + 1\n\n\nTime to Progression\nTTP\n4\nADT - STARTDT + 1"
+  },
+  {
+    "objectID": "posts/statistics/2025/解析用データセット仕様書.html#adlbデータセットの重要な変数",
+    "href": "posts/statistics/2025/解析用データセット仕様書.html#adlbデータセットの重要な変数",
+    "title": "解析用データセット仕様書",
+    "section": "2.5 ADLBデータセットの重要な変数",
+    "text": "2.5 ADLBデータセットの重要な変数\n\n2.5.1 解析値とカテゴリ変数\nADLBでは数値解析値（AVAL）に基づいて、様々なカテゴリ変数を作成します：\n\n2.5.1.1 AVALCAT1 / AVALCAT1N\n解析値のカテゴリ化変数で、例えば正常範囲の判定などに使用： - “NORMAL” / “ABNORMAL” - “LOW” / “NORMAL” / “HIGH”\n\n\n2.5.1.2 PCHGCAT1 / PCHGCAT1N\nベースラインからの変化率のカテゴリ化変数： - “&gt;30% increase” / “±30%” / “&gt;30% decrease”\n\n\n\n2.5.2 時点変数（AVISIT / AVISITN）\n解析用の時点定義で、スケジュール通りの時点名： - “Baseline” (AVISITN=0) - “Week 4” (AVISITN=4) - “Week 12” (AVISITN=12) - “End of Treatment” (AVISITN=99)"
+  },
+  {
+    "objectID": "posts/statistics/2025/解析用データセット仕様書.html#adtteデータセットの詳細",
+    "href": "posts/statistics/2025/解析用データセット仕様書.html#adtteデータセットの詳細",
+    "title": "解析用データセット仕様書",
+    "section": "2.6 ADTTEデータセットの詳細",
+    "text": "2.6 ADTTEデータセットの詳細\n\n2.6.1 ADTTEの特徴\nADTTEは生存時間解析用のデータセットで、以下の特徴があります：\n\n1被験者1パラメータにつき1レコードの構造\n事象の発生時間または打ち切り時間を記録\n複数の解析エンドポイントを1つのデータセットで管理\n\n\n\n2.6.2 ADTTE作成時の重要な考慮事項\n\n2.6.2.1 1. 事象の優先順位\n複数の事象や打ち切りが同日に発生した場合の優先順位を明確に定義する必要があります。\n\n\n2.6.2.2 2. AVALの計算方法\nAVALは通常、以下の式で計算されます：\nここで： - STARTDT：解析開始日（通常は治療開始日：ADSL.TRTSDT） - ADT：解析日（事象発生日または打ち切り日） - +1：0日目を避けるための調整\n\n\n2.6.2.3 3. 事象データの取得元\n\n事象発生：ADVS.ADTから日付を取得\n打ち切り：ADSL.EOSDTから日付を取得\n\n\n\n2.6.2.4 4. CNSRフラグの設定\n\nCNSR=0：事象発生\nCNSR=1：打ち切り\n\n\n\n2.6.2.5 5. ソースデータの追跡（SRCDOM, SRCVAR, SRCSEQ）\nADTTEでは元データの追跡可能性が重要です：\n事象採用時： - SRCDOM=“ADVS” - SRCVAR=“ADT” - SRCSEQ=ADVS.ASEQ\n打ち切り時： - SRCDOM=“ADSL” - SRCVAR=“EOSDT” - SRCSEQ=（ブランク）\n\n\n\n2.6.3 ADTTEプログラミングのポイント\n\nデータセットの組み合わせ：複数のデータセット（ADSL、ADVS等）を適切に結合\n日付の妥当性チェック：論理的に矛盾する日付の検出と処理\n追跡可能性の確保：各レコードの導出元を明確に記録\n複数事象の処理：同一被験者で複数の解析パラメータを生成"
+  },
+  {
+    "objectID": "posts/statistics/2025/解析用データセット仕様書.html#code-listシート",
+    "href": "posts/statistics/2025/解析用データセット仕様書.html#code-listシート",
+    "title": "解析用データセット仕様書",
+    "section": "2.7 Code Listシート",
+    "text": "2.7 Code Listシート\nコード値とその意味を定義するシートです。ADaM Terminology形式で管理します。\n\n2.7.1 Code Listシート構成\n\n\n\nReference Name\nCode Value\nCode Text\n\n\n\n\nSEXN\n1\n男性\n\n\nSEXN\n2\n女性\n\n\nSEX\nM\nMale\n\n\nSEX\nF\nFemale\n\n\nNYFL\nY\nYes\n\n\nNYFL\nN\nNo\n\n\nAGEU\nYEARS\nYears\n\n\nAGEU\nMONTHS\nMonths"
+  },
+  {
+    "objectID": "posts/statistics/2025/解析用データセット仕様書.html#データセット作成プロセス",
+    "href": "posts/statistics/2025/解析用データセット仕様書.html#データセット作成プロセス",
+    "title": "解析用データセット仕様書",
+    "section": "2.8 データセット作成プロセス",
+    "text": "2.8 データセット作成プロセス\n\n2.8.1 仕様書に基づくプログラム作成\n解析用データセット仕様書を読み込み、Specificationシートの定義に従ってSASプログラムを作成します。ADxx_Conversionシートを参照してパラメータ変換処理も実装します。まずは、プロトコール、統計解析計画書、図表計画書、Rawデータ/SDTM仕様書を基に、解析用データ仕様書をテンプレートを基に手作業で作成する。ここは泥臭いが、手作業でやるしかない。\n\n\n2.8.2 チェックリストの作成\n解析用データセット仕様書について、事前に組織内で規定されているチェックリストに基づいて、目視チェックをする。ここが人的作業であるためミスが起こりえる！"
+  },
+  {
+    "objectID": "posts/statistics/2025/解析用データセット仕様書.html#section",
+    "href": "posts/statistics/2025/解析用データセット仕様書.html#section",
+    "title": "解析用データセット仕様書",
+    "section": "2.9 ",
+    "text": "2.9"
+  },
+  {
+    "objectID": "posts/statistics/2025/解析用データセット作成の流れ2.html",
+    "href": "posts/statistics/2025/解析用データセット作成の流れ2.html",
+    "title": "解析用データセット作成の流れ2",
     "section": "",
-    "text": "仮説検定は片側検定として以下のように定義する。\n\nH_0 : p \\leq p_0\nH_1 : p &gt; p_1"
-  },
-  {
-    "objectID": "posts/statistics/2025/中間解析.html#arguments",
-    "href": "posts/statistics/2025/中間解析.html#arguments",
-    "title": "第2相抗がん剤開発及び検証的試験の中間解析",
-    "section": "2.1 Arguments",
-    "text": "2.1 Arguments\n\n\n\n\n\n\n\nパラメータ\n説明\n\n\n\n\npu\nunacceptable response rate; baseline response rate that needs to be exceeded for treatment to be deemed promising\n\n\npa\nresponse rate that is desirable; should be larger than pu\n\n\nep1\nthreshold for the probability of declaring drug desirable under pu (target type 1 error rate); between 0 and 1\n\n\nep2\nthreshold for the probability of rejecting the drug under pa (target type 2 error rate); between 0 and 1\n\n\nnmax\nmaximum total sample size (default 100; can be at most 1000)\n\n\nx\nobject returned by ph2simon\n\n\n…\narguments to be passed onto plot and print commands called within"
-  },
-  {
-    "objectID": "posts/statistics/2025/中間解析.html#value",
-    "href": "posts/statistics/2025/中間解析.html#value",
-    "title": "第2相抗がん剤開発及び検証的試験の中間解析",
-    "section": "2.2 Value",
-    "text": "2.2 Value\nph2simon returns a list with pu, pa, alpha, beta and nmax as above and:\n\n\n\n\n\n\n\n出力\n説明\n\n\n\n\nout\nmatrix of best 2 stage designs for each value of total sample size n. The 6 columns in the matrix are:\n\n\n\n\n\n\nカラム\n説明\n\n\n\n\nr1\nnumber of responses needed to exceeded in first stage\n\n\nn1\nnumber of subjects treated in first stage\n\n\nr\nnumber of responses needed to exceeded at the end of trial\n\n\nn\ntotal number of subjects to be treated in the trial\n\n\nEN(pu)\nexpected number of patients in the trial under pu\n\n\nPET(pu)\nprobability of stopping after the first stage under pu\n\n\n\nTrial is stopped early if &lt;= r1 responses are seen in the first stage and treatment is considered desirable only when &gt;r responses seen."
-  },
-  {
-    "objectID": "posts/statistics/2025/中間解析.html#methods",
-    "href": "posts/statistics/2025/中間解析.html#methods",
-    "title": "第2相抗がん剤開発及び検証的試験の中間解析",
-    "section": "2.3 Methods",
-    "text": "2.3 Methods\n\nprint(ph2simon): formats and returns the minimax, optimal and any admissible designs.\nplot(ph2simon): plots the expected sample size against the maximum sample size as in Jung et al., 2001"
-  },
-  {
-    "objectID": "posts/statistics/2025/中間解析.html#実務に応用する際において",
-    "href": "posts/statistics/2025/中間解析.html#実務に応用する際において",
-    "title": "第2相抗がん剤開発及び検証的試験の中間解析",
-    "section": "2.4 実務に応用する際において",
-    "text": "2.4 実務に応用する際において\nSimonのMinmax、SimonのOptimanデザインのいずれの方法においても、「薬剤が無効な場合に早期中止を判断するための2段階デザイン無効な場合の期待患者数/を最小にしたい」という無効中止のみを考えた試験デザインである。 すなわち、Rの出力結果から、第1段階目のn1人において、r1人未満の奏効例数であれば、試験を無効中止とするようなデザインである。Rのパッケージで症例数設計をする場合、この数値が正しいことを試験統計家としてValidationをしておく必要はある。"
-  },
-  {
-    "objectID": "posts/statistics/2025/中間解析.html#数学的背景について",
-    "href": "posts/statistics/2025/中間解析.html#数学的背景について",
-    "title": "第2相抗がん剤開発及び検証的試験の中間解析",
-    "section": "2.5 数学的背景について",
-    "text": "2.5 数学的背景について\n別記事で解説します。"
-  },
-  {
-    "objectID": "posts/statistics/2025/中間解析.html#試験概要",
-    "href": "posts/statistics/2025/中間解析.html#試験概要",
-    "title": "第2相抗がん剤開発及び検証的試験の中間解析",
-    "section": "6.1 試験概要",
-    "text": "6.1 試験概要\n今回設計した臨床試験の基本パラメータと解析計画をまとめました。この試験では2段階の逐次デザインを採用し、中間解析で早期中止の可能性を検討します。"
-  },
-  {
-    "objectID": "posts/statistics/2025/中間解析.html#試験設計パラメータ",
-    "href": "posts/statistics/2025/中間解析.html#試験設計パラメータ",
-    "title": "第2相抗がん剤開発及び検証的試験の中間解析",
-    "section": "6.2 試験設計パラメータ",
-    "text": "6.2 試験設計パラメータ\n\n\n\n項目\n設定値\n\n\n\n\n登録期間\n2年\n\n\n追跡期間\n5年\n\n\n目標症例数\n126.7例（2群計128例）63.25例/年\n\n\n期待イベント数\n96.5例（対照群: 55.4例、治療群: 41.1例）"
-  },
-  {
-    "objectID": "posts/statistics/2025/中間解析.html#解析スケジュール",
-    "href": "posts/statistics/2025/中間解析.html#解析スケジュール",
-    "title": "第2相抗がん剤開発及び検証的試験の中間解析",
-    "section": "6.3 解析スケジュール",
-    "text": "6.3 解析スケジュール\n\n6.3.1 中間解析（第1段階）\n\n実施時期: 試験開始から3年後（2.92年）\n期待イベント数: 48.3例（対照群: 30.4例、治療群: 17.9例）\n\n\n\n6.3.2 最終解析（第2段階）\n\n実施時期: 全症例の追跡完了後\n期待イベント数: 96.5例"
-  },
-  {
-    "objectID": "posts/statistics/2025/中間解析.html#統計的判定基準",
-    "href": "posts/statistics/2025/中間解析.html#統計的判定基準",
-    "title": "第2相抗がん剤開発及び検証的試験の中間解析",
-    "section": "6.4 統計的判定基準",
-    "text": "6.4 統計的判定基準\n\n\n\n\n\n\n\n\n\n解析段階\n統計量\n判定基準\n結論\n\n\n\n\n中間解析\nZ₁ &gt; 2.96259\n有効性境界を超過\n有効中止\n\n\n\nZ₁ &lt; 0.86994\n無効性境界を下回る\n無効中止\n\n\n\n0.86994 ≤ Z₁ ≤ 2.96259\n境界値の間\n試験継続\n\n\n最終解析\nZ₂ &gt; 1.89189\n有効性境界を超過\n有効"
-  },
-  {
-    "objectID": "posts/statistics/2025/中間解析.html#まとめ",
-    "href": "posts/statistics/2025/中間解析.html#まとめ",
-    "title": "第2相抗がん剤開発及び検証的試験の中間解析",
-    "section": "6.5 まとめ",
-    "text": "6.5 まとめ\nこの逐次デザインにより、試験の途中で明確な結果が得られた場合には早期中止が可能となり、患者さんの負担軽減と試験の効率化が期待できます。特に、中間解析時点で強い有効性が示された場合や、逆に無効性が明らかになった場合には、倫理的観点からも適切な判断ができる設計となっている。\nこの後は、Proc lifetest Procedure等で実際に解析を行い推定値に基づくZ統計量を算出した上で、Proc Seqtest Procedureで中間解析の結果を評価することとなる。"
-  },
-  {
-    "objectID": "posts/statistics/2025/解析用データセット作成の流れ.html",
-    "href": "posts/statistics/2025/解析用データセット作成の流れ.html",
-    "title": "解析用データセット作成の流れ（フォルダ構造等）",
-    "section": "",
-    "text": "効率的なフォルダ構成でプロジェクトを管理する\n\n\nSAS（Statistical Analysis System）を使ったデータ分析プロジェクトにおいて、最初に決めるべき重要な要素の一つがフォルダ構成です。適切なフォルダ構成を設定することで、プロジェクトの管理が格段に楽になり、チームでの作業効率も向上します。\n多くのSAS初心者は、とりあえずデスクトップやマイドキュメントにファイルを保存してしまいがちですが、プロジェクトが進むにつれて「あのファイルはどこに保存したっけ？」「これは最新バージョン？」といった問題に直面することになります。\n\n\n\nSASプログラミングを実施する際は、フォルダ構成をまず設定します。\nここでは、実際の業務で使用されている標準的な構成例を紹介します。\n任意のプロジェクトフォルダに対して以下のようなフォルダを作成します。テンプレートを作成しておくのが便利でしょう。\n\nInput\nLog\nOutput\nPrg\nSetting\nSpec\n\n\n\nInput：分析に使用する元データを格納\n\n外部から受け取ったCSVファイル、Excelファイル -\nデータベースから抽出した生データ\n既存のSASデータセット\n\nLog：SASプログラムの実行ログを保存\n\nプログラム実行時に出力されるログファイル\nエラーメッセージや警告の記録\n処理時間やデータ件数の確認用\n\nOutput：分析結果や成果物を保存\n\n作成されたSASデータセット\nデータ品質チェック結果\n\nPrg：SASプログラムファイル（.sas）を格納\n\nデータ処理プログラム（1_xx、2_xxのように実行するプログラムの順番が分かる方が望ましい）\nデータクリーニングプログラム\n派生変数作成プログラム\n\nSetting：\n\n設定ファイルや共通処理を保存\nよく使用するマクロ定義\nプロジェクト固有の設定\n\nSpec：仕様書や設計書類を格納\n\n解析用データセット仕様書\n\n\n\n\n\n実際のプロジェクトでは、解析用データセット作成プログラミングと、解析プログラミングはフォルダを分けることを推奨しています。\nここでは、解析用データセット作成に焦点を当てたフォルダ構成について詳しく説明します。\n\n\n解析用データセット作成用のフォルダ構成例：\n\nProject/\nInput/\n\nRaw_Data/ # 生データ（CSV、Excel等）\nExternal/ # 外部参照データ、マスタ情報\n\nLog/ # データ処理ログ\nOutput/ # 作成されたSASデータセット\nPrg/ # データ処理プログラム\nSetting/ # 設定ファイル、マクロ\n\n\n\n\nデータ取り込み（PROC IMPORT）\n\nCSVファイルやExcelファイルからSASデータセットへの変換\n文字エンコーディングの統一\n変数名の標準化\n\nデータクリーニング\n\n欠損値の処理（削除、補完、フラグ付け）\n外れ値の検出と処理\n重複レコードの確認と処理\nデータ型の統一\n\n派生変数の作成\n\n年齢の計算（生年月日から）\nカテゴリ変数の作成（連続変数の区分化）\n合計値や比率の計算\nフラグ変数の作成\n\nデータの品質チェック\n\nPROC FREQ による度数分布の確認\nPROC MEANS による基本統計量の確認\nデータ件数の確認\n変数ごとの欠損値率の確認\n\n\n\n\n\nSASプログラミングにおいて、プログラムの更新履歴を管理することは非常に重要です。特にデータ処理では、どの時点のプログラムで作成されたデータセットなのかを明確にする必要があります。\n\n\nデータセット作成プログラムの命名例\n\n01_data_import_20250614.sas # 初回作成\n01_data_import_20250615.sas # 修正版\n01_data_import_20250620.sas # 最新版\n02_data_cleaning_20250614.sas # データクリーニング\n03_variable_creation_20250615.sas # 派生変数作成\n04_quality_check_20250620.sas # 品質チェック\n\n\n\n\n各SASプログラムの冒頭には、以下のような標準的なヘッダーを記述することを必須とします。\n/*=================================\nプログラム名: 01_data_import.sas\nプロジェクト: プロジェクト名\n作成者      : 山田太郎\n作成日      : 2025/06/14\n最終更新日  : 2025/06/20\nバージョン  : v1.2\n目的        : 顧客アンケートデータの取り込みとクリーニング\n\n入力データ  : Raw_Data/survey_data.csv\n出力データ  : Output/cleaned_survey.sas7bdat\n\n更新履歴:\nv1.0 2025/06/14 初回作成\nv1.1 2025/06/15 欠損値処理ロジック追加\nv1.2 2025/06/20 外れ値検出機能追加\n=================================*/\n\n\n\n\n*---------------------- EOF （プログラム名.sas） ------------------------------- ;\n\n\n\n\nプログラム実行時に、実行日時をログに記録する仕組みを組み込むことも有効です：\n/* 実行開始時刻を記録 */\n%let start_time = %sysfunc(datetime());\n%put NOTE: データセット作成開始 - %sysfunc(datetime(), datetime19.);\n\n/* データ取り込み処理 */\nproc import datafile=\"Input/Raw_Data/survey_data.csv\"\n    out=work.raw_data\n    dbms=csv replace;\n    getnames=yes;\nrun;\n\n/* 実行終了時刻を記録 */\n%let end_time = %sysfunc(datetime());\n%let elapsed_time = %sysevalf(&end_time - &start_time);\n%put NOTE: データセット作成終了 - %sysfunc(datetime(), datetime19.);\n%put NOTE: 実行時間: %sysfunc(&elapsed_time, time8.);\n%put NOTE: 処理件数: %sysfunc(attrn(open(work.raw_data), nobs));\n\n\n\nログファイルの活用 データ処理では、どのような処理が行われたかを正確に記録することが重要です：\n/* ログファイルの出力先を指定（日付付き） */\n%let today = %sysfunc(today(), yymmddn8.);\nproc printto log=\"Log/data_creation_&today..log\";\nrun;\n\n/* データ処理 */\n/* ... */\n\n/* ログ出力を元に戻す */\nproc printto;\nrun;\n\n\n\nSettingフォルダでは、事前に解析用データセット仕様書のinputするファイル情報やPath、InputデータのPaht、OutputデータのPathを指定しておく。これを作成しておくことで、第3者に解析用データセット作成プログラムを提供した際でも、このSettingフォルダのPathだけを更新することで、再現可能な状態がすぐに作ることができる。\nExcelファイルには以下の3つの要素を設定します。：\n\nパス（Path）：ファイルの保存場所\nファイル名：Excelファイル名\nシート名：参照するワークシート名"
-  },
-  {
-    "objectID": "posts/statistics/2025/解析用データセット作成の流れ.html#はじめに",
-    "href": "posts/statistics/2025/解析用データセット作成の流れ.html#はじめに",
-    "title": "解析用データセット作成の流れ（フォルダ構造等）",
-    "section": "",
-    "text": "SAS（Statistical Analysis System）を使ったデータ分析プロジェクトにおいて、最初に決めるべき重要な要素の一つがフォルダ構成です。適切なフォルダ構成を設定することで、プロジェクトの管理が格段に楽になり、チームでの作業効率も向上します。\n多くのSAS初心者は、とりあえずデスクトップやマイドキュメントにファイルを保存してしまいがちですが、プロジェクトが進むにつれて「あのファイルはどこに保存したっけ？」「これは最新バージョン？」といった問題に直面することになります。"
-  },
-  {
-    "objectID": "posts/statistics/2025/解析用データセット作成の流れ.html#基本的なフォルダ構成",
-    "href": "posts/statistics/2025/解析用データセット作成の流れ.html#基本的なフォルダ構成",
-    "title": "解析用データセット作成の流れ（フォルダ構造等）",
-    "section": "",
-    "text": "SASプログラミングを実施する際は、フォルダ構成をまず設定します。\nここでは、実際の業務で使用されている標準的な構成例を紹介します。\n任意のプロジェクトフォルダに対して以下のようなフォルダを作成します。テンプレートを作成しておくのが便利でしょう。\n\nInput\nLog\nOutput\nPrg\nSetting\nSpec\n\n\n\nInput：分析に使用する元データを格納\n\n外部から受け取ったCSVファイル、Excelファイル -\nデータベースから抽出した生データ\n既存のSASデータセット\n\nLog：SASプログラムの実行ログを保存\n\nプログラム実行時に出力されるログファイル\nエラーメッセージや警告の記録\n処理時間やデータ件数の確認用\n\nOutput：分析結果や成果物を保存\n\n作成されたSASデータセット\nデータ品質チェック結果\n\nPrg：SASプログラムファイル（.sas）を格納\n\nデータ処理プログラム（1_xx、2_xxのように実行するプログラムの順番が分かる方が望ましい）\nデータクリーニングプログラム\n派生変数作成プログラム\n\nSetting：\n\n設定ファイルや共通処理を保存\nよく使用するマクロ定義\nプロジェクト固有の設定\n\nSpec：仕様書や設計書類を格納\n\n解析用データセット仕様書"
-  },
-  {
-    "objectID": "posts/statistics/2025/解析用データセット作成の流れ.html#解析用データセット作成に特化したフォルダ構成",
-    "href": "posts/statistics/2025/解析用データセット作成の流れ.html#解析用データセット作成に特化したフォルダ構成",
-    "title": "解析用データセット作成の流れ（フォルダ構造等）",
-    "section": "",
-    "text": "実際のプロジェクトでは、解析用データセット作成プログラミングと、解析プログラミングはフォルダを分けることを推奨しています。\nここでは、解析用データセット作成に焦点を当てたフォルダ構成について詳しく説明します。\n\n\n解析用データセット作成用のフォルダ構成例：\n\nProject/\nInput/\n\nRaw_Data/ # 生データ（CSV、Excel等）\nExternal/ # 外部参照データ、マスタ情報\n\nLog/ # データ処理ログ\nOutput/ # 作成されたSASデータセット\nPrg/ # データ処理プログラム\nSetting/ # 設定ファイル、マクロ\n\n\n\n\nデータ取り込み（PROC IMPORT）\n\nCSVファイルやExcelファイルからSASデータセットへの変換\n文字エンコーディングの統一\n変数名の標準化\n\nデータクリーニング\n\n欠損値の処理（削除、補完、フラグ付け）\n外れ値の検出と処理\n重複レコードの確認と処理\nデータ型の統一\n\n派生変数の作成\n\n年齢の計算（生年月日から）\nカテゴリ変数の作成（連続変数の区分化）\n合計値や比率の計算\nフラグ変数の作成\n\nデータの品質チェック\n\nPROC FREQ による度数分布の確認\nPROC MEANS による基本統計量の確認\nデータ件数の確認\n変数ごとの欠損値率の確認"
-  },
-  {
-    "objectID": "posts/statistics/2025/解析用データセット作成の流れ.html#プログラムの日付管理とバージョン管理",
-    "href": "posts/statistics/2025/解析用データセット作成の流れ.html#プログラムの日付管理とバージョン管理",
-    "title": "解析用データセット作成の流れ（フォルダ構造等）",
-    "section": "",
-    "text": "SASプログラミングにおいて、プログラムの更新履歴を管理することは非常に重要です。特にデータ処理では、どの時点のプログラムで作成されたデータセットなのかを明確にする必要があります。\n\n\nデータセット作成プログラムの命名例\n\n01_data_import_20250614.sas # 初回作成\n01_data_import_20250615.sas # 修正版\n01_data_import_20250620.sas # 最新版\n02_data_cleaning_20250614.sas # データクリーニング\n03_variable_creation_20250615.sas # 派生変数作成\n04_quality_check_20250620.sas # 品質チェック\n\n\n\n\n各SASプログラムの冒頭には、以下のような標準的なヘッダーを記述することを必須とします。\n/*=================================\nプログラム名: 01_data_import.sas\nプロジェクト: プロジェクト名\n作成者      : 山田太郎\n作成日      : 2025/06/14\n最終更新日  : 2025/06/20\nバージョン  : v1.2\n目的        : 顧客アンケートデータの取り込みとクリーニング\n\n入力データ  : Raw_Data/survey_data.csv\n出力データ  : Output/cleaned_survey.sas7bdat\n\n更新履歴:\nv1.0 2025/06/14 初回作成\nv1.1 2025/06/15 欠損値処理ロジック追加\nv1.2 2025/06/20 外れ値検出機能追加\n=================================*/\n\n\n\n\n*---------------------- EOF （プログラム名.sas） ------------------------------- ;"
-  },
-  {
-    "objectID": "posts/statistics/2025/解析用データセット作成の流れ.html#自動的な実行日時記録",
-    "href": "posts/statistics/2025/解析用データセット作成の流れ.html#自動的な実行日時記録",
-    "title": "解析用データセット作成の流れ（フォルダ構造等）",
-    "section": "",
-    "text": "プログラム実行時に、実行日時をログに記録する仕組みを組み込むことも有効です：\n/* 実行開始時刻を記録 */\n%let start_time = %sysfunc(datetime());\n%put NOTE: データセット作成開始 - %sysfunc(datetime(), datetime19.);\n\n/* データ取り込み処理 */\nproc import datafile=\"Input/Raw_Data/survey_data.csv\"\n    out=work.raw_data\n    dbms=csv replace;\n    getnames=yes;\nrun;\n\n/* 実行終了時刻を記録 */\n%let end_time = %sysfunc(datetime());\n%let elapsed_time = %sysevalf(&end_time - &start_time);\n%put NOTE: データセット作成終了 - %sysfunc(datetime(), datetime19.);\n%put NOTE: 実行時間: %sysfunc(&elapsed_time, time8.);\n%put NOTE: 処理件数: %sysfunc(attrn(open(work.raw_data), nobs));"
-  },
-  {
-    "objectID": "posts/statistics/2025/解析用データセット作成の流れ.html#実践的な運用のコツ",
-    "href": "posts/statistics/2025/解析用データセット作成の流れ.html#実践的な運用のコツ",
-    "title": "解析用データセット作成の流れ（フォルダ構造等）",
-    "section": "",
-    "text": "ログファイルの活用 データ処理では、どのような処理が行われたかを正確に記録することが重要です：\n/* ログファイルの出力先を指定（日付付き） */\n%let today = %sysfunc(today(), yymmddn8.);\nproc printto log=\"Log/data_creation_&today..log\";\nrun;\n\n/* データ処理 */\n/* ... */\n\n/* ログ出力を元に戻す */\nproc printto;\nrun;"
-  },
-  {
-    "objectID": "posts/statistics/2025/解析用データセット作成の流れ.html#settingフォルダについて",
-    "href": "posts/statistics/2025/解析用データセット作成の流れ.html#settingフォルダについて",
-    "title": "解析用データセット作成の流れ（フォルダ構造等）",
-    "section": "",
-    "text": "Settingフォルダでは、事前に解析用データセット仕様書のinputするファイル情報やPath、InputデータのPaht、OutputデータのPathを指定しておく。これを作成しておくことで、第3者に解析用データセット作成プログラムを提供した際でも、このSettingフォルダのPathだけを更新することで、再現可能な状態がすぐに作ることができる。\nExcelファイルには以下の3つの要素を設定します。：\n\nパス（Path）：ファイルの保存場所\nファイル名：Excelファイル名\nシート名：参照するワークシート名"
-  },
-  {
-    "objectID": "posts/statistics/2025/解析用データセット作成の流れ.html#attrib-statement",
-    "href": "posts/statistics/2025/解析用データセット作成の流れ.html#attrib-statement",
-    "title": "解析用データセット作成の流れ（フォルダ構造等）",
-    "section": "2.1 Attrib statement",
-    "text": "2.1 Attrib statement\n具体的なプログラミングについては、別記事で解説をするが、ここでは解析用データセットを作成する上で大事なAttrib Statementについて解説する。\n以下記事が参考になる。\n\nATTRIBステートメント\n変数属性を定義した空のデータセットを作成する方法【まとめ】\n\n解析用データ仕様書にて、各変数のLabel、Length、formatを指定する必要がある。 その際に、解析用データセットに対してattrib statementを適用することで簡単に設定できる。\nちなみに、変数の順番だけを入れ替えるならばformat Statementでも簡単にできる。こちらのブログが参考になります。\n\ndata ADSL;\n    set ADSL;\n    attrib \n        STUDYID   label=\"Study Identifier\"           length=$12  format=$12.\n        USUBJID   label=\"Unique Subject Identifier\"  length=$40  format=$40.\n        SUBJID    label=\"Subject Identifier\"         length=$20  format=$20.\n        AGE       label=\"Age\"                        length=8    format=8.\n        SEX       label=\"Sex\"                        length=$1   format=SEX.\n        TRT01P    label=\"Planned Treatment for Period 1\"  length=$200  format=$200.\n        TRT01A    label=\"Actual Treatment for Period 1\"   length=$200  format=$200.\n        TRT01PN   label=\"Planned Treatment for Period 1 (N)\"  length=8  format=8.\n        TRT01AN   label=\"Actual Treatment for Period 1 (N)\"  length=8  format=8.\n        FASFL     label=\"Full Analysis Set Flag\"     length=$1   format=NYFL.\n    ;\nrun;\n実際は手入力ですることは人為的ミスの元となるのでマクロ化等で自動化することを推奨するが考え方は上記の通りである。"
-  },
-  {
-    "objectID": "posts/statistics/2025/解析用データセット作成の流れ.html#proc-format",
-    "href": "posts/statistics/2025/解析用データセット作成の流れ.html#proc-format",
-    "title": "解析用データセット作成の流れ（フォルダ構造等）",
-    "section": "2.2 Proc format",
-    "text": "2.2 Proc format\n以下記事が参考になる。 - PROC FORMAT入門1 : VALUEステートメント\nPROC FORMATは、SASにおいてユーザー定義フォーマットを作成するプロシージャです。数値や文字データを、より読みやすい形式に変換して表示することができます。 基本構文は以下の通りです。\nproc format;\n    value フォーマット名\n        値1 = \"ラベル1\"\n        値2 = \"ラベル2\"\n        値3 = \"ラベル3\";\nrun;\n文字フォーマットには先頭にドルマークを付けます。\nproc format;\n    value trtf\n        1 = \"プラセボ\"\n        2 = \"低用量\"\n        3 = \"高用量\"\n        . = \"欠測\";\n        \n    value sexf\n        1 = \"男性\"\n        2 = \"女性\"\n        . = \"不明\";\n        \n    value nyf\n        0 = \"No\"\n        1 = \"Yes\"\n        . = \"Missing\";\nrun;\n\nproc format;\n    value $sexf\n        \"M\" = \"男性\"\n        \"F\" = \"女性\"\n        \" \" = \"不明\";\n        \n    value $countryfmt\n        \"JPN\" = \"日本\"\n        \"USA\" = \"アメリカ合衆国\"\n        \"GBR\" = \"イギリス\"\n        other = \"その他\";\nrun;"
-  },
-  {
-    "objectID": "posts/statistics/2025/解析用データセット作成の流れ.html#データセットからのフォーマット作成",
-    "href": "posts/statistics/2025/解析用データセット作成の流れ.html#データセットからのフォーマット作成",
-    "title": "解析用データセット作成の流れ（フォルダ構造等）",
-    "section": "2.3 データセットからのフォーマット作成",
-    "text": "2.3 データセットからのフォーマット作成\n\n2.3.1 3.1 CNTLIN=オプションの使用\nデータセットからフォーマットを作成する場合、特定の変数名を持つデータセットを準備する必要があります。 必要な変数：\n\nFMTNAME：フォーマット名\nSTART：変換前の値（開始値）\nEND：変換前の値（終了値、範囲指定時）\nLABEL：変換後のラベル\nTYPE：フォーマットタイプ（‘N’=数値、‘C’=文字）\n\n/* 治療群フォーマット用データセット */\ndata trt_fmt;\n    retain fmtname 'trtf' type 'N';\n    input start end label $20.;\n    datalines;\n1 1 プラセボ\n2 2 低用量\n3 3 高用量\n. . 欠測\n;\nrun;\n\n/* 性別フォーマット用データセット */\ndata sex_fmt;\n    retain fmtname '$sexf' type 'C';\n    input start $1. end $1. label $10.;\n    datalines;\nM M 男性\nF F 女性\n   不明\n;\nrun;\n\n/* フォーマットの作成 */\nproc format cntlin=trt_fmt;\nrun;\n\nproc format cntlin=sex_fmt;\nrun;\nPROC FORMATは以下の2つの方法でフォーマットを作成できます：\nVALUEステートメント：直接コードに記述する方法。シンプルで直感的 CNTLIN=オプション：データセットから作成する方法。大量のフォーマットや動的な作成に適している\n適切なフォーマットの使用により、データの可読性が大幅に向上し、レポート作成時の効率も改善されます。"
+    "text": "本記事では、こちらを踏まえて、より具体的な解析データセット作成の流れをまとめていく。"
   }
 ]

@@ -52,7 +52,7 @@ editor: visual
 
 ## 参考文献
 
--   [2022年度SASユーザー総会：臨床試験のデータハンドリングとSQLプロシジャ](https://www.sas.com/ja_jp/events/21/users-group-2021/sessions.html#m=l3-5)
+-   [2021年度SASユーザー総会：臨床試験のデータハンドリングとSQLプロシジャ](https://www.sas.com/ja_jp/events/21/users-group-2021/sessions.html#m=l3-5)
 -   2007年度SASユーザー総会：臨床試験データの加工におけるSAS/Proc SQL の活用事例：データセット併合と図表作成
 -   2007年度SASユーザー総会：SQL プロシジャの利用－安全性の集計を題材に－
 -   2016年度：データハンドリングにおけるSQLプロシジャの利活用 -PROC SQL入門ー
@@ -246,7 +246,7 @@ run ;
 
 -   **統一された記法**：Proc SQLでは「`Proc SQL;`」～「`quit`」、データステップでは「`Data`」～「`run;`」、Proc SQL以外のプロシジャでは「`Proc`」～「`run;`」を1工程と表現する
 
-# 各Statementの使い方について
+# 参考データ
 
 ```{markdown}
 /* 付録. SAS プログラム (SAS Ver 9.1 日本語版) */

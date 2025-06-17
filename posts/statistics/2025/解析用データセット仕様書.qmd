@@ -37,13 +37,99 @@ editor: visual
 
 ## 参考文献
 
--   SASユーザー総会2014年度：SASとExcelを用いたCDISCADaM標準における作業効率化の試み
+-   SASユーザー総会2014年度：SASとExcelを用いたCDISCADaM標準における作業効率化の試み（武田薬品、高浪さん：PDFのP351）
+
+-   SASユーザー総会2014年度：PMDAへの承認申請時 CDISC標準電子データ提出に向けた社内標準のリモデリング（塩野義製薬：）
 
 -   SASユーザー総会2013年度：ライブラリ参照と名前の定義を利用して EXCELファイルへの柔軟なデータ入出力を実現する 解析結果のレポーティングからセルオートマトンまで
 
 -   SASユーザー総会2010年度：“Standard Template Programs"の開発
 
-## 仕様書の基本構成
+-   [生存時間解析用ADaMデータセット（ADTTE）のソースコード紹介](https://sas-user2024.ywstat.jp/download.html?n=74&key=paper)
+
+# Excel形式のメタデータの作成
+
+ADaMでは、以下のメタデータが定義されている。 申請を目的とする場合は全てを作成する必要があるが、ここでは申請を目的としない臨床試験を想定する。 その場合、Analysis Dataset MetadataとAnalysis Variable Metadatで1つのExcelにしてもよいだろう。以下の仕様書においても、そのスタンスを採用している。 ここでは、解析プログラム仕様書については表の例だけを示して深入りしない。
+
++-----------------------------------------+--------------------------------------------------------------------------------------------------+
+| 種類                                    | 概要                                                                                             |
++=========================================+==================================================================================================+
+| Analysis Dataset Metadata               | 解析用データセットの一覧と概要が記載されたメタデータ                                             |
++-----------------------------------------+--------------------------------------------------------------------------------------------------+
+| Analysis Variable Metadata              | 各解析用データセットに含まれる変数のラベル、コードリスト、導出方法等の情報が記載されたメタデータ |
++-----------------------------------------+--------------------------------------------------------------------------------------------------+
+| Analysis Parameter Value-Level Metadata | 各解析パラメータの導出方法等の情報が記載されたメタデータ                                         |
++-----------------------------------------+--------------------------------------------------------------------------------------------------+
+| Analysis Results Metadata               | 実施した解析の概要やレコード抽出条件、プログラム等の情報が記載されたメタデータ                   |
++-----------------------------------------+--------------------------------------------------------------------------------------------------+
+
+## 例
+
+**Analysis Dataset Metadata シート：データセットの一覧**
+
++--------------+--------------------------------------------------------------+------------------+---------------------------------------------+---------------------------+------------------+---------------------------------+
+| Dataset Name | Dataset Description                                          | Dataset Location | Dataset Structure                           | Key Variables of Interest | Class of Dataset | Documentation                   |
++==============+==============================================================+==================+=============================================+===========================+==================+=================================+
+| ADSL         | Subject Population, demographic and baseline characteristics | ADSL.xpt         | one record per subject                      | USUBJID                   | ADSL             | SAP, ADSL.sas                   |
++--------------+--------------------------------------------------------------+------------------+---------------------------------------------+---------------------------+------------------+---------------------------------+
+| ADAE         | Adverse Event Analysis Dataset                               | ADAE.xpt         | one record per subject per each AE recorded | USUBJID, AESEQ            | ADAE             | ADAE.sas                        |
++--------------+--------------------------------------------------------------+------------------+---------------------------------------------+---------------------------+------------------+---------------------------------+
+| ADEF         | Analysis Dataset for Efficacy Disease Parameters             | ADEF.xpt         | 1 record per subject parameter              | USUBJID, PARAMCD          | BDS              | Dictionary used in MedDRA VOL.X |
++--------------+--------------------------------------------------------------+------------------+---------------------------------------------+---------------------------+------------------+---------------------------------+
+
+**ADSL シート：ADSL データセットの変数一覧（ADAE、ADEF も同様に作成）**
+
+| Dataset | Variable Name | Variable Label | Type | Length | Display Format | Codelist/Controlled Term | Codelist Name | Origin | Source/Derivation |
+|--------|--------|--------|--------|--------|--------|--------|--------|--------|--------|
+| ADSL | STUDYID | Study Identifier | text | 200 | \$20 |  |  | Predecessor | DM.STUDYID |
+| ADSL | USUBJID | Unique Subject Identifier | text | 200 | \$20 |  |  | Predecessor | DM.USUBJID |
+| ADSL | SUBJID | Subject Identifier | text | 200 | \$20 |  |  | Predecessor | DM.SUBJID |
+| ADSL | SITEID | Study Site Identifier | text | 200 | \$3 |  |  | Predecessor | DM.SITEID |
+| ADSL | AGE | Age | integer | 8 | 8.0 | AGEU | AGEU | Predecessor | DM.AGE |
+| ADSL | AGEU | Age Units | text | 200 | \$20 | AGEU | AGEU | Predecessor | DM.AGEU |
+| ADSL | SEX | Sex | text | 1 | \$1 | SEX | SEX | Predecessor | DM.SEX |
+| ADSL | SEXN | Sex (N) | text | 8 | 8.0 | SEXN | SEXN | Predecessor | 1=F,FEMALE=M,2=M |
+| ADSL | RACE | Race | text | 200 | \$200 | RACE | RACE | Predecessor | DM.RACE |
+| ADSL | RACEN | Race (N) | integer | 8 | 8.0 | RACEN | RACEN | Assigned | 1=DM.RACE="ASIAN" |
+
+**Codelist シート：コードリストの一覧**
+
+| Name | CodeValue      | CodeText       | Data Type |
+|------|----------------|----------------|-----------|
+| SEX  | F              | Female         | text      |
+| SEX  | M              | Male           | text      |
+| SEXN | 1              | Male           | integer   |
+| SEXN | 2              | Female         | integer   |
+| AGEU | YEARS          |                | text      |
+| ARM  | Drug A         | Drug A         | text      |
+| ARM  | Drug B         | Drug B         | text      |
+| ARM  | Screen Failure | Screen Failure | text      |
+| TRT  | Drug A         | Drug A         | text      |
+| TRT  | Drug B         | Drug B         | text      |
+| TRTN | 1              | Drug A         | integer   |
+| TRTN | 2              | Drug B         | integer   |
+
+**Value List シート：解析パラメータの一覧**
+
+| Name | Dataset Name | Variable Name | Variable Label | Parameter_variable | Comparator | Parameters | Variable Type | Length | Display Format |
+|--------|--------|--------|--------|--------|--------|--------|--------|--------|--------|
+|  | ADEF | AVAL | Analysis Value | PARAMCD | IN | HEAL | integer | 8 | 1.0 |
+
+**Analysis Results Metadata シート：解析結果メタデータ**
+
+前向きの臨床試験であれば、ここまでAnalysis Result Metadataを作成することは可能であろう。ただし、探索的にデータを解析する場合は事前に解析方法を定義することは難しいように思われる。
+
++--------------------+--------------+------------+---------+-----------+----------------------+--------------------------------------------+---------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Display Identifier | Display Name | Analysis   | Dataset | Parameter | Reason               | Selection Criteria                         | Documentation | Programming Statements                                                                                                                                                                         |
+|                    |              |            |         |           |                      |                                            |               |                                                                                                                                                                                                |
+|                    |              | Population |         |           |                      |                                            |               |                                                                                                                                                                                                |
++====================+==============+============+=========+===========+======================+============================================+===============+================================================================================================================================================================================================+
+| Table14.2.1        | 主要評価項目 | FAS        | ADEFF   | AVAL      | Pre-specified in SAP | FASFL="Y" and PARAMCD = 1 and AVISTN = 4   | SAP           | proc format; value TRTFMT 1 = "Drug A" 2 = "Drug B"; run; proc freq data=ADSL ADEF; where FASFL = "Y" and PARAMCD = 1; table AVISTN　*TRT* AVAL/chisq nocol nopct format TRT01N TRT1FMT.;run;  |
++--------------------+--------------+------------+---------+-----------+----------------------+--------------------------------------------+---------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Table2             | 副次評価項目 | FAS        | ADEFF   | AVAL      | Pre-specified in SAP | PPROTFL="Y" and PARAMCD = 1 and AVISTN = 4 | SAP           | proc format; value TRTFMT 1 = "Drug A" 2 = "Drug B"; run; proc freq data=ADSL ADEF; where PPROTFL = "Y" and PARAMCD = 1; table AVISTN *TRT* AVAL/chisq nocol nopct format TRT01N TRT1FMT.;run; |
++--------------------+--------------+------------+---------+-----------+----------------------+--------------------------------------------+---------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+## 解析用データセット仕様書の基本構成
 
 解析用データセット仕様書は、主に以下の要素で構成されます：
 
@@ -153,12 +239,17 @@ ADLB、ADTTEなどのBDS形式データセットでは、パラメータの定�
 
 ### ADTTE_PARAMシート例
 
-| PARAM                           | PARAMCD  | PARAMN | AVAL              |
-|---------------------------------|----------|--------|-------------------|
-| Weight/Waist Circumference Loss | WTWCLOSS | 1      | ADT - STARTDT + 1 |
-| Overall Survival                | OS       | 2      | ADT - STARTDT + 1 |
-| Progression Free Survival       | PFS      | 3      | ADT - STARTDT + 1 |
-| Time to Progression             | TTP      | 4      | ADT - STARTDT + 1 |
++---------------------------------+-------------+-------------+-------------------+
+| PARAM                           | PARAMCD     | PARAMN      | AVAL              |
++=================================+=============+=============+===================+
+| Weight/Waist Circumference Loss | WTWCLOSS    | 1           | ADT - STARTDT + 1 |
++---------------------------------+-------------+-------------+-------------------+
+| Overall Survival                | OS          | 2           | ADT - STARTDT + 1 |
++---------------------------------+-------------+-------------+-------------------+
+| Progression Free Survival       | PFS         | 3           | ADT - STARTDT + 1 |
++---------------------------------+-------------+-------------+-------------------+
+| Time to Progression             | TTP         | 4           | ADT - STARTDT + 1 |
++---------------------------------+-------------+-------------+-------------------+
 
 ## ADLBデータセットの重要な変数
 
@@ -244,8 +335,12 @@ ADTTEでは元データの追跡可能性が重要です：
 
 ## データセット作成プロセス
 
-### 1. 仕様書に基づくプログラム作成
+### 仕様書に基づくプログラム作成
 
-解析用データセット仕様書を読み込み、Specificationシートの定義に従ってSASプログラムを作成します。ADxx_Conversionシートを参照してパラメータ変換処理も実装します。
+解析用データセット仕様書を読み込み、Specificationシートの定義に従ってSASプログラムを作成します。ADxx_Conversionシートを参照してパラメータ変換処理も実装します。まずは、プロトコール、統計解析計画書、図表計画書、Rawデータ/SDTM仕様書を基に、解析用データ仕様書をテンプレートを基に**手作業で**作成する。ここは泥臭いが、手作業でやるしかない。
 
-###　参考文献 - [生存時間解析用ADaMデータセット（ADTTE）のソースコード紹介](https://sas-user2024.ywstat.jp/download.html?n=74&key=paper)
+### チェックリストの作成
+
+解析用データセット仕様書について、事前に組織内で規定されているチェックリストに基づいて、目視チェックをする。ここが人的作業であるためミスが起こりえる！
+
+##

@@ -1,0 +1,718 @@
+---
+title: "SASプログラミングTips1"
+author: "坂本航太"
+categories: [SAS,解析プログラミング]
+date-modified: "2025-06-16"
+abstract-title: Abstract
+abstract: ""
+date: "2025-06-16"
+format:
+  html: 
+    fontsize: normal
+    page-layout: full
+    lang: "ja"
+    encoding: "UTF-8"
+    toc: true
+    toc-depth: 2
+    code-fold: show
+    html-math-method: katex
+    fig-format: svg
+    fig-height: 5
+    fig-width: 9
+    self-contained: true
+    number-sections: true
+    code-block-border-left: true
+    code-line-numbers: false
+    code-overflow: wrap
+    highlight-style: atom-one
+    df-print: tibble
+editor: visual
+---
+
+# SAS Programing学習
+
+本記事では、実務上便利なSASプログラミングのTipsを紹介する。
+
+## 参考文献
+
+-   
+
+# SAS日付をマクロ化する方法
+
+```         
+%let StDateTime = %sysfunc( datetime() );
+%put &StDateTime;
+
+data _null_;
+   Date1 = put(date(), yymmdds10.);
+   Date2 = compress(Date1, "/");
+   Time1 = put(time(), tod8.);
+   Time2 = compress(Time1,":");
+
+   * マクロ変数に格納 ;
+   call symput('StDates', trim(left(Date1)));
+   call symput('StDate', trim(left(Date2)));
+   call symput('StTimes', trim(left(Time1)));
+   call symput('StTime', trim(left(Time2)));
+run;
+%put &StDates. &StDate. &StTimes. &StTime.;
+```
+
+## プログラム解説
+
+このSASプログラムは現在の日時を取得し、異なる形式でマクロ変数に格納するコードです。
+
+**処理の流れ：**
+
+1.  `%sysfunc(datetime())`で現在日時を数値形式で取得
+
+2.  `date()`と`time()`で日付・時刻を個別に取得
+
+3.  `put()`関数でフォーマット適用（日付：YYYY/MM/DD、時刻：HH:MM:SS）
+
+4.  `compress()`で区切り文字を除去（日付：YYYYMMDD、時刻：HHMMSS）
+
+5.  `call symput()`で4つのマクロ変数を作成
+
+**作成されるマクロ変数：**
+
+-   `&StDates`：2025/06/16（スラッシュ付き日付）
+
+-   `&StDate`：20250616（スラッシュなし日付）
+
+-   `&StTimes`：14:30:25（コロン付き時刻）
+
+-   `&StTime`：143025（コロンなし時刻）
+
+**用途：** ログファイル名生成、バックアップのタイムスタンプ、処理開始時刻の記録など、バッチ処理でよく使用される汎用的なコードです。
+
+# Path指定のTips
+
+```         
+%LET execpath=" ";
+%MACRO setexecpath;
+    %LET execpath=%SYSFUNC(GETOPTION(SYSIN));
+    %IF %LENGTH(&execpath)=0
+    %THEN %LET execpath=%SYSGET(SAS_EXECFILEPATH);
+%MEND setexecpath;
+%setexecpath;
+%PUT &execpath;
+
+%let PROGRAM_NAME = %scan(%scan(&execpath, -1, "\"), 1, ".") ;
+%put &PROGRAM_NAME; 
+%let CURRENT_DIR = %qsubstr("&execpath.", 2, %eval(%index("&execpath.", %scan(&execpath, -1, "\")))-2) ;
+%put &CURRENT_DIR;
+%let PARENT_DIR = %qsubstr("&execpath.", 2, %eval(%index("&execpath.", %scan(&execpath, -2, "\")))-2) ;
+%put &PARENT_DIR;
+%let PROJECT_ROOT = %qsubstr("&execpath.", 2, %eval(%index("&execpath.", %scan(&execpath, -3, "\")))-2) ;
+%put &PROJECT_ROOT;
+
+data _null_;
+    /* Input関連パス */
+    INPUT_RAW = cat("&PROJECT_ROOT", "\Input\Raw");
+    call symputx("INPUT_RAW", INPUT_RAW);
+    
+    INPUT_EXT = cat("&PROJECT_ROOT", "\Input\External");
+    call symputx("INPUT_EXT", INPUT_EXT);
+    
+    /* Output関連パス */
+    OUTPUT_PATH = cat("&PROJECT_ROOT", "\Output");
+    call symputx("OUTPUT_PATH", OUTPUT_PATH);
+    
+    LOG_PATH = cat("&PROJECT_ROOT", "\Log");
+    call symputx("LOG_PATH", LOG_PATH);
+    
+    /* プログラム関連パス */
+    MACRO_PATH = cat("&PROJECT_ROOT", "\Macro");
+    call symputx("MACRO_PATH", MACRO_PATH);
+    
+    SETTING_PATH = cat("&PROJECT_ROOT", "\Setting");
+    call symputx("SETTING_PATH", SETTING_PATH);
+    
+    /* 仕様書パス */
+    SPEC_PATH = cat("&PROJECT_ROOT", "\Spec");
+    call symputx("SPEC_PATH", SPEC_PATH);
+run;
+
+%put INPUT_RAW=&INPUT_RAW;
+%put INPUT_EXT=&INPUT_EXT;
+%put OUTPUT_PATH=&OUTPUT_PATH;
+%put LOG_PATH=&LOG_PATH;
+%put MACRO_PATH=&MACRO_PATH;
+%put SETTING_PATH=&SETTING_PATH;
+%put SPEC_PATH=&SPEC_PATH;
+```
+
+## プログラム解説
+
+このSASプログラムは、実行中のプログラムの場所を自動判定し、プロジェクトの標準フォルダ構造に基づいて各種パスを動的に設定する汎用的なパス管理コードです。
+
+### 実行パス取得マクロ
+
+最初の部分では、現在実行中のSASプログラムの完全パスを取得するマクロを定義しています。このマクロは実行環境に関係なく動作するよう設計されており、バッチ実行時はGETOPTION(SYSIN)関数を、対話的実行時はSAS_EXECFILEPATH環境変数を使用します。IF文による条件分岐により、どちらの環境でも確実にプログラムパスを取得できる仕組みになっています。
+
+### 階層パス解析
+
+次に、取得したフルパスから階層構造を解析し、プロジェクト内での相対位置を把握する処理を行います。SCAN関数とQSUBSTR関数を組み合わせて、パスを階層別に分解します。PROGRAM_NAMEには実行中のプログラム名（拡張子なし）、CURRENT_DIRには現在のディレクトリの完全パス、PARENT_DIRには1つ上の階層ディレクトリのパス、PROJECT_ROOTにはプロジェクトルートディレクトリのパス（2つ上の階層）がそれぞれ格納されます。
+
+-   **各変数の役割：**
+
+    -   `PROGRAM_NAME`：実行中のプログラム名（拡張子なし）
+
+    -   `CURRENT_DIR`：現在のディレクトリの完全パス
+
+    -   `PARENT_DIR`：1つ上の階層ディレクトリのパス
+
+    -   `PROJECT_ROOT`：プロジェクトルートディレクトリのパス（2つ上の階層）
+
+### 標準パス自動生成
+
+最後のデータステップでは、プロジェクト標準フォルダ構造に基づいて必要なパスを自動生成します。CAT関数でPROJECT_ROOTを基準として各フォルダパスを結合し、CALL SYMPUTX文でマクロ変数として定義します。生データ格納用のINPUT_RAW、外部データ格納用のINPUT_EXT、出力ファイル格納用のOUTPUT_PATH、ログファイル格納用のLOG_PATH、マクロファイル格納用のMACRO_PATH、設定ファイル格納用のSETTING_PATH、仕様書格納用のSPEC_PATHが設定されます。
+
+**設定されるパス：**
+
+-   `INPUT_RAW`：生データ（Raw data）格納パス
+
+-   `INPUT_EXT`：外部データ（External data）格納パス
+
+-   `OUTPUT_PATH`：出力ファイル格納パス
+
+-   `LOG_PATH`：ログファイル格納パス
+
+-   `MACRO_PATH`：マクロファイル格納パス
+
+-   `SETTING_PATH`：設定ファイル格納パス
+
+-   `SPEC_PATH`：仕様書格納パス
+
+### 活用メリット
+
+このコードをプロジェクトの各SASプログラム冒頭に配置することで、プロジェクトフォルダの移動や環境変更時にパス設定の修正が不要になります。チーム開発での設定統一と保守性向上を実現でき、どのサブフォルダからプログラムを実行しても、常に正しいプロジェクトルートを基準とした一貫したパス管理が可能になります。手動でのパス設定ミスを防ぎ、開発効率の向上にも寄与します。
+
+# フォルダの自動作成
+
+```         
+/* ディレクトリ自動作成マクロ */
+%macro create_dir_structure(path);
+   %local parent_dir dir_name;
+   %let path = %sysfunc(strip(&path));
+   %let parent_dir = %substr(&path, 1, %length(&path)-%length(%scan(&path, -1, '\')));
+   %let dir_name = %scan(&path, -1, '\');
+   
+   %if %sysfunc(fileexist(&path)) = 0 %then %do;
+       %if %length(&parent_dir) > 0 %then %do;
+           %if %sysfunc(fileexist(&parent_dir)) = 0 %then %do;
+               %create_dir_structure(&parent_dir);
+           %end;
+       %end;
+       %let rc = %sysfunc(dcreate(&dir_name, &parent_dir));
+   %end;
+%mend;
+
+/* プロジェクトフォルダ構造の自動作成 */
+%create_dir_structure(&INPUT_RAW);
+%create_dir_structure(&INPUT_EXT);
+%create_dir_structure(&OUTPUT_PATH);
+%create_dir_structure(&LOG_PATH);
+%create_dir_structure(&MACRO_PATH);
+%create_dir_structure(&SETTING_PATH);
+%create_dir_structure(&SPEC_PATH);
+```
+
+## プログラム解説
+
+このSASマクロは、指定されたディレクトリパスが存在しない場合に、必要な階層構造を含めて自動的にフォルダを作成する汎用的なディレクトリ作成マクロです。
+
+### マクロの動作原理
+
+マクロは再帰的なアルゴリズムを採用しており、深い階層のフォルダ構造でも一度の呼び出しで全ての必要なディレクトリを作成できます。まず入力されたパスを親ディレクトリ部分と最終フォルダ名に分解し、指定されたパスが存在するかをチェックします。存在しない場合、親ディレクトリの存在も確認し、親ディレクトリが存在しなければマクロが自分自身を呼び出して上位階層から順次作成していきます。
+
+### パス解析のロジック
+
+STRIP関数で入力パスの前後空白を除去した後、SUBSTR関数とSCAN関数を組み合わせてパスを分解します。SCAN関数でパス区切り文字（バックスラッシュ）を基準に最終フォルダ名を抽出し、SUBSTR関数で親ディレクトリ部分を切り出します。この処理により、どのような深さのパスでも正確に階層構造を解析できます。
+
+### 条件分岐による効率的な処理
+
+FILEEXIST関数による存在チェックを各段階で実行し、既に存在するディレクトリに対しては何も処理を行いません。これにより無駄な処理を避け、既存の構造を保護しながら必要な部分のみを作成します。実際のフォルダ作成はDCREATE関数で実行され、作成結果は戻り値で確認できます。
+
+### プロジェクト管理での活用
+
+このマクロを前回のパス設定コードと組み合わせることで、プロジェクト開始時のフォルダ構造セットアップを完全自動化できます。新しい環境でプロジェクトを開始する際や、チームメンバーが初めてプロジェクトに参加する際に、手動でフォルダを作成する手間を省き、標準的なフォルダ構造を確実に構築できます。
+
+### エラー処理と保守性
+
+マクロはエラーハンドリングも考慮されており、作成に失敗した場合でも処理が停止することなく、次の処理に進みます。また、既存のフォルダ構造に影響を与えることなく、必要な部分のみを安全に追加できる設計になっています。プロジェクトの成長に合わせて新しいフォルダが必要になった場合も、このマクロを呼び出すだけで簡単に対応できます
+
+# 日付管理
+
+```         
+/* 日付情報取得 */
+data _null_;
+  Date1 = put(date(), yymmdds10.);
+  Date2 = compress(Date1, "/");
+  call symputx('current_date', trim(left(Date2)));
+run;
+
+/* プロジェクトルート取得 */
+%LET execpath=" ";
+%MACRO setexecpath;
+   %LET execpath=%SYSFUNC(GETOPTION(SYSIN));
+   %IF %LENGTH(&execpath)=0
+   %THEN %LET execpath=%SYSGET(SAS_EXECFILEPATH);
+%MEND setexecpath;
+%setexecpath;
+
+%let PROJECT_ROOT = %qsubstr("&execpath.", 2, %eval(%index("&execpath.", %scan(&execpath, -3, "\")))-2) ;
+
+/* 日付ベースのプログラムパス設定 */
+data _null_;
+   PRG_DATE = cat("&PROJECT_ROOT", "\Prg\", "&current_date");
+   call symputx("PRG_DATE", PRG_DATE);
+run;
+
+/* ディレクトリ自動作成マクロ */
+%macro create_dir_structure(path);
+   %local parent_dir dir_name;
+   %let path = %sysfunc(strip(&path));
+   %let parent_dir = %substr(&path, 1, %length(&path)-%length(%scan(&path, -1, '\')));
+   %let dir_name = %scan(&path, -1, '\');
+   
+   %if %sysfunc(fileexist(&path)) = 0 %then %do;
+       %if %length(&parent_dir) > 0 %then %do;
+           %if %sysfunc(fileexist(&parent_dir)) = 0 %then %do;
+               %create_dir_structure(&parent_dir);
+           %end;
+       %end;
+       %let rc = %sysfunc(dcreate(&dir_name, &parent_dir));
+   %end;
+%mend;
+
+/* 日付フォルダの自動作成 */
+%create_dir_structure(&PRG_DATE);
+
+%put PRG_DATE=&PRG_DATE;
+```
+
+## プログラム解説
+
+このSASプログラムは、実行日ベースのプログラム管理フォルダを自動作成する汎用的なコードです。
+
+### 基本的な仕組み
+
+まず現在の日付をYYYYMMDD形式で取得し、実行中のプログラムパスからプロジェクトルートを自動判定します。その後、プロジェクトルート配下のPrgフォルダ内に実行日付のサブフォルダ（例：Prg\\20250616）を作成します。
+
+### 日付ベースフォルダ管理の利点
+
+このシステムにより、プログラムの実行履歴を日付別に整理できます。同じプログラムを異なる日に実行しても結果が混在せず、過去の実行内容を簡単に追跡できます。特に開発段階では、日々の変更内容を時系列で管理できるため、問題発生時の原因特定や以前のバージョンへの戻しが容易になります。
+
+### 自動ディレクトリ作成の活用
+
+create_dir_structureマクロの再帰処理により、深い階層構造でも一度の呼び出しで必要なフォルダが全て作成されます。既存フォルダの存在チェック機能により、重複実行しても安全で、チーム開発での環境差異も自動的に解決されます。
+
+このコードをプログラム冒頭に配置することで、実行のたびに適切な作業フォルダが準備され、プロジェクトの標準化と履歴管理を同時に実現できます。
+
+# マクロライブラリの活用
+
+```         
+/* マクロライブラリの一括読み込み */
+filename MACROLIB "&MACRO_PATH" ;
+%include MACROLIB (データ処理macro.sas);
+%include MACROLIB (統計解析macro.sas);
+%include MACROLIB (レポート生成macro.sas);
+%include MACROLIB (ユーティリティmacro.sas);
+```
+
+## プログラム解説
+
+このコードは、FILENAME文とINCLUDE文を組み合わせて、特定フォルダ内の複数のSASファイルを効率的に読み込む汎用的な手法です。
+
+### FILENAME文による論理参照の設定
+
+FILENAME文で論理名「MACROLIB」を定義し、マクロ変数で指定されたフォルダパスを割り当てます。これにより、以降の処理では物理的なフォルダパスではなく、論理名を使用してファイルにアクセスできるようになります。
+
+### INCLUDE文による選択的ファイル読み込み
+
+各INCLUDE文では、論理名に続けて括弧内にファイル名を指定することで、指定フォルダ内の特定ファイルを読み込みます。この記法により、フォルダ内の全ファイルではなく、必要なファイルのみを選択的に読み込むことが可能です。
+
+### この手法の優位性
+
+従来の絶対パス指定と比較して、コードの保守性と可読性が大幅に向上します。フォルダパスの変更時は最初のFILENAME文のみを修正すれば良く、同一フォルダ内の複数ファイルを扱う際の記述量も削減されます。また、論理名を使用することで、プラットフォーム間でのパス記法の違いも吸収できます。
+
+### 応用範囲
+
+この手法は、マクロライブラリの管理以外にも、設定ファイルの読み込み、データセットの一括処理、プログラムの分割実行など、様々な場面で活用できます。プロジェクトの規模が大きくなり、複数のファイルを体系的に管理する必要がある場合に特に有効な手法です。
+
+# プログラミングの動的生成
+
+```         
+%macro create_pg(PGM_name,Table, Analysis_pop);
+filename ext "&Analysis_PGM./&PGM_name..sas";
+data _null_;
+   file ext;
+put "proc datasets kill nolist ; run ; quit ; ";
+put "dm 'out ; clear ; log ; clear ;' ;";
+put "*+------------------+-----------------------------------------------------------+";
+put "| STUDY              | Project                                                         |";
+put "| DESCRIPTION   |   &Table                                                        |";
+put "| Analysis Population   |   &Analysis_pop                                                 |";
+put "| SUPPORT          |                                                                            |";
+put "| VERSION          | SAS 9.4 (64 bit) Windows                                   |";
+put "| PROGRAM NAME     |     &PGM_name..sas                                      |";
+put "+------------------+-----------------------------------------------------------+";
+put "| PURPOSE:         |                                                            |";
+put "+------------------+-----------------------------------------------------------+";
+put "| NOTE:               |                                                            |";
+put "+------------------+-----------------------------------------------------------+";
+put "| HISTORY:         | yyyy-mm-dd   Initial coding                      |";
+put "|                  　　　 |                                                            |";
+put "|                          |                                                            |";
+put "+------------------+-----------------------------------------------------------+;";
+run;
+%mend;
+
+data _null_;
+   set OUT2;
+   call execute(cats('%create_pg(', PGM_name ,  ',' , Table  , ',' , Analysis_pop , ')')) ;
+run;
+```
+
+## プログラム解説
+
+このSASプログラムは、メタデータを基にして解析プログラムのテンプレートを動的に生成する自動化システムです。
+
+### プログラム生成マクロの構造
+
+create_pgマクロは、プログラム名、テーブル名、解析対象集団の3つのパラメータを受け取り、指定されたフォルダに新しいSASプログラムファイルを作成します。FILENAME文で出力先ファイルを指定し、FILE文とPUT文を使用してプログラムのヘッダー部分を標準化されたフォーマットで出力します。
+
+### 標準化されたヘッダー生成
+
+各生成プログラムには、プロジェクト情報、プログラム説明、解析対象集団、バージョン情報、履歴管理欄を含む統一フォーマットのヘッダーが自動挿入されます。これにより、手動作成時に発生しがちな記載漏れや形式の不統一を防ぎ、プロジェクト全体でのドキュメント品質を保証します。
+
+### メタデータ駆動型の一括生成
+
+最後のデータステップでは、OUT2データセットに格納されたメタデータを読み込み、CALL EXECUTE文を使用してマクロを動的に実行します。CATS関数でマクロ呼び出し文を構築し、データセットの各レコードに対して個別のプログラムファイルを生成します。
+
+### 自動化の利点とメリット
+
+この手法により、数十から数百の解析プログラムを一度に生成できるため、大規模プロジェクトでの開発効率が大幅に向上します。メタデータの変更時も該当部分のみを修正して再実行すれば、全プログラムに変更が反映されるため、保守性も高くなります。また、ヒューマンエラーの削減と品質の均一化も実現できます。
+
+# SAS備忘録さんのFavorite関数の解説
+
+1.  CATS関数
+2.  CATX関数
+3.  WHICHN・WHICHC関数
+4.  CHOOSEN・CHOOSEC関数
+5.  COALESCE・COALESCEC関数
+6.  VVALUE・VVALUEX関数
+7.  CMISS関数
+8.  IFN・IFC関数
+9.  CALL MISSING
+10. CALL SYMPUTX
+
+SASプログラミングで頻繁に使用される便利な関数を、実用的なプログラム例とともに解説します。
+
+## 1. CATS関数
+
+**機能：** 複数の文字列を連結し、各引数の前後の空白を自動削除
+
+```         
+data example1;
+    name = "田中";
+    id = "001";
+    dept = "営業部";
+    
+    /* 従来の方法 */
+    result1 = trim(name) || trim(id) || trim(dept);
+    
+    /* CATS関数を使用 */
+    result2 = cats(name, id, dept);
+    
+    put result1= result2=;
+run;
+```
+
+**出力：** result1=田中001営業部 result2=田中001営業部
+
+CATS関数は自動的に前後の空白を削除するため、TRIMやLEFT関数が不要になり、コードがシンプルになります。
+
+## 2. CATX関数
+
+**機能：** 指定した区切り文字で複数の文字列を連結
+
+```         
+data example2;
+    year = 2025;
+    month = 6;
+    day = 16;
+    
+    /* 日付文字列の作成 */
+    date_slash = catx("/", year, month, day);
+    date_hyphen = catx("-", year, month, day);
+    
+    /* CSVフォーマットの作成 */
+    csv_line = catx(",", "田中太郎", 30, "東京都");
+    
+    put date_slash= date_hyphen= csv_line=;
+run;
+```
+
+**出力：** date_slash=2025/6/16 date_hyphen=2025-6-16 csv_line=田中太郎,30,東京都
+
+## 3. WHICHN・WHICHC関数
+
+**機能：** 指定した値がリストの何番目にあるかを返す
+
+```         
+data ae_severity;
+    input pt $ severity $;
+    
+    /* 重篤度レベルをコード化 */
+    severity_code = whichc(severity, "軽度", "中等度", "重度", "重篤");
+    
+    /* グレード分類への変換 */
+    ctcae_grade = whichc(severity, "Grade1", "Grade2", "Grade3", "Grade4", "Grade5");
+    
+datalines;
+頭痛 軽度
+発熱 中等度
+呼吸困難 重度
+;
+run;
+```
+
+pt=頭痛 severity=軽度 severity_code=1 ctcae_grade=0
+
+pt=発熱 severity=中等度 severity_code=2 ctcae_grade=0\
+pt=呼吸困難 severity=重度 severity_code=3 ctcae_grade=0
+
+-   `severity_code`：指定したリスト内での位置を返す
+
+    -   "軽度" → 1番目 → 1
+
+    -   "中等度" → 2番目 → 2
+
+    -   "重度" → 3番目 → 3
+
+<!-- -->
+
+-   `ctcae_grade`：CTCAEグレード用のリストにマッチしないため全て0
+
+    -   データの"軽度"、"中等度"、"重度"は"Grade1"、"Grade2"等とマッチしない
+
+    -   マッチしない場合はWHICHC関数は0を返す
+
+## 4. CHOOSEN・CHOOSEC関数
+
+**機能：** インデックス番号に基づいてリストから値を選択
+
+```         
+data example4;
+    do i = 1 to 4;
+        /* 数値版：CHOOSEN */
+        threshold = choosen(i, 60, 70, 80, 90);
+        
+        /* 文字版：CHOOSEC */
+        grade = choosec(i, "D", "C", "B", "A");
+        
+        put i= threshold= grade=;
+    end;
+run;
+```
+
+**出力：** i=1 threshold=60 grade=D i=2 threshold=70 grade=C i=3 threshold=80 grade=B i=4 threshold=90 grade=A
+
+・Y番目のXの値を返す。\
+・第2引数以降に数値型の変数または値を指定する場合はCHOOSEN関数を用いる。\
+・第2引数以降に文字型の変数または値を指定する場合はCHOOSEC関数を用いる。
+
+## 5. COALESCE・COALESCEC関数
+
+**機能：** 最初の非欠損値を返す
+
+```         
+/* サンプルデータの作成 */
+data sample_data;
+    input ID X1 $ X2 $ X3 $;
+    datalines;
+1 AA    BB
+2    CC DD
+3       EE
+4 FF    
+5          
+6 GG HH II
+;
+run;
+
+/* 方法1: IF-ELSE文を使用 */
+data result1;
+    set sample_data;
+    length Y $2.;
+    if X1^="" then Y=X1;
+    else if X2^="" then Y=X2;
+    else if X3^="" then Y=X3;
+run;
+
+/* 方法2: COALESCEC関数を使用 */
+data result2;
+    set sample_data;
+    length Y $2.;
+    Y = coalescec(X1, X2, X3);
+run;
+```
+
+**ポイント：**
+
+-   この関数は「引数のうち最初に欠損値以外で登場する値を返す」という機能を持っています。
+
+-   **COALESCE：** 数値の場合、欠損値（.）をスキップして最初の有効な値（85）を返す
+
+-   **COALESCEC：** 文字の場合、空白をスキップして最初の有効な文字列を返す
+
+## 6. VVALUE・VVALUEX関数
+
+**機能：** フォーマットが適用された値を文字列として取得
+
+```         
+data DT1;
+  format X yymmdd10.;
+  X = '13jun2017'd;
+run;
+
+
+data DT2;
+  set DT1;
+  length Y $20.;
+  Y = put( X, yymmdd10.);
+run;
+
+
+data DT2;
+  set DT1;
+  length Y1 Y2 $20.;
+
+  /* vvalue関数を使った例 */
+  Y1 = vvalue( X );
+
+  /* vvaluex関数を使った例 */
+  Y2 = vvaluex( "X" );
+
+run;
+```
+
+-   **Y1 = vvalue( X )：**「 vvalue( X ) 」で変数Xに割り当てられているFORMAT「YYMMDD10.」を使って文字変換した値「2017-06-13」を返しています。
+-   **Y2 = vvaluex( "X" );**vvaluex も vvalue と同じ機能を持っているのですが、違いは以下の通り。
+-   vvalue( X )      … 変数名を指定
+-   vvaluex( "X" )  … 変数名を表す文字値を指定
+-   つまり、「 vvaluex( "X" ) 」で変数Xに割り当てられているFORMAT「YYMMDD10.」を使って文字変換した値「2017-06-13」を返しています。
+
+## 7. CMISS関数
+
+**機能：** 欠損値の個数をカウント
+
+```         
+data example7;
+    input name $ age height weight;
+    
+    missing_count = cmiss(age, height, weight);
+    complete_data = (missing_count = 0);
+    
+    put name= missing_count= complete_data=;
+    
+datalines;
+田中 25 170 65
+佐藤 . 165 .
+山田 30 . 70
+;
+run;
+```
+
+**出力：** name=田中 missing_count=0 complete_data=1 name=佐藤 missing_count=2 complete_data=0 name=山田 missing_count=1 complete_data=0
+
+## 8. IFN・IFC関数
+
+**機能：** 条件に基づいて値を返す三項演算子
+
+```         
+
+data DT1;
+   length X1 $10.;
+   X1="YES"; output;
+   X1="NO"; output;
+run;
+
+#Before
+data DT2;
+   set DT1;
+   if X1 = "YES" then X2=1;
+   else  X2=0;
+run;
+
+#After
+data DT2;
+   set DT1;
+   X2 = ifn(X1="YES",1,0);
+run;
+```
+
+Rのifelse関数みたいな気持ち。
+
+## 9. CALL MISSING
+
+**機能：** 複数の変数を一度に欠損値に設定
+
+```         
+data example9;
+    name = "田中";
+    age = 25;
+    score = 85;
+    
+    /* 条件に応じて全データを欠損値に */
+    if age < 20 then call missing(of name age score);
+    
+    put name= age= score=;
+run;
+```
+
+このSASコードは`CALL MISSING`ルーチンを使って、条件に応じて複数の変数を一度に欠損値に設定する例です。
+
+## 10. CALL SYMPUTX
+
+**機能：** データステップ内でマクロ変数を作成・更新
+
+```         
+data example10;
+    input dept $ sales;
+    
+    /* 部門別に動的にマクロ変数を作成 */
+    call symputx(cats("sales_", dept), sales);
+    
+    /* 最大売上をマクロ変数に格納 */
+    retain max_sales;
+    if _n_ = 1 then max_sales = sales;
+    else max_sales = max(max_sales, sales);
+
+   if  _EOF then call symputx("OBS", _N_);
+    
+datalines;
+営業 1200
+技術 800
+総務 300
+;
+run;
+
+/* データステップ終了後に最大値を取得 */
+data _null_;
+    set example10 end=last;
+    retain max_sales;
+    if _n_ = 1 then max_sales = sales;
+    else max_sales = max(max_sales, sales);
+    if last then call symputx("max_sales_total", max_sales);
+run;
+
+%put &sales_営業 &sales_技術 &sales_総務;
+%put &max_sales_total;
+```
+
+**出力：** 1200 800 300 1200
+
+これらの関数を使いこなすことで、SASプログラミングの効率と可読性が大幅に向上します。特にデータクリーニングや条件分岐処理において威力を発揮する関数群です。

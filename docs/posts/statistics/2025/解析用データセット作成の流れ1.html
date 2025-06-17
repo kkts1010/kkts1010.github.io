@@ -8,7 +8,7 @@
 
 <meta name="author" content="坂本航太">
 
-<title>解析用データセット作成の流れ（フォルダ構造等） – Kota Sakamoto</title>
+<title>解析用データセット作成の流れ1（フォルダ構造等） – Kota Sakamoto</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -3848,7 +3848,7 @@ vertical-align: -.125em;
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-page-left">
-      <h1 class="title">解析用データセット作成の流れ（フォルダ構造等）</h1>
+      <h1 class="title">解析用データセット作成の流れ1（フォルダ構造等）</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">SAS</div>
                 <div class="quarto-category">解析プログラミング</div>
@@ -3894,12 +3894,13 @@ vertical-align: -.125em;
   <li><a href="#解析用データセット作成の流れフォルダ構造等" id="toc-解析用データセット作成の流れフォルダ構造等" class="nav-link active" data-scroll-target="#解析用データセット作成の流れフォルダ構造等"><span class="header-section-number">1</span> 解析用データセット作成の流れ（フォルダ構造等）</a>
   <ul class="collapse">
   <li><a href="#はじめに" id="toc-はじめに" class="nav-link" data-scroll-target="#はじめに"><span class="header-section-number">1.1</span> はじめに</a></li>
-  <li><a href="#基本的なフォルダ構成" id="toc-基本的なフォルダ構成" class="nav-link" data-scroll-target="#基本的なフォルダ構成"><span class="header-section-number">1.2</span> 基本的なフォルダ構成</a></li>
-  <li><a href="#解析用データセット作成に特化したフォルダ構成" id="toc-解析用データセット作成に特化したフォルダ構成" class="nav-link" data-scroll-target="#解析用データセット作成に特化したフォルダ構成"><span class="header-section-number">1.3</span> 解析用データセット作成に特化したフォルダ構成</a></li>
-  <li><a href="#プログラムの日付管理とバージョン管理" id="toc-プログラムの日付管理とバージョン管理" class="nav-link" data-scroll-target="#プログラムの日付管理とバージョン管理"><span class="header-section-number">1.4</span> プログラムの日付管理とバージョン管理</a></li>
-  <li><a href="#自動的な実行日時記録" id="toc-自動的な実行日時記録" class="nav-link" data-scroll-target="#自動的な実行日時記録"><span class="header-section-number">1.5</span> 自動的な実行日時記録</a></li>
-  <li><a href="#実践的な運用のコツ" id="toc-実践的な運用のコツ" class="nav-link" data-scroll-target="#実践的な運用のコツ"><span class="header-section-number">1.6</span> 実践的な運用のコツ</a></li>
-  <li><a href="#settingフォルダについて" id="toc-settingフォルダについて" class="nav-link" data-scroll-target="#settingフォルダについて"><span class="header-section-number">1.7</span> Settingフォルダについて</a></li>
+  <li><a href="#参考文献" id="toc-参考文献" class="nav-link" data-scroll-target="#参考文献"><span class="header-section-number">1.2</span> 参考文献</a></li>
+  <li><a href="#解析用データセット作成における基本的なフォルダ構成案" id="toc-解析用データセット作成における基本的なフォルダ構成案" class="nav-link" data-scroll-target="#解析用データセット作成における基本的なフォルダ構成案"><span class="header-section-number">1.3</span> 解析用データセット作成における基本的なフォルダ構成案</a></li>
+  <li><a href="#解析用データセット作成に特化したフォルダ構成" id="toc-解析用データセット作成に特化したフォルダ構成" class="nav-link" data-scroll-target="#解析用データセット作成に特化したフォルダ構成"><span class="header-section-number">1.4</span> 解析用データセット作成に特化したフォルダ構成</a></li>
+  <li><a href="#プログラムの日付管理とバージョン管理" id="toc-プログラムの日付管理とバージョン管理" class="nav-link" data-scroll-target="#プログラムの日付管理とバージョン管理"><span class="header-section-number">1.5</span> プログラムの日付管理とバージョン管理</a></li>
+  <li><a href="#自動的な実行日時記録" id="toc-自動的な実行日時記録" class="nav-link" data-scroll-target="#自動的な実行日時記録"><span class="header-section-number">1.6</span> 自動的な実行日時記録</a></li>
+  <li><a href="#実践的な運用のコツ" id="toc-実践的な運用のコツ" class="nav-link" data-scroll-target="#実践的な運用のコツ"><span class="header-section-number">1.7</span> 実践的な運用のコツ</a></li>
+  <li><a href="#settingフォルダについて" id="toc-settingフォルダについて" class="nav-link" data-scroll-target="#settingフォルダについて"><span class="header-section-number">1.8</span> Settingフォルダについて</a></li>
   </ul></li>
   <li><a href="#sasデータハンドリング" id="toc-sasデータハンドリング" class="nav-link" data-scroll-target="#sasデータハンドリング"><span class="header-section-number">2</span> SASデータハンドリング</a>
   <ul class="collapse">
@@ -3907,6 +3908,7 @@ vertical-align: -.125em;
   <li><a href="#proc-format" id="toc-proc-format" class="nav-link" data-scroll-target="#proc-format"><span class="header-section-number">2.2</span> Proc format</a></li>
   <li><a href="#データセットからのフォーマット作成" id="toc-データセットからのフォーマット作成" class="nav-link" data-scroll-target="#データセットからのフォーマット作成"><span class="header-section-number">2.3</span> データセットからのフォーマット作成</a></li>
   </ul></li>
+  <li><a href="#解析用データセットtlf作成を踏まえてフォルダ構成案" id="toc-解析用データセットtlf作成を踏まえてフォルダ構成案" class="nav-link" data-scroll-target="#解析用データセットtlf作成を踏まえてフォルダ構成案"><span class="header-section-number">3</span> 解析用データセット＋TLF作成を踏まえてフォルダ構成案</a></li>
   </ul>
 </nav>
     </div>
@@ -3925,11 +3927,15 @@ vertical-align: -.125em;
 <p>SAS（Statistical Analysis System）を使ったデータ分析プロジェクトにおいて、最初に決めるべき重要な要素の一つがフォルダ構成です。適切なフォルダ構成を設定することで、プロジェクトの管理が格段に楽になり、チームでの作業効率も向上します。</p>
 <p>多くのSAS初心者は、とりあえずデスクトップやマイドキュメントにファイルを保存してしまいがちですが、プロジェクトが進むにつれて「あのファイルはどこに保存したっけ？」「これは最新バージョン？」といった問題に直面することになります。</p>
 </section>
-<section id="基本的なフォルダ構成" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="基本的なフォルダ構成"><span class="header-section-number">1.2</span> 基本的なフォルダ構成</h2>
-<p>SASプログラミングを実施する際は、フォルダ構成をまず設定します。</p>
-<p>ここでは、実際の業務で使用されている標準的な構成例を紹介します。</p>
-<p>任意のプロジェクトフォルダに対して以下のようなフォルダを作成します。テンプレートを作成しておくのが便利でしょう。</p>
+<section id="参考文献" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="参考文献"><span class="header-section-number">1.2</span> 参考文献</h2>
+<ul>
+<li>SASユーザー総会2014年度：PMDAへの承認申請時 CDISC標準電子データ提出に向けた社内標準のリモデリング（塩野義製薬）</li>
+</ul>
+</section>
+<section id="解析用データセット作成における基本的なフォルダ構成案" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="解析用データセット作成における基本的なフォルダ構成案"><span class="header-section-number">1.3</span> 解析用データセット作成における基本的なフォルダ構成案</h2>
+<p>SASプログラミングを実施する際は、フォルダ構成をまず設定します。ここでは、実際の業務で使用することができそうな標準的な構成例を紹介します。 任意のプロジェクトフォルダに対して以下のようなフォルダを作成します。テンプレートを作成しておくのが便利でしょう。もしくはProjectフォルダを作成して、自動でフォルダを作成するSASプログラムを準備しておくこともよいかもしれません。ここでの例は、あくまで1つの例であり、より使いやすくなるようなフォルダ構成に変更しても差し支えない。なお、このフォルダ構成はTLF作成のプログラムにおいても引用できる可能性がある。、TLFの解析を踏まえたフォルダ構成は別途提案する。</p>
 <ul>
 <li>Input</li>
 <li>Log</li>
@@ -3938,8 +3944,8 @@ vertical-align: -.125em;
 <li>Setting</li>
 <li>Spec</li>
 </ul>
-<section id="各フォルダの役割" class="level3" data-number="1.2.1">
-<h3 data-number="1.2.1" class="anchored" data-anchor-id="各フォルダの役割"><span class="header-section-number">1.2.1</span> 各フォルダの役割</h3>
+<section id="各フォルダの役割" class="level3" data-number="1.3.1">
+<h3 data-number="1.3.1" class="anchored" data-anchor-id="各フォルダの役割"><span class="header-section-number">1.3.1</span> 各フォルダの役割</h3>
 <p><strong>Input</strong>：分析に使用する元データを格納</p>
 <ul>
 <li><p>外部から受け取ったCSVファイル、Excelファイル -</p></li>
@@ -3975,12 +3981,12 @@ vertical-align: -.125em;
 </ul>
 </section>
 </section>
-<section id="解析用データセット作成に特化したフォルダ構成" class="level2" data-number="1.3">
-<h2 data-number="1.3" class="anchored" data-anchor-id="解析用データセット作成に特化したフォルダ構成"><span class="header-section-number">1.3</span> 解析用データセット作成に特化したフォルダ構成</h2>
+<section id="解析用データセット作成に特化したフォルダ構成" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="解析用データセット作成に特化したフォルダ構成"><span class="header-section-number">1.4</span> 解析用データセット作成に特化したフォルダ構成</h2>
 <p>実際のプロジェクトでは、解析用データセット作成プログラミングと、解析プログラミングはフォルダを分けることを推奨しています。</p>
 <p>ここでは、解析用データセット作成に焦点を当てたフォルダ構成について詳しく説明します。</p>
-<section id="データセット作成フォルダ構成" class="level3" data-number="1.3.1">
-<h3 data-number="1.3.1" class="anchored" data-anchor-id="データセット作成フォルダ構成"><span class="header-section-number">1.3.1</span> データセット作成フォルダ構成</h3>
+<section id="データセット作成フォルダ構成" class="level3" data-number="1.4.1">
+<h3 data-number="1.4.1" class="anchored" data-anchor-id="データセット作成フォルダ構成"><span class="header-section-number">1.4.1</span> データセット作成フォルダ構成</h3>
 <p>解析用データセット作成用のフォルダ構成例：</p>
 <ul>
 <li>Project/</li>
@@ -3995,18 +4001,17 @@ vertical-align: -.125em;
 <li>Setting/ # 設定ファイル、マクロ</li>
 </ul>
 </section>
-<section id="具体的な作業内容" class="level3" data-number="1.3.2">
-<h3 data-number="1.3.2" class="anchored" data-anchor-id="具体的な作業内容"><span class="header-section-number">1.3.2</span> 具体的な作業内容</h3>
+<section id="具体的な作業内容" class="level3" data-number="1.4.2">
+<h3 data-number="1.4.2" class="anchored" data-anchor-id="具体的な作業内容"><span class="header-section-number">1.4.2</span> 具体的な作業内容</h3>
 <p><strong>データ取り込み（PROC IMPORT）</strong></p>
 <ul>
-<li><p>CSVファイルやExcelファイルからSASデータセットへの変換</p></li>
+<li><p>解析用データ仕様書に基づいて、変数のlength,format,labelが入った空データセット（メタデータ）を作成する。</p></li>
 <li><p>文字エンコーディングの統一</p></li>
 <li><p>変数名の標準化</p></li>
 </ul>
 <p><strong>データクリーニング</strong></p>
 <ul>
 <li><p>欠損値の処理（削除、補完、フラグ付け）</p></li>
-<li><p>外れ値の検出と処理</p></li>
 <li><p>重複レコードの確認と処理</p></li>
 <li><p>データ型の統一</p></li>
 </ul>
@@ -4017,20 +4022,13 @@ vertical-align: -.125em;
 <li><p>合計値や比率の計算</p></li>
 <li><p>フラグ変数の作成</p></li>
 </ul>
-<p><strong>データの品質チェック</strong></p>
-<ul>
-<li><p>PROC FREQ による度数分布の確認</p></li>
-<li><p>PROC MEANS による基本統計量の確認</p></li>
-<li><p>データ件数の確認</p></li>
-<li><p>変数ごとの欠損値率の確認</p></li>
-</ul>
 </section>
 </section>
-<section id="プログラムの日付管理とバージョン管理" class="level2" data-number="1.4">
-<h2 data-number="1.4" class="anchored" data-anchor-id="プログラムの日付管理とバージョン管理"><span class="header-section-number">1.4</span> プログラムの日付管理とバージョン管理</h2>
+<section id="プログラムの日付管理とバージョン管理" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="プログラムの日付管理とバージョン管理"><span class="header-section-number">1.5</span> プログラムの日付管理とバージョン管理</h2>
 <p>SASプログラミングにおいて、プログラムの更新履歴を管理することは非常に重要です。特にデータ処理では、どの時点のプログラムで作成されたデータセットなのかを明確にする必要があります。</p>
-<section id="ファイル名による日付管理" class="level3" data-number="1.4.1">
-<h3 data-number="1.4.1" class="anchored" data-anchor-id="ファイル名による日付管理"><span class="header-section-number">1.4.1</span> ファイル名による日付管理</h3>
+<section id="ファイル名による日付管理" class="level3" data-number="1.5.1">
+<h3 data-number="1.5.1" class="anchored" data-anchor-id="ファイル名による日付管理"><span class="header-section-number">1.5.1</span> ファイル名による日付管理</h3>
 <p>データセット作成プログラムの命名例</p>
 <ul>
 <li><p>01_data_import_20250614.sas # 初回作成</p></li>
@@ -4041,8 +4039,8 @@ vertical-align: -.125em;
 <li><p>04_quality_check_20250620.sas # 品質チェック</p></li>
 </ul>
 </section>
-<section id="プログラム内でのヘッダーコメント管理" class="level3" data-number="1.4.2">
-<h3 data-number="1.4.2" class="anchored" data-anchor-id="プログラム内でのヘッダーコメント管理"><span class="header-section-number">1.4.2</span> プログラム内でのヘッダーコメント管理</h3>
+<section id="プログラム内でのヘッダーコメント管理" class="level3" data-number="1.5.2">
+<h3 data-number="1.5.2" class="anchored" data-anchor-id="プログラム内でのヘッダーコメント管理"><span class="header-section-number">1.5.2</span> プログラム内でのヘッダーコメント管理</h3>
 <p>各SASプログラムの冒頭には、以下のような標準的なヘッダーを記述することを必須とします。</p>
 <pre class="sas"><code>/*=================================
 プログラム名: 01_data_import.sas
@@ -4068,8 +4066,8 @@ v1.2 2025/06/20 外れ値検出機能追加
 *---------------------- EOF （プログラム名.sas） ------------------------------- ;</code></pre>
 </section>
 </section>
-<section id="自動的な実行日時記録" class="level2" data-number="1.5">
-<h2 data-number="1.5" class="anchored" data-anchor-id="自動的な実行日時記録"><span class="header-section-number">1.5</span> 自動的な実行日時記録</h2>
+<section id="自動的な実行日時記録" class="level2" data-number="1.6">
+<h2 data-number="1.6" class="anchored" data-anchor-id="自動的な実行日時記録"><span class="header-section-number">1.6</span> 自動的な実行日時記録</h2>
 <p>プログラム実行時に、実行日時をログに記録する仕組みを組み込むことも有効です：</p>
 <pre class="sas"><code>/* 実行開始時刻を記録 */
 %let start_time = %sysfunc(datetime());
@@ -4089,8 +4087,8 @@ run;
 %put NOTE: 実行時間: %sysfunc(&amp;elapsed_time, time8.);
 %put NOTE: 処理件数: %sysfunc(attrn(open(work.raw_data), nobs));</code></pre>
 </section>
-<section id="実践的な運用のコツ" class="level2" data-number="1.6">
-<h2 data-number="1.6" class="anchored" data-anchor-id="実践的な運用のコツ"><span class="header-section-number">1.6</span> 実践的な運用のコツ</h2>
+<section id="実践的な運用のコツ" class="level2" data-number="1.7">
+<h2 data-number="1.7" class="anchored" data-anchor-id="実践的な運用のコツ"><span class="header-section-number">1.7</span> 実践的な運用のコツ</h2>
 <p>ログファイルの活用 データ処理では、どのような処理が行われたかを正確に記録することが重要です：</p>
 <pre class="sas"><code>/* ログファイルの出力先を指定（日付付き） */
 %let today = %sysfunc(today(), yymmddn8.);
@@ -4104,8 +4102,8 @@ run;
 proc printto;
 run;</code></pre>
 </section>
-<section id="settingフォルダについて" class="level2" data-number="1.7">
-<h2 data-number="1.7" class="anchored" data-anchor-id="settingフォルダについて"><span class="header-section-number">1.7</span> Settingフォルダについて</h2>
+<section id="settingフォルダについて" class="level2" data-number="1.8">
+<h2 data-number="1.8" class="anchored" data-anchor-id="settingフォルダについて"><span class="header-section-number">1.8</span> Settingフォルダについて</h2>
 <p>Settingフォルダでは、事前に解析用データセット仕様書のinputするファイル情報やPath、InputデータのPaht、OutputデータのPathを指定しておく。これを作成しておくことで、第3者に解析用データセット作成プログラムを提供した際でも、このSettingフォルダのPathだけを更新することで、再現可能な状態がすぐに作ることができる。</p>
 <p>Excelファイルには以下の3つの要素を設定します。：</p>
 <ul>
@@ -4231,10 +4229,93 @@ run;</code></pre>
 <p>PROC FORMATは以下の2つの方法でフォーマットを作成できます：</p>
 <p>VALUEステートメント：直接コードに記述する方法。シンプルで直感的 CNTLIN=オプション：データセットから作成する方法。大量のフォーマットや動的な作成に適している</p>
 <p>適切なフォーマットの使用により、データの可読性が大幅に向上し、レポート作成時の効率も改善されます。</p>
-
-
 </section>
 </section>
+</section>
+<section id="解析用データセットtlf作成を踏まえてフォルダ構成案" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> 解析用データセット＋TLF作成を踏まえてフォルダ構成案</h1>
+<p>臨床試験等の事前に解析する項目を定めることができる場合、以下のフォルダ構造案を提示する。</p>
+<ul>
+<li><p>Project Folder</p>
+<ul>
+<li><p>Document（SOP、SAP、DHR、Mock-up等の手動で作成するもの）</p></li>
+<li><p>ADS Program</p>
+<ul>
+<li><p>Input</p>
+<ul>
+<li><p>Raw</p></li>
+<li><p>External</p></li>
+</ul></li>
+<li><p>Log</p></li>
+<li><p>Output</p></li>
+<li><p>Prg</p>
+<ul>
+<li><p>yyyymmdd（開発中）</p>
+<ul>
+<li><p>ADSL</p></li>
+<li><p>ADLB</p></li>
+<li><p>ADTTE</p></li>
+</ul></li>
+<li><p>yyyymmdd_固定（最後に作成する）</p>
+<ul>
+<li><p>ADSL</p></li>
+<li><p>ADLB</p></li>
+<li><p>ADTTE</p></li>
+</ul></li>
+</ul></li>
+<li><p>Macro</p></li>
+<li><p>Setting（LogやOutput、仕様書のPathを指定するもの、sasのlibname引用先）</p></li>
+<li><p>Spec（解析データセット仕様書）</p>
+<ul>
+<li><p>v1.0</p></li>
+<li><p>v2.0</p></li>
+</ul></li>
+</ul></li>
+<li><p>Analysis Program</p>
+<ul>
+<li><p>Input</p>
+<ul>
+<li><p>Mock-up</p></li>
+<li><p>SAP</p></li>
+</ul></li>
+<li><p>Log</p></li>
+<li><p>Output</p></li>
+<li><p>Prg</p>
+<ul>
+<li><p>yyyymmdd（開発中）</p>
+<ul>
+<li><p>Table1.sas</p></li>
+<li><p>Table2.sas</p></li>
+<li><p>Supplementary_Figure1.sas</p></li>
+<li><p>TFL14_1_4_2.sas</p></li>
+</ul></li>
+<li><p>yyyymmdd_固定</p>
+<ul>
+<li><p>Table1.sas</p></li>
+<li><p>Table2.sas</p></li>
+<li><p>Supplementary_Figure1.sas</p></li>
+<li><p>TFL14_1_4_2.sas</p></li>
+</ul></li>
+</ul></li>
+<li><p>Macro</p></li>
+<li><p>Setting（LogやOutput、仕様書のPathを指定するもの、sasのlibname引用先）</p></li>
+<li><p>Spec（解析プログラム仕様書、臨床試験の場合は作成する。論文投稿の5TFL程度であれば作成しない）</p>
+<ul>
+<li><p>v1.0</p></li>
+<li><p>v2.0</p></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+<p>基本的に上記のフォルダ構成でプロジェクトを運用することとする。RであってもSASであっても同じものとする。</p>
+<p>また、各帳票のプログラムについては、手動やコピペで作成することは原則禁止とする。プログラムはMock-upにて以下の情報を記載の上、SAS/Rで自動で作成するものとする。具体的な作成方法については別途まとめる。</p>
+<ul>
+<li><p>Table Name</p></li>
+<li><p>Analysis Population FLAG</p></li>
+<li><p>Analyus</p></li>
+</ul>
+
+
 </section>
 
 </main> <!-- /main -->

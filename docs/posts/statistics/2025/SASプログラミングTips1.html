@@ -8,7 +8,7 @@
 
 <meta name="author" content="坂本航太">
 
-<title>解析用データセット仕様書 – Kota Sakamoto</title>
+<title>SASプログラミングTips1 – Kota Sakamoto</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -3848,11 +3848,10 @@ vertical-align: -.125em;
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-page-left">
-      <h1 class="title">解析用データセット仕様書</h1>
+      <h1 class="title">SASプログラミングTips1</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">SAS</div>
-                <div class="quarto-category">R</div>
-                <div class="quarto-category">解析用データセット</div>
+                <div class="quarto-category">解析プログラミング</div>
               </div>
                   </div>
   </div>
@@ -3870,25 +3869,19 @@ vertical-align: -.125em;
       <div>
       <div class="quarto-title-meta-heading">公開</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">2025年6月14日</p>
+        <p class="date">2025年6月16日</p>
       </div>
     </div>
     
       <div>
       <div class="quarto-title-meta-heading">更新日</div>
       <div class="quarto-title-meta-contents">
-        <p class="date-modified">2025年6月14日</p>
+        <p class="date-modified">2025年6月16日</p>
       </div>
     </div>
       
     </div>
     
-  <div>
-    <div class="abstract">
-      <div class="block-title">Abstract</div>
-      個人的な解析データセット作成方法をまとめます。
-    </div>
-  </div>
   
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
@@ -3898,22 +3891,46 @@ vertical-align: -.125em;
     <h2 id="toc-title">目次</h2>
    
   <ul class="collapse">
-  <li><a href="#解析用データセット仕様書の作成ガイド" id="toc-解析用データセット仕様書の作成ガイド" class="nav-link active" data-scroll-target="#解析用データセット仕様書の作成ガイド"><span class="header-section-number">1</span> 解析用データセット仕様書の作成ガイド</a>
+  <li><a href="#sas-programing学習" id="toc-sas-programing学習" class="nav-link active" data-scroll-target="#sas-programing学習"><span class="header-section-number">1</span> SAS Programing学習</a>
   <ul class="collapse">
-  <li><a href="#はじめに" id="toc-はじめに" class="nav-link" data-scroll-target="#はじめに"><span class="header-section-number">1.1</span> はじめに</a></li>
-  <li><a href="#参考文献" id="toc-参考文献" class="nav-link" data-scroll-target="#参考文献"><span class="header-section-number">1.2</span> 参考文献</a></li>
+  <li><a href="#参考文献" id="toc-参考文献" class="nav-link" data-scroll-target="#参考文献"><span class="header-section-number">1.1</span> 参考文献</a></li>
   </ul></li>
-  <li><a href="#excel形式のメタデータの作成" id="toc-excel形式のメタデータの作成" class="nav-link" data-scroll-target="#excel形式のメタデータの作成"><span class="header-section-number">2</span> Excel形式のメタデータの作成</a>
+  <li><a href="#sas日付をマクロ化する方法" id="toc-sas日付をマクロ化する方法" class="nav-link" data-scroll-target="#sas日付をマクロ化する方法"><span class="header-section-number">2</span> SAS日付をマクロ化する方法</a>
   <ul class="collapse">
-  <li><a href="#例" id="toc-例" class="nav-link" data-scroll-target="#例"><span class="header-section-number">2.1</span> 例</a></li>
-  <li><a href="#解析用データセット仕様書の基本構成" id="toc-解析用データセット仕様書の基本構成" class="nav-link" data-scroll-target="#解析用データセット仕様書の基本構成"><span class="header-section-number">2.2</span> 解析用データセット仕様書の基本構成</a></li>
-  <li><a href="#specificationシートの構成" id="toc-specificationシートの構成" class="nav-link" data-scroll-target="#specificationシートの構成"><span class="header-section-number">2.3</span> Specificationシートの構成</a></li>
-  <li><a href="#paramシート" id="toc-paramシート" class="nav-link" data-scroll-target="#paramシート"><span class="header-section-number">2.4</span> PARAMシート</a></li>
-  <li><a href="#adlbデータセットの重要な変数" id="toc-adlbデータセットの重要な変数" class="nav-link" data-scroll-target="#adlbデータセットの重要な変数"><span class="header-section-number">2.5</span> ADLBデータセットの重要な変数</a></li>
-  <li><a href="#adtteデータセットの詳細" id="toc-adtteデータセットの詳細" class="nav-link" data-scroll-target="#adtteデータセットの詳細"><span class="header-section-number">2.6</span> ADTTEデータセットの詳細</a></li>
-  <li><a href="#code-listシート" id="toc-code-listシート" class="nav-link" data-scroll-target="#code-listシート"><span class="header-section-number">2.7</span> Code Listシート</a></li>
-  <li><a href="#データセット作成プロセス" id="toc-データセット作成プロセス" class="nav-link" data-scroll-target="#データセット作成プロセス"><span class="header-section-number">2.8</span> データセット作成プロセス</a></li>
-  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"><span class="header-section-number">2.9</span> </a></li>
+  <li><a href="#プログラム解説" id="toc-プログラム解説" class="nav-link" data-scroll-target="#プログラム解説"><span class="header-section-number">2.1</span> プログラム解説</a></li>
+  </ul></li>
+  <li><a href="#path指定のtips" id="toc-path指定のtips" class="nav-link" data-scroll-target="#path指定のtips"><span class="header-section-number">3</span> Path指定のTips</a>
+  <ul class="collapse">
+  <li><a href="#プログラム解説-1" id="toc-プログラム解説-1" class="nav-link" data-scroll-target="#プログラム解説-1"><span class="header-section-number">3.1</span> プログラム解説</a></li>
+  </ul></li>
+  <li><a href="#フォルダの自動作成" id="toc-フォルダの自動作成" class="nav-link" data-scroll-target="#フォルダの自動作成"><span class="header-section-number">4</span> フォルダの自動作成</a>
+  <ul class="collapse">
+  <li><a href="#プログラム解説-2" id="toc-プログラム解説-2" class="nav-link" data-scroll-target="#プログラム解説-2"><span class="header-section-number">4.1</span> プログラム解説</a></li>
+  </ul></li>
+  <li><a href="#日付管理" id="toc-日付管理" class="nav-link" data-scroll-target="#日付管理"><span class="header-section-number">5</span> 日付管理</a>
+  <ul class="collapse">
+  <li><a href="#プログラム解説-3" id="toc-プログラム解説-3" class="nav-link" data-scroll-target="#プログラム解説-3"><span class="header-section-number">5.1</span> プログラム解説</a></li>
+  </ul></li>
+  <li><a href="#マクロライブラリの活用" id="toc-マクロライブラリの活用" class="nav-link" data-scroll-target="#マクロライブラリの活用"><span class="header-section-number">6</span> マクロライブラリの活用</a>
+  <ul class="collapse">
+  <li><a href="#プログラム解説-4" id="toc-プログラム解説-4" class="nav-link" data-scroll-target="#プログラム解説-4"><span class="header-section-number">6.1</span> プログラム解説</a></li>
+  </ul></li>
+  <li><a href="#プログラミングの動的生成" id="toc-プログラミングの動的生成" class="nav-link" data-scroll-target="#プログラミングの動的生成"><span class="header-section-number">7</span> プログラミングの動的生成</a>
+  <ul class="collapse">
+  <li><a href="#プログラム解説-5" id="toc-プログラム解説-5" class="nav-link" data-scroll-target="#プログラム解説-5"><span class="header-section-number">7.1</span> プログラム解説</a></li>
+  </ul></li>
+  <li><a href="#sas備忘録さんのfavorite関数の解説" id="toc-sas備忘録さんのfavorite関数の解説" class="nav-link" data-scroll-target="#sas備忘録さんのfavorite関数の解説"><span class="header-section-number">8</span> SAS備忘録さんのFavorite関数の解説</a>
+  <ul class="collapse">
+  <li><a href="#cats関数" id="toc-cats関数" class="nav-link" data-scroll-target="#cats関数"><span class="header-section-number">8.1</span> 1. CATS関数</a></li>
+  <li><a href="#catx関数" id="toc-catx関数" class="nav-link" data-scroll-target="#catx関数"><span class="header-section-number">8.2</span> 2. CATX関数</a></li>
+  <li><a href="#whichnwhichc関数" id="toc-whichnwhichc関数" class="nav-link" data-scroll-target="#whichnwhichc関数"><span class="header-section-number">8.3</span> 3. WHICHN・WHICHC関数</a></li>
+  <li><a href="#choosenchoosec関数" id="toc-choosenchoosec関数" class="nav-link" data-scroll-target="#choosenchoosec関数"><span class="header-section-number">8.4</span> 4. CHOOSEN・CHOOSEC関数</a></li>
+  <li><a href="#coalescecoalescec関数" id="toc-coalescecoalescec関数" class="nav-link" data-scroll-target="#coalescecoalescec関数"><span class="header-section-number">8.5</span> 5. COALESCE・COALESCEC関数</a></li>
+  <li><a href="#vvaluevvaluex関数" id="toc-vvaluevvaluex関数" class="nav-link" data-scroll-target="#vvaluevvaluex関数"><span class="header-section-number">8.6</span> 6. VVALUE・VVALUEX関数</a></li>
+  <li><a href="#cmiss関数" id="toc-cmiss関数" class="nav-link" data-scroll-target="#cmiss関数"><span class="header-section-number">8.7</span> 7. CMISS関数</a></li>
+  <li><a href="#ifnifc関数" id="toc-ifnifc関数" class="nav-link" data-scroll-target="#ifnifc関数"><span class="header-section-number">8.8</span> 8. IFN・IFC関数</a></li>
+  <li><a href="#call-missing" id="toc-call-missing" class="nav-link" data-scroll-target="#call-missing"><span class="header-section-number">8.9</span> 9. CALL MISSING</a></li>
+  <li><a href="#call-symputx" id="toc-call-symputx" class="nav-link" data-scroll-target="#call-symputx"><span class="header-section-number">8.10</span> 10. CALL SYMPUTX</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -3925,1410 +3942,624 @@ vertical-align: -.125em;
 
 
 
-<section id="解析用データセット仕様書の作成ガイド" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span> 解析用データセット仕様書の作成ガイド</h1>
-<section id="はじめに" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="はじめに"><span class="header-section-number">1.1</span> はじめに</h2>
-<p>臨床試験や統計解析プロジェクトにおいて、解析用データセット仕様書は分析の設計図とも言える重要な文書です。本記事では、実用的な解析用データセット仕様書の構成と記載内容について、主要な3つのデータセット（ADSL、ADLB、ADTTE）を例に解説し、さらに仕様書に基づくデータセット作成とバリデーションプロセスについても説明します。探索的解析であっても事前に解析用データセット仕様書を作成することを推奨する。</p>
-</section>
-<section id="参考文献" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="参考文献"><span class="header-section-number">1.2</span> 参考文献</h2>
+<section id="sas-programing学習" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> SAS Programing学習</h1>
+<p>本記事では、実務上便利なSASプログラミングのTipsを紹介する。</p>
+<section id="参考文献" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="参考文献"><span class="header-section-number">1.1</span> 参考文献</h2>
 <ul>
-<li><p>SASユーザー総会2014年度：SASとExcelを用いたCDISCADaM標準における作業効率化の試み（武田薬品、高浪さん：PDFのP351）</p></li>
-<li><p>SASユーザー総会2014年度：PMDAへの承認申請時 CDISC標準電子データ提出に向けた社内標準のリモデリング（塩野義製薬：）</p></li>
-<li><p>SASユーザー総会2013年度：ライブラリ参照と名前の定義を利用して EXCELファイルへの柔軟なデータ入出力を実現する 解析結果のレポーティングからセルオートマトンまで</p></li>
-<li><p>SASユーザー総会2010年度：“Standard Template Programs”の開発</p></li>
-<li><p><a href="https://sas-user2024.ywstat.jp/download.html?n=74&amp;key=paper">生存時間解析用ADaMデータセット（ADTTE）のソースコード紹介</a></p></li>
+<li></li>
 </ul>
 </section>
 </section>
-<section id="excel形式のメタデータの作成" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> Excel形式のメタデータの作成</h1>
-<p>ADaMでは、以下のメタデータが定義されている。 申請を目的とする場合は全てを作成する必要があるが、ここでは申請を目的としない臨床試験を想定する。 その場合、Analysis Dataset MetadataとAnalysis Variable Metadatで1つのExcelにしてもよいだろう。以下の仕様書においても、そのスタンスを採用している。 ここでは、解析プログラム仕様書については表の例だけを示して深入りしない。</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 29%">
-<col style="width: 70%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>種類</th>
-<th>概要</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Analysis Dataset Metadata</td>
-<td>解析用データセットの一覧と概要が記載されたメタデータ</td>
-</tr>
-<tr class="even">
-<td>Analysis Variable Metadata</td>
-<td>各解析用データセットに含まれる変数のラベル、コードリスト、導出方法等の情報が記載されたメタデータ</td>
-</tr>
-<tr class="odd">
-<td>Analysis Parameter Value-Level Metadata</td>
-<td>各解析パラメータの導出方法等の情報が記載されたメタデータ</td>
-</tr>
-<tr class="even">
-<td>Analysis Results Metadata</td>
-<td>実施した解析の概要やレコード抽出条件、プログラム等の情報が記載されたメタデータ</td>
-</tr>
-</tbody>
-</table>
-<section id="例" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="例"><span class="header-section-number">2.1</span> 例</h2>
-<p><strong>Analysis Dataset Metadata シート：データセットの一覧</strong></p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 6%">
-<col style="width: 27%">
-<col style="width: 8%">
-<col style="width: 20%">
-<col style="width: 12%">
-<col style="width: 8%">
-<col style="width: 14%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Dataset Name</th>
-<th>Dataset Description</th>
-<th>Dataset Location</th>
-<th>Dataset Structure</th>
-<th>Key Variables of Interest</th>
-<th>Class of Dataset</th>
-<th>Documentation</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>ADSL</td>
-<td>Subject Population, demographic and baseline characteristics</td>
-<td>ADSL.xpt</td>
-<td>one record per subject</td>
-<td>USUBJID</td>
-<td>ADSL</td>
-<td>SAP, ADSL.sas</td>
-</tr>
-<tr class="even">
-<td>ADAE</td>
-<td>Adverse Event Analysis Dataset</td>
-<td>ADAE.xpt</td>
-<td>one record per subject per each AE recorded</td>
-<td>USUBJID, AESEQ</td>
-<td>ADAE</td>
-<td>ADAE.sas</td>
-</tr>
-<tr class="odd">
-<td>ADEF</td>
-<td>Analysis Dataset for Efficacy Disease Parameters</td>
-<td>ADEF.xpt</td>
-<td>1 record per subject parameter</td>
-<td>USUBJID, PARAMCD</td>
-<td>BDS</td>
-<td>Dictionary used in MedDRA VOL.X</td>
-</tr>
-</tbody>
-</table>
-<p><strong>ADSL シート：ADSL データセットの変数一覧（ADAE、ADEF も同様に作成）</strong></p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 10%">
-<col style="width: 10%">
-<col style="width: 10%">
-<col style="width: 10%">
-<col style="width: 10%">
-<col style="width: 10%">
-<col style="width: 10%">
-<col style="width: 10%">
-<col style="width: 10%">
-<col style="width: 10%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Dataset</th>
-<th>Variable Name</th>
-<th>Variable Label</th>
-<th>Type</th>
-<th>Length</th>
-<th>Display Format</th>
-<th>Codelist/Controlled Term</th>
-<th>Codelist Name</th>
-<th>Origin</th>
-<th>Source/Derivation</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>ADSL</td>
-<td>STUDYID</td>
-<td>Study Identifier</td>
-<td>text</td>
-<td>200</td>
-<td>$20</td>
-<td></td>
-<td></td>
-<td>Predecessor</td>
-<td>DM.STUDYID</td>
-</tr>
-<tr class="even">
-<td>ADSL</td>
-<td>USUBJID</td>
-<td>Unique Subject Identifier</td>
-<td>text</td>
-<td>200</td>
-<td>$20</td>
-<td></td>
-<td></td>
-<td>Predecessor</td>
-<td>DM.USUBJID</td>
-</tr>
-<tr class="odd">
-<td>ADSL</td>
-<td>SUBJID</td>
-<td>Subject Identifier</td>
-<td>text</td>
-<td>200</td>
-<td>$20</td>
-<td></td>
-<td></td>
-<td>Predecessor</td>
-<td>DM.SUBJID</td>
-</tr>
-<tr class="even">
-<td>ADSL</td>
-<td>SITEID</td>
-<td>Study Site Identifier</td>
-<td>text</td>
-<td>200</td>
-<td>$3</td>
-<td></td>
-<td></td>
-<td>Predecessor</td>
-<td>DM.SITEID</td>
-</tr>
-<tr class="odd">
-<td>ADSL</td>
-<td>AGE</td>
-<td>Age</td>
-<td>integer</td>
-<td>8</td>
-<td>8.0</td>
-<td>AGEU</td>
-<td>AGEU</td>
-<td>Predecessor</td>
-<td>DM.AGE</td>
-</tr>
-<tr class="even">
-<td>ADSL</td>
-<td>AGEU</td>
-<td>Age Units</td>
-<td>text</td>
-<td>200</td>
-<td>$20</td>
-<td>AGEU</td>
-<td>AGEU</td>
-<td>Predecessor</td>
-<td>DM.AGEU</td>
-</tr>
-<tr class="odd">
-<td>ADSL</td>
-<td>SEX</td>
-<td>Sex</td>
-<td>text</td>
-<td>1</td>
-<td>$1</td>
-<td>SEX</td>
-<td>SEX</td>
-<td>Predecessor</td>
-<td>DM.SEX</td>
-</tr>
-<tr class="even">
-<td>ADSL</td>
-<td>SEXN</td>
-<td>Sex (N)</td>
-<td>text</td>
-<td>8</td>
-<td>8.0</td>
-<td>SEXN</td>
-<td>SEXN</td>
-<td>Predecessor</td>
-<td>1=F,FEMALE=M,2=M</td>
-</tr>
-<tr class="odd">
-<td>ADSL</td>
-<td>RACE</td>
-<td>Race</td>
-<td>text</td>
-<td>200</td>
-<td>$200</td>
-<td>RACE</td>
-<td>RACE</td>
-<td>Predecessor</td>
-<td>DM.RACE</td>
-</tr>
-<tr class="even">
-<td>ADSL</td>
-<td>RACEN</td>
-<td>Race (N)</td>
-<td>integer</td>
-<td>8</td>
-<td>8.0</td>
-<td>RACEN</td>
-<td>RACEN</td>
-<td>Assigned</td>
-<td>1=DM.RACE=“ASIAN”</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Codelist シート：コードリストの一覧</strong></p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Name</th>
-<th>CodeValue</th>
-<th>CodeText</th>
-<th>Data Type</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>SEX</td>
-<td>F</td>
-<td>Female</td>
-<td>text</td>
-</tr>
-<tr class="even">
-<td>SEX</td>
-<td>M</td>
-<td>Male</td>
-<td>text</td>
-</tr>
-<tr class="odd">
-<td>SEXN</td>
-<td>1</td>
-<td>Male</td>
-<td>integer</td>
-</tr>
-<tr class="even">
-<td>SEXN</td>
-<td>2</td>
-<td>Female</td>
-<td>integer</td>
-</tr>
-<tr class="odd">
-<td>AGEU</td>
-<td>YEARS</td>
-<td></td>
-<td>text</td>
-</tr>
-<tr class="even">
-<td>ARM</td>
-<td>Drug A</td>
-<td>Drug A</td>
-<td>text</td>
-</tr>
-<tr class="odd">
-<td>ARM</td>
-<td>Drug B</td>
-<td>Drug B</td>
-<td>text</td>
-</tr>
-<tr class="even">
-<td>ARM</td>
-<td>Screen Failure</td>
-<td>Screen Failure</td>
-<td>text</td>
-</tr>
-<tr class="odd">
-<td>TRT</td>
-<td>Drug A</td>
-<td>Drug A</td>
-<td>text</td>
-</tr>
-<tr class="even">
-<td>TRT</td>
-<td>Drug B</td>
-<td>Drug B</td>
-<td>text</td>
-</tr>
-<tr class="odd">
-<td>TRTN</td>
-<td>1</td>
-<td>Drug A</td>
-<td>integer</td>
-</tr>
-<tr class="even">
-<td>TRTN</td>
-<td>2</td>
-<td>Drug B</td>
-<td>integer</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Value List シート：解析パラメータの一覧</strong></p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 10%">
-<col style="width: 10%">
-<col style="width: 10%">
-<col style="width: 10%">
-<col style="width: 10%">
-<col style="width: 10%">
-<col style="width: 10%">
-<col style="width: 10%">
-<col style="width: 10%">
-<col style="width: 10%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Name</th>
-<th>Dataset Name</th>
-<th>Variable Name</th>
-<th>Variable Label</th>
-<th>Parameter_variable</th>
-<th>Comparator</th>
-<th>Parameters</th>
-<th>Variable Type</th>
-<th>Length</th>
-<th>Display Format</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td></td>
-<td>ADEF</td>
-<td>AVAL</td>
-<td>Analysis Value</td>
-<td>PARAMCD</td>
-<td>IN</td>
-<td>HEAL</td>
-<td>integer</td>
-<td>8</td>
-<td>1.0</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Analysis Results Metadata シート：解析結果メタデータ</strong></p>
-<p>前向きの臨床試験であれば、ここまでAnalysis Result Metadataを作成することは可能であろう。ただし、探索的にデータを解析する場合は事前に解析方法を定義することは難しいように思われる。</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 5%">
-<col style="width: 4%">
-<col style="width: 3%">
-<col style="width: 2%">
-<col style="width: 3%">
-<col style="width: 6%">
-<col style="width: 12%">
-<col style="width: 4%">
-<col style="width: 54%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Display Identifier</th>
-<th>Display Name</th>
-<th><p>Analysis</p>
-<p>Population</p></th>
-<th>Dataset</th>
-<th>Parameter</th>
-<th>Reason</th>
-<th>Selection Criteria</th>
-<th>Documentation</th>
-<th>Programming Statements</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Table14.2.1</td>
-<td>主要評価項目</td>
-<td>FAS</td>
-<td>ADEFF</td>
-<td>AVAL</td>
-<td>Pre-specified in SAP</td>
-<td>FASFL=“Y” and PARAMCD = 1 and AVISTN = 4</td>
-<td>SAP</td>
-<td>proc format; value TRTFMT 1 = “Drug A” 2 = “Drug B”; run; proc freq data=ADSL ADEF; where FASFL = “Y” and PARAMCD = 1; table AVISTN　<em>TRT</em> AVAL/chisq nocol nopct format TRT01N TRT1FMT.;run;</td>
-</tr>
-<tr class="even">
-<td>Table2</td>
-<td>副次評価項目</td>
-<td>FAS</td>
-<td>ADEFF</td>
-<td>AVAL</td>
-<td>Pre-specified in SAP</td>
-<td>PPROTFL=“Y” and PARAMCD = 1 and AVISTN = 4</td>
-<td>SAP</td>
-<td>proc format; value TRTFMT 1 = “Drug A” 2 = “Drug B”; run; proc freq data=ADSL ADEF; where PPROTFL = “Y” and PARAMCD = 1; table AVISTN <em>TRT</em> AVAL/chisq nocol nopct format TRT01N TRT1FMT.;run;</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="解析用データセット仕様書の基本構成" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="解析用データセット仕様書の基本構成"><span class="header-section-number">2.2</span> 解析用データセット仕様書の基本構成</h2>
-<p>解析用データセット仕様書は、主に以下の要素で構成されます：</p>
-<ul>
-<li><strong>表紙・改訂履歴</strong>：文書管理情報</li>
-<li><strong>Dataset Definition</strong>：データセットの基本定義</li>
-<li><strong>Specification</strong>：変数の詳細仕様</li>
-<li><strong>ADLB_PARAM / ADTTE_PARAM</strong>：パラメータ定義表（ADLB、ADTTE用）</li>
-<li><strong>Codelist</strong>：コード値の定義</li>
-</ul>
-<p>これらの情報をExcelファイルの複数シートに整理することで、管理しやすく実用的な仕様書が作成できます。</p>
-</section>
-<section id="specificationシートの構成" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="specificationシートの構成"><span class="header-section-number">2.3</span> Specificationシートの構成</h2>
-<p>変数仕様を記載するSpecificationシートでは、以下の項目を含めることを推奨します：</p>
-<section id="基本項目" class="level3" data-number="2.3.1">
-<h3 data-number="2.3.1" class="anchored" data-anchor-id="基本項目"><span class="header-section-number">2.3.1</span> 基本項目</h3>
-<ul>
-<li><strong>Varnum</strong>：変数番号（並び順）</li>
-<li><strong>Domain</strong>：データセット名（ADSL、ADLB、ADTTE等）</li>
-<li><strong>Variable Name</strong>：変数名</li>
-<li><strong>Variable Label</strong>：変数ラベル</li>
-<li><strong>Type</strong>：データタイプ（Char/Num）</li>
-<li><strong>Length</strong>：変数長</li>
-<li><strong>Display Format</strong>：表示フォーマット</li>
-<li><strong>Codelist</strong>：コードリスト参照名</li>
-<li><strong>Core</strong>：必須度（Req=必須、Perm=任意、Cond=条件付き）</li>
-<li><strong>Definition</strong>：定義・導出方法</li>
-</ul>
-</section>
-<section id="adslのspecificationシート例" class="level3" data-number="2.3.2">
-<h3 data-number="2.3.2" class="anchored" data-anchor-id="adslのspecificationシート例"><span class="header-section-number">2.3.2</span> ADSLのSpecificationシート例</h3>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 10%">
-<col style="width: 10%">
-<col style="width: 10%">
-<col style="width: 10%">
-<col style="width: 10%">
-<col style="width: 10%">
-<col style="width: 10%">
-<col style="width: 10%">
-<col style="width: 10%">
-<col style="width: 10%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Varnum</th>
-<th>Domain</th>
-<th>Variable Name</th>
-<th>Variable Label</th>
-<th>Type</th>
-<th>Length</th>
-<th>Display Format</th>
-<th>Codelist</th>
-<th>Core</th>
-<th>Definition</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>1</td>
-<td>ADSL</td>
-<td>STUDYID</td>
-<td>Study Identifier</td>
-<td>Char</td>
-<td>12</td>
-<td></td>
-<td></td>
-<td>Req</td>
-<td>DM.STUDYID</td>
-</tr>
-<tr class="even">
-<td>2</td>
-<td>ADSL</td>
-<td>USUBJID</td>
-<td>Unique Subject Identifier</td>
-<td>Char</td>
-<td>40</td>
-<td></td>
-<td></td>
-<td>Req</td>
-<td>DM.USUBJID</td>
-</tr>
-<tr class="odd">
-<td>3</td>
-<td>ADSL</td>
-<td>SUBJID</td>
-<td>Subject Identifier</td>
-<td>Char</td>
-<td>20</td>
-<td></td>
-<td></td>
-<td>Req</td>
-<td>DM.SUBJID</td>
-</tr>
-<tr class="even">
-<td>4</td>
-<td>ADSL</td>
-<td>AGE</td>
-<td>Age</td>
-<td>Num</td>
-<td>8</td>
-<td></td>
-<td></td>
-<td>Req</td>
-<td>DM.AGE</td>
-</tr>
-<tr class="odd">
-<td>5</td>
-<td>ADSL</td>
-<td>SEX</td>
-<td>Sex</td>
-<td>Char</td>
-<td>1</td>
-<td></td>
-<td>SEX</td>
-<td>Req</td>
-<td>DM.SEX</td>
-</tr>
-<tr class="even">
-<td>6</td>
-<td>ADSL</td>
-<td>TRT01P</td>
-<td>Planned Treatment for Period 1</td>
-<td>Char</td>
-<td>200</td>
-<td></td>
-<td></td>
-<td>Req</td>
-<td>ARM</td>
-</tr>
-<tr class="odd">
-<td>7</td>
-<td>ADSL</td>
-<td>TRT01A</td>
-<td>Actual Treatment for Period 1</td>
-<td>Char</td>
-<td>200</td>
-<td></td>
-<td></td>
-<td>Req</td>
-<td>ACTARM</td>
-</tr>
-<tr class="even">
-<td>8</td>
-<td>ADSL</td>
-<td>TRT01PN</td>
-<td>Planned Treatment for Period 1 (N)</td>
-<td>Num</td>
-<td>8</td>
-<td></td>
-<td></td>
-<td>Req</td>
-<td>Derived from TRT01P</td>
-</tr>
-<tr class="odd">
-<td>9</td>
-<td>ADSL</td>
-<td>TRT01AN</td>
-<td>Actual Treatment for Period 1 (N)</td>
-<td>Num</td>
-<td>8</td>
-<td></td>
-<td></td>
-<td>Req</td>
-<td>Derived from TRT01A</td>
-</tr>
-<tr class="even">
-<td>10</td>
-<td>ADSL</td>
-<td>FASFL</td>
-<td>Full Analysis Set Flag</td>
-<td>Char</td>
-<td>1</td>
-<td></td>
-<td>NYFL</td>
-<td>Req</td>
-<td>External derivation</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="adlbのspecificationシート例" class="level3" data-number="2.3.3">
-<h3 data-number="2.3.3" class="anchored" data-anchor-id="adlbのspecificationシート例"><span class="header-section-number">2.3.3</span> ADLBのSpecificationシート例</h3>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 10%">
-<col style="width: 10%">
-<col style="width: 10%">
-<col style="width: 10%">
-<col style="width: 10%">
-<col style="width: 10%">
-<col style="width: 10%">
-<col style="width: 10%">
-<col style="width: 10%">
-<col style="width: 10%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Varnum</th>
-<th>Domain</th>
-<th>Variable Name</th>
-<th>Variable Label</th>
-<th>Type</th>
-<th>Length</th>
-<th>Display Format</th>
-<th>Codelist</th>
-<th>Core</th>
-<th>Definition</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>1</td>
-<td>ADLB</td>
-<td>STUDYID</td>
-<td>Study Identifier</td>
-<td>Char</td>
-<td>12</td>
-<td></td>
-<td></td>
-<td>Req</td>
-<td>DM.STUDYID</td>
-</tr>
-<tr class="even">
-<td>2</td>
-<td>ADLB</td>
-<td>USUBJID</td>
-<td>Unique Subject Identifier</td>
-<td>Char</td>
-<td>40</td>
-<td></td>
-<td></td>
-<td>Req</td>
-<td>DM.USUBJID</td>
-</tr>
-<tr class="odd">
-<td>3</td>
-<td>ADLB</td>
-<td>SUBJID</td>
-<td>Subject Identifier</td>
-<td>Char</td>
-<td>20</td>
-<td></td>
-<td></td>
-<td>Req</td>
-<td>DM.SUBJID</td>
-</tr>
-<tr class="even">
-<td>4</td>
-<td>ADLB</td>
-<td>AGE</td>
-<td>Age</td>
-<td>Num</td>
-<td>8</td>
-<td></td>
-<td></td>
-<td>Req</td>
-<td>DM.AGE</td>
-</tr>
-<tr class="odd">
-<td>5</td>
-<td>ADLB</td>
-<td>SEX</td>
-<td>Sex</td>
-<td>Char</td>
-<td>1</td>
-<td></td>
-<td>SEX</td>
-<td>Req</td>
-<td>DM.SEX</td>
-</tr>
-<tr class="even">
-<td>6</td>
-<td>ADLB</td>
-<td>TRT01P</td>
-<td>Planned Treatment for Period 1</td>
-<td>Char</td>
-<td>200</td>
-<td></td>
-<td></td>
-<td>Req</td>
-<td>ARM</td>
-</tr>
-<tr class="odd">
-<td>7</td>
-<td>ADLB</td>
-<td>TRT01A</td>
-<td>Actual Treatment for Period 1</td>
-<td>Char</td>
-<td>200</td>
-<td></td>
-<td></td>
-<td>Req</td>
-<td>ACTARM</td>
-</tr>
-<tr class="even">
-<td>8</td>
-<td>ADLB</td>
-<td>PARAM</td>
-<td>Parameter</td>
-<td>Char</td>
-<td>200</td>
-<td></td>
-<td></td>
-<td>Req</td>
-<td>Parameter description</td>
-</tr>
-<tr class="odd">
-<td>9</td>
-<td>ADLB</td>
-<td>PARAMCD</td>
-<td>Parameter Code</td>
-<td>Char</td>
-<td>8</td>
-<td></td>
-<td></td>
-<td>Req</td>
-<td>Parameter short name</td>
-</tr>
-<tr class="even">
-<td>10</td>
-<td>ADLB</td>
-<td>PARAMN</td>
-<td>Parameter (N)</td>
-<td>Num</td>
-<td>8</td>
-<td></td>
-<td></td>
-<td>Req</td>
-<td>Numeric representation of PARAM</td>
-</tr>
-<tr class="odd">
-<td>11</td>
-<td>ADLB</td>
-<td>AVISIT</td>
-<td>Analysis Visit</td>
-<td>Char</td>
-<td>200</td>
-<td></td>
-<td></td>
-<td>Req</td>
-<td>Analysis visit description</td>
-</tr>
-<tr class="even">
-<td>12</td>
-<td>ADLB</td>
-<td>AVISITN</td>
-<td>Analysis Visit (N)</td>
-<td>Num</td>
-<td>8</td>
-<td></td>
-<td></td>
-<td>Req</td>
-<td>Numeric representation of AVISIT</td>
-</tr>
-<tr class="odd">
-<td>13</td>
-<td>ADLB</td>
-<td>AVAL</td>
-<td>Analysis Value</td>
-<td>Num</td>
-<td>8</td>
-<td></td>
-<td></td>
-<td>Req</td>
-<td>Numeric analysis value</td>
-</tr>
-<tr class="even">
-<td>14</td>
-<td>ADLB</td>
-<td>AVALC</td>
-<td>Analysis Value (C)</td>
-<td>Char</td>
-<td>200</td>
-<td></td>
-<td></td>
-<td>Cond</td>
-<td>Character analysis value</td>
-</tr>
-<tr class="odd">
-<td>15</td>
-<td>ADLB</td>
-<td>BASE</td>
-<td>Baseline Value</td>
-<td>Num</td>
-<td>8</td>
-<td></td>
-<td></td>
-<td>Perm</td>
-<td>Baseline analysis value</td>
-</tr>
-<tr class="even">
-<td>16</td>
-<td>ADLB</td>
-<td>BASEC</td>
-<td>Baseline Value (C)</td>
-<td>Char</td>
-<td>200</td>
-<td></td>
-<td></td>
-<td>Perm</td>
-<td>Baseline character value</td>
-</tr>
-<tr class="odd">
-<td>17</td>
-<td>ADLB</td>
-<td>CHG</td>
-<td>Change from Baseline</td>
-<td>Num</td>
-<td>8</td>
-<td></td>
-<td></td>
-<td>Perm</td>
-<td>AVAL - BASE</td>
-</tr>
-<tr class="even">
-<td>18</td>
-<td>ADLB</td>
-<td>PCHG</td>
-<td>Percent Change from Baseline</td>
-<td>Num</td>
-<td>8</td>
-<td></td>
-<td></td>
-<td>Perm</td>
-<td>((AVAL-BASE)/BASE)*100</td>
-</tr>
-<tr class="odd">
-<td>19</td>
-<td>ADLB</td>
-<td>AVALCAT1</td>
-<td>Analysis Value Category 1</td>
-<td>Char</td>
-<td>200</td>
-<td></td>
-<td></td>
-<td>Perm</td>
-<td>Categorization of AVAL</td>
-</tr>
-<tr class="even">
-<td>20</td>
-<td>ADLB</td>
-<td>AVALCAT1N</td>
-<td>Analysis Value Category 1 (N)</td>
-<td>Num</td>
-<td>8</td>
-<td></td>
-<td></td>
-<td>Perm</td>
-<td>Numeric representation of AVALCAT1</td>
-</tr>
-<tr class="odd">
-<td>21</td>
-<td>ADLB</td>
-<td>PCHGCAT1</td>
-<td>Percent Chg from Baseline Category 1</td>
-<td>Char</td>
-<td>200</td>
-<td></td>
-<td></td>
-<td>Perm</td>
-<td>Categorization of PCHG</td>
-</tr>
-<tr class="even">
-<td>22</td>
-<td>ADLB</td>
-<td>PCHGCAT1N</td>
-<td>Percent Chg from Baseline Category 1 (N)</td>
-<td>Num</td>
-<td>8</td>
-<td></td>
-<td></td>
-<td>Perm</td>
-<td>Numeric representation of PCHGCAT1</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="adtteのspecificationシート例" class="level3" data-number="2.3.4">
-<h3 data-number="2.3.4" class="anchored" data-anchor-id="adtteのspecificationシート例"><span class="header-section-number">2.3.4</span> ADTTEのSpecificationシート例</h3>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 10%">
-<col style="width: 10%">
-<col style="width: 10%">
-<col style="width: 10%">
-<col style="width: 10%">
-<col style="width: 10%">
-<col style="width: 10%">
-<col style="width: 10%">
-<col style="width: 10%">
-<col style="width: 10%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Varnum</th>
-<th>Domain</th>
-<th>Variable Name</th>
-<th>Variable Label</th>
-<th>Type</th>
-<th>Length</th>
-<th>Display Format</th>
-<th>Codelist</th>
-<th>Core</th>
-<th>Definition</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>1</td>
-<td>ADTTE</td>
-<td>STUDYID</td>
-<td>Study Identifier</td>
-<td>Char</td>
-<td>12</td>
-<td></td>
-<td></td>
-<td>Req</td>
-<td>DM.STUDYID</td>
-</tr>
-<tr class="even">
-<td>2</td>
-<td>ADTTE</td>
-<td>USUBJID</td>
-<td>Unique Subject Identifier</td>
-<td>Char</td>
-<td>40</td>
-<td></td>
-<td></td>
-<td>Req</td>
-<td>DM.USUBJID</td>
-</tr>
-<tr class="odd">
-<td>3</td>
-<td>ADTTE</td>
-<td>SUBJID</td>
-<td>Subject Identifier</td>
-<td>Char</td>
-<td>20</td>
-<td></td>
-<td></td>
-<td>Req</td>
-<td>DM.SUBJID</td>
-</tr>
-<tr class="even">
-<td>4</td>
-<td>ADTTE</td>
-<td>AGE</td>
-<td>Age</td>
-<td>Num</td>
-<td>8</td>
-<td></td>
-<td></td>
-<td>Req</td>
-<td>DM.AGE</td>
-</tr>
-<tr class="odd">
-<td>5</td>
-<td>ADTTE</td>
-<td>SEX</td>
-<td>Sex</td>
-<td>Char</td>
-<td>1</td>
-<td></td>
-<td>SEX</td>
-<td>Req</td>
-<td>DM.SEX</td>
-</tr>
-<tr class="even">
-<td>6</td>
-<td>ADTTE</td>
-<td>TRT01P</td>
-<td>Planned Treatment for Period 1</td>
-<td>Char</td>
-<td>200</td>
-<td></td>
-<td></td>
-<td>Req</td>
-<td>ARM</td>
-</tr>
-<tr class="odd">
-<td>7</td>
-<td>ADTTE</td>
-<td>TRT01A</td>
-<td>Actual Treatment for Period 1</td>
-<td>Char</td>
-<td>200</td>
-<td></td>
-<td></td>
-<td>Req</td>
-<td>ACTARM</td>
-</tr>
-<tr class="even">
-<td>8</td>
-<td>ADTTE</td>
-<td>PARAM</td>
-<td>Parameter</td>
-<td>Char</td>
-<td>200</td>
-<td></td>
-<td></td>
-<td>Req</td>
-<td>Analysis parameter description</td>
-</tr>
-<tr class="odd">
-<td>9</td>
-<td>ADTTE</td>
-<td>PARAMCD</td>
-<td>Parameter Code</td>
-<td>Char</td>
-<td>8</td>
-<td></td>
-<td></td>
-<td>Req</td>
-<td>Analysis parameter short name</td>
-</tr>
-<tr class="even">
-<td>10</td>
-<td>ADTTE</td>
-<td>PARAMN</td>
-<td>Parameter (N)</td>
-<td>Num</td>
-<td>8</td>
-<td></td>
-<td></td>
-<td>Req</td>
-<td>Numeric representation of PARAM</td>
-</tr>
-<tr class="odd">
-<td>11</td>
-<td>ADTTE</td>
-<td>AVAL</td>
-<td>Analysis Value</td>
-<td>Num</td>
-<td>8</td>
-<td></td>
-<td></td>
-<td>Req</td>
-<td>Time to event in days</td>
-</tr>
-<tr class="even">
-<td>12</td>
-<td>ADTTE</td>
-<td>STARTDT</td>
-<td>Time to Event Origin Date</td>
-<td>Num</td>
-<td>8</td>
-<td>e8601da.</td>
-<td></td>
-<td>Req</td>
-<td>Analysis start date</td>
-</tr>
-<tr class="odd">
-<td>13</td>
-<td>ADTTE</td>
-<td>ADT</td>
-<td>Analysis Date</td>
-<td>Num</td>
-<td>8</td>
-<td>e8601da.</td>
-<td></td>
-<td>Req</td>
-<td>Event or censoring date</td>
-</tr>
-<tr class="even">
-<td>14</td>
-<td>ADTTE</td>
-<td>CNSR</td>
-<td>Censor</td>
-<td>Num</td>
-<td>8</td>
-<td></td>
-<td></td>
-<td>Req</td>
-<td>Censoring flag (0=event, 1=censor)</td>
-</tr>
-<tr class="odd">
-<td>15</td>
-<td>ADTTE</td>
-<td>EVNTDESC</td>
-<td>Event or Censoring Description</td>
-<td>Char</td>
-<td>200</td>
-<td></td>
-<td></td>
-<td>Perm</td>
-<td>Description of event or censoring</td>
-</tr>
-<tr class="even">
-<td>16</td>
-<td>ADTTE</td>
-<td>SRCDOM</td>
-<td>Source Data</td>
-<td>Char</td>
-<td>8</td>
-<td></td>
-<td></td>
-<td>Perm</td>
-<td>Source domain</td>
-</tr>
-<tr class="odd">
-<td>17</td>
-<td>ADTTE</td>
-<td>SRCVAR</td>
-<td>Source Variable</td>
-<td>Char</td>
-<td>8</td>
-<td></td>
-<td></td>
-<td>Perm</td>
-<td>Source variable</td>
-</tr>
-<tr class="even">
-<td>18</td>
-<td>ADTTE</td>
-<td>SRCSEQ</td>
-<td>Source Sequence Number</td>
-<td>Num</td>
-<td>8</td>
-<td></td>
-<td></td>
-<td>Perm</td>
-<td>Source sequence number</td>
-</tr>
-</tbody>
-</table>
-</section>
-</section>
-<section id="paramシート" class="level2" data-number="2.4">
-<h2 data-number="2.4" class="anchored" data-anchor-id="paramシート"><span class="header-section-number">2.4</span> PARAMシート</h2>
-<p>ADLB、ADTTEなどのBDS形式データセットでは、パラメータの定義情報を管理するための専用シートを作成します。</p>
-<section id="adlb_paramシート例" class="level3" data-number="2.4.1">
-<h3 data-number="2.4.1" class="anchored" data-anchor-id="adlb_paramシート例"><span class="header-section-number">2.4.1</span> ADLB_PARAMシート例</h3>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>PARAM</th>
-<th>PARAMCD</th>
-<th>PARAMN</th>
-<th>AVAL</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>HbA1c(%)</td>
-<td>HBA1C</td>
-<td>1</td>
-<td>input(LABデータ)</td>
-</tr>
-<tr class="even">
-<td>Blood glucose (mg/dL)</td>
-<td>GLU</td>
-<td>2</td>
-<td>input(LABデータ)</td>
-</tr>
-<tr class="odd">
-<td>BUN (mg/dL)</td>
-<td>BUN</td>
-<td>3</td>
-<td>input(LABデータ)</td>
-</tr>
-<tr class="even">
-<td>Creatinine (mg/dL)</td>
-<td>CREAT</td>
-<td>4</td>
-<td>input(LABデータ)</td>
-</tr>
-<tr class="odd">
-<td>ALT (U/L)</td>
-<td>ALT</td>
-<td>5</td>
-<td>input(LABデータ)</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="adtte_paramシート例" class="level3" data-number="2.4.2">
-<h3 data-number="2.4.2" class="anchored" data-anchor-id="adtte_paramシート例"><span class="header-section-number">2.4.2</span> ADTTE_PARAMシート例</h3>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 40%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 23%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>PARAM</th>
-<th>PARAMCD</th>
-<th>PARAMN</th>
-<th>AVAL</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Weight/Waist Circumference Loss</td>
-<td>WTWCLOSS</td>
-<td>1</td>
-<td>ADT - STARTDT + 1</td>
-</tr>
-<tr class="even">
-<td>Overall Survival</td>
-<td>OS</td>
-<td>2</td>
-<td>ADT - STARTDT + 1</td>
-</tr>
-<tr class="odd">
-<td>Progression Free Survival</td>
-<td>PFS</td>
-<td>3</td>
-<td>ADT - STARTDT + 1</td>
-</tr>
-<tr class="even">
-<td>Time to Progression</td>
-<td>TTP</td>
-<td>4</td>
-<td>ADT - STARTDT + 1</td>
-</tr>
-</tbody>
-</table>
-</section>
-</section>
-<section id="adlbデータセットの重要な変数" class="level2" data-number="2.5">
-<h2 data-number="2.5" class="anchored" data-anchor-id="adlbデータセットの重要な変数"><span class="header-section-number">2.5</span> ADLBデータセットの重要な変数</h2>
-<section id="解析値とカテゴリ変数" class="level3" data-number="2.5.1">
-<h3 data-number="2.5.1" class="anchored" data-anchor-id="解析値とカテゴリ変数"><span class="header-section-number">2.5.1</span> 解析値とカテゴリ変数</h3>
-<p>ADLBでは数値解析値（AVAL）に基づいて、様々なカテゴリ変数を作成します：</p>
-<section id="avalcat1-avalcat1n" class="level4" data-number="2.5.1.1">
-<h4 data-number="2.5.1.1" class="anchored" data-anchor-id="avalcat1-avalcat1n"><span class="header-section-number">2.5.1.1</span> AVALCAT1 / AVALCAT1N</h4>
-<p>解析値のカテゴリ化変数で、例えば正常範囲の判定などに使用： - “NORMAL” / “ABNORMAL” - “LOW” / “NORMAL” / “HIGH”</p>
-</section>
-<section id="pchgcat1-pchgcat1n" class="level4" data-number="2.5.1.2">
-<h4 data-number="2.5.1.2" class="anchored" data-anchor-id="pchgcat1-pchgcat1n"><span class="header-section-number">2.5.1.2</span> PCHGCAT1 / PCHGCAT1N</h4>
-<p>ベースラインからの変化率のカテゴリ化変数： - “&gt;30% increase” / “±30%” / “&gt;30% decrease”</p>
-</section>
-</section>
-<section id="時点変数avisit-avisitn" class="level3" data-number="2.5.2">
-<h3 data-number="2.5.2" class="anchored" data-anchor-id="時点変数avisit-avisitn"><span class="header-section-number">2.5.2</span> 時点変数（AVISIT / AVISITN）</h3>
-<p>解析用の時点定義で、スケジュール通りの時点名： - “Baseline” (AVISITN=0) - “Week 4” (AVISITN=4) - “Week 12” (AVISITN=12) - “End of Treatment” (AVISITN=99)</p>
-</section>
-</section>
-<section id="adtteデータセットの詳細" class="level2" data-number="2.6">
-<h2 data-number="2.6" class="anchored" data-anchor-id="adtteデータセットの詳細"><span class="header-section-number">2.6</span> ADTTEデータセットの詳細</h2>
-<section id="adtteの特徴" class="level3" data-number="2.6.1">
-<h3 data-number="2.6.1" class="anchored" data-anchor-id="adtteの特徴"><span class="header-section-number">2.6.1</span> ADTTEの特徴</h3>
-<p>ADTTEは生存時間解析用のデータセットで、以下の特徴があります：</p>
-<ul>
-<li><strong>1被験者1パラメータにつき1レコード</strong>の構造</li>
-<li><strong>事象の発生時間</strong>または<strong>打ち切り時間</strong>を記録</li>
-<li><strong>複数の解析エンドポイント</strong>を1つのデータセットで管理</li>
-</ul>
-</section>
-<section id="adtte作成時の重要な考慮事項" class="level3" data-number="2.6.2">
-<h3 data-number="2.6.2" class="anchored" data-anchor-id="adtte作成時の重要な考慮事項"><span class="header-section-number">2.6.2</span> ADTTE作成時の重要な考慮事項</h3>
-<section id="事象の優先順位" class="level4" data-number="2.6.2.1">
-<h4 data-number="2.6.2.1" class="anchored" data-anchor-id="事象の優先順位"><span class="header-section-number">2.6.2.1</span> 1. 事象の優先順位</h4>
-<p>複数の事象や打ち切りが同日に発生した場合の優先順位を明確に定義する必要があります。</p>
-</section>
-<section id="avalの計算方法" class="level4" data-number="2.6.2.2">
-<h4 data-number="2.6.2.2" class="anchored" data-anchor-id="avalの計算方法"><span class="header-section-number">2.6.2.2</span> 2. AVALの計算方法</h4>
-<p>AVALは通常、以下の式で計算されます：</p>
-<p>ここで： - <strong>STARTDT</strong>：解析開始日（通常は治療開始日：ADSL.TRTSDT） - <strong>ADT</strong>：解析日（事象発生日または打ち切り日） - <strong>+1</strong>：0日目を避けるための調整</p>
-</section>
-<section id="事象データの取得元" class="level4" data-number="2.6.2.3">
-<h4 data-number="2.6.2.3" class="anchored" data-anchor-id="事象データの取得元"><span class="header-section-number">2.6.2.3</span> 3. 事象データの取得元</h4>
-<ul>
-<li><strong>事象発生</strong>：ADVS.ADTから日付を取得</li>
-<li><strong>打ち切り</strong>：ADSL.EOSDTから日付を取得</li>
-</ul>
-</section>
-<section id="cnsrフラグの設定" class="level4" data-number="2.6.2.4">
-<h4 data-number="2.6.2.4" class="anchored" data-anchor-id="cnsrフラグの設定"><span class="header-section-number">2.6.2.4</span> 4. CNSRフラグの設定</h4>
-<ul>
-<li><strong>CNSR=0</strong>：事象発生</li>
-<li><strong>CNSR=1</strong>：打ち切り</li>
-</ul>
-</section>
-<section id="ソースデータの追跡srcdom-srcvar-srcseq" class="level4" data-number="2.6.2.5">
-<h4 data-number="2.6.2.5" class="anchored" data-anchor-id="ソースデータの追跡srcdom-srcvar-srcseq"><span class="header-section-number">2.6.2.5</span> 5. ソースデータの追跡（SRCDOM, SRCVAR, SRCSEQ）</h4>
-<p>ADTTEでは元データの追跡可能性が重要です：</p>
-<p><strong>事象採用時</strong>： - SRCDOM=“ADVS” - SRCVAR=“ADT” - SRCSEQ=ADVS.ASEQ</p>
-<p><strong>打ち切り時</strong>： - SRCDOM=“ADSL” - SRCVAR=“EOSDT” - SRCSEQ=（ブランク）</p>
-</section>
-</section>
-<section id="adtteプログラミングのポイント" class="level3" data-number="2.6.3">
-<h3 data-number="2.6.3" class="anchored" data-anchor-id="adtteプログラミングのポイント"><span class="header-section-number">2.6.3</span> ADTTEプログラミングのポイント</h3>
+<section id="sas日付をマクロ化する方法" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> SAS日付をマクロ化する方法</h1>
+<pre><code>%let StDateTime = %sysfunc( datetime() );
+%put &amp;StDateTime;
+
+data _null_;
+   Date1 = put(date(), yymmdds10.);
+   Date2 = compress(Date1, &quot;/&quot;);
+   Time1 = put(time(), tod8.);
+   Time2 = compress(Time1,&quot;:&quot;);
+
+   * マクロ変数に格納 ;
+   call symput(&#39;StDates&#39;, trim(left(Date1)));
+   call symput(&#39;StDate&#39;, trim(left(Date2)));
+   call symput(&#39;StTimes&#39;, trim(left(Time1)));
+   call symput(&#39;StTime&#39;, trim(left(Time2)));
+run;
+%put &amp;StDates. &amp;StDate. &amp;StTimes. &amp;StTime.;</code></pre>
+<section id="プログラム解説" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="プログラム解説"><span class="header-section-number">2.1</span> プログラム解説</h2>
+<p>このSASプログラムは現在の日時を取得し、異なる形式でマクロ変数に格納するコードです。</p>
+<p><strong>処理の流れ：</strong></p>
 <ol type="1">
-<li><strong>データセットの組み合わせ</strong>：複数のデータセット（ADSL、ADVS等）を適切に結合</li>
-<li><strong>日付の妥当性チェック</strong>：論理的に矛盾する日付の検出と処理</li>
-<li><strong>追跡可能性の確保</strong>：各レコードの導出元を明確に記録</li>
-<li><strong>複数事象の処理</strong>：同一被験者で複数の解析パラメータを生成</li>
+<li><p><code>%sysfunc(datetime())</code>で現在日時を数値形式で取得</p></li>
+<li><p><code>date()</code>と<code>time()</code>で日付・時刻を個別に取得</p></li>
+<li><p><code>put()</code>関数でフォーマット適用（日付：YYYY/MM/DD、時刻：HH:MM:SS）</p></li>
+<li><p><code>compress()</code>で区切り文字を除去（日付：YYYYMMDD、時刻：HHMMSS）</p></li>
+<li><p><code>call symput()</code>で4つのマクロ変数を作成</p></li>
 </ol>
+<p><strong>作成されるマクロ変数：</strong></p>
+<ul>
+<li><p><code>&amp;StDates</code>：2025/06/16（スラッシュ付き日付）</p></li>
+<li><p><code>&amp;StDate</code>：20250616（スラッシュなし日付）</p></li>
+<li><p><code>&amp;StTimes</code>：14:30:25（コロン付き時刻）</p></li>
+<li><p><code>&amp;StTime</code>：143025（コロンなし時刻）</p></li>
+</ul>
+<p><strong>用途：</strong> ログファイル名生成、バックアップのタイムスタンプ、処理開始時刻の記録など、バッチ処理でよく使用される汎用的なコードです。</p>
 </section>
 </section>
-<section id="code-listシート" class="level2" data-number="2.7">
-<h2 data-number="2.7" class="anchored" data-anchor-id="code-listシート"><span class="header-section-number">2.7</span> Code Listシート</h2>
-<p>コード値とその意味を定義するシートです。ADaM Terminology形式で管理します。</p>
-<section id="code-listシート構成" class="level3" data-number="2.7.1">
-<h3 data-number="2.7.1" class="anchored" data-anchor-id="code-listシート構成"><span class="header-section-number">2.7.1</span> Code Listシート構成</h3>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Reference Name</th>
-<th>Code Value</th>
-<th>Code Text</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>SEXN</td>
-<td>1</td>
-<td>男性</td>
-</tr>
-<tr class="even">
-<td>SEXN</td>
-<td>2</td>
-<td>女性</td>
-</tr>
-<tr class="odd">
-<td>SEX</td>
-<td>M</td>
-<td>Male</td>
-</tr>
-<tr class="even">
-<td>SEX</td>
-<td>F</td>
-<td>Female</td>
-</tr>
-<tr class="odd">
-<td>NYFL</td>
-<td>Y</td>
-<td>Yes</td>
-</tr>
-<tr class="even">
-<td>NYFL</td>
-<td>N</td>
-<td>No</td>
-</tr>
-<tr class="odd">
-<td>AGEU</td>
-<td>YEARS</td>
-<td>Years</td>
-</tr>
-<tr class="even">
-<td>AGEU</td>
-<td>MONTHS</td>
-<td>Months</td>
-</tr>
-</tbody>
-</table>
+<section id="path指定のtips" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Path指定のTips</h1>
+<pre><code>%LET execpath=&quot; &quot;;
+%MACRO setexecpath;
+    %LET execpath=%SYSFUNC(GETOPTION(SYSIN));
+    %IF %LENGTH(&amp;execpath)=0
+    %THEN %LET execpath=%SYSGET(SAS_EXECFILEPATH);
+%MEND setexecpath;
+%setexecpath;
+%PUT &amp;execpath;
+
+%let PROGRAM_NAME = %scan(%scan(&amp;execpath, -1, &quot;\&quot;), 1, &quot;.&quot;) ;
+%put &amp;PROGRAM_NAME; 
+%let CURRENT_DIR = %qsubstr(&quot;&amp;execpath.&quot;, 2, %eval(%index(&quot;&amp;execpath.&quot;, %scan(&amp;execpath, -1, &quot;\&quot;)))-2) ;
+%put &amp;CURRENT_DIR;
+%let PARENT_DIR = %qsubstr(&quot;&amp;execpath.&quot;, 2, %eval(%index(&quot;&amp;execpath.&quot;, %scan(&amp;execpath, -2, &quot;\&quot;)))-2) ;
+%put &amp;PARENT_DIR;
+%let PROJECT_ROOT = %qsubstr(&quot;&amp;execpath.&quot;, 2, %eval(%index(&quot;&amp;execpath.&quot;, %scan(&amp;execpath, -3, &quot;\&quot;)))-2) ;
+%put &amp;PROJECT_ROOT;
+
+data _null_;
+    /* Input関連パス */
+    INPUT_RAW = cat(&quot;&amp;PROJECT_ROOT&quot;, &quot;\Input\Raw&quot;);
+    call symputx(&quot;INPUT_RAW&quot;, INPUT_RAW);
+    
+    INPUT_EXT = cat(&quot;&amp;PROJECT_ROOT&quot;, &quot;\Input\External&quot;);
+    call symputx(&quot;INPUT_EXT&quot;, INPUT_EXT);
+    
+    /* Output関連パス */
+    OUTPUT_PATH = cat(&quot;&amp;PROJECT_ROOT&quot;, &quot;\Output&quot;);
+    call symputx(&quot;OUTPUT_PATH&quot;, OUTPUT_PATH);
+    
+    LOG_PATH = cat(&quot;&amp;PROJECT_ROOT&quot;, &quot;\Log&quot;);
+    call symputx(&quot;LOG_PATH&quot;, LOG_PATH);
+    
+    /* プログラム関連パス */
+    MACRO_PATH = cat(&quot;&amp;PROJECT_ROOT&quot;, &quot;\Macro&quot;);
+    call symputx(&quot;MACRO_PATH&quot;, MACRO_PATH);
+    
+    SETTING_PATH = cat(&quot;&amp;PROJECT_ROOT&quot;, &quot;\Setting&quot;);
+    call symputx(&quot;SETTING_PATH&quot;, SETTING_PATH);
+    
+    /* 仕様書パス */
+    SPEC_PATH = cat(&quot;&amp;PROJECT_ROOT&quot;, &quot;\Spec&quot;);
+    call symputx(&quot;SPEC_PATH&quot;, SPEC_PATH);
+run;
+
+%put INPUT_RAW=&amp;INPUT_RAW;
+%put INPUT_EXT=&amp;INPUT_EXT;
+%put OUTPUT_PATH=&amp;OUTPUT_PATH;
+%put LOG_PATH=&amp;LOG_PATH;
+%put MACRO_PATH=&amp;MACRO_PATH;
+%put SETTING_PATH=&amp;SETTING_PATH;
+%put SPEC_PATH=&amp;SPEC_PATH;</code></pre>
+<section id="プログラム解説-1" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="プログラム解説-1"><span class="header-section-number">3.1</span> プログラム解説</h2>
+<p>このSASプログラムは、実行中のプログラムの場所を自動判定し、プロジェクトの標準フォルダ構造に基づいて各種パスを動的に設定する汎用的なパス管理コードです。</p>
+<section id="実行パス取得マクロ" class="level3" data-number="3.1.1">
+<h3 data-number="3.1.1" class="anchored" data-anchor-id="実行パス取得マクロ"><span class="header-section-number">3.1.1</span> 実行パス取得マクロ</h3>
+<p>最初の部分では、現在実行中のSASプログラムの完全パスを取得するマクロを定義しています。このマクロは実行環境に関係なく動作するよう設計されており、バッチ実行時はGETOPTION(SYSIN)関数を、対話的実行時はSAS_EXECFILEPATH環境変数を使用します。IF文による条件分岐により、どちらの環境でも確実にプログラムパスを取得できる仕組みになっています。</p>
+</section>
+<section id="階層パス解析" class="level3" data-number="3.1.2">
+<h3 data-number="3.1.2" class="anchored" data-anchor-id="階層パス解析"><span class="header-section-number">3.1.2</span> 階層パス解析</h3>
+<p>次に、取得したフルパスから階層構造を解析し、プロジェクト内での相対位置を把握する処理を行います。SCAN関数とQSUBSTR関数を組み合わせて、パスを階層別に分解します。PROGRAM_NAMEには実行中のプログラム名（拡張子なし）、CURRENT_DIRには現在のディレクトリの完全パス、PARENT_DIRには1つ上の階層ディレクトリのパス、PROJECT_ROOTにはプロジェクトルートディレクトリのパス（2つ上の階層）がそれぞれ格納されます。</p>
+<ul>
+<li><p><strong>各変数の役割：</strong></p>
+<ul>
+<li><p><code>PROGRAM_NAME</code>：実行中のプログラム名（拡張子なし）</p></li>
+<li><p><code>CURRENT_DIR</code>：現在のディレクトリの完全パス</p></li>
+<li><p><code>PARENT_DIR</code>：1つ上の階層ディレクトリのパス</p></li>
+<li><p><code>PROJECT_ROOT</code>：プロジェクトルートディレクトリのパス（2つ上の階層）</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="標準パス自動生成" class="level3" data-number="3.1.3">
+<h3 data-number="3.1.3" class="anchored" data-anchor-id="標準パス自動生成"><span class="header-section-number">3.1.3</span> 標準パス自動生成</h3>
+<p>最後のデータステップでは、プロジェクト標準フォルダ構造に基づいて必要なパスを自動生成します。CAT関数でPROJECT_ROOTを基準として各フォルダパスを結合し、CALL SYMPUTX文でマクロ変数として定義します。生データ格納用のINPUT_RAW、外部データ格納用のINPUT_EXT、出力ファイル格納用のOUTPUT_PATH、ログファイル格納用のLOG_PATH、マクロファイル格納用のMACRO_PATH、設定ファイル格納用のSETTING_PATH、仕様書格納用のSPEC_PATHが設定されます。</p>
+<p><strong>設定されるパス：</strong></p>
+<ul>
+<li><p><code>INPUT_RAW</code>：生データ（Raw data）格納パス</p></li>
+<li><p><code>INPUT_EXT</code>：外部データ（External data）格納パス</p></li>
+<li><p><code>OUTPUT_PATH</code>：出力ファイル格納パス</p></li>
+<li><p><code>LOG_PATH</code>：ログファイル格納パス</p></li>
+<li><p><code>MACRO_PATH</code>：マクロファイル格納パス</p></li>
+<li><p><code>SETTING_PATH</code>：設定ファイル格納パス</p></li>
+<li><p><code>SPEC_PATH</code>：仕様書格納パス</p></li>
+</ul>
+</section>
+<section id="活用メリット" class="level3" data-number="3.1.4">
+<h3 data-number="3.1.4" class="anchored" data-anchor-id="活用メリット"><span class="header-section-number">3.1.4</span> 活用メリット</h3>
+<p>このコードをプロジェクトの各SASプログラム冒頭に配置することで、プロジェクトフォルダの移動や環境変更時にパス設定の修正が不要になります。チーム開発での設定統一と保守性向上を実現でき、どのサブフォルダからプログラムを実行しても、常に正しいプロジェクトルートを基準とした一貫したパス管理が可能になります。手動でのパス設定ミスを防ぎ、開発効率の向上にも寄与します。</p>
 </section>
 </section>
-<section id="データセット作成プロセス" class="level2" data-number="2.8">
-<h2 data-number="2.8" class="anchored" data-anchor-id="データセット作成プロセス"><span class="header-section-number">2.8</span> データセット作成プロセス</h2>
-<section id="仕様書に基づくプログラム作成" class="level3" data-number="2.8.1">
-<h3 data-number="2.8.1" class="anchored" data-anchor-id="仕様書に基づくプログラム作成"><span class="header-section-number">2.8.1</span> 仕様書に基づくプログラム作成</h3>
-<p>解析用データセット仕様書を読み込み、Specificationシートの定義に従ってSASプログラムを作成します。ADxx_Conversionシートを参照してパラメータ変換処理も実装します。まずは、プロトコール、統計解析計画書、図表計画書、Rawデータ/SDTM仕様書を基に、解析用データ仕様書をテンプレートを基に<strong>手作業で</strong>作成する。ここは泥臭いが、手作業でやるしかない。</p>
 </section>
-<section id="チェックリストの作成" class="level3" data-number="2.8.2">
-<h3 data-number="2.8.2" class="anchored" data-anchor-id="チェックリストの作成"><span class="header-section-number">2.8.2</span> チェックリストの作成</h3>
-<p>解析用データセット仕様書について、事前に組織内で規定されているチェックリストに基づいて、目視チェックをする。ここが人的作業であるためミスが起こりえる！</p>
+<section id="フォルダの自動作成" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> フォルダの自動作成</h1>
+<pre><code>/* ディレクトリ自動作成マクロ */
+%macro create_dir_structure(path);
+   %local parent_dir dir_name;
+   %let path = %sysfunc(strip(&amp;path));
+   %let parent_dir = %substr(&amp;path, 1, %length(&amp;path)-%length(%scan(&amp;path, -1, &#39;\&#39;)));
+   %let dir_name = %scan(&amp;path, -1, &#39;\&#39;);
+   
+   %if %sysfunc(fileexist(&amp;path)) = 0 %then %do;
+       %if %length(&amp;parent_dir) &gt; 0 %then %do;
+           %if %sysfunc(fileexist(&amp;parent_dir)) = 0 %then %do;
+               %create_dir_structure(&amp;parent_dir);
+           %end;
+       %end;
+       %let rc = %sysfunc(dcreate(&amp;dir_name, &amp;parent_dir));
+   %end;
+%mend;
+
+/* プロジェクトフォルダ構造の自動作成 */
+%create_dir_structure(&amp;INPUT_RAW);
+%create_dir_structure(&amp;INPUT_EXT);
+%create_dir_structure(&amp;OUTPUT_PATH);
+%create_dir_structure(&amp;LOG_PATH);
+%create_dir_structure(&amp;MACRO_PATH);
+%create_dir_structure(&amp;SETTING_PATH);
+%create_dir_structure(&amp;SPEC_PATH);</code></pre>
+<section id="プログラム解説-2" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="プログラム解説-2"><span class="header-section-number">4.1</span> プログラム解説</h2>
+<p>このSASマクロは、指定されたディレクトリパスが存在しない場合に、必要な階層構造を含めて自動的にフォルダを作成する汎用的なディレクトリ作成マクロです。</p>
+<section id="マクロの動作原理" class="level3" data-number="4.1.1">
+<h3 data-number="4.1.1" class="anchored" data-anchor-id="マクロの動作原理"><span class="header-section-number">4.1.1</span> マクロの動作原理</h3>
+<p>マクロは再帰的なアルゴリズムを採用しており、深い階層のフォルダ構造でも一度の呼び出しで全ての必要なディレクトリを作成できます。まず入力されたパスを親ディレクトリ部分と最終フォルダ名に分解し、指定されたパスが存在するかをチェックします。存在しない場合、親ディレクトリの存在も確認し、親ディレクトリが存在しなければマクロが自分自身を呼び出して上位階層から順次作成していきます。</p>
+</section>
+<section id="パス解析のロジック" class="level3" data-number="4.1.2">
+<h3 data-number="4.1.2" class="anchored" data-anchor-id="パス解析のロジック"><span class="header-section-number">4.1.2</span> パス解析のロジック</h3>
+<p>STRIP関数で入力パスの前後空白を除去した後、SUBSTR関数とSCAN関数を組み合わせてパスを分解します。SCAN関数でパス区切り文字（バックスラッシュ）を基準に最終フォルダ名を抽出し、SUBSTR関数で親ディレクトリ部分を切り出します。この処理により、どのような深さのパスでも正確に階層構造を解析できます。</p>
+</section>
+<section id="条件分岐による効率的な処理" class="level3" data-number="4.1.3">
+<h3 data-number="4.1.3" class="anchored" data-anchor-id="条件分岐による効率的な処理"><span class="header-section-number">4.1.3</span> 条件分岐による効率的な処理</h3>
+<p>FILEEXIST関数による存在チェックを各段階で実行し、既に存在するディレクトリに対しては何も処理を行いません。これにより無駄な処理を避け、既存の構造を保護しながら必要な部分のみを作成します。実際のフォルダ作成はDCREATE関数で実行され、作成結果は戻り値で確認できます。</p>
+</section>
+<section id="プロジェクト管理での活用" class="level3" data-number="4.1.4">
+<h3 data-number="4.1.4" class="anchored" data-anchor-id="プロジェクト管理での活用"><span class="header-section-number">4.1.4</span> プロジェクト管理での活用</h3>
+<p>このマクロを前回のパス設定コードと組み合わせることで、プロジェクト開始時のフォルダ構造セットアップを完全自動化できます。新しい環境でプロジェクトを開始する際や、チームメンバーが初めてプロジェクトに参加する際に、手動でフォルダを作成する手間を省き、標準的なフォルダ構造を確実に構築できます。</p>
+</section>
+<section id="エラー処理と保守性" class="level3" data-number="4.1.5">
+<h3 data-number="4.1.5" class="anchored" data-anchor-id="エラー処理と保守性"><span class="header-section-number">4.1.5</span> エラー処理と保守性</h3>
+<p>マクロはエラーハンドリングも考慮されており、作成に失敗した場合でも処理が停止することなく、次の処理に進みます。また、既存のフォルダ構造に影響を与えることなく、必要な部分のみを安全に追加できる設計になっています。プロジェクトの成長に合わせて新しいフォルダが必要になった場合も、このマクロを呼び出すだけで簡単に対応できます</p>
 </section>
 </section>
-<section id="section" class="level2" data-number="2.9">
-<h2 data-number="2.9" class="anchored" data-anchor-id="section"><span class="header-section-number">2.9</span> </h2>
+</section>
+<section id="日付管理" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> 日付管理</h1>
+<pre><code>/* 日付情報取得 */
+data _null_;
+  Date1 = put(date(), yymmdds10.);
+  Date2 = compress(Date1, &quot;/&quot;);
+  call symputx(&#39;current_date&#39;, trim(left(Date2)));
+run;
+
+/* プロジェクトルート取得 */
+%LET execpath=&quot; &quot;;
+%MACRO setexecpath;
+   %LET execpath=%SYSFUNC(GETOPTION(SYSIN));
+   %IF %LENGTH(&amp;execpath)=0
+   %THEN %LET execpath=%SYSGET(SAS_EXECFILEPATH);
+%MEND setexecpath;
+%setexecpath;
+
+%let PROJECT_ROOT = %qsubstr(&quot;&amp;execpath.&quot;, 2, %eval(%index(&quot;&amp;execpath.&quot;, %scan(&amp;execpath, -3, &quot;\&quot;)))-2) ;
+
+/* 日付ベースのプログラムパス設定 */
+data _null_;
+   PRG_DATE = cat(&quot;&amp;PROJECT_ROOT&quot;, &quot;\Prg\&quot;, &quot;&amp;current_date&quot;);
+   call symputx(&quot;PRG_DATE&quot;, PRG_DATE);
+run;
+
+/* ディレクトリ自動作成マクロ */
+%macro create_dir_structure(path);
+   %local parent_dir dir_name;
+   %let path = %sysfunc(strip(&amp;path));
+   %let parent_dir = %substr(&amp;path, 1, %length(&amp;path)-%length(%scan(&amp;path, -1, &#39;\&#39;)));
+   %let dir_name = %scan(&amp;path, -1, &#39;\&#39;);
+   
+   %if %sysfunc(fileexist(&amp;path)) = 0 %then %do;
+       %if %length(&amp;parent_dir) &gt; 0 %then %do;
+           %if %sysfunc(fileexist(&amp;parent_dir)) = 0 %then %do;
+               %create_dir_structure(&amp;parent_dir);
+           %end;
+       %end;
+       %let rc = %sysfunc(dcreate(&amp;dir_name, &amp;parent_dir));
+   %end;
+%mend;
+
+/* 日付フォルダの自動作成 */
+%create_dir_structure(&amp;PRG_DATE);
+
+%put PRG_DATE=&amp;PRG_DATE;</code></pre>
+<section id="プログラム解説-3" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="プログラム解説-3"><span class="header-section-number">5.1</span> プログラム解説</h2>
+<p>このSASプログラムは、実行日ベースのプログラム管理フォルダを自動作成する汎用的なコードです。</p>
+<section id="基本的な仕組み" class="level3" data-number="5.1.1">
+<h3 data-number="5.1.1" class="anchored" data-anchor-id="基本的な仕組み"><span class="header-section-number">5.1.1</span> 基本的な仕組み</h3>
+<p>まず現在の日付をYYYYMMDD形式で取得し、実行中のプログラムパスからプロジェクトルートを自動判定します。その後、プロジェクトルート配下のPrgフォルダ内に実行日付のサブフォルダ（例：Prg\20250616）を作成します。</p>
+</section>
+<section id="日付ベースフォルダ管理の利点" class="level3" data-number="5.1.2">
+<h3 data-number="5.1.2" class="anchored" data-anchor-id="日付ベースフォルダ管理の利点"><span class="header-section-number">5.1.2</span> 日付ベースフォルダ管理の利点</h3>
+<p>このシステムにより、プログラムの実行履歴を日付別に整理できます。同じプログラムを異なる日に実行しても結果が混在せず、過去の実行内容を簡単に追跡できます。特に開発段階では、日々の変更内容を時系列で管理できるため、問題発生時の原因特定や以前のバージョンへの戻しが容易になります。</p>
+</section>
+<section id="自動ディレクトリ作成の活用" class="level3" data-number="5.1.3">
+<h3 data-number="5.1.3" class="anchored" data-anchor-id="自動ディレクトリ作成の活用"><span class="header-section-number">5.1.3</span> 自動ディレクトリ作成の活用</h3>
+<p>create_dir_structureマクロの再帰処理により、深い階層構造でも一度の呼び出しで必要なフォルダが全て作成されます。既存フォルダの存在チェック機能により、重複実行しても安全で、チーム開発での環境差異も自動的に解決されます。</p>
+<p>このコードをプログラム冒頭に配置することで、実行のたびに適切な作業フォルダが準備され、プロジェクトの標準化と履歴管理を同時に実現できます。</p>
+</section>
+</section>
+</section>
+<section id="マクロライブラリの活用" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> マクロライブラリの活用</h1>
+<pre><code>/* マクロライブラリの一括読み込み */
+filename MACROLIB &quot;&amp;MACRO_PATH&quot; ;
+%include MACROLIB (データ処理macro.sas);
+%include MACROLIB (統計解析macro.sas);
+%include MACROLIB (レポート生成macro.sas);
+%include MACROLIB (ユーティリティmacro.sas);</code></pre>
+<section id="プログラム解説-4" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="プログラム解説-4"><span class="header-section-number">6.1</span> プログラム解説</h2>
+<p>このコードは、FILENAME文とINCLUDE文を組み合わせて、特定フォルダ内の複数のSASファイルを効率的に読み込む汎用的な手法です。</p>
+<section id="filename文による論理参照の設定" class="level3" data-number="6.1.1">
+<h3 data-number="6.1.1" class="anchored" data-anchor-id="filename文による論理参照の設定"><span class="header-section-number">6.1.1</span> FILENAME文による論理参照の設定</h3>
+<p>FILENAME文で論理名「MACROLIB」を定義し、マクロ変数で指定されたフォルダパスを割り当てます。これにより、以降の処理では物理的なフォルダパスではなく、論理名を使用してファイルにアクセスできるようになります。</p>
+</section>
+<section id="include文による選択的ファイル読み込み" class="level3" data-number="6.1.2">
+<h3 data-number="6.1.2" class="anchored" data-anchor-id="include文による選択的ファイル読み込み"><span class="header-section-number">6.1.2</span> INCLUDE文による選択的ファイル読み込み</h3>
+<p>各INCLUDE文では、論理名に続けて括弧内にファイル名を指定することで、指定フォルダ内の特定ファイルを読み込みます。この記法により、フォルダ内の全ファイルではなく、必要なファイルのみを選択的に読み込むことが可能です。</p>
+</section>
+<section id="この手法の優位性" class="level3" data-number="6.1.3">
+<h3 data-number="6.1.3" class="anchored" data-anchor-id="この手法の優位性"><span class="header-section-number">6.1.3</span> この手法の優位性</h3>
+<p>従来の絶対パス指定と比較して、コードの保守性と可読性が大幅に向上します。フォルダパスの変更時は最初のFILENAME文のみを修正すれば良く、同一フォルダ内の複数ファイルを扱う際の記述量も削減されます。また、論理名を使用することで、プラットフォーム間でのパス記法の違いも吸収できます。</p>
+</section>
+<section id="応用範囲" class="level3" data-number="6.1.4">
+<h3 data-number="6.1.4" class="anchored" data-anchor-id="応用範囲"><span class="header-section-number">6.1.4</span> 応用範囲</h3>
+<p>この手法は、マクロライブラリの管理以外にも、設定ファイルの読み込み、データセットの一括処理、プログラムの分割実行など、様々な場面で活用できます。プロジェクトの規模が大きくなり、複数のファイルを体系的に管理する必要がある場合に特に有効な手法です。</p>
+</section>
+</section>
+</section>
+<section id="プログラミングの動的生成" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> プログラミングの動的生成</h1>
+<pre><code>%macro create_pg(PGM_name,Table, Analysis_pop);
+filename ext &quot;&amp;Analysis_PGM./&amp;PGM_name..sas&quot;;
+data _null_;
+   file ext;
+put &quot;proc datasets kill nolist ; run ; quit ; &quot;;
+put &quot;dm &#39;out ; clear ; log ; clear ;&#39; ;&quot;;
+put &quot;*+------------------+-----------------------------------------------------------+&quot;;
+put &quot;| STUDY              | Project                                                         |&quot;;
+put &quot;| DESCRIPTION   |   &amp;Table                                                        |&quot;;
+put &quot;| Analysis Population   |   &amp;Analysis_pop                                                 |&quot;;
+put &quot;| SUPPORT          |                                                                            |&quot;;
+put &quot;| VERSION          | SAS 9.4 (64 bit) Windows                                   |&quot;;
+put &quot;| PROGRAM NAME     |     &amp;PGM_name..sas                                      |&quot;;
+put &quot;+------------------+-----------------------------------------------------------+&quot;;
+put &quot;| PURPOSE:         |                                                            |&quot;;
+put &quot;+------------------+-----------------------------------------------------------+&quot;;
+put &quot;| NOTE:               |                                                            |&quot;;
+put &quot;+------------------+-----------------------------------------------------------+&quot;;
+put &quot;| HISTORY:         | yyyy-mm-dd   Initial coding                      |&quot;;
+put &quot;|                  　　　 |                                                            |&quot;;
+put &quot;|                          |                                                            |&quot;;
+put &quot;+------------------+-----------------------------------------------------------+;&quot;;
+run;
+%mend;
+
+data _null_;
+   set OUT2;
+   call execute(cats(&#39;%create_pg(&#39;, PGM_name ,  &#39;,&#39; , Table  , &#39;,&#39; , Analysis_pop , &#39;)&#39;)) ;
+run;</code></pre>
+<section id="プログラム解説-5" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="プログラム解説-5"><span class="header-section-number">7.1</span> プログラム解説</h2>
+<p>このSASプログラムは、メタデータを基にして解析プログラムのテンプレートを動的に生成する自動化システムです。</p>
+<section id="プログラム生成マクロの構造" class="level3" data-number="7.1.1">
+<h3 data-number="7.1.1" class="anchored" data-anchor-id="プログラム生成マクロの構造"><span class="header-section-number">7.1.1</span> プログラム生成マクロの構造</h3>
+<p>create_pgマクロは、プログラム名、テーブル名、解析対象集団の3つのパラメータを受け取り、指定されたフォルダに新しいSASプログラムファイルを作成します。FILENAME文で出力先ファイルを指定し、FILE文とPUT文を使用してプログラムのヘッダー部分を標準化されたフォーマットで出力します。</p>
+</section>
+<section id="標準化されたヘッダー生成" class="level3" data-number="7.1.2">
+<h3 data-number="7.1.2" class="anchored" data-anchor-id="標準化されたヘッダー生成"><span class="header-section-number">7.1.2</span> 標準化されたヘッダー生成</h3>
+<p>各生成プログラムには、プロジェクト情報、プログラム説明、解析対象集団、バージョン情報、履歴管理欄を含む統一フォーマットのヘッダーが自動挿入されます。これにより、手動作成時に発生しがちな記載漏れや形式の不統一を防ぎ、プロジェクト全体でのドキュメント品質を保証します。</p>
+</section>
+<section id="メタデータ駆動型の一括生成" class="level3" data-number="7.1.3">
+<h3 data-number="7.1.3" class="anchored" data-anchor-id="メタデータ駆動型の一括生成"><span class="header-section-number">7.1.3</span> メタデータ駆動型の一括生成</h3>
+<p>最後のデータステップでは、OUT2データセットに格納されたメタデータを読み込み、CALL EXECUTE文を使用してマクロを動的に実行します。CATS関数でマクロ呼び出し文を構築し、データセットの各レコードに対して個別のプログラムファイルを生成します。</p>
+</section>
+<section id="自動化の利点とメリット" class="level3" data-number="7.1.4">
+<h3 data-number="7.1.4" class="anchored" data-anchor-id="自動化の利点とメリット"><span class="header-section-number">7.1.4</span> 自動化の利点とメリット</h3>
+<p>この手法により、数十から数百の解析プログラムを一度に生成できるため、大規模プロジェクトでの開発効率が大幅に向上します。メタデータの変更時も該当部分のみを修正して再実行すれば、全プログラムに変更が反映されるため、保守性も高くなります。また、ヒューマンエラーの削減と品質の均一化も実現できます。</p>
+</section>
+</section>
+</section>
+<section id="sas備忘録さんのfavorite関数の解説" class="level1" data-number="8">
+<h1 data-number="8"><span class="header-section-number">8</span> SAS備忘録さんのFavorite関数の解説</h1>
+<ol type="1">
+<li>CATS関数</li>
+<li>CATX関数</li>
+<li>WHICHN・WHICHC関数</li>
+<li>CHOOSEN・CHOOSEC関数</li>
+<li>COALESCE・COALESCEC関数</li>
+<li>VVALUE・VVALUEX関数</li>
+<li>CMISS関数</li>
+<li>IFN・IFC関数</li>
+<li>CALL MISSING</li>
+<li>CALL SYMPUTX</li>
+</ol>
+<p>SASプログラミングで頻繁に使用される便利な関数を、実用的なプログラム例とともに解説します。</p>
+<section id="cats関数" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="cats関数"><span class="header-section-number">8.1</span> 1. CATS関数</h2>
+<p><strong>機能：</strong> 複数の文字列を連結し、各引数の前後の空白を自動削除</p>
+<pre><code>data example1;
+    name = &quot;田中&quot;;
+    id = &quot;001&quot;;
+    dept = &quot;営業部&quot;;
+    
+    /* 従来の方法 */
+    result1 = trim(name) || trim(id) || trim(dept);
+    
+    /* CATS関数を使用 */
+    result2 = cats(name, id, dept);
+    
+    put result1= result2=;
+run;</code></pre>
+<p><strong>出力：</strong> result1=田中001営業部 result2=田中001営業部</p>
+<p>CATS関数は自動的に前後の空白を削除するため、TRIMやLEFT関数が不要になり、コードがシンプルになります。</p>
+</section>
+<section id="catx関数" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="catx関数"><span class="header-section-number">8.2</span> 2. CATX関数</h2>
+<p><strong>機能：</strong> 指定した区切り文字で複数の文字列を連結</p>
+<pre><code>data example2;
+    year = 2025;
+    month = 6;
+    day = 16;
+    
+    /* 日付文字列の作成 */
+    date_slash = catx(&quot;/&quot;, year, month, day);
+    date_hyphen = catx(&quot;-&quot;, year, month, day);
+    
+    /* CSVフォーマットの作成 */
+    csv_line = catx(&quot;,&quot;, &quot;田中太郎&quot;, 30, &quot;東京都&quot;);
+    
+    put date_slash= date_hyphen= csv_line=;
+run;</code></pre>
+<p><strong>出力：</strong> date_slash=2025/6/16 date_hyphen=2025-6-16 csv_line=田中太郎,30,東京都</p>
+</section>
+<section id="whichnwhichc関数" class="level2" data-number="8.3">
+<h2 data-number="8.3" class="anchored" data-anchor-id="whichnwhichc関数"><span class="header-section-number">8.3</span> 3. WHICHN・WHICHC関数</h2>
+<p><strong>機能：</strong> 指定した値がリストの何番目にあるかを返す</p>
+<pre><code>data ae_severity;
+    input pt $ severity $;
+    
+    /* 重篤度レベルをコード化 */
+    severity_code = whichc(severity, &quot;軽度&quot;, &quot;中等度&quot;, &quot;重度&quot;, &quot;重篤&quot;);
+    
+    /* グレード分類への変換 */
+    ctcae_grade = whichc(severity, &quot;Grade1&quot;, &quot;Grade2&quot;, &quot;Grade3&quot;, &quot;Grade4&quot;, &quot;Grade5&quot;);
+    
+datalines;
+頭痛 軽度
+発熱 中等度
+呼吸困難 重度
+;
+run;</code></pre>
+<p>pt=頭痛 severity=軽度 severity_code=1 ctcae_grade=0</p>
+<p>pt=発熱 severity=中等度 severity_code=2 ctcae_grade=0<br>
+pt=呼吸困難 severity=重度 severity_code=3 ctcae_grade=0</p>
+<ul>
+<li><p><code>severity_code</code>：指定したリスト内での位置を返す</p>
+<ul>
+<li><p>“軽度” → 1番目 → 1</p></li>
+<li><p>“中等度” → 2番目 → 2</p></li>
+<li><p>“重度” → 3番目 → 3</p></li>
+</ul></li>
+</ul>
+<!-- -->
+<ul>
+<li><p><code>ctcae_grade</code>：CTCAEグレード用のリストにマッチしないため全て0</p>
+<ul>
+<li><p>データの”軽度”、“中等度”、“重度”は”Grade1”、“Grade2”等とマッチしない</p></li>
+<li><p>マッチしない場合はWHICHC関数は0を返す</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="choosenchoosec関数" class="level2" data-number="8.4">
+<h2 data-number="8.4" class="anchored" data-anchor-id="choosenchoosec関数"><span class="header-section-number">8.4</span> 4. CHOOSEN・CHOOSEC関数</h2>
+<p><strong>機能：</strong> インデックス番号に基づいてリストから値を選択</p>
+<pre><code>data example4;
+    do i = 1 to 4;
+        /* 数値版：CHOOSEN */
+        threshold = choosen(i, 60, 70, 80, 90);
+        
+        /* 文字版：CHOOSEC */
+        grade = choosec(i, &quot;D&quot;, &quot;C&quot;, &quot;B&quot;, &quot;A&quot;);
+        
+        put i= threshold= grade=;
+    end;
+run;</code></pre>
+<p><strong>出力：</strong> i=1 threshold=60 grade=D i=2 threshold=70 grade=C i=3 threshold=80 grade=B i=4 threshold=90 grade=A</p>
+<p>・Y番目のXの値を返す。<br>
+・第2引数以降に数値型の変数または値を指定する場合はCHOOSEN関数を用いる。<br>
+・第2引数以降に文字型の変数または値を指定する場合はCHOOSEC関数を用いる。</p>
+</section>
+<section id="coalescecoalescec関数" class="level2" data-number="8.5">
+<h2 data-number="8.5" class="anchored" data-anchor-id="coalescecoalescec関数"><span class="header-section-number">8.5</span> 5. COALESCE・COALESCEC関数</h2>
+<p><strong>機能：</strong> 最初の非欠損値を返す</p>
+<pre><code>/* サンプルデータの作成 */
+data sample_data;
+    input ID X1 $ X2 $ X3 $;
+    datalines;
+1 AA    BB
+2    CC DD
+3       EE
+4 FF    
+5          
+6 GG HH II
+;
+run;
+
+/* 方法1: IF-ELSE文を使用 */
+data result1;
+    set sample_data;
+    length Y $2.;
+    if X1^=&quot;&quot; then Y=X1;
+    else if X2^=&quot;&quot; then Y=X2;
+    else if X3^=&quot;&quot; then Y=X3;
+run;
+
+/* 方法2: COALESCEC関数を使用 */
+data result2;
+    set sample_data;
+    length Y $2.;
+    Y = coalescec(X1, X2, X3);
+run;</code></pre>
+<p><strong>ポイント：</strong></p>
+<ul>
+<li><p>この関数は「引数のうち最初に欠損値以外で登場する値を返す」という機能を持っています。</p></li>
+<li><p><strong>COALESCE：</strong> 数値の場合、欠損値（.）をスキップして最初の有効な値（85）を返す</p></li>
+<li><p><strong>COALESCEC：</strong> 文字の場合、空白をスキップして最初の有効な文字列を返す</p></li>
+</ul>
+</section>
+<section id="vvaluevvaluex関数" class="level2" data-number="8.6">
+<h2 data-number="8.6" class="anchored" data-anchor-id="vvaluevvaluex関数"><span class="header-section-number">8.6</span> 6. VVALUE・VVALUEX関数</h2>
+<p><strong>機能：</strong> フォーマットが適用された値を文字列として取得</p>
+<pre><code>data DT1;
+  format X yymmdd10.;
+  X = &#39;13jun2017&#39;d;
+run;
+
+
+data DT2;
+  set DT1;
+  length Y $20.;
+  Y = put( X, yymmdd10.);
+run;
+
+
+data DT2;
+  set DT1;
+  length Y1 Y2 $20.;
+
+  /* vvalue関数を使った例 */
+  Y1 = vvalue( X );
+
+  /* vvaluex関数を使った例 */
+  Y2 = vvaluex( &quot;X&quot; );
+
+run;</code></pre>
+<ul>
+<li><strong>Y1 = vvalue( X )：</strong>「 vvalue( X ) 」で変数Xに割り当てられているFORMAT「YYMMDD10.」を使って文字変換した値「2017-06-13」を返しています。</li>
+<li><strong>Y2 = vvaluex( “X” );</strong>vvaluex も vvalue と同じ機能を持っているのですが、違いは以下の通り。</li>
+<li>vvalue( X )      … 変数名を指定</li>
+<li>vvaluex( “X” )  … 変数名を表す文字値を指定</li>
+<li>つまり、「 vvaluex( “X” ) 」で変数Xに割り当てられているFORMAT「YYMMDD10.」を使って文字変換した値「2017-06-13」を返しています。</li>
+</ul>
+</section>
+<section id="cmiss関数" class="level2" data-number="8.7">
+<h2 data-number="8.7" class="anchored" data-anchor-id="cmiss関数"><span class="header-section-number">8.7</span> 7. CMISS関数</h2>
+<p><strong>機能：</strong> 欠損値の個数をカウント</p>
+<pre><code>data example7;
+    input name $ age height weight;
+    
+    missing_count = cmiss(age, height, weight);
+    complete_data = (missing_count = 0);
+    
+    put name= missing_count= complete_data=;
+    
+datalines;
+田中 25 170 65
+佐藤 . 165 .
+山田 30 . 70
+;
+run;</code></pre>
+<p><strong>出力：</strong> name=田中 missing_count=0 complete_data=1 name=佐藤 missing_count=2 complete_data=0 name=山田 missing_count=1 complete_data=0</p>
+</section>
+<section id="ifnifc関数" class="level2" data-number="8.8">
+<h2 data-number="8.8" class="anchored" data-anchor-id="ifnifc関数"><span class="header-section-number">8.8</span> 8. IFN・IFC関数</h2>
+<p><strong>機能：</strong> 条件に基づいて値を返す三項演算子</p>
+<pre><code>
+data DT1;
+   length X1 $10.;
+   X1=&quot;YES&quot;; output;
+   X1=&quot;NO&quot;; output;
+run;
+
+#Before
+data DT2;
+   set DT1;
+   if X1 = &quot;YES&quot; then X2=1;
+   else  X2=0;
+run;
+
+#After
+data DT2;
+   set DT1;
+   X2 = ifn(X1=&quot;YES&quot;,1,0);
+run;</code></pre>
+<p>Rのifelse関数みたいな気持ち。</p>
+</section>
+<section id="call-missing" class="level2" data-number="8.9">
+<h2 data-number="8.9" class="anchored" data-anchor-id="call-missing"><span class="header-section-number">8.9</span> 9. CALL MISSING</h2>
+<p><strong>機能：</strong> 複数の変数を一度に欠損値に設定</p>
+<pre><code>data example9;
+    name = &quot;田中&quot;;
+    age = 25;
+    score = 85;
+    
+    /* 条件に応じて全データを欠損値に */
+    if age &lt; 20 then call missing(of name age score);
+    
+    put name= age= score=;
+run;</code></pre>
+<p>このSASコードは<code>CALL MISSING</code>ルーチンを使って、条件に応じて複数の変数を一度に欠損値に設定する例です。</p>
+</section>
+<section id="call-symputx" class="level2" data-number="8.10">
+<h2 data-number="8.10" class="anchored" data-anchor-id="call-symputx"><span class="header-section-number">8.10</span> 10. CALL SYMPUTX</h2>
+<p><strong>機能：</strong> データステップ内でマクロ変数を作成・更新</p>
+<pre><code>data example10;
+    input dept $ sales;
+    
+    /* 部門別に動的にマクロ変数を作成 */
+    call symputx(cats(&quot;sales_&quot;, dept), sales);
+    
+    /* 最大売上をマクロ変数に格納 */
+    retain max_sales;
+    if _n_ = 1 then max_sales = sales;
+    else max_sales = max(max_sales, sales);
+
+   if  _EOF then call symputx(&quot;OBS&quot;, _N_);
+    
+datalines;
+営業 1200
+技術 800
+総務 300
+;
+run;
+
+/* データステップ終了後に最大値を取得 */
+data _null_;
+    set example10 end=last;
+    retain max_sales;
+    if _n_ = 1 then max_sales = sales;
+    else max_sales = max(max_sales, sales);
+    if last then call symputx(&quot;max_sales_total&quot;, max_sales);
+run;
+
+%put &amp;sales_営業 &amp;sales_技術 &amp;sales_総務;
+%put &amp;max_sales_total;</code></pre>
+<p><strong>出力：</strong> 1200 800 300 1200</p>
+<p>これらの関数を使いこなすことで、SASプログラミングの効率と可読性が大幅に向上します。特にデータクリーニングや条件分岐処理において威力を発揮する関数群です。</p>
 
 
 </section>
