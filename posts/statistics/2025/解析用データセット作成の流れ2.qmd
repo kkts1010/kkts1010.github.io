@@ -6,13 +6,27 @@ date-modified: "2025-06-16"
 abstract-title: Abstract
 abstract: ""
 date: "2025-06-16"
+listing: 
+  -   id: lst
+      type: grid
+      sort: false
+      contents:
+          - 解析用データセット作成の流れ1.qmd
+          - 解析用データセット仕様書.qmd
 editor: visual
 ---
 
 # 解析用データセット作成の流れ2
 
-本記事では、[こちら](https://kkts1010.github.io/posts/statistics/2025/%E8%A7%A3%E6%9E%90%E7%94%A8%E3%83%87%E3%83%BC%E3%82%BF%E3%82%BB%E3%83%83%E3%83%88%E4%BD%9C%E6%88%90%E3%81%AE%E6%B5%81%E3%82%8C.html)を踏まえて、より具体的な解析データセット作成の流れをまとめていく。
+本記事では、以下の私のブログを踏まえて、より具体的な解析データセット作成の流れをまとめていく。
+
+::: {#lst}
+:::
+
 
 ## 参考文献
 
--
+- [PharmaSUG2010 - Paper AD16 Automating the Link between Metadata and Analysis Dataset Misha Rittmann, Octagon Research Solutions, Inc., Wayne, PA](https://www.lexjansen.com/pharmasug/2010/AD/AD16.pdf)
+- [PharmaSUG2010 - Paper TT06 SAS Programming Techniques for Manipulating Metadata on the Database Level Chris Speck, PAREXEL International, Durham, NC](https://www.lexjansen.com/pharmasug/2010/TT/TT06.pdf)
+- [PharmaSUG2011 – Paper CD17 Making a List, Checking it Twice (Part 1): Techniques for Specifying and Validating Analysis Datasets](https://www.lexjansen.com/pharmasug/2011/CD/PharmaSUG-2011-CD17.pdf)
+- [PharmaSUG2011 - Paper CD12ADaM Standard Naming Conventions are Good to HaveChristine Teng, Merck Sharp & Dohme Corp, Rahway, NJ](https://www.lexjansen.com/pharmasug/2011/CD/PharmaSUG-2011-CD12.pdf)

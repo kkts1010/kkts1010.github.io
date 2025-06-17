@@ -213,7 +213,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#proc-format" id="toc-proc-format" class="nav-link" data-scroll-target="#proc-format"><span class="header-section-number">2.2</span> Proc format</a></li>
   <li><a href="#データセットからのフォーマット作成" id="toc-データセットからのフォーマット作成" class="nav-link" data-scroll-target="#データセットからのフォーマット作成"><span class="header-section-number">2.3</span> データセットからのフォーマット作成</a></li>
   </ul></li>
-  <li><a href="#解析用データセットtlf作成を踏まえてフォルダ構成案" id="toc-解析用データセットtlf作成を踏まえてフォルダ構成案" class="nav-link" data-scroll-target="#解析用データセットtlf作成を踏まえてフォルダ構成案"><span class="header-section-number">3</span> 解析用データセット＋TLF作成を踏まえてフォルダ構成案</a></li>
+  <li><a href="#解析用データセットtlf作成を踏まえてフォルダ構成案" id="toc-解析用データセットtlf作成を踏まえてフォルダ構成案" class="nav-link" data-scroll-target="#解析用データセットtlf作成を踏まえてフォルダ構成案"><span class="header-section-number">3</span> 解析用データセット＋TLF作成を踏まえてフォルダ構成案</a>
+  <ul class="collapse">
+  <li><a href="#sasプログラムの例" id="toc-sasプログラムの例" class="nav-link" data-scroll-target="#sasプログラムの例"><span class="header-section-number">3.1</span> SASプログラムの例</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -620,14 +623,139 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul></li>
 </ul>
 <p>基本的に上記のフォルダ構成でプロジェクトを運用することとする。RであってもSASであっても同じものとする。</p>
-<p>また、各帳票のプログラムについては、手動やコピペで作成することは原則禁止とする。プログラムはMock-upにて以下の情報を記載の上、SAS/Rで自動で作成するものとする。具体的な作成方法については別途まとめる。</p>
-<ul>
-<li><p>Table Name</p></li>
-<li><p>Analysis Population FLAG</p></li>
-<li><p>Analyus</p></li>
-</ul>
+<section id="sasプログラムの例" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="sasプログラムの例"><span class="header-section-number">3.1</span> SASプログラムの例</h2>
+<p>以下のプロジェクトは人間が主導で<code>Project</code>フォルダを適当な場所に作成して、そのフォルダにて以下のプログラムを実行するだけで、上記のフォルダ構造を作成するものである。</p>
+<div class="sourceCode" id="cb8" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource sas number-lines code-with-copy"><code class="sourceCode"><span id="cb8-1"><a href="#cb8-1"></a>proc datasets kill nolist ; run ; quit ; </span>
+<span id="cb8-2"><a href="#cb8-2"></a>dm 'out ; clear ; log ; clear ;' ;</span>
+<span id="cb8-3"><a href="#cb8-3"></a></span>
+<span id="cb8-4"><a href="#cb8-4"></a>/***********************************************************************</span>
+<span id="cb8-5"><a href="#cb8-5"></a>* Project         : 臨床研究の統計解析プログラミング</span>
+<span id="cb8-6"><a href="#cb8-6"></a>* Program name    : 01_Folder_Setting.sas</span>
+<span id="cb8-7"><a href="#cb8-7"></a>* Author          : Kota Sakamoto</span>
+<span id="cb8-8"><a href="#cb8-8"></a>* Date created    : 20250617</span>
+<span id="cb8-9"><a href="#cb8-9"></a>* Purpose         :　プロジェクト開始時のフォルダ構造の標準化</span>
+<span id="cb8-10"><a href="#cb8-10"></a>* Revision History :</span>
+<span id="cb8-11"><a href="#cb8-11"></a>***********************************************************************/</span>
+<span id="cb8-12"><a href="#cb8-12"></a></span>
+<span id="cb8-13"><a href="#cb8-13"></a>/* 1. /* --- 日付設定 --- */ */;</span>
+<span id="cb8-14"><a href="#cb8-14"></a>data _null_;</span>
+<span id="cb8-15"><a href="#cb8-15"></a>   dt = datetime();</span>
+<span id="cb8-16"><a href="#cb8-16"></a>   Date1 = put(datepart(dt), yymmdds10.);</span>
+<span id="cb8-17"><a href="#cb8-17"></a>   Date2 = compress(Date1, "/");</span>
+<span id="cb8-18"><a href="#cb8-18"></a>   Time1 = put(timepart(dt), tod8.);</span>
+<span id="cb8-19"><a href="#cb8-19"></a>   Time2 = compress(Time1, ":");   </span>
+<span id="cb8-20"><a href="#cb8-20"></a>   call symputx('StDates', Date1);</span>
+<span id="cb8-21"><a href="#cb8-21"></a>   call symputx('StDate', Date2);</span>
+<span id="cb8-22"><a href="#cb8-22"></a>   call symputx('StTimes', Time1);</span>
+<span id="cb8-23"><a href="#cb8-23"></a>   call symputx('StTime', Time2);</span>
+<span id="cb8-24"><a href="#cb8-24"></a>run;</span>
+<span id="cb8-25"><a href="#cb8-25"></a></span>
+<span id="cb8-26"><a href="#cb8-26"></a>%put 日付: &amp;StDates. (&amp;StDate.) 時刻: &amp;StTimes. (&amp;StTime.);</span>
+<span id="cb8-27"><a href="#cb8-27"></a></span>
+<span id="cb8-28"><a href="#cb8-28"></a>/* 2. /* --- フォルダのマクロ変数の取得 --- */ */;</span>
+<span id="cb8-29"><a href="#cb8-29"></a>%LET execpath=" ";</span>
+<span id="cb8-30"><a href="#cb8-30"></a>%MACRO setexecpath;</span>
+<span id="cb8-31"><a href="#cb8-31"></a>    %LET execpath=%SYSFUNC(GETOPTION(SYSIN));</span>
+<span id="cb8-32"><a href="#cb8-32"></a>    %IF %LENGTH(&amp;execpath)=0</span>
+<span id="cb8-33"><a href="#cb8-33"></a>    %THEN %LET execpath=%SYSGET(SAS_EXECFILEPATH);</span>
+<span id="cb8-34"><a href="#cb8-34"></a>%MEND setexecpath;</span>
+<span id="cb8-35"><a href="#cb8-35"></a>%setexecpath;</span>
+<span id="cb8-36"><a href="#cb8-36"></a>%PUT &amp;execpath;</span>
+<span id="cb8-37"><a href="#cb8-37"></a></span>
+<span id="cb8-38"><a href="#cb8-38"></a>%let CURRENT_DIR = %qsubstr("&amp;execpath.", 2, %eval(%index("&amp;execpath.", %scan(&amp;execpath, -1, "\")))-2) ;</span>
+<span id="cb8-39"><a href="#cb8-39"></a>%put &amp;CURRENT_DIR;</span>
+<span id="cb8-40"><a href="#cb8-40"></a></span>
+<span id="cb8-41"><a href="#cb8-41"></a></span>
+<span id="cb8-42"><a href="#cb8-42"></a>/* 3. /* --- フォルダのlibnameの指定 --- */ */;</span>
+<span id="cb8-43"><a href="#cb8-43"></a>%let folder1 = Document;</span>
+<span id="cb8-44"><a href="#cb8-44"></a>%let folder2 = ADS_Program;</span>
+<span id="cb8-45"><a href="#cb8-45"></a>%let folder3 = ADS_Program\Input;</span>
+<span id="cb8-46"><a href="#cb8-46"></a>%let folder4 = ADS_Program\Input\Raw;</span>
+<span id="cb8-47"><a href="#cb8-47"></a>%let folder5 = ADS_Program\Input\External;</span>
+<span id="cb8-48"><a href="#cb8-48"></a>%let folder6 = ADS_Program\Log;</span>
+<span id="cb8-49"><a href="#cb8-49"></a>%let folder7 = ADS_Program\Output;</span>
+<span id="cb8-50"><a href="#cb8-50"></a>%let folder8 = ADS_Program\Prg;</span>
+<span id="cb8-51"><a href="#cb8-51"></a>%let folder9 = ADS_Program\Prg\Develop;</span>
+<span id="cb8-52"><a href="#cb8-52"></a>%let folder10 = ADS_Program\Prg\Fix;</span>
+<span id="cb8-53"><a href="#cb8-53"></a>%let folder11 = ADS_Program\Macro;</span>
+<span id="cb8-54"><a href="#cb8-54"></a>%let folder12 = ADS_Program\Setting;</span>
+<span id="cb8-55"><a href="#cb8-55"></a>%let folder13 = ADS_Program\Spec;</span>
+<span id="cb8-56"><a href="#cb8-56"></a>%let folder14 = Analysis_Program;</span>
+<span id="cb8-57"><a href="#cb8-57"></a>%let folder15 = Analysis_Program\Input;</span>
+<span id="cb8-58"><a href="#cb8-58"></a>%let folder16 = Analysis_Program\Log;</span>
+<span id="cb8-59"><a href="#cb8-59"></a>%let folder17 = Analysis_Program\Output;</span>
+<span id="cb8-60"><a href="#cb8-60"></a>%let folder18 = Analysis_Program\Prg;</span>
+<span id="cb8-61"><a href="#cb8-61"></a>%let folder19 = Analysis_Program\Prg\Develop;</span>
+<span id="cb8-62"><a href="#cb8-62"></a>%let folder20 = Analysis_Program\Prg\Fix;</span>
+<span id="cb8-63"><a href="#cb8-63"></a>%let folder21 = Analysis_Program\Macro;</span>
+<span id="cb8-64"><a href="#cb8-64"></a>%let folder22 = Analysis_Program\Setting;</span>
+<span id="cb8-65"><a href="#cb8-65"></a>%let folder23 = Analysis_Program\Spec;</span>
+<span id="cb8-66"><a href="#cb8-66"></a>%let folder24 = Paper;</span>
+<span id="cb8-67"><a href="#cb8-67"></a></span>
+<span id="cb8-68"><a href="#cb8-68"></a></span>
+<span id="cb8-69"><a href="#cb8-69"></a>/* まとめて一気に実施する */</span>
+<span id="cb8-70"><a href="#cb8-70"></a>%macro create_folder_paths;</span>
+<span id="cb8-71"><a href="#cb8-71"></a>    data _null_;</span>
+<span id="cb8-72"><a href="#cb8-72"></a>        %do i = 1 %to 24;</span>
+<span id="cb8-73"><a href="#cb8-73"></a>            folder&amp;i = cat("&amp;CURRENT_DIR", "\", "&amp;&amp;folder&amp;i..");</span>
+<span id="cb8-74"><a href="#cb8-74"></a>            call symputx("folder&amp;i", folder&amp;i);</span>
+<span id="cb8-75"><a href="#cb8-75"></a>        %end;</span>
+<span id="cb8-76"><a href="#cb8-76"></a>    run;</span>
+<span id="cb8-77"><a href="#cb8-77"></a>%mend;</span>
+<span id="cb8-78"><a href="#cb8-78"></a></span>
+<span id="cb8-79"><a href="#cb8-79"></a>%create_folder_paths;</span>
+<span id="cb8-80"><a href="#cb8-80"></a>%put _user_;</span>
+<span id="cb8-81"><a href="#cb8-81"></a>    </span>
+<span id="cb8-82"><a href="#cb8-82"></a></span>
+<span id="cb8-83"><a href="#cb8-83"></a>/* 4. /* --- フォルダ作成 --- */ */;</span>
+<span id="cb8-84"><a href="#cb8-84"></a>/* ディレクトリ自動作成マクロ */</span>
+<span id="cb8-85"><a href="#cb8-85"></a>%macro create_dir(path);</span>
+<span id="cb8-86"><a href="#cb8-86"></a>   %local parent_dir dir_name;</span>
+<span id="cb8-87"><a href="#cb8-87"></a>   %let path = %sysfunc(strip(&amp;path));</span>
+<span id="cb8-88"><a href="#cb8-88"></a>   %let parent_dir = %substr(&amp;path, 1, %length(&amp;path)-%length(%scan(&amp;path, -1, '\')));</span>
+<span id="cb8-89"><a href="#cb8-89"></a>   %let dir_name = %scan(&amp;path, -1, '\');</span>
+<span id="cb8-90"><a href="#cb8-90"></a>   </span>
+<span id="cb8-91"><a href="#cb8-91"></a>   %if %sysfunc(fileexist(&amp;path)) = 0 %then %do;</span>
+<span id="cb8-92"><a href="#cb8-92"></a>       %if %length(&amp;parent_dir) &gt; 0 %then %do;</span>
+<span id="cb8-93"><a href="#cb8-93"></a>           %if %sysfunc(fileexist(&amp;parent_dir)) = 0 %then %do;</span>
+<span id="cb8-94"><a href="#cb8-94"></a>               %create_dir_structure(&amp;parent_dir);</span>
+<span id="cb8-95"><a href="#cb8-95"></a>           %end;</span>
+<span id="cb8-96"><a href="#cb8-96"></a>       %end;</span>
+<span id="cb8-97"><a href="#cb8-97"></a>       %let rc = %sysfunc(dcreate(&amp;dir_name, &amp;parent_dir));</span>
+<span id="cb8-98"><a href="#cb8-98"></a>   %end;</span>
+<span id="cb8-99"><a href="#cb8-99"></a>%mend;</span>
+<span id="cb8-100"><a href="#cb8-100"></a></span>
+<span id="cb8-101"><a href="#cb8-101"></a>/* プロジェクトフォルダ構造の自動作成 */</span>
+<span id="cb8-102"><a href="#cb8-102"></a>%macro create_all_folders;</span>
+<span id="cb8-103"><a href="#cb8-103"></a>   %do i = 1 %to 24;</span>
+<span id="cb8-104"><a href="#cb8-104"></a>       %create_dir(&amp;&amp;folder&amp;i);</span>
+<span id="cb8-105"><a href="#cb8-105"></a>   %end;</span>
+<span id="cb8-106"><a href="#cb8-106"></a>%mend;</span>
+<span id="cb8-107"><a href="#cb8-107"></a></span>
+<span id="cb8-108"><a href="#cb8-108"></a>%create_all_folders;</span>
+<span id="cb8-109"><a href="#cb8-109"></a></span>
+<span id="cb8-110"><a href="#cb8-110"></a>/* 5. /* --- 解析用データセットと解析プログラムについて、開発日付を逐次作成する --- */ */;</span>
+<span id="cb8-111"><a href="#cb8-111"></a>data _null_;</span>
+<span id="cb8-112"><a href="#cb8-112"></a>    /* 各フォルダパスを作成 */</span>
+<span id="cb8-113"><a href="#cb8-113"></a>    Prg_Develop1= cat( "&amp;CURRENT_DIR","ADS_Program\Prg\Develop","\", "&amp;StDate");</span>
+<span id="cb8-114"><a href="#cb8-114"></a>    Prg_Develop2  = catx( "&amp;CURRENT_DIR","Analysis_Program\Prg\Develop","\", "&amp;StDate");</span>
+<span id="cb8-115"><a href="#cb8-115"></a>    </span>
+<span id="cb8-116"><a href="#cb8-116"></a>    /* マクロ変数に格納 */</span>
+<span id="cb8-117"><a href="#cb8-117"></a>    call symputx("Prg_Develop1", Prg_Develop1);</span>
+<span id="cb8-118"><a href="#cb8-118"></a>    call symputx("Prg_Develop2", Prg_Develop2);</span>
+<span id="cb8-119"><a href="#cb8-119"></a>  </span>
+<span id="cb8-120"><a href="#cb8-120"></a>run;</span>
+<span id="cb8-121"><a href="#cb8-121"></a></span>
+<span id="cb8-122"><a href="#cb8-122"></a>/* 作成されたパスを確認 */</span>
+<span id="cb8-123"><a href="#cb8-123"></a>%put &amp;Prg_Develop1;</span>
+<span id="cb8-124"><a href="#cb8-124"></a>%put  &amp;Prg_Develop2;</span>
+<span id="cb8-125"><a href="#cb8-125"></a></span>
+<span id="cb8-126"><a href="#cb8-126"></a>%create_dir(&amp;Prg_Develop1);</span>
+<span id="cb8-127"><a href="#cb8-127"></a>%create_dir(&amp;Prg_Develop2);</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

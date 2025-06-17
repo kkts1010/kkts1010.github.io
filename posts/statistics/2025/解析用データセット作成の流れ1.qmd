@@ -459,10 +459,136 @@ VALUEステートメント：直接コードに記述する方法。シンプル
 
 基本的に上記のフォルダ構成でプロジェクトを運用することとする。RであってもSASであっても同じものとする。
 
-また、各帳票のプログラムについては、手動やコピペで作成することは原則禁止とする。プログラムはMock-upにて以下の情報を記載の上、SAS/Rで自動で作成するものとする。具体的な作成方法については別途まとめる。
+## SASプログラムの例
 
--   Table Name
+以下のプロジェクトは人間が主導で`Project`フォルダを適当な場所に作成して、そのフォルダにて以下のプログラムを実行するだけで、上記のフォルダ構造を作成するものである。
 
--   Analysis Population FLAG
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+proc datasets kill nolist ; run ; quit ; 
+dm 'out ; clear ; log ; clear ;' ;
 
--   Analyus
+/***********************************************************************
+* Project         : 臨床研究の統計解析プログラミング
+* Program name    : 01_Folder_Setting.sas
+* Author          : Kota Sakamoto
+* Date created    : 20250617
+* Purpose         :　プロジェクト開始時のフォルダ構造の標準化
+* Revision History :
+***********************************************************************/
+
+/* 1. /* --- 日付設定 --- */ */;
+data _null_;
+   dt = datetime();
+   Date1 = put(datepart(dt), yymmdds10.);
+   Date2 = compress(Date1, "/");
+   Time1 = put(timepart(dt), tod8.);
+   Time2 = compress(Time1, ":");   
+   call symputx('StDates', Date1);
+   call symputx('StDate', Date2);
+   call symputx('StTimes', Time1);
+   call symputx('StTime', Time2);
+run;
+
+%put 日付: &StDates. (&StDate.) 時刻: &StTimes. (&StTime.);
+
+/* 2. /* --- フォルダのマクロ変数の取得 --- */ */;
+%LET execpath=" ";
+%MACRO setexecpath;
+    %LET execpath=%SYSFUNC(GETOPTION(SYSIN));
+    %IF %LENGTH(&execpath)=0
+    %THEN %LET execpath=%SYSGET(SAS_EXECFILEPATH);
+%MEND setexecpath;
+%setexecpath;
+%PUT &execpath;
+
+%let CURRENT_DIR = %qsubstr("&execpath.", 2, %eval(%index("&execpath.", %scan(&execpath, -1, "\")))-2) ;
+%put &CURRENT_DIR;
+
+
+/* 3. /* --- フォルダのlibnameの指定 --- */ */;
+%let folder1 = Document;
+%let folder2 = ADS_Program;
+%let folder3 = ADS_Program\Input;
+%let folder4 = ADS_Program\Input\Raw;
+%let folder5 = ADS_Program\Input\External;
+%let folder6 = ADS_Program\Log;
+%let folder7 = ADS_Program\Output;
+%let folder8 = ADS_Program\Prg;
+%let folder9 = ADS_Program\Prg\Develop;
+%let folder10 = ADS_Program\Prg\Fix;
+%let folder11 = ADS_Program\Macro;
+%let folder12 = ADS_Program\Setting;
+%let folder13 = ADS_Program\Spec;
+%let folder14 = Analysis_Program;
+%let folder15 = Analysis_Program\Input;
+%let folder16 = Analysis_Program\Log;
+%let folder17 = Analysis_Program\Output;
+%let folder18 = Analysis_Program\Prg;
+%let folder19 = Analysis_Program\Prg\Develop;
+%let folder20 = Analysis_Program\Prg\Fix;
+%let folder21 = Analysis_Program\Macro;
+%let folder22 = Analysis_Program\Setting;
+%let folder23 = Analysis_Program\Spec;
+%let folder24 = Paper;
+
+
+/* まとめて一気に実施する */
+%macro create_folder_paths;
+    data _null_;
+        %do i = 1 %to 24;
+            folder&i = cat("&CURRENT_DIR", "\", "&&folder&i..");
+            call symputx("folder&i", folder&i);
+        %end;
+    run;
+%mend;
+
+%create_folder_paths;
+%put _user_;
+    
+
+/* 4. /* --- フォルダ作成 --- */ */;
+/* ディレクトリ自動作成マクロ */
+%macro create_dir(path);
+   %local parent_dir dir_name;
+   %let path = %sysfunc(strip(&path));
+   %let parent_dir = %substr(&path, 1, %length(&path)-%length(%scan(&path, -1, '\')));
+   %let dir_name = %scan(&path, -1, '\');
+   
+   %if %sysfunc(fileexist(&path)) = 0 %then %do;
+       %if %length(&parent_dir) > 0 %then %do;
+           %if %sysfunc(fileexist(&parent_dir)) = 0 %then %do;
+               %create_dir_structure(&parent_dir);
+           %end;
+       %end;
+       %let rc = %sysfunc(dcreate(&dir_name, &parent_dir));
+   %end;
+%mend;
+
+/* プロジェクトフォルダ構造の自動作成 */
+%macro create_all_folders;
+   %do i = 1 %to 24;
+       %create_dir(&&folder&i);
+   %end;
+%mend;
+
+%create_all_folders;
+
+/* 5. /* --- 解析用データセットと解析プログラムについて、開発日付を逐次作成する --- */ */;
+data _null_;
+    /* 各フォルダパスを作成 */
+    Prg_Develop1= cat( "&CURRENT_DIR","ADS_Program\Prg\Develop","\", "&StDate");
+    Prg_Develop2  = catx( "&CURRENT_DIR","Analysis_Program\Prg\Develop","\", "&StDate");
+    
+    /* マクロ変数に格納 */
+    call symputx("Prg_Develop1", Prg_Develop1);
+    call symputx("Prg_Develop2", Prg_Develop2);
+  
+run;
+
+/* 作成されたパスを確認 */
+%put &Prg_Develop1;
+%put  &Prg_Develop2;
+
+%create_dir(&Prg_Develop1);
+%create_dir(&Prg_Develop2);
+```

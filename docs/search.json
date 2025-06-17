@@ -18,7 +18,7 @@
     "href": "posts/Web_tools/Web_tools.html#医薬品開発",
     "title": "Web Tools",
     "section": "2 医薬品開発",
-    "text": "2 医薬品開発\n\nPMDA 審査関連業務の概要について\nICH Efficacyガイドライン\n製薬協データサイエンス部会 成果物\nFDA Clinical Trials Guidance Documents\nFDA Real-World Evidence Documents\nEMA Biostatistics guidelines\nEMA Real-world evidence guidelines\nCDISC ADaM\nStatistical Analysi Plan(Australian Clinical Trials)"
+    "text": "2 医薬品開発\n\nPMDA 審査関連業務の概要について\nICH Efficacyガイドライン\n製薬協データサイエンス部会 成果物\n製薬協 医薬品評価委員会シンポジウム\nFDA Clinical Trials Guidance Documents\nFDA Real-World Evidence Documents\nEMA Biostatistics guidelines\nEMA Real-world evidence guidelines\nCDISC ADaM\nStatistical Analysi Plan(Australian Clinical Trials)"
   },
   {
     "objectID": "posts/Web_tools/Web_tools.html#統計",
@@ -32,14 +32,14 @@
     "href": "posts/Web_tools/Web_tools.html#sasプログラミング",
     "title": "Web Tools",
     "section": "4 SASプログラミング",
-    "text": "4 SASプログラミング\n\nSAS備忘録\nPharmaceutical Software Users Group\nSASユーザー会\nSASユーザー総会 論文集アーカイブ\nSAS Forumユーザー会 2006\n大阪SAS勉強会\nデータステップ100万回　SAS新手一生\n晴れ時々SAS\n我輩はブロガーではない。ネタもまだない\nデータサイエンス100本ノック（構造化データ加工編）のSAS版\nRTFファイルをPDF化するDDEプログラム"
+    "text": "4 SASプログラミング\n\nSAS備忘録\nPharmaceutical Software Users Group\nConference Proceedings (1976 - present) … and more\nSASユーザー会\nSASユーザー総会 論文集アーカイブ\nSAS Forumユーザー会 2006\n大阪SAS勉強会\nデータステップ100万回　SAS新手一生\n晴れ時々SAS\n我輩はブロガーではない。ネタもまだない\n僕の頁 \nデータサイエンス100本ノック（構造化データ加工編）のSAS版\nRTFファイルをPDF化するDDEプログラム"
   },
   {
     "objectID": "posts/Web_tools/Web_tools.html#rプログラミング海外サイト",
     "href": "posts/Web_tools/Web_tools.html#rプログラミング海外サイト",
     "title": "Web Tools",
     "section": "5 Rプログラミング（海外サイト）",
-    "text": "5 Rプログラミング（海外サイト）\n\nTidyverse style guide\nR Workflow for Reproducible Data Analysis and Reporting\nBuilding reproducible analytical pipelines with R\nR Workflow（Frank Harrell先生\nReproducible Medical Research with R\nR for Clinical Study Reports and Submission\nAn Introduction to Statistical Programming Methods with R\nTables in Clinical Trials with R\nIntroduction to tern\nWorkshops at rstudio::conf 2022\nTLG Catalog\nIntroduction to {rtables}\nReproducible Environments(Posit社)"
+    "text": "5 Rプログラミング（海外サイト）\n\nTidyverse style guide\nR Workflow for Reproducible Data Analysis and Reporting\nBuilding reproducible analytical pipelines with R\nR Rpharma\nR Workflow（Frank Harrell先生\nReproducible Medical Research with R\nR for Clinical Study Reports and Submission\nAn Introduction to Statistical Programming Methods with R\nTables in Clinical Trials with R\nIntroduction to tern\nWorkshops at rstudio::conf 2022\nTLG Catalog\nIntroduction to {rtables}\nReproducible Environments(Posit社)"
   },
   {
     "objectID": "posts/Web_tools/Web_tools.html#rプログラミング日本語",
@@ -180,6 +180,13 @@
     "title": "解析用データセット作成の流れ1（フォルダ構造等）",
     "section": "2.3 データセットからのフォーマット作成",
     "text": "2.3 データセットからのフォーマット作成\n\n2.3.1 3.1 CNTLIN=オプションの使用\nデータセットからフォーマットを作成する場合、特定の変数名を持つデータセットを準備する必要があります。 必要な変数：\n\nFMTNAME：フォーマット名\nSTART：変換前の値（開始値）\nEND：変換前の値（終了値、範囲指定時）\nLABEL：変換後のラベル\nTYPE：フォーマットタイプ（‘N’=数値、‘C’=文字）\n\n/* 治療群フォーマット用データセット */\ndata trt_fmt;\n    retain fmtname 'trtf' type 'N';\n    input start end label $20.;\n    datalines;\n1 1 プラセボ\n2 2 低用量\n3 3 高用量\n. . 欠測\n;\nrun;\n\n/* 性別フォーマット用データセット */\ndata sex_fmt;\n    retain fmtname '$sexf' type 'C';\n    input start $1. end $1. label $10.;\n    datalines;\nM M 男性\nF F 女性\n   不明\n;\nrun;\n\n/* フォーマットの作成 */\nproc format cntlin=trt_fmt;\nrun;\n\nproc format cntlin=sex_fmt;\nrun;\nPROC FORMATは以下の2つの方法でフォーマットを作成できます：\nVALUEステートメント：直接コードに記述する方法。シンプルで直感的 CNTLIN=オプション：データセットから作成する方法。大量のフォーマットや動的な作成に適している\n適切なフォーマットの使用により、データの可読性が大幅に向上し、レポート作成時の効率も改善されます。"
+  },
+  {
+    "objectID": "posts/statistics/2025/解析用データセット作成の流れ1.html#sasプログラムの例",
+    "href": "posts/statistics/2025/解析用データセット作成の流れ1.html#sasプログラムの例",
+    "title": "解析用データセット作成の流れ1（フォルダ構造等）",
+    "section": "3.1 SASプログラムの例",
+    "text": "3.1 SASプログラムの例\n以下のプロジェクトは人間が主導でProjectフォルダを適当な場所に作成して、そのフォルダにて以下のプログラムを実行するだけで、上記のフォルダ構造を作成するものである。\nproc datasets kill nolist ; run ; quit ; \ndm 'out ; clear ; log ; clear ;' ;\n\n/***********************************************************************\n* Project         : 臨床研究の統計解析プログラミング\n* Program name    : 01_Folder_Setting.sas\n* Author          : Kota Sakamoto\n* Date created    : 20250617\n* Purpose         :　プロジェクト開始時のフォルダ構造の標準化\n* Revision History :\n***********************************************************************/\n\n/* 1. /* --- 日付設定 --- */ */;\ndata _null_;\n   dt = datetime();\n   Date1 = put(datepart(dt), yymmdds10.);\n   Date2 = compress(Date1, \"/\");\n   Time1 = put(timepart(dt), tod8.);\n   Time2 = compress(Time1, \":\");   \n   call symputx('StDates', Date1);\n   call symputx('StDate', Date2);\n   call symputx('StTimes', Time1);\n   call symputx('StTime', Time2);\nrun;\n\n%put 日付: &StDates. (&StDate.) 時刻: &StTimes. (&StTime.);\n\n/* 2. /* --- フォルダのマクロ変数の取得 --- */ */;\n%LET execpath=\" \";\n%MACRO setexecpath;\n    %LET execpath=%SYSFUNC(GETOPTION(SYSIN));\n    %IF %LENGTH(&execpath)=0\n    %THEN %LET execpath=%SYSGET(SAS_EXECFILEPATH);\n%MEND setexecpath;\n%setexecpath;\n%PUT &execpath;\n\n%let CURRENT_DIR = %qsubstr(\"&execpath.\", 2, %eval(%index(\"&execpath.\", %scan(&execpath, -1, \"\\\")))-2) ;\n%put &CURRENT_DIR;\n\n\n/* 3. /* --- フォルダのlibnameの指定 --- */ */;\n%let folder1 = Document;\n%let folder2 = ADS_Program;\n%let folder3 = ADS_Program\\Input;\n%let folder4 = ADS_Program\\Input\\Raw;\n%let folder5 = ADS_Program\\Input\\External;\n%let folder6 = ADS_Program\\Log;\n%let folder7 = ADS_Program\\Output;\n%let folder8 = ADS_Program\\Prg;\n%let folder9 = ADS_Program\\Prg\\Develop;\n%let folder10 = ADS_Program\\Prg\\Fix;\n%let folder11 = ADS_Program\\Macro;\n%let folder12 = ADS_Program\\Setting;\n%let folder13 = ADS_Program\\Spec;\n%let folder14 = Analysis_Program;\n%let folder15 = Analysis_Program\\Input;\n%let folder16 = Analysis_Program\\Log;\n%let folder17 = Analysis_Program\\Output;\n%let folder18 = Analysis_Program\\Prg;\n%let folder19 = Analysis_Program\\Prg\\Develop;\n%let folder20 = Analysis_Program\\Prg\\Fix;\n%let folder21 = Analysis_Program\\Macro;\n%let folder22 = Analysis_Program\\Setting;\n%let folder23 = Analysis_Program\\Spec;\n%let folder24 = Paper;\n\n\n/* まとめて一気に実施する */\n%macro create_folder_paths;\n    data _null_;\n        %do i = 1 %to 24;\n            folder&i = cat(\"&CURRENT_DIR\", \"\\\", \"&&folder&i..\");\n            call symputx(\"folder&i\", folder&i);\n        %end;\n    run;\n%mend;\n\n%create_folder_paths;\n%put _user_;\n    \n\n/* 4. /* --- フォルダ作成 --- */ */;\n/* ディレクトリ自動作成マクロ */\n%macro create_dir(path);\n   %local parent_dir dir_name;\n   %let path = %sysfunc(strip(&path));\n   %let parent_dir = %substr(&path, 1, %length(&path)-%length(%scan(&path, -1, '\\')));\n   %let dir_name = %scan(&path, -1, '\\');\n   \n   %if %sysfunc(fileexist(&path)) = 0 %then %do;\n       %if %length(&parent_dir) &gt; 0 %then %do;\n           %if %sysfunc(fileexist(&parent_dir)) = 0 %then %do;\n               %create_dir_structure(&parent_dir);\n           %end;\n       %end;\n       %let rc = %sysfunc(dcreate(&dir_name, &parent_dir));\n   %end;\n%mend;\n\n/* プロジェクトフォルダ構造の自動作成 */\n%macro create_all_folders;\n   %do i = 1 %to 24;\n       %create_dir(&&folder&i);\n   %end;\n%mend;\n\n%create_all_folders;\n\n/* 5. /* --- 解析用データセットと解析プログラムについて、開発日付を逐次作成する --- */ */;\ndata _null_;\n    /* 各フォルダパスを作成 */\n    Prg_Develop1= cat( \"&CURRENT_DIR\",\"ADS_Program\\Prg\\Develop\",\"\\\", \"&StDate\");\n    Prg_Develop2  = catx( \"&CURRENT_DIR\",\"Analysis_Program\\Prg\\Develop\",\"\\\", \"&StDate\");\n    \n    /* マクロ変数に格納 */\n    call symputx(\"Prg_Develop1\", Prg_Develop1);\n    call symputx(\"Prg_Develop2\", Prg_Develop2);\n  \nrun;\n\n/* 作成されたパスを確認 */\n%put &Prg_Develop1;\n%put  &Prg_Develop2;\n\n%create_dir(&Prg_Develop1);\n%create_dir(&Prg_Develop2);"
   },
   {
     "objectID": "posts/statistics/2025/中間解析.html",
@@ -977,6 +984,13 @@
     "href": "posts/statistics/2025/解析用データセット作成の流れ2.html",
     "title": "解析用データセット作成の流れ2",
     "section": "",
-    "text": "本記事では、こちらを踏まえて、より具体的な解析データセット作成の流れをまとめていく。"
+    "text": "本記事では、以下の私のブログを踏まえて、より具体的な解析データセット作成の流れをまとめていく。\n\n\n\n\n\n\n\n\n\n\n\n\n\n坂本航太\n\n\n2025/06/14\n\n\n\n\n\n\n\n\n\n\n\n\n個人的な解析データセット作成方法をまとめます。\n\n\n\n坂本航太\n\n\n2025/06/14\n\n\n\n\n\n\n一致なし\n\n\n\n\nPharmaSUG2010 - Paper AD16 Automating the Link between Metadata and Analysis Dataset Misha Rittmann, Octagon Research Solutions, Inc., Wayne, PA\nPharmaSUG2010 - Paper TT06 SAS Programming Techniques for Manipulating Metadata on the Database Level Chris Speck, PAREXEL International, Durham, NC\nPharmaSUG2011 – Paper CD17 Making a List, Checking it Twice (Part 1): Techniques for Specifying and Validating Analysis Datasets\nPharmaSUG2011 - Paper CD12ADaM Standard Naming Conventions are Good to HaveChristine Teng, Merck Sharp & Dohme Corp, Rahway, NJ"
+  },
+  {
+    "objectID": "posts/statistics/2025/解析用データセット作成の流れ2.html#参考文献",
+    "href": "posts/statistics/2025/解析用データセット作成の流れ2.html#参考文献",
+    "title": "解析用データセット作成の流れ2",
+    "section": "",
+    "text": "PharmaSUG2010 - Paper AD16 Automating the Link between Metadata and Analysis Dataset Misha Rittmann, Octagon Research Solutions, Inc., Wayne, PA\nPharmaSUG2010 - Paper TT06 SAS Programming Techniques for Manipulating Metadata on the Database Level Chris Speck, PAREXEL International, Durham, NC\nPharmaSUG2011 – Paper CD17 Making a List, Checking it Twice (Part 1): Techniques for Specifying and Validating Analysis Datasets\nPharmaSUG2011 - Paper CD12ADaM Standard Naming Conventions are Good to HaveChristine Teng, Merck Sharp & Dohme Corp, Rahway, NJ"
   }
 ]

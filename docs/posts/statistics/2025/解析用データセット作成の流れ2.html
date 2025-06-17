@@ -31,6 +31,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../../">
+<script src="../../../site_libs/quarto-listing/list.min.js"></script>
+<script src="../../../site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../../site_libs/quarto-html/popper.min.js"></script>
@@ -68,7 +70,79 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "サーチ"
   }
 }</script>
+<script>
 
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-lst .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
+
+    const options = {
+      valueNames: ['listing-title','listing-author','listing-date','listing-image','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      
+      searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-lst'] = new List('listing-lst', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  </script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../../styles.css">
 </head>
@@ -177,12 +251,65 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="解析用データセット作成の流れ2" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> 解析用データセット作成の流れ2</h1>
-<p>本記事では、<a href="https://kkts1010.github.io/posts/statistics/2025/%E8%A7%A3%E6%9E%90%E7%94%A8%E3%83%87%E3%83%BC%E3%82%BF%E3%82%BB%E3%83%83%E3%83%88%E4%BD%9C%E6%88%90%E3%81%AE%E6%B5%81%E3%82%8C.html">こちら</a>を踏まえて、より具体的な解析データセット作成の流れをまとめていく。</p>
+<p>本記事では、以下の私のブログを踏まえて、より具体的な解析データセット作成の流れをまとめていく。</p>
+<div id="listing-lst" class="quarto-listing quarto-listing-container-grid">
+<div class="list grid quarto-listing-cols-3">
+<div class="g-col-1" data-index="0" data-categories="U0FTJTJDJUU4JUE3JUEzJUU2JTlFJTkwJUUzJTgzJTk3JUUzJTgzJUFEJUUzJTgyJUIwJUUzJTgzJUE5JUUzJTgzJTlGJUUzJTgzJUIzJUUzJTgyJUIw" data-listing-date-sort="1749826800000" data-listing-file-modified-sort="1750145612056" data-listing-date-modified-sort="1749826800000" data-listing-reading-time-sort="12" data-listing-word-count-sort="2237">
+<a href="../../../posts/statistics/2025/解析用データセット作成の流れ1.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<div class="listing-item-img-placeholder card-img-top" style="height: 150px;">&nbsp;</div>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+解析用データセット作成の流れ1（フォルダ構造等）
+</h5>
+<div class="card-text listing-description delink">
+効率的なフォルダ構成でプロジェクトを管理する
+</div>
+<div class="card-attribution card-text-small justify">
+<div class="listing-author">
+坂本航太
+</div>
+<div class="listing-date">
+2025/06/14
+</div>
+</div>
+</div>
+</div></a>
+</div>
+<div class="g-col-1" data-index="1" data-categories="U0FTJTJDUiUyQyVFOCVBNyVBMyVFNiU5RSU5MCVFNyU5NCVBOCVFMyU4MyU4NyVFMyU4MyVCQyVFMyU4MiVCRiVFMyU4MiVCQiVFMyU4MyU4MyVFMyU4MyU4OA==" data-listing-date-sort="1749826800000" data-listing-file-modified-sort="1750125781885" data-listing-date-modified-sort="1749826800000" data-listing-reading-time-sort="23" data-listing-word-count-sort="4557">
+<a href="../../../posts/statistics/2025/解析用データセット仕様書.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<div class="listing-item-img-placeholder card-img-top" style="height: 150px;">&nbsp;</div>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+解析用データセット仕様書
+</h5>
+<div class="card-text listing-description delink">
+<p>個人的な解析データセット作成方法をまとめます。</p>
+</div>
+<div class="card-attribution card-text-small justify">
+<div class="listing-author">
+坂本航太
+</div>
+<div class="listing-date">
+2025/06/14
+</div>
+</div>
+</div>
+</div></a>
+</div>
+</div>
+<div class="listing-no-matching d-none">一致なし</div>
+</div>
 <section id="参考文献" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="参考文献"><span class="header-section-number">1.1</span> 参考文献</h2>
 <ul>
-<li></li>
+<li><a href="https://www.lexjansen.com/pharmasug/2010/AD/AD16.pdf">PharmaSUG2010 - Paper AD16 Automating the Link between Metadata and Analysis Dataset Misha Rittmann, Octagon Research Solutions, Inc., Wayne, PA</a></li>
+<li><a href="https://www.lexjansen.com/pharmasug/2010/TT/TT06.pdf">PharmaSUG2010 - Paper TT06 SAS Programming Techniques for Manipulating Metadata on the Database Level Chris Speck, PAREXEL International, Durham, NC</a></li>
+<li><a href="https://www.lexjansen.com/pharmasug/2011/CD/PharmaSUG-2011-CD17.pdf">PharmaSUG2011 – Paper CD17 Making a List, Checking it Twice (Part 1): Techniques for Specifying and Validating Analysis Datasets</a></li>
+<li><a href="https://www.lexjansen.com/pharmasug/2011/CD/PharmaSUG-2011-CD12.pdf">PharmaSUG2011 - Paper CD12ADaM Standard Naming Conventions are Good to HaveChristine Teng, Merck Sharp &amp; Dohme Corp, Rahway, NJ</a></li>
 </ul>
+
 
 
 </section>
