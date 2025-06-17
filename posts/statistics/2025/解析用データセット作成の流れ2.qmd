@@ -69,7 +69,7 @@ run;
 ### Analysis Dataset Metadataシート
 
 | Dataset Name | Dataset Description | Dataset Structure | Key Variables |
-|-----------------|-------------------|-------------------|-----------------|
+|------------------|------------------|------------------|------------------|
 | ADSL | Subject Population, demographic and baseline | one record per subject | USUBJID |
 | ADAE | Adverse Event Analysis Dataset | one record per subject per AE | USUBJID, AESEQ |
 | ADEF | Analysis Dataset for Efficacy Disease Parameters | 1 record per subject parameter | USUBJID, PARAMCD |
@@ -221,30 +221,27 @@ stop;  /* 0観測データセットにする */
         getnames=yes;
     run;
     
-    /* 空箱生成コード作成 */
-    data _null_;
-        file "C:\temp\&dsname._shell.sas";
-        set work.spec_&dsname end=last_obs;
-        
-        if _n_ = 1 then do;
-            put "data &dsname._shell;";
-            put "    attrib";
-        end;
-        
-        put "        " Variable_Name @20 "length=" @;
-        if upcase(Type) = "TEXT" then put "$" @;
-        if Display_Format ne '' then 
-            put Display_Format @35 "label='" Variable_Label "'";
-        else 
-            put Length @35 "label='" Variable_Label "'";
-        
-        if last_obs then do;
-            put "    ;";
-            put "    call missing(of _all_);";
-            put "    stop;";
-            put "run;";
-        end;
-    run;
+data _null_;
+    file "C:\Users\temp\ADSL_shell.sas";
+    set work.spec_clean end=last_obs;
+    
+    if _n_ = 1 then do;
+        put "/* ADSL空箱データセット */";
+        put "data adsl_shell;";
+        put "    attrib";
+    end;
+
+    put "        " Variable_Name " length=" @;
+    if upcase(Type) = "CHAR" then put "$" @;
+    put Length " label='" Variable_Label "'";
+    
+    if last_obs then do;
+        put "    ;";
+        put "    call missing(of _all_);  
+        put "    stop;                    
+        put "run;";
+    end;
+run;
 %mend;
 
 /* 各データセットの空箱を生成 */
@@ -268,3 +265,88 @@ stop;  /* 0観測データセットにする */
 4\. 再利用性: 複数のプログラムで同じattrib文を使用可能
 
 5\. 検証支援: 独立プログラミングでも同じ仕様書を活用
+
+# SASコードリストからフォーマット自動生成の実装例
+
+##  Excelコードリストの読み込みと PROC FORMAT用データセット変換
+Excelコードリストの読み込み
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+/* Excelファイルからコードリストを読み込み */
+proc import datafile="C:\path\to\codelist.xlsx"
+    out=Codelist
+    dbms=xlsx
+    replace;
+    sheet="Sheet1";
+    getnames=yes;
+run;
+
+/* CNTLIN形式に変換 */
+data _Fmt;
+    set Codelist;
+    
+    FMTNAME = Codelist_Name;  /* フォーマット名 */
+    START = Value;            /* 開始値 */
+    LABEL = Label;            /* ラベル */
+    
+    /* 数値・文字型の判定 */
+    if Type = 'Num' then TYPE = 'N';
+    else TYPE = 'C';
+    
+    /* 不要な変数を除外 */
+    keep FMTNAME START LABEL TYPE;
+run;
+
+```
+
+## フォーマット作成・出力
+
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+/*-------------------------*/
+/*   作業用フォーマット作成           */
+/*-------------------------*/
+proc format lib=work cntlin=_Fmt;
+run;
+
+/*-------------------------*/
+/*   フォーマットの出力               */
+/*-------------------------*/
+proc format lib=Output cntlin=_Fmt;
+run;
+```
+
+## 用途例
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+/* 臨床試験の被験者背景表 */
+proc tabulate data=trial_data;
+    class sex agegrp;
+    table sex, agegrp*n*f=8.0;
+    format sex $SEX. agegrp $AGEGRP.;
+    title "被験者背景（性別・年齢群別）";
+run;
+
+```
+
+## Specificationシートでの記載例
+目的: Excelで管理されているコードリストマスターから自動的にSAS formatを生成し、データの標準化を図る
+処理フロー:
+
+1. ExcelコードリストをSASデータセットとして読み込み
+2. PROC FORMAT用のCNTLIN形式に変換（数値・文字型の自動判定含む）
+3. 作業用ライブラリでフォーマット作成・検証
+4. 本番ライブラリに最終出力
+
+入力ファイル: codelist.xlsxと出力フォーマットである。
+
+- SEX（文字型）: M=Male, F=Female, U=Unknown
+- SEXN（数値型）: 1=男性, 2=女性
+- NYFL（文字型）: Y=Yes, N=No
+- AGEU（文字型）: YEARS=Years, MONTHS=Months
+
+### 実装のメリット
+1. Excel管理の利便性: 非プログラマーでもコードリストの更新が容易で、チーム間での共有も簡単です。
+2. 混在データ型対応: 数値型と文字型のフォーマットが混在していても、自動的に適切な形式で生成されます。
+3. 自動化による効率性: 手動でのフォーマット定義が不要になり、Excelファイルの更新が即座にSASフォーマットに反映されます。
+4. 品質向上: ヒューマンエラーが削減され、データの標準化が徹底されます。
+5. 拡張性: 新しいコードリストの追加がExcelシートへの行追加だけで完了し、CDISC標準などへの準拠も効率的に行えます。

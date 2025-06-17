@@ -196,7 +196,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">目次</h2>
    
   <ul class="collapse">
-  <li><a href="#解析用データセット作成の流れフォルダ構造等" id="toc-解析用データセット作成の流れフォルダ構造等" class="nav-link active" data-scroll-target="#解析用データセット作成の流れフォルダ構造等"><span class="header-section-number">1</span> 解析用データセット作成の流れ（フォルダ構造等）</a>
+  <li><a href="#解析用データセット作成の流れ1" id="toc-解析用データセット作成の流れ1" class="nav-link active" data-scroll-target="#解析用データセット作成の流れ1"><span class="header-section-number">1</span> 解析用データセット作成の流れ1</a>
   <ul class="collapse">
   <li><a href="#はじめに" id="toc-はじめに" class="nav-link" data-scroll-target="#はじめに"><span class="header-section-number">1.1</span> はじめに</a></li>
   <li><a href="#参考文献" id="toc-参考文献" class="nav-link" data-scroll-target="#参考文献"><span class="header-section-number">1.2</span> 参考文献</a></li>
@@ -227,8 +227,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<section id="解析用データセット作成の流れフォルダ構造等" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span> 解析用データセット作成の流れ（フォルダ構造等）</h1>
+<section id="解析用データセット作成の流れ1" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> 解析用データセット作成の流れ1</h1>
 <p>効率的なフォルダ構成でプロジェクトを管理する</p>
 <section id="はじめに" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="はじめに"><span class="header-section-number">1.1</span> はじめに</h2>
@@ -719,7 +719,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb8-91"><a href="#cb8-91"></a>   %if %sysfunc(fileexist(&amp;path)) = 0 %then %do;</span>
 <span id="cb8-92"><a href="#cb8-92"></a>       %if %length(&amp;parent_dir) &gt; 0 %then %do;</span>
 <span id="cb8-93"><a href="#cb8-93"></a>           %if %sysfunc(fileexist(&amp;parent_dir)) = 0 %then %do;</span>
-<span id="cb8-94"><a href="#cb8-94"></a>               %create_dir_structure(&amp;parent_dir);</span>
+<span id="cb8-94"><a href="#cb8-94"></a>               %create_dir(&amp;parent_dir);</span>
 <span id="cb8-95"><a href="#cb8-95"></a>           %end;</span>
 <span id="cb8-96"><a href="#cb8-96"></a>       %end;</span>
 <span id="cb8-97"><a href="#cb8-97"></a>       %let rc = %sysfunc(dcreate(&amp;dir_name, &amp;parent_dir));</span>

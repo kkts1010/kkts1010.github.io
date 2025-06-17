@@ -251,6 +251,24 @@ ADLB、ADTTEなどのBDS形式データセットでは、パラメータの定�
 | Time to Progression             | TTP         | 4           | ADT - STARTDT + 1 |
 +---------------------------------+-------------+-------------+-------------------+
 
+## Code ListのSheetについて
+
+`Proc Format`でFormatを作るvalueとLabelを事前に仕様書に用意しておく。
+
+| No. | Codelist_Name | Value   | Label   | Type | 説明   | Synonym | 備考 |
+|-----|---------------|---------|---------|------|--------|---------|------|
+| 1   | SEX          | M       | Male    | Char | 男性   | 男      |      |
+| 2   | SEX          | F       | Female  | Char | 女性   | 女      |      |
+| 3   | SEX          | U       | Unknown | Char | 不明   | 未知    |      |
+| 4   | SEXN         | 1       | 男性    | Num  | 男性   | Male    |      |
+| 5   | SEXN         | 2       | 女性    | Num  | 女性   | Female  |      |
+| 6   | NYFL         | Y       | Yes     | Char | はい   | あり    |      |
+| 7   | NYFL         | N       | No      | Char | いいえ | なし    |      |
+| 8   | AGEU         | YEARS   | Years   | Char | 年     | 年      |      |
+| 9   | AGEU         | MONTHS  | Months  | Char | 月     | ヶ月    |      |
+
+
+
 ## ADLBデータセットの重要な変数
 
 ### 解析値とカテゴリ変数
@@ -316,22 +334,6 @@ ADTTEでは元データの追跡可能性が重要です：
 3.  **追跡可能性の確保**：各レコードの導出元を明確に記録
 4.  **複数事象の処理**：同一被験者で複数の解析パラメータを生成
 
-## Code Listシート
-
-コード値とその意味を定義するシートです。ADaM Terminology形式で管理します。
-
-### Code Listシート構成
-
-| Reference Name | Code Value | Code Text |
-|----------------|------------|-----------|
-| SEXN           | 1          | 男性      |
-| SEXN           | 2          | 女性      |
-| SEX            | M          | Male      |
-| SEX            | F          | Female    |
-| NYFL           | Y          | Yes       |
-| NYFL           | N          | No        |
-| AGEU           | YEARS      | Years     |
-| AGEU           | MONTHS     | Months    |
 
 ## データセット作成プロセス
 

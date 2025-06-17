@@ -3909,9 +3909,9 @@ vertical-align: -.125em;
   <li><a href="#解析用データセット仕様書の基本構成" id="toc-解析用データセット仕様書の基本構成" class="nav-link" data-scroll-target="#解析用データセット仕様書の基本構成"><span class="header-section-number">2.2</span> 解析用データセット仕様書の基本構成</a></li>
   <li><a href="#specificationシートの構成" id="toc-specificationシートの構成" class="nav-link" data-scroll-target="#specificationシートの構成"><span class="header-section-number">2.3</span> Specificationシートの構成</a></li>
   <li><a href="#paramシート" id="toc-paramシート" class="nav-link" data-scroll-target="#paramシート"><span class="header-section-number">2.4</span> PARAMシート</a></li>
-  <li><a href="#adlbデータセットの重要な変数" id="toc-adlbデータセットの重要な変数" class="nav-link" data-scroll-target="#adlbデータセットの重要な変数"><span class="header-section-number">2.5</span> ADLBデータセットの重要な変数</a></li>
-  <li><a href="#adtteデータセットの詳細" id="toc-adtteデータセットの詳細" class="nav-link" data-scroll-target="#adtteデータセットの詳細"><span class="header-section-number">2.6</span> ADTTEデータセットの詳細</a></li>
-  <li><a href="#code-listシート" id="toc-code-listシート" class="nav-link" data-scroll-target="#code-listシート"><span class="header-section-number">2.7</span> Code Listシート</a></li>
+  <li><a href="#code-listのsheetについて" id="toc-code-listのsheetについて" class="nav-link" data-scroll-target="#code-listのsheetについて"><span class="header-section-number">2.5</span> Code ListのSheetについて</a></li>
+  <li><a href="#adlbデータセットの重要な変数" id="toc-adlbデータセットの重要な変数" class="nav-link" data-scroll-target="#adlbデータセットの重要な変数"><span class="header-section-number">2.6</span> ADLBデータセットの重要な変数</a></li>
+  <li><a href="#adtteデータセットの詳細" id="toc-adtteデータセットの詳細" class="nav-link" data-scroll-target="#adtteデータセットの詳細"><span class="header-section-number">2.7</span> ADTTEデータセットの詳細</a></li>
   <li><a href="#データセット作成プロセス" id="toc-データセット作成プロセス" class="nav-link" data-scroll-target="#データセット作成プロセス"><span class="header-section-number">2.8</span> データセット作成プロセス</a></li>
   <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"><span class="header-section-number">2.9</span> </a></li>
   </ul></li>
@@ -5186,29 +5186,149 @@ vertical-align: -.125em;
 </table>
 </section>
 </section>
-<section id="adlbデータセットの重要な変数" class="level2" data-number="2.5">
-<h2 data-number="2.5" class="anchored" data-anchor-id="adlbデータセットの重要な変数"><span class="header-section-number">2.5</span> ADLBデータセットの重要な変数</h2>
-<section id="解析値とカテゴリ変数" class="level3" data-number="2.5.1">
-<h3 data-number="2.5.1" class="anchored" data-anchor-id="解析値とカテゴリ変数"><span class="header-section-number">2.5.1</span> 解析値とカテゴリ変数</h3>
+<section id="code-listのsheetについて" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="code-listのsheetについて"><span class="header-section-number">2.5</span> Code ListのSheetについて</h2>
+<p><code>Proc Format</code>でFormatを作るvalueとLabelを事前に仕様書に用意しておく。</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 7%">
+<col style="width: 22%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 8%">
+<col style="width: 11%">
+<col style="width: 13%">
+<col style="width: 8%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>No.</th>
+<th>Codelist_Name</th>
+<th>Value</th>
+<th>Label</th>
+<th>Type</th>
+<th>説明</th>
+<th>Synonym</th>
+<th>備考</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>SEX</td>
+<td>M</td>
+<td>Male</td>
+<td>Char</td>
+<td>男性</td>
+<td>男</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>SEX</td>
+<td>F</td>
+<td>Female</td>
+<td>Char</td>
+<td>女性</td>
+<td>女</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>SEX</td>
+<td>U</td>
+<td>Unknown</td>
+<td>Char</td>
+<td>不明</td>
+<td>未知</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>SEXN</td>
+<td>1</td>
+<td>男性</td>
+<td>Num</td>
+<td>男性</td>
+<td>Male</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>SEXN</td>
+<td>2</td>
+<td>女性</td>
+<td>Num</td>
+<td>女性</td>
+<td>Female</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>NYFL</td>
+<td>Y</td>
+<td>Yes</td>
+<td>Char</td>
+<td>はい</td>
+<td>あり</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>NYFL</td>
+<td>N</td>
+<td>No</td>
+<td>Char</td>
+<td>いいえ</td>
+<td>なし</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>AGEU</td>
+<td>YEARS</td>
+<td>Years</td>
+<td>Char</td>
+<td>年</td>
+<td>年</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td>AGEU</td>
+<td>MONTHS</td>
+<td>Months</td>
+<td>Char</td>
+<td>月</td>
+<td>ヶ月</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="adlbデータセットの重要な変数" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="adlbデータセットの重要な変数"><span class="header-section-number">2.6</span> ADLBデータセットの重要な変数</h2>
+<section id="解析値とカテゴリ変数" class="level3" data-number="2.6.1">
+<h3 data-number="2.6.1" class="anchored" data-anchor-id="解析値とカテゴリ変数"><span class="header-section-number">2.6.1</span> 解析値とカテゴリ変数</h3>
 <p>ADLBでは数値解析値（AVAL）に基づいて、様々なカテゴリ変数を作成します：</p>
-<section id="avalcat1-avalcat1n" class="level4" data-number="2.5.1.1">
-<h4 data-number="2.5.1.1" class="anchored" data-anchor-id="avalcat1-avalcat1n"><span class="header-section-number">2.5.1.1</span> AVALCAT1 / AVALCAT1N</h4>
+<section id="avalcat1-avalcat1n" class="level4" data-number="2.6.1.1">
+<h4 data-number="2.6.1.1" class="anchored" data-anchor-id="avalcat1-avalcat1n"><span class="header-section-number">2.6.1.1</span> AVALCAT1 / AVALCAT1N</h4>
 <p>解析値のカテゴリ化変数で、例えば正常範囲の判定などに使用： - “NORMAL” / “ABNORMAL” - “LOW” / “NORMAL” / “HIGH”</p>
 </section>
-<section id="pchgcat1-pchgcat1n" class="level4" data-number="2.5.1.2">
-<h4 data-number="2.5.1.2" class="anchored" data-anchor-id="pchgcat1-pchgcat1n"><span class="header-section-number">2.5.1.2</span> PCHGCAT1 / PCHGCAT1N</h4>
+<section id="pchgcat1-pchgcat1n" class="level4" data-number="2.6.1.2">
+<h4 data-number="2.6.1.2" class="anchored" data-anchor-id="pchgcat1-pchgcat1n"><span class="header-section-number">2.6.1.2</span> PCHGCAT1 / PCHGCAT1N</h4>
 <p>ベースラインからの変化率のカテゴリ化変数： - “&gt;30% increase” / “±30%” / “&gt;30% decrease”</p>
 </section>
 </section>
-<section id="時点変数avisit-avisitn" class="level3" data-number="2.5.2">
-<h3 data-number="2.5.2" class="anchored" data-anchor-id="時点変数avisit-avisitn"><span class="header-section-number">2.5.2</span> 時点変数（AVISIT / AVISITN）</h3>
+<section id="時点変数avisit-avisitn" class="level3" data-number="2.6.2">
+<h3 data-number="2.6.2" class="anchored" data-anchor-id="時点変数avisit-avisitn"><span class="header-section-number">2.6.2</span> 時点変数（AVISIT / AVISITN）</h3>
 <p>解析用の時点定義で、スケジュール通りの時点名： - “Baseline” (AVISITN=0) - “Week 4” (AVISITN=4) - “Week 12” (AVISITN=12) - “End of Treatment” (AVISITN=99)</p>
 </section>
 </section>
-<section id="adtteデータセットの詳細" class="level2" data-number="2.6">
-<h2 data-number="2.6" class="anchored" data-anchor-id="adtteデータセットの詳細"><span class="header-section-number">2.6</span> ADTTEデータセットの詳細</h2>
-<section id="adtteの特徴" class="level3" data-number="2.6.1">
-<h3 data-number="2.6.1" class="anchored" data-anchor-id="adtteの特徴"><span class="header-section-number">2.6.1</span> ADTTEの特徴</h3>
+<section id="adtteデータセットの詳細" class="level2" data-number="2.7">
+<h2 data-number="2.7" class="anchored" data-anchor-id="adtteデータセットの詳細"><span class="header-section-number">2.7</span> ADTTEデータセットの詳細</h2>
+<section id="adtteの特徴" class="level3" data-number="2.7.1">
+<h3 data-number="2.7.1" class="anchored" data-anchor-id="adtteの特徴"><span class="header-section-number">2.7.1</span> ADTTEの特徴</h3>
 <p>ADTTEは生存時間解析用のデータセットで、以下の特徴があります：</p>
 <ul>
 <li><strong>1被験者1パラメータにつき1レコード</strong>の構造</li>
@@ -5216,104 +5336,46 @@ vertical-align: -.125em;
 <li><strong>複数の解析エンドポイント</strong>を1つのデータセットで管理</li>
 </ul>
 </section>
-<section id="adtte作成時の重要な考慮事項" class="level3" data-number="2.6.2">
-<h3 data-number="2.6.2" class="anchored" data-anchor-id="adtte作成時の重要な考慮事項"><span class="header-section-number">2.6.2</span> ADTTE作成時の重要な考慮事項</h3>
-<section id="事象の優先順位" class="level4" data-number="2.6.2.1">
-<h4 data-number="2.6.2.1" class="anchored" data-anchor-id="事象の優先順位"><span class="header-section-number">2.6.2.1</span> 1. 事象の優先順位</h4>
+<section id="adtte作成時の重要な考慮事項" class="level3" data-number="2.7.2">
+<h3 data-number="2.7.2" class="anchored" data-anchor-id="adtte作成時の重要な考慮事項"><span class="header-section-number">2.7.2</span> ADTTE作成時の重要な考慮事項</h3>
+<section id="事象の優先順位" class="level4" data-number="2.7.2.1">
+<h4 data-number="2.7.2.1" class="anchored" data-anchor-id="事象の優先順位"><span class="header-section-number">2.7.2.1</span> 1. 事象の優先順位</h4>
 <p>複数の事象や打ち切りが同日に発生した場合の優先順位を明確に定義する必要があります。</p>
 </section>
-<section id="avalの計算方法" class="level4" data-number="2.6.2.2">
-<h4 data-number="2.6.2.2" class="anchored" data-anchor-id="avalの計算方法"><span class="header-section-number">2.6.2.2</span> 2. AVALの計算方法</h4>
+<section id="avalの計算方法" class="level4" data-number="2.7.2.2">
+<h4 data-number="2.7.2.2" class="anchored" data-anchor-id="avalの計算方法"><span class="header-section-number">2.7.2.2</span> 2. AVALの計算方法</h4>
 <p>AVALは通常、以下の式で計算されます：</p>
 <p>ここで： - <strong>STARTDT</strong>：解析開始日（通常は治療開始日：ADSL.TRTSDT） - <strong>ADT</strong>：解析日（事象発生日または打ち切り日） - <strong>+1</strong>：0日目を避けるための調整</p>
 </section>
-<section id="事象データの取得元" class="level4" data-number="2.6.2.3">
-<h4 data-number="2.6.2.3" class="anchored" data-anchor-id="事象データの取得元"><span class="header-section-number">2.6.2.3</span> 3. 事象データの取得元</h4>
+<section id="事象データの取得元" class="level4" data-number="2.7.2.3">
+<h4 data-number="2.7.2.3" class="anchored" data-anchor-id="事象データの取得元"><span class="header-section-number">2.7.2.3</span> 3. 事象データの取得元</h4>
 <ul>
 <li><strong>事象発生</strong>：ADVS.ADTから日付を取得</li>
 <li><strong>打ち切り</strong>：ADSL.EOSDTから日付を取得</li>
 </ul>
 </section>
-<section id="cnsrフラグの設定" class="level4" data-number="2.6.2.4">
-<h4 data-number="2.6.2.4" class="anchored" data-anchor-id="cnsrフラグの設定"><span class="header-section-number">2.6.2.4</span> 4. CNSRフラグの設定</h4>
+<section id="cnsrフラグの設定" class="level4" data-number="2.7.2.4">
+<h4 data-number="2.7.2.4" class="anchored" data-anchor-id="cnsrフラグの設定"><span class="header-section-number">2.7.2.4</span> 4. CNSRフラグの設定</h4>
 <ul>
 <li><strong>CNSR=0</strong>：事象発生</li>
 <li><strong>CNSR=1</strong>：打ち切り</li>
 </ul>
 </section>
-<section id="ソースデータの追跡srcdom-srcvar-srcseq" class="level4" data-number="2.6.2.5">
-<h4 data-number="2.6.2.5" class="anchored" data-anchor-id="ソースデータの追跡srcdom-srcvar-srcseq"><span class="header-section-number">2.6.2.5</span> 5. ソースデータの追跡（SRCDOM, SRCVAR, SRCSEQ）</h4>
+<section id="ソースデータの追跡srcdom-srcvar-srcseq" class="level4" data-number="2.7.2.5">
+<h4 data-number="2.7.2.5" class="anchored" data-anchor-id="ソースデータの追跡srcdom-srcvar-srcseq"><span class="header-section-number">2.7.2.5</span> 5. ソースデータの追跡（SRCDOM, SRCVAR, SRCSEQ）</h4>
 <p>ADTTEでは元データの追跡可能性が重要です：</p>
 <p><strong>事象採用時</strong>： - SRCDOM=“ADVS” - SRCVAR=“ADT” - SRCSEQ=ADVS.ASEQ</p>
 <p><strong>打ち切り時</strong>： - SRCDOM=“ADSL” - SRCVAR=“EOSDT” - SRCSEQ=（ブランク）</p>
 </section>
 </section>
-<section id="adtteプログラミングのポイント" class="level3" data-number="2.6.3">
-<h3 data-number="2.6.3" class="anchored" data-anchor-id="adtteプログラミングのポイント"><span class="header-section-number">2.6.3</span> ADTTEプログラミングのポイント</h3>
+<section id="adtteプログラミングのポイント" class="level3" data-number="2.7.3">
+<h3 data-number="2.7.3" class="anchored" data-anchor-id="adtteプログラミングのポイント"><span class="header-section-number">2.7.3</span> ADTTEプログラミングのポイント</h3>
 <ol type="1">
 <li><strong>データセットの組み合わせ</strong>：複数のデータセット（ADSL、ADVS等）を適切に結合</li>
 <li><strong>日付の妥当性チェック</strong>：論理的に矛盾する日付の検出と処理</li>
 <li><strong>追跡可能性の確保</strong>：各レコードの導出元を明確に記録</li>
 <li><strong>複数事象の処理</strong>：同一被験者で複数の解析パラメータを生成</li>
 </ol>
-</section>
-</section>
-<section id="code-listシート" class="level2" data-number="2.7">
-<h2 data-number="2.7" class="anchored" data-anchor-id="code-listシート"><span class="header-section-number">2.7</span> Code Listシート</h2>
-<p>コード値とその意味を定義するシートです。ADaM Terminology形式で管理します。</p>
-<section id="code-listシート構成" class="level3" data-number="2.7.1">
-<h3 data-number="2.7.1" class="anchored" data-anchor-id="code-listシート構成"><span class="header-section-number">2.7.1</span> Code Listシート構成</h3>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Reference Name</th>
-<th>Code Value</th>
-<th>Code Text</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>SEXN</td>
-<td>1</td>
-<td>男性</td>
-</tr>
-<tr class="even">
-<td>SEXN</td>
-<td>2</td>
-<td>女性</td>
-</tr>
-<tr class="odd">
-<td>SEX</td>
-<td>M</td>
-<td>Male</td>
-</tr>
-<tr class="even">
-<td>SEX</td>
-<td>F</td>
-<td>Female</td>
-</tr>
-<tr class="odd">
-<td>NYFL</td>
-<td>Y</td>
-<td>Yes</td>
-</tr>
-<tr class="even">
-<td>NYFL</td>
-<td>N</td>
-<td>No</td>
-</tr>
-<tr class="odd">
-<td>AGEU</td>
-<td>YEARS</td>
-<td>Years</td>
-</tr>
-<tr class="even">
-<td>AGEU</td>
-<td>MONTHS</td>
-<td>Months</td>
-</tr>
-</tbody>
-</table>
 </section>
 </section>
 <section id="データセット作成プロセス" class="level2" data-number="2.8">

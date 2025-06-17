@@ -286,6 +286,13 @@ window.Quarto = {
   <li><a href="#重要なポイント" id="toc-重要なポイント" class="nav-link" data-scroll-target="#重要なポイント"><span class="header-section-number">2.8</span> 重要なポイント</a></li>
   <li><a href="#例" id="toc-例" class="nav-link" data-scroll-target="#例"><span class="header-section-number">2.9</span> 例</a></li>
   </ul></li>
+  <li><a href="#sasコードリストからフォーマット自動生成の実装例" id="toc-sasコードリストからフォーマット自動生成の実装例" class="nav-link" data-scroll-target="#sasコードリストからフォーマット自動生成の実装例"><span class="header-section-number">3</span> SASコードリストからフォーマット自動生成の実装例</a>
+  <ul class="collapse">
+  <li><a href="#excelコードリストの読み込みと-proc-format用データセット変換" id="toc-excelコードリストの読み込みと-proc-format用データセット変換" class="nav-link" data-scroll-target="#excelコードリストの読み込みと-proc-format用データセット変換"><span class="header-section-number">3.1</span> Excelコードリストの読み込みと PROC FORMAT用データセット変換</a></li>
+  <li><a href="#フォーマット作成出力" id="toc-フォーマット作成出力" class="nav-link" data-scroll-target="#フォーマット作成出力"><span class="header-section-number">3.2</span> フォーマット作成・出力</a></li>
+  <li><a href="#用途例" id="toc-用途例" class="nav-link" data-scroll-target="#用途例"><span class="header-section-number">3.3</span> 用途例</a></li>
+  <li><a href="#specificationシートでの記載例" id="toc-specificationシートでの記載例" class="nav-link" data-scroll-target="#specificationシートでの記載例"><span class="header-section-number">3.4</span> Specificationシートでの記載例</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -354,10 +361,10 @@ window.Quarto = {
 <h3 data-number="2.2.1" class="anchored" data-anchor-id="analysis-dataset-metadataシート"><span class="header-section-number">2.2.1</span> Analysis Dataset Metadataシート</h3>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 23%">
-<col style="width: 26%">
-<col style="width: 26%">
-<col style="width: 23%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -589,36 +596,33 @@ window.Quarto = {
 <span id="cb9-9"><a href="#cb9-9"></a>        getnames=yes;</span>
 <span id="cb9-10"><a href="#cb9-10"></a>    run;</span>
 <span id="cb9-11"><a href="#cb9-11"></a>    </span>
-<span id="cb9-12"><a href="#cb9-12"></a>    /* 空箱生成コード作成 */</span>
-<span id="cb9-13"><a href="#cb9-13"></a>    data _null_;</span>
-<span id="cb9-14"><a href="#cb9-14"></a>        file "C:\temp\&amp;dsname._shell.sas";</span>
-<span id="cb9-15"><a href="#cb9-15"></a>        set work.spec_&amp;dsname end=last_obs;</span>
-<span id="cb9-16"><a href="#cb9-16"></a>        </span>
-<span id="cb9-17"><a href="#cb9-17"></a>        if _n_ = 1 then do;</span>
-<span id="cb9-18"><a href="#cb9-18"></a>            put "data &amp;dsname._shell;";</span>
-<span id="cb9-19"><a href="#cb9-19"></a>            put "    attrib";</span>
-<span id="cb9-20"><a href="#cb9-20"></a>        end;</span>
-<span id="cb9-21"><a href="#cb9-21"></a>        </span>
-<span id="cb9-22"><a href="#cb9-22"></a>        put "        " Variable_Name @20 "length=" @;</span>
-<span id="cb9-23"><a href="#cb9-23"></a>        if upcase(Type) = "TEXT" then put "$" @;</span>
-<span id="cb9-24"><a href="#cb9-24"></a>        if Display_Format ne '' then </span>
-<span id="cb9-25"><a href="#cb9-25"></a>            put Display_Format @35 "label='" Variable_Label "'";</span>
-<span id="cb9-26"><a href="#cb9-26"></a>        else </span>
-<span id="cb9-27"><a href="#cb9-27"></a>            put Length @35 "label='" Variable_Label "'";</span>
-<span id="cb9-28"><a href="#cb9-28"></a>        </span>
-<span id="cb9-29"><a href="#cb9-29"></a>        if last_obs then do;</span>
-<span id="cb9-30"><a href="#cb9-30"></a>            put "    ;";</span>
-<span id="cb9-31"><a href="#cb9-31"></a>            put "    call missing(of _all_);";</span>
-<span id="cb9-32"><a href="#cb9-32"></a>            put "    stop;";</span>
-<span id="cb9-33"><a href="#cb9-33"></a>            put "run;";</span>
-<span id="cb9-34"><a href="#cb9-34"></a>        end;</span>
-<span id="cb9-35"><a href="#cb9-35"></a>    run;</span>
-<span id="cb9-36"><a href="#cb9-36"></a>%mend;</span>
-<span id="cb9-37"><a href="#cb9-37"></a></span>
-<span id="cb9-38"><a href="#cb9-38"></a>/* 各データセットの空箱を生成 */</span>
-<span id="cb9-39"><a href="#cb9-39"></a>%create_shell(ADSL);</span>
-<span id="cb9-40"><a href="#cb9-40"></a>%create_shell(ADAE);</span>
-<span id="cb9-41"><a href="#cb9-41"></a>%create_shell(ADEF);</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-12"><a href="#cb9-12"></a>data _null_;</span>
+<span id="cb9-13"><a href="#cb9-13"></a>    file "C:\Users\temp\ADSL_shell.sas";</span>
+<span id="cb9-14"><a href="#cb9-14"></a>    set work.spec_clean end=last_obs;</span>
+<span id="cb9-15"><a href="#cb9-15"></a>    </span>
+<span id="cb9-16"><a href="#cb9-16"></a>    if _n_ = 1 then do;</span>
+<span id="cb9-17"><a href="#cb9-17"></a>        put "/* ADSL空箱データセット */";</span>
+<span id="cb9-18"><a href="#cb9-18"></a>        put "data adsl_shell;";</span>
+<span id="cb9-19"><a href="#cb9-19"></a>        put "    attrib";</span>
+<span id="cb9-20"><a href="#cb9-20"></a>    end;</span>
+<span id="cb9-21"><a href="#cb9-21"></a></span>
+<span id="cb9-22"><a href="#cb9-22"></a>    put "        " Variable_Name " length=" @;</span>
+<span id="cb9-23"><a href="#cb9-23"></a>    if upcase(Type) = "CHAR" then put "$" @;</span>
+<span id="cb9-24"><a href="#cb9-24"></a>    put Length " label='" Variable_Label "'";</span>
+<span id="cb9-25"><a href="#cb9-25"></a>    </span>
+<span id="cb9-26"><a href="#cb9-26"></a>    if last_obs then do;</span>
+<span id="cb9-27"><a href="#cb9-27"></a>        put "    ;";</span>
+<span id="cb9-28"><a href="#cb9-28"></a>        put "    call missing(of _all_);  </span>
+<span id="cb9-29"><a href="#cb9-29"></a>        put "    stop;                    </span>
+<span id="cb9-30"><a href="#cb9-30"></a>        put "run;";</span>
+<span id="cb9-31"><a href="#cb9-31"></a>    end;</span>
+<span id="cb9-32"><a href="#cb9-32"></a>run;</span>
+<span id="cb9-33"><a href="#cb9-33"></a>%mend;</span>
+<span id="cb9-34"><a href="#cb9-34"></a></span>
+<span id="cb9-35"><a href="#cb9-35"></a>/* 各データセットの空箱を生成 */</span>
+<span id="cb9-36"><a href="#cb9-36"></a>%create_shell(ADSL);</span>
+<span id="cb9-37"><a href="#cb9-37"></a>%create_shell(ADAE);</span>
+<span id="cb9-38"><a href="#cb9-38"></a>%create_shell(ADEF);</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <section id="includeによる読み込み" class="level3" data-number="2.9.1">
 <h3 data-number="2.9.1" class="anchored" data-anchor-id="includeによる読み込み"><span class="header-section-number">2.9.1</span> %includeによる読み込み</h3>
 <p>生成されたSASコードは%include文で読み込み、任意のデータステップで使用できます。</p>
@@ -628,6 +632,88 @@ window.Quarto = {
 <p>3. 保守性: 仕様変更時はExcelファイルの更新のみで対応</p>
 <p>4. 再利用性: 複数のプログラムで同じattrib文を使用可能</p>
 <p>5. 検証支援: 独立プログラミングでも同じ仕様書を活用</p>
+</section>
+</section>
+</section>
+<section id="sasコードリストからフォーマット自動生成の実装例" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> SASコードリストからフォーマット自動生成の実装例</h1>
+<section id="excelコードリストの読み込みと-proc-format用データセット変換" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="excelコードリストの読み込みと-proc-format用データセット変換"><span class="header-section-number">3.1</span> Excelコードリストの読み込みと PROC FORMAT用データセット変換</h2>
+<p>Excelコードリストの読み込み</p>
+<div class="sourceCode" id="cb10" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource sas number-lines code-with-copy"><code class="sourceCode"><span id="cb10-1"><a href="#cb10-1"></a>/* Excelファイルからコードリストを読み込み */</span>
+<span id="cb10-2"><a href="#cb10-2"></a>proc import datafile="C:\path\to\codelist.xlsx"</span>
+<span id="cb10-3"><a href="#cb10-3"></a>    out=Codelist</span>
+<span id="cb10-4"><a href="#cb10-4"></a>    dbms=xlsx</span>
+<span id="cb10-5"><a href="#cb10-5"></a>    replace;</span>
+<span id="cb10-6"><a href="#cb10-6"></a>    sheet="Sheet1";</span>
+<span id="cb10-7"><a href="#cb10-7"></a>    getnames=yes;</span>
+<span id="cb10-8"><a href="#cb10-8"></a>run;</span>
+<span id="cb10-9"><a href="#cb10-9"></a></span>
+<span id="cb10-10"><a href="#cb10-10"></a>/* CNTLIN形式に変換 */</span>
+<span id="cb10-11"><a href="#cb10-11"></a>data _Fmt;</span>
+<span id="cb10-12"><a href="#cb10-12"></a>    set Codelist;</span>
+<span id="cb10-13"><a href="#cb10-13"></a>    </span>
+<span id="cb10-14"><a href="#cb10-14"></a>    FMTNAME = Codelist_Name;  /* フォーマット名 */</span>
+<span id="cb10-15"><a href="#cb10-15"></a>    START = Value;            /* 開始値 */</span>
+<span id="cb10-16"><a href="#cb10-16"></a>    LABEL = Label;            /* ラベル */</span>
+<span id="cb10-17"><a href="#cb10-17"></a>    </span>
+<span id="cb10-18"><a href="#cb10-18"></a>    /* 数値・文字型の判定 */</span>
+<span id="cb10-19"><a href="#cb10-19"></a>    if Type = 'Num' then TYPE = 'N';</span>
+<span id="cb10-20"><a href="#cb10-20"></a>    else TYPE = 'C';</span>
+<span id="cb10-21"><a href="#cb10-21"></a>    </span>
+<span id="cb10-22"><a href="#cb10-22"></a>    /* 不要な変数を除外 */</span>
+<span id="cb10-23"><a href="#cb10-23"></a>    keep FMTNAME START LABEL TYPE;</span>
+<span id="cb10-24"><a href="#cb10-24"></a>run;</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="フォーマット作成出力" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="フォーマット作成出力"><span class="header-section-number">3.2</span> フォーマット作成・出力</h2>
+<div class="sourceCode" id="cb11" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource sas number-lines code-with-copy"><code class="sourceCode"><span id="cb11-1"><a href="#cb11-1"></a>/*-------------------------*/</span>
+<span id="cb11-2"><a href="#cb11-2"></a>/*   作業用フォーマット作成           */</span>
+<span id="cb11-3"><a href="#cb11-3"></a>/*-------------------------*/</span>
+<span id="cb11-4"><a href="#cb11-4"></a>proc format lib=work cntlin=_Fmt;</span>
+<span id="cb11-5"><a href="#cb11-5"></a>run;</span>
+<span id="cb11-6"><a href="#cb11-6"></a></span>
+<span id="cb11-7"><a href="#cb11-7"></a>/*-------------------------*/</span>
+<span id="cb11-8"><a href="#cb11-8"></a>/*   フォーマットの出力               */</span>
+<span id="cb11-9"><a href="#cb11-9"></a>/*-------------------------*/</span>
+<span id="cb11-10"><a href="#cb11-10"></a>proc format lib=Output cntlin=_Fmt;</span>
+<span id="cb11-11"><a href="#cb11-11"></a>run;</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="用途例" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="用途例"><span class="header-section-number">3.3</span> 用途例</h2>
+<div class="sourceCode" id="cb12" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource sas number-lines code-with-copy"><code class="sourceCode"><span id="cb12-1"><a href="#cb12-1"></a>/* 臨床試験の被験者背景表 */</span>
+<span id="cb12-2"><a href="#cb12-2"></a>proc tabulate data=trial_data;</span>
+<span id="cb12-3"><a href="#cb12-3"></a>    class sex agegrp;</span>
+<span id="cb12-4"><a href="#cb12-4"></a>    table sex, agegrp*n*f=8.0;</span>
+<span id="cb12-5"><a href="#cb12-5"></a>    format sex $SEX. agegrp $AGEGRP.;</span>
+<span id="cb12-6"><a href="#cb12-6"></a>    title "被験者背景（性別・年齢群別）";</span>
+<span id="cb12-7"><a href="#cb12-7"></a>run;</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="specificationシートでの記載例" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="specificationシートでの記載例"><span class="header-section-number">3.4</span> Specificationシートでの記載例</h2>
+<p>目的: Excelで管理されているコードリストマスターから自動的にSAS formatを生成し、データの標準化を図る 処理フロー:</p>
+<ol type="1">
+<li>ExcelコードリストをSASデータセットとして読み込み</li>
+<li>PROC FORMAT用のCNTLIN形式に変換（数値・文字型の自動判定含む）</li>
+<li>作業用ライブラリでフォーマット作成・検証</li>
+<li>本番ライブラリに最終出力</li>
+</ol>
+<p>入力ファイル: codelist.xlsxと出力フォーマットである。</p>
+<ul>
+<li>SEX（文字型）: M=Male, F=Female, U=Unknown</li>
+<li>SEXN（数値型）: 1=男性, 2=女性</li>
+<li>NYFL（文字型）: Y=Yes, N=No</li>
+<li>AGEU（文字型）: YEARS=Years, MONTHS=Months</li>
+</ul>
+<section id="実装のメリット" class="level3" data-number="3.4.1">
+<h3 data-number="3.4.1" class="anchored" data-anchor-id="実装のメリット"><span class="header-section-number">3.4.1</span> 実装のメリット</h3>
+<ol type="1">
+<li>Excel管理の利便性: 非プログラマーでもコードリストの更新が容易で、チーム間での共有も簡単です。</li>
+<li>混在データ型対応: 数値型と文字型のフォーマットが混在していても、自動的に適切な形式で生成されます。</li>
+<li>自動化による効率性: 手動でのフォーマット定義が不要になり、Excelファイルの更新が即座にSASフォーマットに反映されます。</li>
+<li>品質向上: ヒューマンエラーが削減され、データの標準化が徹底されます。</li>
+<li>拡張性: 新しいコードリストの追加がExcelシートへの行追加だけで完了し、CDISC標準などへの準拠も効率的に行えます。</li>
+</ol>
 
 
 
@@ -637,7 +723,7 @@ window.Quarto = {
 
 <div class="quarto-listing quarto-listing-container-grid" id="listing-lst">
 <div class="list grid quarto-listing-cols-3">
-<div class="g-col-1" data-index="0" data-categories="U0FTJTJDJUU4JUE3JUEzJUU2JTlFJTkwJUUzJTgzJTk3JUUzJTgzJUFEJUUzJTgyJUIwJUUzJTgzJUE5JUUzJTgzJTlGJUUzJTgzJUIzJUUzJTgyJUIw" data-listing-date-sort="1749826800000" data-listing-file-modified-sort="1750151053053" data-listing-date-modified-sort="1749826800000" data-listing-reading-time-sort="12" data-listing-word-count-sort="2237">
+<div class="g-col-1" data-index="0" data-categories="U0FTJTJDJUU4JUE3JUEzJUU2JTlFJTkwJUUzJTgzJTk3JUUzJTgzJUFEJUUzJTgyJUIwJUUzJTgzJUE5JUUzJTgzJTlGJUUzJTgzJUIzJUUzJTgyJUIw" data-listing-date-sort="1749826800000" data-listing-file-modified-sort="1750155616031" data-listing-date-modified-sort="1749826800000" data-listing-reading-time-sort="12" data-listing-word-count-sort="2237">
 <a href="../../../posts/statistics/2025/解析用データセット作成の流れ1.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <div class="listing-item-img-placeholder card-img-top" style="height: 150px;">&nbsp;</div>
@@ -659,7 +745,7 @@ window.Quarto = {
 </div>
 </div></a>
 </div>
-<div class="g-col-1" data-index="1" data-categories="U0FTJTJDUiUyQyVFOCVBNyVBMyVFNiU5RSU5MCVFNyU5NCVBOCVFMyU4MyU4NyVFMyU4MyVCQyVFMyU4MiVCRiVFMyU4MiVCQiVFMyU4MyU4MyVFMyU4MyU4OA==" data-listing-date-sort="1749826800000" data-listing-file-modified-sort="1750151048489" data-listing-date-modified-sort="1749826800000" data-listing-reading-time-sort="23" data-listing-word-count-sort="4557">
+<div class="g-col-1" data-index="1" data-categories="U0FTJTJDUiUyQyVFOCVBNyVBMyVFNiU5RSU5MCVFNyU5NCVBOCVFMyU4MyU4NyVFMyU4MyVCQyVFMyU4MiVCRiVFMyU4MiVCQiVFMyU4MyU4MyVFMyU4MyU4OA==" data-listing-date-sort="1749826800000" data-listing-file-modified-sort="1750156920867" data-listing-date-modified-sort="1749826800000" data-listing-reading-time-sort="24" data-listing-word-count-sort="4730">
 <a href="../../../posts/statistics/2025/解析用データセット仕様書.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <div class="listing-item-img-placeholder card-img-top" style="height: 150px;">&nbsp;</div>

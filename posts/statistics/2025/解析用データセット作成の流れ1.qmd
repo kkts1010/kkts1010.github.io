@@ -9,7 +9,7 @@ date: "2025-06-14"
 editor: visual
 ---
 
-# 解析用データセット作成の流れ（フォルダ構造等）
+# 解析用データセット作成の流れ1
 
 効率的なフォルダ構成でプロジェクトを管理する
 
@@ -557,7 +557,7 @@ run;
    %if %sysfunc(fileexist(&path)) = 0 %then %do;
        %if %length(&parent_dir) > 0 %then %do;
            %if %sysfunc(fileexist(&parent_dir)) = 0 %then %do;
-               %create_dir_structure(&parent_dir);
+               %create_dir(&parent_dir);
            %end;
        %end;
        %let rc = %sysfunc(dcreate(&dir_name, &parent_dir));
