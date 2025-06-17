@@ -20,13 +20,251 @@ editor: visual
 
 本記事では、以下の私のブログを踏まえて、より具体的な解析データセット作成の流れをまとめていく。
 
-::: {#lst}
-:::
-
-
 ## 参考文献
 
-- [PharmaSUG2010 - Paper AD16 Automating the Link between Metadata and Analysis Dataset Misha Rittmann, Octagon Research Solutions, Inc., Wayne, PA](https://www.lexjansen.com/pharmasug/2010/AD/AD16.pdf)
-- [PharmaSUG2010 - Paper TT06 SAS Programming Techniques for Manipulating Metadata on the Database Level Chris Speck, PAREXEL International, Durham, NC](https://www.lexjansen.com/pharmasug/2010/TT/TT06.pdf)
-- [PharmaSUG2011 – Paper CD17 Making a List, Checking it Twice (Part 1): Techniques for Specifying and Validating Analysis Datasets](https://www.lexjansen.com/pharmasug/2011/CD/PharmaSUG-2011-CD17.pdf)
-- [PharmaSUG2011 - Paper CD12ADaM Standard Naming Conventions are Good to HaveChristine Teng, Merck Sharp & Dohme Corp, Rahway, NJ](https://www.lexjansen.com/pharmasug/2011/CD/PharmaSUG-2011-CD12.pdf)
+-   [PharmaSUG2010 - Paper AD16 Automating the Link between Metadata and Analysis Dataset Misha Rittmann, Octagon Research Solutions, Inc., Wayne, PA](https://www.lexjansen.com/pharmasug/2010/AD/AD16.pdf)
+-   [PharmaSUG2010 - Paper TT06 SAS Programming Techniques for Manipulating Metadata on the Database Level Chris Speck, PAREXEL International, Durham, NC](https://www.lexjansen.com/pharmasug/2010/TT/TT06.pdf)
+-   [PharmaSUG2011 – Paper CD17 Making a List, Checking it Twice (Part 1): Techniques for Specifying and Validating Analysis Datasets](https://www.lexjansen.com/pharmasug/2011/CD/PharmaSUG-2011-CD17.pdf)
+-   [PharmaSUG2011 - Paper CD12ADaM Standard Naming Conventions are Good to HaveChristine Teng, Merck Sharp & Dohme Corp, Rahway, NJ](https://www.lexjansen.com/pharmasug/2011/CD/PharmaSUG-2011-CD12.pdf)
+
+# Excelの仕様書からSASのattrib文を自動生成する方法
+
+## はじめに
+
+臨床研究でADaMデータセットを作成する際、仕様書通りの変数属性（長さ、ラベル）を確実に設定することは極めて重要です。しかし、実データを処理しながら属性を設定すると、元データの属性に引きずられてしまうリスクがあります。 今回は、Excelの仕様書から「空箱データセット」を自動生成し、確実に仕様書通りの構造を作る方法をご紹介します。
+
+### よくある失敗パターン
+
+通常、ADSLデータセットを作成する際は以下のように手動でattrib文を記述します：
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+data adsl;
+    set dm;  /* 実データを先に読み込み */
+    
+    /* 後からattribを設定しても... */
+    attrib 
+        STUDYID length=$20 label="Study Identifier"
+        AGE     length=8   label="Age";
+    
+    /* 元データの属性に引きずられる可能性 */
+run;
+```
+
+### この方法の問題点
+
+1.  元データの変数属性が優先される場合がある
+2.  仕様書通りの長さに設定されない
+3.  ラベルが正しく設定されない場合がある
+
+### 解決方法：空箱データセットの活用
+
+### コンセプト
+
+1.  空箱データセット：仕様書通りの構造だけを持つ0観測のデータセット
+2.  構造の継承：空箱の構造を継承して実データを処理
+3.  確実性：仕様書の属性が必ず適用される
+
+## 実践的な仕様書構造
+
+### Analysis Dataset Metadataシート
+
+| Dataset Name | Dataset Description | Dataset Structure | Key Variables |
+|-----------------|-------------------|-------------------|-----------------|
+| ADSL | Subject Population, demographic and baseline | one record per subject | USUBJID |
+| ADAE | Adverse Event Analysis Dataset | one record per subject per AE | USUBJID, AESEQ |
+| ADEF | Analysis Dataset for Efficacy Disease Parameters | 1 record per subject parameter | USUBJID, PARAMCD |
+
+### 個別データセットシート（ADSL例）
+
+| Dataset | Variable Name | Variable Label | Type | Length | Display Format | Origin | Source/Derivation |
+|---------|---------|---------|---------|---------|---------|---------|---------|
+| ADSL | STUDYID | Study Identifier | text | 200 | \$20 | Predecessor | DM.STUDYID |
+| ADSL | USUBJID | Unique Subject Identifier | text | 200 | \$20 | Predecessor | DM.USUBJID |
+| ADSL | AGE | Age | integer | 8 | 8.0 | Predecessor | DM.AGE |
+| ADSL | SEX | Sex | text | 1 | \$1 | Predecessor | DM.SEX |
+| ADSL | SAFFL | Safety Population Flag | text | 1 | \$1 | Derived | 条件により設定 |
+
+## SASコードによる自動生成
+
+## Excel仕様書の読み込み
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+/* ADaM仕様書を読み込み */
+proc import 
+    datafile="C:\specs\ADaM_Specifications.xlsx"  
+    out=work.spec_adsl
+    dbms=excel
+    replace;
+    sheet="ADSL";
+    getnames=yes;
+run;
+
+/* 内容確認 */
+proc print data=work.spec_adsl;
+run;
+```
+
+## 空箱データセット生成コードの作成
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+/* 空箱データセット生成コードを作成 */
+data _null_;
+    file "C:\temp\ADSL_shell.sas";
+    set work.spec_adsl end=last_obs;
+    
+    if _n_ = 1 then do;
+        put "/* ADSL空箱データセット */";
+        put "data adsl_shell;";
+        put "    attrib";
+    end;
+    
+    /* 各変数の属性を出力 */
+    put "        " Variable_Name @20 "length=" @;
+    if upcase(Type) = "TEXT" then put "$" @;
+    
+    /* Display Formatを使用 */
+    if Display_Format ne '' then 
+        put Display_Format @35 "label='" Variable_Label "'";
+    else 
+        put Length @35 "label='" Variable_Label "'";
+    
+    if last_obs then do;
+        put "    ;";
+        put "    call missing(of _all_);  /* 全変数を欠損値に設定 */";
+        put "    stop;                    /* 0観測データセット */";
+        put "run;";
+    end;
+run;
+```
+
+## 生成されるコード例
+
+実行後、`C:\temp\ADSL_shell.sas`に以下が生成されます：
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+/* ADSL空箱データセット */
+data adsl_shell;
+    attrib
+        STUDYID             length=$20              label='Study Identifier'
+        USUBJID             length=$20              label='Unique Subject Identifier'
+        AGE                 length=8                label='Age'
+        SEX                 length=$1               label='Sex'
+        SAFFL               length=$1               label='Safety Population Flag'
+    ;
+    call missing(of _all_);  /* 全変数を欠損値に設定 */
+    stop;                    /* 0観測データセット */
+run;
+```
+
+## 空箱データセットを使った実データ処理
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+/* 空箱データセットを作成 */
+%include "C:\temp\ADSL_shell.sas";
+
+/* 実際のADSL作成 */
+data derived.adsl;
+    if 0 then set adsl_shell;  /* 構造のみ継承、実際は読み込まない */
+    set rawdata.dm;            /* 実データを処理 */
+    
+    /* データ処理 */
+    studyid = studyid;
+    usubjid = usubjid;
+    age = age;
+    sex = sex;
+    
+    /* 派生変数の作成 */
+    if /* 条件 */ then saffl = 'Y';
+    else saffl = 'N';
+    
+    keep studyid usubjid age sex saffl;
+run;
+```
+
+## 重要なポイント
+
+### call missing(of *all*) の役割
+
+全ての変数を欠損値に設定し、データ型と長さのみを定義します。
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+call missing(of _all_);
+```
+
+### if 0 then set トリックの活用
+
+このテクニックにより、空レコードを処理することなく、純粋に構造のみを継承できます。
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+if 0 then set adsl_shell;  /* 決して実行されないが構造は継承 */
+```
+
+### stop ステートメントの必要性
+
+データの読み込みを即座に停止し、構造のみのデータセットを作成します。
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+stop;  /* 0観測データセットにする */
+```
+
+## 例
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+%macro create_shell(dsname);
+    /* 仕様書読み込み */
+    proc import 
+        datafile="C:\specs\ADaM_Specifications.xlsx"  
+        out=work.spec_&dsname
+        dbms=excel
+        replace;
+        sheet="&dsname";
+        getnames=yes;
+    run;
+    
+    /* 空箱生成コード作成 */
+    data _null_;
+        file "C:\temp\&dsname._shell.sas";
+        set work.spec_&dsname end=last_obs;
+        
+        if _n_ = 1 then do;
+            put "data &dsname._shell;";
+            put "    attrib";
+        end;
+        
+        put "        " Variable_Name @20 "length=" @;
+        if upcase(Type) = "TEXT" then put "$" @;
+        if Display_Format ne '' then 
+            put Display_Format @35 "label='" Variable_Label "'";
+        else 
+            put Length @35 "label='" Variable_Label "'";
+        
+        if last_obs then do;
+            put "    ;";
+            put "    call missing(of _all_);";
+            put "    stop;";
+            put "run;";
+        end;
+    run;
+%mend;
+
+/* 各データセットの空箱を生成 */
+%create_shell(ADSL);
+%create_shell(ADAE);
+%create_shell(ADEF);
+```
+
+### %includeによる読み込み
+
+生成されたSASコードは%include文で読み込み、任意のデータステップで使用できます。
+
+メリット
+
+1\. 効率性: 手動でのattrib文記述が不要
+
+2\. 正確性: コピペミスやタイプミスを防止
+
+3\. 保守性: 仕様変更時はExcelファイルの更新のみで対応
+
+4\. 再利用性: 複数のプログラムで同じattrib文を使用可能
+
+5\. 検証支援: 独立プログラミングでも同じ仕様書を活用

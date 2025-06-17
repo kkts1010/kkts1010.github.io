@@ -984,7 +984,7 @@
     "href": "posts/statistics/2025/解析用データセット作成の流れ2.html",
     "title": "解析用データセット作成の流れ2",
     "section": "",
-    "text": "本記事では、以下の私のブログを踏まえて、より具体的な解析データセット作成の流れをまとめていく。\n\n\n\n\n\n\n\n\n\n\n\n\n\n坂本航太\n\n\n2025/06/14\n\n\n\n\n\n\n\n\n\n\n\n\n個人的な解析データセット作成方法をまとめます。\n\n\n\n坂本航太\n\n\n2025/06/14\n\n\n\n\n\n\n一致なし\n\n\n\n\nPharmaSUG2010 - Paper AD16 Automating the Link between Metadata and Analysis Dataset Misha Rittmann, Octagon Research Solutions, Inc., Wayne, PA\nPharmaSUG2010 - Paper TT06 SAS Programming Techniques for Manipulating Metadata on the Database Level Chris Speck, PAREXEL International, Durham, NC\nPharmaSUG2011 – Paper CD17 Making a List, Checking it Twice (Part 1): Techniques for Specifying and Validating Analysis Datasets\nPharmaSUG2011 - Paper CD12ADaM Standard Naming Conventions are Good to HaveChristine Teng, Merck Sharp & Dohme Corp, Rahway, NJ"
+    "text": "本記事では、以下の私のブログを踏まえて、より具体的な解析データセット作成の流れをまとめていく。\n\n\n\nPharmaSUG2010 - Paper AD16 Automating the Link between Metadata and Analysis Dataset Misha Rittmann, Octagon Research Solutions, Inc., Wayne, PA\nPharmaSUG2010 - Paper TT06 SAS Programming Techniques for Manipulating Metadata on the Database Level Chris Speck, PAREXEL International, Durham, NC\nPharmaSUG2011 – Paper CD17 Making a List, Checking it Twice (Part 1): Techniques for Specifying and Validating Analysis Datasets\nPharmaSUG2011 - Paper CD12ADaM Standard Naming Conventions are Good to HaveChristine Teng, Merck Sharp & Dohme Corp, Rahway, NJ"
   },
   {
     "objectID": "posts/statistics/2025/解析用データセット作成の流れ2.html#参考文献",
@@ -992,5 +992,68 @@
     "title": "解析用データセット作成の流れ2",
     "section": "",
     "text": "PharmaSUG2010 - Paper AD16 Automating the Link between Metadata and Analysis Dataset Misha Rittmann, Octagon Research Solutions, Inc., Wayne, PA\nPharmaSUG2010 - Paper TT06 SAS Programming Techniques for Manipulating Metadata on the Database Level Chris Speck, PAREXEL International, Durham, NC\nPharmaSUG2011 – Paper CD17 Making a List, Checking it Twice (Part 1): Techniques for Specifying and Validating Analysis Datasets\nPharmaSUG2011 - Paper CD12ADaM Standard Naming Conventions are Good to HaveChristine Teng, Merck Sharp & Dohme Corp, Rahway, NJ"
+  },
+  {
+    "objectID": "posts/statistics/2025/解析用データセット作成の流れ2.html#はじめに",
+    "href": "posts/statistics/2025/解析用データセット作成の流れ2.html#はじめに",
+    "title": "解析用データセット作成の流れ2",
+    "section": "2.1 はじめに",
+    "text": "2.1 はじめに\n臨床研究でADaMデータセットを作成する際、仕様書通りの変数属性（長さ、ラベル）を確実に設定することは極めて重要です。しかし、実データを処理しながら属性を設定すると、元データの属性に引きずられてしまうリスクがあります。 今回は、Excelの仕様書から「空箱データセット」を自動生成し、確実に仕様書通りの構造を作る方法をご紹介します。\n\n2.1.1 よくある失敗パターン\n通常、ADSLデータセットを作成する際は以下のように手動でattrib文を記述します：\ndata adsl;\n    set dm;  /* 実データを先に読み込み */\n    \n    /* 後からattribを設定しても... */\n    attrib \n        STUDYID length=$20 label=\"Study Identifier\"\n        AGE     length=8   label=\"Age\";\n    \n    /* 元データの属性に引きずられる可能性 */\nrun;\n\n\n2.1.2 この方法の問題点\n\n元データの変数属性が優先される場合がある\n仕様書通りの長さに設定されない\nラベルが正しく設定されない場合がある\n\n\n\n2.1.3 解決方法：空箱データセットの活用\n\n\n2.1.4 コンセプト\n\n空箱データセット：仕様書通りの構造だけを持つ0観測のデータセット\n構造の継承：空箱の構造を継承して実データを処理\n確実性：仕様書の属性が必ず適用される"
+  },
+  {
+    "objectID": "posts/statistics/2025/解析用データセット作成の流れ2.html#実践的な仕様書構造",
+    "href": "posts/statistics/2025/解析用データセット作成の流れ2.html#実践的な仕様書構造",
+    "title": "解析用データセット作成の流れ2",
+    "section": "2.2 実践的な仕様書構造",
+    "text": "2.2 実践的な仕様書構造\n\n2.2.1 Analysis Dataset Metadataシート\n\n\n\n\n\n\n\n\n\nDataset Name\nDataset Description\nDataset Structure\nKey Variables\n\n\n\n\nADSL\nSubject Population, demographic and baseline\none record per subject\nUSUBJID\n\n\nADAE\nAdverse Event Analysis Dataset\none record per subject per AE\nUSUBJID, AESEQ\n\n\nADEF\nAnalysis Dataset for Efficacy Disease Parameters\n1 record per subject parameter\nUSUBJID, PARAMCD\n\n\n\n\n\n2.2.2 個別データセットシート（ADSL例）\n\n\n\n\n\n\n\n\n\n\n\n\n\nDataset\nVariable Name\nVariable Label\nType\nLength\nDisplay Format\nOrigin\nSource/Derivation\n\n\n\n\nADSL\nSTUDYID\nStudy Identifier\ntext\n200\n$20\nPredecessor\nDM.STUDYID\n\n\nADSL\nUSUBJID\nUnique Subject Identifier\ntext\n200\n$20\nPredecessor\nDM.USUBJID\n\n\nADSL\nAGE\nAge\ninteger\n8\n8.0\nPredecessor\nDM.AGE\n\n\nADSL\nSEX\nSex\ntext\n1\n$1\nPredecessor\nDM.SEX\n\n\nADSL\nSAFFL\nSafety Population Flag\ntext\n1\n$1\nDerived\n条件により設定"
+  },
+  {
+    "objectID": "posts/statistics/2025/解析用データセット作成の流れ2.html#sasコードによる自動生成",
+    "href": "posts/statistics/2025/解析用データセット作成の流れ2.html#sasコードによる自動生成",
+    "title": "解析用データセット作成の流れ2",
+    "section": "2.3 SASコードによる自動生成",
+    "text": "2.3 SASコードによる自動生成"
+  },
+  {
+    "objectID": "posts/statistics/2025/解析用データセット作成の流れ2.html#excel仕様書の読み込み",
+    "href": "posts/statistics/2025/解析用データセット作成の流れ2.html#excel仕様書の読み込み",
+    "title": "解析用データセット作成の流れ2",
+    "section": "2.4 Excel仕様書の読み込み",
+    "text": "2.4 Excel仕様書の読み込み\n/* ADaM仕様書を読み込み */\nproc import \n    datafile=\"C:\\specs\\ADaM_Specifications.xlsx\"  \n    out=work.spec_adsl\n    dbms=excel\n    replace;\n    sheet=\"ADSL\";\n    getnames=yes;\nrun;\n\n/* 内容確認 */\nproc print data=work.spec_adsl;\nrun;"
+  },
+  {
+    "objectID": "posts/statistics/2025/解析用データセット作成の流れ2.html#空箱データセット生成コードの作成",
+    "href": "posts/statistics/2025/解析用データセット作成の流れ2.html#空箱データセット生成コードの作成",
+    "title": "解析用データセット作成の流れ2",
+    "section": "2.5 空箱データセット生成コードの作成",
+    "text": "2.5 空箱データセット生成コードの作成\n/* 空箱データセット生成コードを作成 */\ndata _null_;\n    file \"C:\\temp\\ADSL_shell.sas\";\n    set work.spec_adsl end=last_obs;\n    \n    if _n_ = 1 then do;\n        put \"/* ADSL空箱データセット */\";\n        put \"data adsl_shell;\";\n        put \"    attrib\";\n    end;\n    \n    /* 各変数の属性を出力 */\n    put \"        \" Variable_Name @20 \"length=\" @;\n    if upcase(Type) = \"TEXT\" then put \"$\" @;\n    \n    /* Display Formatを使用 */\n    if Display_Format ne '' then \n        put Display_Format @35 \"label='\" Variable_Label \"'\";\n    else \n        put Length @35 \"label='\" Variable_Label \"'\";\n    \n    if last_obs then do;\n        put \"    ;\";\n        put \"    call missing(of _all_);  /* 全変数を欠損値に設定 */\";\n        put \"    stop;                    /* 0観測データセット */\";\n        put \"run;\";\n    end;\nrun;"
+  },
+  {
+    "objectID": "posts/statistics/2025/解析用データセット作成の流れ2.html#生成されるコード例",
+    "href": "posts/statistics/2025/解析用データセット作成の流れ2.html#生成されるコード例",
+    "title": "解析用データセット作成の流れ2",
+    "section": "2.6 生成されるコード例",
+    "text": "2.6 生成されるコード例\n実行後、C:\\temp\\ADSL_shell.sasに以下が生成されます：\n/* ADSL空箱データセット */\ndata adsl_shell;\n    attrib\n        STUDYID             length=$20              label='Study Identifier'\n        USUBJID             length=$20              label='Unique Subject Identifier'\n        AGE                 length=8                label='Age'\n        SEX                 length=$1               label='Sex'\n        SAFFL               length=$1               label='Safety Population Flag'\n    ;\n    call missing(of _all_);  /* 全変数を欠損値に設定 */\n    stop;                    /* 0観測データセット */\nrun;"
+  },
+  {
+    "objectID": "posts/statistics/2025/解析用データセット作成の流れ2.html#空箱データセットを使った実データ処理",
+    "href": "posts/statistics/2025/解析用データセット作成の流れ2.html#空箱データセットを使った実データ処理",
+    "title": "解析用データセット作成の流れ2",
+    "section": "2.7 空箱データセットを使った実データ処理",
+    "text": "2.7 空箱データセットを使った実データ処理\n/* 空箱データセットを作成 */\n%include \"C:\\temp\\ADSL_shell.sas\";\n\n/* 実際のADSL作成 */\ndata derived.adsl;\n    if 0 then set adsl_shell;  /* 構造のみ継承、実際は読み込まない */\n    set rawdata.dm;            /* 実データを処理 */\n    \n    /* データ処理 */\n    studyid = studyid;\n    usubjid = usubjid;\n    age = age;\n    sex = sex;\n    \n    /* 派生変数の作成 */\n    if /* 条件 */ then saffl = 'Y';\n    else saffl = 'N';\n    \n    keep studyid usubjid age sex saffl;\nrun;"
+  },
+  {
+    "objectID": "posts/statistics/2025/解析用データセット作成の流れ2.html#重要なポイント",
+    "href": "posts/statistics/2025/解析用データセット作成の流れ2.html#重要なポイント",
+    "title": "解析用データセット作成の流れ2",
+    "section": "2.8 重要なポイント",
+    "text": "2.8 重要なポイント\n\n2.8.1 call missing(of all) の役割\n全ての変数を欠損値に設定し、データ型と長さのみを定義します。\ncall missing(of _all_);\n\n\n2.8.2 if 0 then set トリックの活用\nこのテクニックにより、空レコードを処理することなく、純粋に構造のみを継承できます。\nif 0 then set adsl_shell;  /* 決して実行されないが構造は継承 */\n\n\n2.8.3 stop ステートメントの必要性\nデータの読み込みを即座に停止し、構造のみのデータセットを作成します。\nstop;  /* 0観測データセットにする */"
+  },
+  {
+    "objectID": "posts/statistics/2025/解析用データセット作成の流れ2.html#例",
+    "href": "posts/statistics/2025/解析用データセット作成の流れ2.html#例",
+    "title": "解析用データセット作成の流れ2",
+    "section": "2.9 例",
+    "text": "2.9 例\n%macro create_shell(dsname);\n    /* 仕様書読み込み */\n    proc import \n        datafile=\"C:\\specs\\ADaM_Specifications.xlsx\"  \n        out=work.spec_&dsname\n        dbms=excel\n        replace;\n        sheet=\"&dsname\";\n        getnames=yes;\n    run;\n    \n    /* 空箱生成コード作成 */\n    data _null_;\n        file \"C:\\temp\\&dsname._shell.sas\";\n        set work.spec_&dsname end=last_obs;\n        \n        if _n_ = 1 then do;\n            put \"data &dsname._shell;\";\n            put \"    attrib\";\n        end;\n        \n        put \"        \" Variable_Name @20 \"length=\" @;\n        if upcase(Type) = \"TEXT\" then put \"$\" @;\n        if Display_Format ne '' then \n            put Display_Format @35 \"label='\" Variable_Label \"'\";\n        else \n            put Length @35 \"label='\" Variable_Label \"'\";\n        \n        if last_obs then do;\n            put \"    ;\";\n            put \"    call missing(of _all_);\";\n            put \"    stop;\";\n            put \"run;\";\n        end;\n    run;\n%mend;\n\n/* 各データセットの空箱を生成 */\n%create_shell(ADSL);\n%create_shell(ADAE);\n%create_shell(ADEF);\n\n2.9.1 %includeによる読み込み\n生成されたSASコードは%include文で読み込み、任意のデータステップで使用できます。\nメリット\n1. 効率性: 手動でのattrib文記述が不要\n2. 正確性: コピペミスやタイプミスを防止\n3. 保守性: 仕様変更時はExcelファイルの更新のみで対応\n4. 再利用性: 複数のプログラムで同じattrib文を使用可能\n5. 検証支援: 独立プログラミングでも同じ仕様書を活用"
   }
 ]
