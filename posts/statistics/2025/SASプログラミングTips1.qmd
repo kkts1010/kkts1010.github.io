@@ -21,11 +21,14 @@ format:
     fig-width: 9
     self-contained: true
     number-sections: true
-    code-block-border-left: true
     code-line-numbers: false
     code-overflow: wrap
     highlight-style: atom-one
     df-print: tibble
+    code-copy: true
+    code-block-bg: true
+    code-block-border-left: "#28a745"
+    code-annotations: hover
 editor: visual
 ---
 
@@ -39,23 +42,26 @@ editor: visual
 
 # SAS日付をマクロ化する方法
 
-```         
-%let StDateTime = %sysfunc( datetime() );
-%put &StDateTime;
-
+```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}
 data _null_;
-   Date1 = put(date(), yymmdds10.);
-   Date2 = compress(Date1, "/");
-   Time1 = put(time(), tod8.);
-   Time2 = compress(Time1,":");
 
-   * マクロ変数に格納 ;
-   call symput('StDates', trim(left(Date1)));
-   call symput('StDate', trim(left(Date2)));
-   call symput('StTimes', trim(left(Time1)));
-   call symput('StTime', trim(left(Time2)));
+   dt = datetime();
+   
+   /* 日付フォーマット */
+   Date1 = put(datepart(dt), yymmdds10.);
+   Date2 = compress(Date1, "/");
+   
+   /* 時刻フォーマット */
+   Time1 = put(timepart(dt), tod8.);
+   Time2 = compress(Time1, ":");
+   
+   call symputx('StDates', Date1);
+   call symputx('StDate', Date2);
+   call symputx('StTimes', Time1);
+   call symputx('StTime', Time2);
 run;
-%put &StDates. &StDate. &StTimes. &StTime.;
+
+%put 日付: &StDates. (&StDate.) 時刻: &StTimes. (&StTime.);
 ```
 
 ## プログラム解説
@@ -72,7 +78,7 @@ run;
 
 4.  `compress()`で区切り文字を除去（日付：YYYYMMDD、時刻：HHMMSS）
 
-5.  `call symput()`で4つのマクロ変数を作成
+5.  `call symputx()`で4つのマクロ変数を作成
 
 **作成されるマクロ変数：**
 
@@ -88,7 +94,7 @@ run;
 
 # Path指定のTips
 
-```         
+```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}  
 %LET execpath=" ";
 %MACRO setexecpath;
     %LET execpath=%SYSFUNC(GETOPTION(SYSIN));
@@ -191,7 +197,7 @@ run;
 
 # フォルダの自動作成
 
-```         
+```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}   
 /* ディレクトリ自動作成マクロ */
 %macro create_dir_structure(path);
    %local parent_dir dir_name;
@@ -245,7 +251,7 @@ FILEEXIST関数による存在チェックを各段階で実行し、既に存�
 
 # 日付管理
 
-```         
+```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}       
 /* 日付情報取得 */
 data _null_;
   Date1 = put(date(), yymmdds10.);
@@ -313,7 +319,7 @@ create_dir_structureマクロの再帰処理により、深い階層構造でも
 
 # マクロライブラリの活用
 
-```         
+```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}  
 /* マクロライブラリの一括読み込み */
 filename MACROLIB "&MACRO_PATH" ;
 %include MACROLIB (データ処理macro.sas);
@@ -344,7 +350,7 @@ FILENAME文で論理名「MACROLIB」を定義し、マクロ変数で指定さ�
 
 # プログラミングの動的生成
 
-```         
+```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}      
 %macro create_pg(PGM_name,Table, Analysis_pop);
 filename ext "&Analysis_PGM./&PGM_name..sas";
 data _null_;
@@ -411,11 +417,11 @@ create_pgマクロは、プログラム名、テーブル名、解析対象集�
 
 SASプログラミングで頻繁に使用される便利な関数を、実用的なプログラム例とともに解説します。
 
-## 1. CATS関数
+## CATS関数
 
 **機能：** 複数の文字列を連結し、各引数の前後の空白を自動削除
 
-```         
+```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}     
 data example1;
     name = "田中";
     id = "001";
@@ -435,11 +441,11 @@ run;
 
 CATS関数は自動的に前後の空白を削除するため、TRIMやLEFT関数が不要になり、コードがシンプルになります。
 
-## 2. CATX関数
+## CATX関数
 
 **機能：** 指定した区切り文字で複数の文字列を連結
 
-```         
+```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}      
 data example2;
     year = 2025;
     month = 6;
@@ -458,11 +464,11 @@ run;
 
 **出力：** date_slash=2025/6/16 date_hyphen=2025-6-16 csv_line=田中太郎,30,東京都
 
-## 3. WHICHN・WHICHC関数
+## WHICHN・WHICHC関数
 
 **機能：** 指定した値がリストの何番目にあるかを返す
 
-```         
+```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}
 data ae_severity;
     input pt $ severity $;
     
@@ -501,11 +507,11 @@ pt=呼吸困難 severity=重度 severity_code=3 ctcae_grade=0
 
     -   マッチしない場合はWHICHC関数は0を返す
 
-## 4. CHOOSEN・CHOOSEC関数
+## CHOOSEN・CHOOSEC関数
 
 **機能：** インデックス番号に基づいてリストから値を選択
 
-```         
+```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}   
 data example4;
     do i = 1 to 4;
         /* 数値版：CHOOSEN */
@@ -525,11 +531,11 @@ run;
 ・第2引数以降に数値型の変数または値を指定する場合はCHOOSEN関数を用いる。\
 ・第2引数以降に文字型の変数または値を指定する場合はCHOOSEC関数を用いる。
 
-## 5. COALESCE・COALESCEC関数
+## COALESCE・COALESCEC関数
 
 **機能：** 最初の非欠損値を返す
 
-```         
+```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}       
 /* サンプルデータの作成 */
 data sample_data;
     input ID X1 $ X2 $ X3 $;
@@ -568,11 +574,11 @@ run;
 
 -   **COALESCEC：** 文字の場合、空白をスキップして最初の有効な文字列を返す
 
-## 6. VVALUE・VVALUEX関数
+## VVALUE・VVALUEX関数
 
 **機能：** フォーマットが適用された値を文字列として取得
 
-```         
+```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}       
 data DT1;
   format X yymmdd10.;
   X = '13jun2017'd;
@@ -605,11 +611,11 @@ run;
 -   vvaluex( "X" )  … 変数名を表す文字値を指定
 -   つまり、「 vvaluex( "X" ) 」で変数Xに割り当てられているFORMAT「YYMMDD10.」を使って文字変換した値「2017-06-13」を返しています。
 
-## 7. CMISS関数
+## CMISS関数
 
 **機能：** 欠損値の個数をカウント
 
-```         
+```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}     
 data example7;
     input name $ age height weight;
     
@@ -628,12 +634,11 @@ run;
 
 **出力：** name=田中 missing_count=0 complete_data=1 name=佐藤 missing_count=2 complete_data=0 name=山田 missing_count=1 complete_data=0
 
-## 8. IFN・IFC関数
+## IFN・IFC関数
 
 **機能：** 条件に基づいて値を返す三項演算子
 
-```         
-
+```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}
 data DT1;
    length X1 $10.;
    X1="YES"; output;
@@ -656,11 +661,11 @@ run;
 
 Rのifelse関数みたいな気持ち。
 
-## 9. CALL MISSING
+## CALL MISSING
 
 **機能：** 複数の変数を一度に欠損値に設定
 
-```         
+```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap} 
 data example9;
     name = "田中";
     age = 25;
@@ -675,11 +680,11 @@ run;
 
 このSASコードは`CALL MISSING`ルーチンを使って、条件に応じて複数の変数を一度に欠損値に設定する例です。
 
-## 10. CALL SYMPUTX
+## CALL SYMPUTX
 
 **機能：** データステップ内でマクロ変数を作成・更新
 
-```         
+```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}     
 data example10;
     input dept $ sales;
     

@@ -6,42 +6,6 @@ date-modified: "2025-06-14"
 abstract-title: Abstract
 abstract: ""
 date: "2025-06-14"
-format:
-  html: 
-    fontsize: normal
-    page-layout: full
-    lang: "ja"
-    encoding: "UTF-8"
-    toc: true
-    toc-depth: 2
-    code-fold: show
-    html-math-method: katex
-    fig-format: svg
-    fig-height: 5
-    fig-width: 9
-    self-contained: true
-    number-sections: true
-    code-block-border-left: true
-    code-line-numbers: false
-    code-overflow: wrap
-    highlight-style: atom-one
-    df-print: tibble
-#   pdf:
-#     documentclass: bxjsarticle
-#     classoption: 
-#       - xelatex
-#       - ja=standard
-#     pdf-engine: xelatex
-#     mainfont: "Times New Roman"
-#     sansfont: "Times New Roman"
-#     monofont: "Courier New"
-#     CJKmainfont: "MS Mincho"  
-#     CJKsansfont: "MS Gothic" 
-#     toc: true
-#     toc-depth: 2
-#     number-sections: true
-#     colorlinks: true
-#     keep-tex: true
 editor: visual
 ---
 
@@ -185,7 +149,7 @@ SASプログラミングにおいて、プログラムの更新履歴を管理�
 
 各SASプログラムの冒頭には、以下のような標準的なヘッダーを記述することを必須とします。
 
-``` sas
+```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}
 /*=================================
 プログラム名: 01_data_import.sas
 プロジェクト: プロジェクト名
@@ -214,7 +178,7 @@ v1.2 2025/06/20 外れ値検出機能追加
 
 プログラム実行時に、実行日時をログに記録する仕組みを組み込むことも有効です：
 
-``` sas
+```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}
 /* 実行開始時刻を記録 */
 %let start_time = %sysfunc(datetime());
 %put NOTE: データセット作成開始 - %sysfunc(datetime(), datetime19.);
@@ -238,7 +202,7 @@ run;
 
 ログファイルの活用 データ処理では、どのような処理が行われたかを正確に記録することが重要です：
 
-``` sas
+```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}
 /* ログファイルの出力先を指定（日付付き） */
 %let today = %sysfunc(today(), yymmddn8.);
 proc printto log="Log/data_creation_&today..log";
@@ -277,8 +241,7 @@ Excelファイルには以下の3つの要素を設定します。：
 
 ちなみに、変数の順番だけを入れ替えるならばformat Statementでも簡単にできる。[こちらのブログ](https://sas-boubi.blogspot.com/search/label/%E3%82%B9%E3%83%86%E3%83%BC%E3%83%88%E3%83%A1%E3%83%B3%E3%83%88%3A%20FORMAT)が参考になります。
 
-``` sas
-
+```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}
 data ADSL;
     set ADSL;
     attrib 
@@ -304,7 +267,7 @@ run;
 
 PROC FORMATは、SASにおいてユーザー定義フォーマットを作成するプロシージャです。数値や文字データを、より読みやすい形式に変換して表示することができます。 基本構文は以下の通りです。
 
-``` sas
+```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}
 proc format;
     value フォーマット名
         値1 = "ラベル1"
@@ -315,7 +278,7 @@ run;
 
 文字フォーマットには先頭にドルマークを付けます。
 
-``` sas
+```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}
 proc format;
     value trtf
         1 = "プラセボ"
@@ -360,7 +323,7 @@ run;
 -   LABEL：変換後のラベル
 -   TYPE：フォーマットタイプ（'N'=数値、'C'=文字）
 
-``` sas
+```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}
 /* 治療群フォーマット用データセット */
 data trt_fmt;
     retain fmtname 'trtf' type 'N';

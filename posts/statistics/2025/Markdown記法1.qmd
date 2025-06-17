@@ -6,27 +6,6 @@ date-modified: "2025-06-15"
 abstract-title: Abstract
 abstract: ""
 date: "2025-06-15"
-format:
-  html: 
-    fontsize: normal
-    page-layout: full
-    lang: "ja"
-    encoding: "UTF-8"
-    toc: true
-    toc-depth: 2
-    code-fold: show
-    html-math-method: katex
-    fig-format: svg
-    fig-height: 5
-    fig-width: 9
-    self-contained: true
-    number-sections: true
-    code-block-border-left: true
-    code-line-numbers: false
-    code-overflow: wrap
-    highlight-style: atom-one
-    df-print: tibble
-editor: visual
 ---
 
 # Markdown記法
@@ -62,7 +41,7 @@ Markdownは、プレーンテキストで記述した文書を構造化された
 
 コードを美しく表示するには、バッククオート3つ（\`\`\`）でコードを囲みます。 これだけだとSAS/Rに限らず、プログラムは実行はされないが、サンプルとして提示する際に便利である。
 
-```         
+```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}   
 # Rコードの例
 library(ggplot2)
 library(dplyr)

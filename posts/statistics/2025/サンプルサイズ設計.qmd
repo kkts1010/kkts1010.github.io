@@ -83,7 +83,7 @@ abstract: "私が頻用する基本的なサンプルサイズ設計について
 
 通常の単群試験の例数設計は以下のように行います。以下のSASプログラムは、対照群のリスクp0 = 0.1、実験群のリスクp1 = 0.3、リスク差 = 0.2を想定しています。なお、sides = 2は両側検定を意味します。片側検定を行う場合は、sides = 1としてください。
 
-``` sas
+```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}
 proc power;
 onesamplefreq test=z
     method = normal
@@ -100,7 +100,7 @@ run;
 
 先ほどと異なり、test = exactを指定しています。これにより、2項分布に基づく正確な検定が行われます。これにより、サンプルサイズ計算がより正確になります。また、plotオプションを使用して、サンプルサイズに対する検出力の変化を視覚化しています。これにより、必要なサンプルサイズをより直感的に理解できます。
 
-``` sas
+```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}
 proc power;
     onesamplefreq test=exact
         sides = 2
@@ -125,7 +125,7 @@ Exact法に基づく症例数設計では、検出力は単調増加にならず
 連続量アウトカムの場合、サンプルサイズは以下の式で計算できます。 以下では優越性を示す検証的試験を想定しています。
 twosamplemeans test = diffを用いて、2群間の平均値の差を検定する方法を想定しています。以下では、対照群の平均値μ0 = 0、実験群の平均値μ1 = 0.5、標準偏差σ = 1を想定しています。
 
-``` sas
+```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}
 proc power;
     twosamplemeans test=diff
         meandiff = 0.5
@@ -138,7 +138,7 @@ run;
 
 複数の状況をまとめて計算する場合は、以下のようにします。
 
-``` sas
+```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}
 proc power;
     twosamplemeans test=diff
         meandiff = 0.5 , 1 , 1.5
@@ -165,7 +165,7 @@ run;
 
 SASプログラムは以下となります。ここでは、対照群のリスク及びリスク差を指定している。リスク差は、対照群のp0に基づいて計算されるため、対照群のp0を指定する必要があります。
 
-``` sas
+```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}
 proc power;
 twosamplefreq test=pchi
     sides = 2
@@ -198,7 +198,7 @@ SASのtwosamplesurvival statementではLakatosの方法が採用されていま�
 
 SASでは以下のように実行します。ここでは、対照群の生存率S_c(3) = 0.3、実験群の生存率S_a(2) = 0.2を想定しています。登録期間は3年、フォローアップ期間は2年としています。これにより、試験のデザインや目的に応じたサンプルサイズを計算することができます。
 
-``` sas 
+```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}
 proc power;
     twosamplesurvival test = logrank
     curve("Control") = 3:0.3
@@ -222,7 +222,7 @@ $$
 
 この関係を用いて、ある時点tとその時点のKM推定量の結果を用いて各群のハザードを指定してサンプルサイズ計算をする方法は以下となります。
 
-``` sas
+```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}
 proc power;
     twosamplesurvival test = logrank
     groupsurvexphazards = (0.05 0.01)

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja"><head>
 
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.7.30">
@@ -41,7 +41,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-9849038e97c5862c14c4eb81893d019b.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-5c5a4ce15ea03f2a96650e783ca02c3c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-945f87a38397f0f3b8ef34e2f394b6bc.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -56,17 +56,17 @@ ul.task-list li input[type="checkbox"] {
   ],
   "show-item-context": false,
   "language": {
-    "search-no-results-text": "No results",
-    "search-matching-documents-text": "matching documents",
-    "search-copy-link-title": "Copy link to search",
-    "search-hide-matches-text": "Hide additional matches",
-    "search-more-match-text": "more match in this document",
-    "search-more-matches-text": "more matches in this document",
-    "search-clear-button-title": "Clear",
+    "search-no-results-text": "一致なし",
+    "search-matching-documents-text": "一致した文書",
+    "search-copy-link-title": "検索へのリンクをコピー",
+    "search-hide-matches-text": "追加の検索結果を非表示",
+    "search-more-match-text": "追加の検索結果",
+    "search-more-matches-text": "追加の検索結果",
+    "search-clear-button-title": "消去",
     "search-text-placeholder": "",
-    "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit",
-    "search-label": "Search"
+    "search-detached-cancel-button-title": "取消",
+    "search-submit-button-title": "検索",
+    "search-label": "サーチ"
   }
 }</script>
 <script>
@@ -99,8 +99,22 @@ ul.task-list li input[type="checkbox"] {
   })
   </script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -143,8 +157,8 @@ window.Quarto = {
     <span class="navbar-title">Kota Sakamoto</span>
     </a>
   </div>
-            <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+            <div id="quarto-search" class="" title="サーチ"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="ナビゲーションを切り替える" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -195,7 +209,7 @@ window.Quarto = {
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(11)</span></div><div class="category" data-category="Z2l0aHVi">github <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TWFya2Rvd24=">Markdown <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Ug==">R <span class="quarto-category-count">(1)</span></div><div class="category" data-category="U0FT">SAS <span class="quarto-category-count">(9)</span></div><div class="category" data-category="JUU4JUE3JUEzJUU2JTlFJTkwJUUzJTgzJTk3JUUzJTgzJUFEJUUzJTgyJUIwJUUzJTgzJUE5JUUzJTgzJTlGJUUzJTgzJUIzJUUzJTgyJUIw">解析プログラミング <span class="quarto-category-count">(6)</span></div><div class="category" data-category="JUU4JUE3JUEzJUU2JTlFJTkwJUU3JTk0JUE4JUUzJTgzJTg3JUUzJTgzJUJDJUUzJTgyJUJGJUUzJTgyJUJCJUUzJTgzJTgzJUUzJTgzJTg4">解析用データセット <span class="quarto-category-count">(1)</span></div><div class="category" data-category="JUU4JTg3JUE4JUU1JUJBJThBJUU4JUE5JUE2JUU5JUE4JTkz">臨床試験 <span class="quarto-category-count">(2)</span></div></div></div>
+    <h5 class="quarto-listing-category-title">分類</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">すべて <span class="quarto-category-count">(11)</span></div><div class="category" data-category="Z2l0aHVi">github <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TWFya2Rvd24=">Markdown <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Ug==">R <span class="quarto-category-count">(1)</span></div><div class="category" data-category="U0FT">SAS <span class="quarto-category-count">(9)</span></div><div class="category" data-category="JUU4JUE3JUEzJUU2JTlFJTkwJUUzJTgzJTk3JUUzJTgzJUFEJUUzJTgyJUIwJUUzJTgzJUE5JUUzJTgzJTlGJUUzJTgzJUIzJUUzJTgyJUIw">解析プログラミング <span class="quarto-category-count">(6)</span></div><div class="category" data-category="JUU4JUE3JUEzJUU2JTlFJTkwJUU3JTk0JUE4JUUzJTgzJTg3JUUzJTgzJUJDJUUzJTgyJUJGJUUzJTgyJUJCJUUzJTgzJTgzJUUzJTgzJTg4">解析用データセット <span class="quarto-category-count">(1)</span></div><div class="category" data-category="JUU4JTg3JUE4JUU1JUJBJThBJUU4JUE5JUE2JUU5JUE4JTkz">臨床試験 <span class="quarto-category-count">(2)</span></div></div></div>
 <!-- main -->
 <main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
 
@@ -209,7 +223,7 @@ window.Quarto = {
 
 <div class="quarto-listing quarto-listing-container-default" id="listing-listing">
 <div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="U0FTJTJDJUU4JUE3JUEzJUU2JTlFJTkwJUUzJTgzJTk3JUUzJTgzJUFEJUUzJTgyJUIwJUUzJTgzJUE5JUUzJTgzJTlGJUUzJTgzJUIzJUUzJTgyJUIw" data-listing-date-sort="1749999600000" data-listing-file-modified-sort="1750064067751" data-listing-date-modified-sort="1749999600000" data-listing-reading-time-sort="13" data-listing-word-count-sort="2567">
+<div class="quarto-post image-right" data-index="0" data-categories="U0FTJTJDJUU4JUE3JUEzJUU2JTlFJTkwJUUzJTgzJTk3JUUzJTgzJUFEJUUzJTgyJUIwJUUzJTgzJUE5JUUzJTgzJTlGJUUzJTgzJUIzJUUzJTgyJUIw" data-listing-date-sort="1749999600000" data-listing-file-modified-sort="1750125225661" data-listing-date-modified-sort="1749999600000" data-listing-reading-time-sort="13" data-listing-word-count-sort="2536">
 <div class="body">
 <h3 class="no-anchor listing-title">
 <a href="../../posts/statistics/2025/SASプログラミングTips1.html" class="no-external">SASプログラミングTips1</a>
@@ -230,7 +244,7 @@ window.Quarto = {
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="1" data-categories="U0FTJTJDJUU4JUE3JUEzJUU2JTlFJTkwJUUzJTgzJTk3JUUzJTgzJUFEJUUzJTgyJUIwJUUzJTgzJUE5JUUzJTgzJTlGJUUzJTgzJUIzJUUzJTgyJUIw" data-listing-date-sort="1749999600000" data-listing-file-modified-sort="1750051078686" data-listing-date-modified-sort="1749999600000" data-listing-reading-time-sort="1" data-listing-word-count-sort="2">
+<div class="quarto-post image-right" data-index="1" data-categories="U0FTJTJDJUU4JUE3JUEzJUU2JTlFJTkwJUUzJTgzJTk3JUUzJTgzJUFEJUUzJTgyJUIwJUUzJTgzJUE5JUUzJTgzJTlGJUUzJTgzJUIzJUUzJTgyJUIw" data-listing-date-sort="1749999600000" data-listing-file-modified-sort="1750125888235" data-listing-date-modified-sort="1749999600000" data-listing-reading-time-sort="1" data-listing-word-count-sort="2">
 <div class="body">
 <h3 class="no-anchor listing-title">
 <a href="../../posts/statistics/2025/解析用データセット作成の流れ2.html" class="no-external">解析用データセット作成の流れ2</a>
@@ -251,7 +265,7 @@ window.Quarto = {
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="2" data-categories="TWFya2Rvd24=" data-listing-date-sort="1749913200000" data-listing-file-modified-sort="1750051076850" data-listing-date-modified-sort="1749913200000" data-listing-reading-time-sort="7" data-listing-word-count-sort="1230">
+<div class="quarto-post image-right" data-index="2" data-categories="TWFya2Rvd24=" data-listing-date-sort="1749913200000" data-listing-file-modified-sort="1750126078980" data-listing-date-modified-sort="1749913200000" data-listing-reading-time-sort="7" data-listing-word-count-sort="1227">
 <div class="body">
 <h3 class="no-anchor listing-title">
 <a href="../../posts/statistics/2025/Markdown記法1.html" class="no-external">Markdown記法について</a>
@@ -270,7 +284,7 @@ window.Quarto = {
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="3" data-categories="U0FTJTJDJUU4JUE3JUEzJUU2JTlFJTkwJUUzJTgzJTk3JUUzJTgzJUFEJUUzJTgyJUIwJUUzJTgzJUE5JUUzJTgzJTlGJUUzJTgzJUIzJUUzJTgyJUIw" data-listing-date-sort="1749913200000" data-listing-file-modified-sort="1750051074643" data-listing-date-modified-sort="1749913200000" data-listing-reading-time-sort="12" data-listing-word-count-sort="2267">
+<div class="quarto-post image-right" data-index="3" data-categories="U0FTJTJDJUU4JUE3JUEzJUU2JTlFJTkwJUUzJTgzJTk3JUUzJTgzJUFEJUUzJTgyJUIwJUUzJTgzJUE5JUUzJTgzJTlGJUUzJTgzJUIzJUUzJTgyJUIw" data-listing-date-sort="1749913200000" data-listing-file-modified-sort="1750125932219" data-listing-date-modified-sort="1749913200000" data-listing-reading-time-sort="12" data-listing-word-count-sort="2244">
 <div class="body">
 <h3 class="no-anchor listing-title">
 <a href="../../posts/statistics/2025/SQL入門1.html" class="no-external">SQL入門1</a>
@@ -331,7 +345,7 @@ window.Quarto = {
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="6" data-categories="U0FTJTJDJUU4JUE3JUEzJUU2JTlFJTkwJUUzJTgzJTk3JUUzJTgzJUFEJUUzJTgyJUIwJUUzJTgzJUE5JUUzJTgzJTlGJUUzJTgzJUIzJUUzJTgyJUIw" data-listing-date-sort="1749826800000" data-listing-file-modified-sort="1749996036313" data-listing-date-modified-sort="1749826800000" data-listing-reading-time-sort="6" data-listing-word-count-sort="1159">
+<div class="quarto-post image-right" data-index="6" data-categories="U0FTJTJDJUU4JUE3JUEzJUU2JTlFJTkwJUUzJTgzJTk3JUUzJTgzJUFEJUUzJTgyJUIwJUUzJTgzJUE5JUUzJTgzJTlGJUUzJTgzJUIzJUUzJTgyJUIw" data-listing-date-sort="1749826800000" data-listing-file-modified-sort="1750126032851" data-listing-date-modified-sort="1749826800000" data-listing-reading-time-sort="6" data-listing-word-count-sort="1140">
 <div class="body">
 <h3 class="no-anchor listing-title">
 <a href="../../posts/statistics/2025/SASマクロ入門1.html" class="no-external">SASマクロ入門1</a>
@@ -352,7 +366,7 @@ window.Quarto = {
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="7" data-categories="U0FTJTJDUiUyQyVFOCVBNyVBMyVFNiU5RSU5MCVFNyU5NCVBOCVFMyU4MyU4NyVFMyU4MyVCQyVFMyU4MiVCRiVFMyU4MiVCQiVFMyU4MyU4MyVFMyU4MyU4OA==" data-listing-date-sort="1749826800000" data-listing-file-modified-sort="1750051816721" data-listing-date-modified-sort="1749826800000" data-listing-reading-time-sort="23" data-listing-word-count-sort="4557">
+<div class="quarto-post image-right" data-index="7" data-categories="U0FTJTJDUiUyQyVFOCVBNyVBMyVFNiU5RSU5MCVFNyU5NCVBOCVFMyU4MyU4NyVFMyU4MyVCQyVFMyU4MiVCRiVFMyU4MiVCQiVFMyU4MyU4MyVFMyU4MyU4OA==" data-listing-date-sort="1749826800000" data-listing-file-modified-sort="1750125781885" data-listing-date-modified-sort="1749826800000" data-listing-reading-time-sort="23" data-listing-word-count-sort="4557">
 <div class="body">
 <h3 class="no-anchor listing-title">
 <a href="../../posts/statistics/2025/解析用データセット仕様書.html" class="no-external">解析用データセット仕様書</a>
@@ -375,7 +389,7 @@ window.Quarto = {
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="8" data-categories="U0FTJTJDJUU4JUE3JUEzJUU2JTlFJTkwJUUzJTgzJTk3JUUzJTgzJUFEJUUzJTgyJUIwJUUzJTgzJUE5JUUzJTgzJTlGJUUzJTgzJUIzJUUzJTgyJUIw" data-listing-date-sort="1749826800000" data-listing-file-modified-sort="1750051948224" data-listing-date-modified-sort="1749826800000" data-listing-reading-time-sort="8" data-listing-word-count-sort="1600">
+<div class="quarto-post image-right" data-index="8" data-categories="U0FTJTJDJUU4JUE3JUEzJUU2JTlFJTkwJUUzJTgzJTk3JUUzJTgzJUFEJUUzJTgyJUIwJUUzJTgzJUE5JUUzJTgzJTlGJUUzJTgzJUIzJUUzJTgyJUIw" data-listing-date-sort="1749826800000" data-listing-file-modified-sort="1750125885888" data-listing-date-modified-sort="1749826800000" data-listing-reading-time-sort="9" data-listing-word-count-sort="1614">
 <div class="body">
 <h3 class="no-anchor listing-title">
 <a href="../../posts/statistics/2025/解析用データセット作成の流れ1.html" class="no-external">解析用データセット作成の流れ1（フォルダ構造等）</a>
@@ -396,7 +410,7 @@ window.Quarto = {
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="9" data-categories="JUU4JTg3JUE4JUU1JUJBJThBJUU4JUE5JUE2JUU5JUE4JTkzJTJDU0FT" data-listing-date-sort="1748012400000" data-listing-file-modified-sort="1749996390055" data-listing-date-modified-sort="1747494000000" data-listing-reading-time-sort="7" data-listing-word-count-sort="1203">
+<div class="quarto-post image-right" data-index="9" data-categories="JUU4JTg3JUE4JUU1JUJBJThBJUU4JUE5JUE2JUU5JUE4JTkzJTJDU0FT" data-listing-date-sort="1748012400000" data-listing-file-modified-sort="1750125729776" data-listing-date-modified-sort="1747494000000" data-listing-reading-time-sort="7" data-listing-word-count-sort="1207">
 <div class="body">
 <h3 class="no-anchor listing-title">
 <a href="../../posts/statistics/2025/中間解析.html" class="no-external">第2相抗がん剤開発及び検証的試験の中間解析</a>
@@ -417,7 +431,7 @@ window.Quarto = {
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="10" data-categories="JUU4JTg3JUE4JUU1JUJBJThBJUU4JUE5JUE2JUU5JUE4JTkzJTJDU0FT" data-listing-date-sort="1747407600000" data-listing-file-modified-sort="1749942913117" data-listing-date-modified-sort="1747494000000" data-listing-reading-time-sort="4" data-listing-word-count-sort="661">
+<div class="quarto-post image-right" data-index="10" data-categories="JUU4JTg3JUE4JUU1JUJBJThBJUU4JUE5JUE2JUU5JUE4JTkzJTJDU0FT" data-listing-date-sort="1747407600000" data-listing-file-modified-sort="1750125964473" data-listing-date-modified-sort="1747494000000" data-listing-reading-time-sort="4" data-listing-word-count-sort="674">
 <div class="body">
 <h3 class="no-anchor listing-title">
 <a href="../../posts/statistics/2025/サンプルサイズ設計.html" class="no-external">臨床試験のサンプルサイズ設計</a>
@@ -439,7 +453,7 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<div class="listing-no-matching d-none">No matching items</div>
+<div class="listing-no-matching d-none">一致なし</div>
 </div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
@@ -466,12 +480,12 @@ window.Quarto = {
       // flash "checked"
       button.classList.add('code-copy-button-checked');
       var currentTitle = button.getAttribute("title");
-      button.setAttribute("title", "Copied!");
+      button.setAttribute("title", "コピーしました");
       let tooltip;
       if (window.bootstrap) {
         button.setAttribute("data-bs-toggle", "tooltip");
         button.setAttribute("data-bs-placement", "left");
-        button.setAttribute("data-bs-title", "Copied!");
+        button.setAttribute("data-bs-title", "コピーしました");
         tooltip = new bootstrap.Tooltip(button, 
           { trigger: "manual", 
             customClass: "code-copy-button-tooltip",

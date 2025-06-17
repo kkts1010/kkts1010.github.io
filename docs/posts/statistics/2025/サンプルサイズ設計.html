@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja"><head>
 
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.7.30">
@@ -7,7 +7,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="坂本航太">
-<meta name="dcterms.date" content="2025-05-17">
 
 <title>臨床試験のサンプルサイズ設計 – Kota Sakamoto</title>
 <style>
@@ -21,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -41,7 +75,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-9849038e97c5862c14c4eb81893d019b.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../site_libs/bootstrap/bootstrap-5c5a4ce15ea03f2a96650e783ca02c3c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-945f87a38397f0f3b8ef34e2f394b6bc.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -56,22 +90,36 @@ ul.task-list li input[type="checkbox"] {
   ],
   "show-item-context": false,
   "language": {
-    "search-no-results-text": "No results",
-    "search-matching-documents-text": "matching documents",
-    "search-copy-link-title": "Copy link to search",
-    "search-hide-matches-text": "Hide additional matches",
-    "search-more-match-text": "more match in this document",
-    "search-more-matches-text": "more matches in this document",
-    "search-clear-button-title": "Clear",
+    "search-no-results-text": "一致なし",
+    "search-matching-documents-text": "一致した文書",
+    "search-copy-link-title": "検索へのリンクをコピー",
+    "search-hide-matches-text": "追加の検索結果を非表示",
+    "search-more-match-text": "追加の検索結果",
+    "search-more-matches-text": "追加の検索結果",
+    "search-clear-button-title": "消去",
     "search-text-placeholder": "",
-    "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit",
-    "search-label": "Search"
+    "search-detached-cancel-button-title": "取消",
+    "search-submit-button-title": "検索",
+    "search-label": "サーチ"
   }
 }</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -114,8 +162,8 @@ window.Quarto = {
     <span class="navbar-title">Kota Sakamoto</span>
     </a>
   </div>
-            <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+            <div id="quarto-search" class="" title="サーチ"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="ナビゲーションを切り替える" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -147,7 +195,7 @@ window.Quarto = {
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-body">
+    <div class="quarto-title column-page-left">
       <h1 class="title">臨床試験のサンプルサイズ設計</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">臨床試験</div>
@@ -157,26 +205,26 @@ window.Quarto = {
   </div>
     
   
-  <div class="quarto-title-meta">
+  <div class="quarto-title-meta column-page-left">
 
       <div>
-      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-heading">作者</div>
       <div class="quarto-title-meta-contents">
                <p>坂本航太 </p>
             </div>
     </div>
       
       <div>
-      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-heading">公開</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">May 17, 2025</p>
+        <p class="date">2025年5月17日</p>
       </div>
     </div>
     
       <div>
-      <div class="quarto-title-meta-heading">Modified</div>
+      <div class="quarto-title-meta-heading">更新日</div>
       <div class="quarto-title-meta-contents">
-        <p class="date-modified">May 18, 2025</p>
+        <p class="date-modified">2025年5月18日</p>
       </div>
     </div>
       
@@ -189,43 +237,31 @@ window.Quarto = {
     </div>
   </div>
   
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">目次</h2>
    
-  <ul>
+  <ul class="collapse">
   <li><a href="#実務で利用するサンプルサイズ設計" id="toc-実務で利用するサンプルサイズ設計" class="nav-link active" data-scroll-target="#実務で利用するサンプルサイズ設計"><span class="header-section-number">1</span> 実務で利用するサンプルサイズ設計</a></li>
   <li><a href="#目次" id="toc-目次" class="nav-link" data-scroll-target="#目次"><span class="header-section-number">2</span> 目次　</a></li>
   <li><a href="#単群試験" id="toc-単群試験" class="nav-link" data-scroll-target="#単群試験"><span class="header-section-number">3</span> 単群試験</a>
   <ul class="collapse">
-  <li><a href="#値アウトカム" id="toc-値アウトカム" class="nav-link" data-scroll-target="#値アウトカム"><span class="header-section-number">3.1</span> 2値アウトカム</a>
-  <ul class="collapse">
-  <li><a href="#参考文献" id="toc-参考文献" class="nav-link" data-scroll-target="#参考文献"><span class="header-section-number">3.1.1</span> 参考文献</a></li>
-  </ul></li>
+  <li><a href="#値アウトカム" id="toc-値アウトカム" class="nav-link" data-scroll-target="#値アウトカム"><span class="header-section-number">3.1</span> 2値アウトカム</a></li>
   </ul></li>
   <li><a href="#並行群間比較計画" id="toc-並行群間比較計画" class="nav-link" data-scroll-target="#並行群間比較計画"><span class="header-section-number">4</span> 並行群間比較計画</a>
   <ul class="collapse">
-  <li><a href="#連続量アウトカム" id="toc-連続量アウトカム" class="nav-link" data-scroll-target="#連続量アウトカム"><span class="header-section-number">4.1</span> 連続量アウトカム</a>
-  <ul class="collapse">
-  <li><a href="#参考文献-1" id="toc-参考文献-1" class="nav-link" data-scroll-target="#参考文献-1"><span class="header-section-number">4.1.1</span> 参考文献</a></li>
-  </ul></li>
-  <li><a href="#値アウトカム-1" id="toc-値アウトカム-1" class="nav-link" data-scroll-target="#値アウトカム-1"><span class="header-section-number">4.2</span> 2値アウトカム</a>
-  <ul class="collapse">
-  <li><a href="#参考文献-2" id="toc-参考文献-2" class="nav-link" data-scroll-target="#参考文献-2"><span class="header-section-number">4.2.1</span> 参考文献</a></li>
-  </ul></li>
-  <li><a href="#生存時間アウトカム" id="toc-生存時間アウトカム" class="nav-link" data-scroll-target="#生存時間アウトカム"><span class="header-section-number">4.3</span> 生存時間アウトカム</a>
-  <ul class="collapse">
-  <li><a href="#参考文献-3" id="toc-参考文献-3" class="nav-link" data-scroll-target="#参考文献-3"><span class="header-section-number">4.3.1</span> 参考文献</a></li>
-  </ul></li>
+  <li><a href="#連続量アウトカム" id="toc-連続量アウトカム" class="nav-link" data-scroll-target="#連続量アウトカム"><span class="header-section-number">4.1</span> 連続量アウトカム</a></li>
+  <li><a href="#値アウトカム-1" id="toc-値アウトカム-1" class="nav-link" data-scroll-target="#値アウトカム-1"><span class="header-section-number">4.2</span> 2値アウトカム</a></li>
+  <li><a href="#生存時間アウトカム" id="toc-生存時間アウトカム" class="nav-link" data-scroll-target="#生存時間アウトカム"><span class="header-section-number">4.3</span> 生存時間アウトカム</a></li>
   </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
+<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
 
 
 
@@ -262,7 +298,7 @@ window.Quarto = {
 <h1 data-number="3"><span class="header-section-number">3</span> 単群試験</h1>
 <section id="値アウトカム" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="値アウトカム"><span class="header-section-number">3.1</span> 2値アウトカム</h2>
-<p>単群試験で2値アウトカムの場合、サンプルサイズは、<span class="math inline">\(P0\)</span>（閾値奏効割合）、<span class="math inline">\(P1\)</span>（期待奏効割合）、<span class="math inline">\(α\)</span>（第一種の過誤確率）、<span class="math inline">\(β\)</span>（第二種の過誤確率）を事前に仮定することで計算できます。閾値奏効割合とは、これ以上の奏効割合がなければ治療効果がない（開発中止をしたい）と考えられる割合のことです。期待奏効割合とは、治療効果があると考えられる割合（次相に進みたい程度）のことです。これらの割合は臨床仮説や先行研究に基づいて決定するため、試験統計家がコメントすることはあまりありません。ICHガイドラインに準じて、SASプログラムは全て両側検定として両側有意水準5%としています。これは、なお、ICH E9では以下のような記載があります。すなわち、GCP準拠の治験においては原則として以下の記載に準じて試験計画を考える必要があります。</p>
+<p>単群試験で2値アウトカムの場合、サンプルサイズは、<span class="math inline">P0</span>（閾値奏効割合）、<span class="math inline">P1</span>（期待奏効割合）、<span class="math inline">α</span>（第一種の過誤確率）、<span class="math inline">β</span>（第二種の過誤確率）を事前に仮定することで計算できます。閾値奏効割合とは、これ以上の奏効割合がなければ治療効果がない（開発中止をしたい）と考えられる割合のことです。期待奏効割合とは、治療効果があると考えられる割合（次相に進みたい程度）のことです。これらの割合は臨床仮説や先行研究に基づいて決定するため、試験統計家がコメントすることはあまりありません。ICHガイドラインに準じて、SASプログラムは全て両側検定として両側有意水準5%としています。これは、なお、ICH E9では以下のような記載があります。すなわち、GCP準拠の治験においては原則として以下の記載に準じて試験計画を考える必要があります。</p>
 <p>「規制上の観点から、本ガイドラインの施行に伴い、原則として片側仮説を検証する場合は2.5％、両側仮説の場合は5％とすることとした。」</p>
 <p>なお、ICH E9にはQ＆AがありQ2で有意水準について言及されている。</p>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -295,36 +331,36 @@ JCOGプロトコール
 </div>
 <p>試験計画時の例：</p>
 <ul>
-<li><p><span class="math inline">\(p0\)</span> = 0.1（閾値奏効割合）</p></li>
-<li><p><span class="math inline">\(p1\)</span> = 0.3（期待奏効割合）</p></li>
-<li><p><span class="math inline">\(α\)</span> = 0.05（第一種の過誤、片側）</p></li>
-<li><p><span class="math inline">\(β\)</span> = 0.2（第二種の過誤）</p></li>
+<li><p><span class="math inline">p0</span> = 0.1（閾値奏効割合）</p></li>
+<li><p><span class="math inline">p1</span> = 0.3（期待奏効割合）</p></li>
+<li><p><span class="math inline">α</span> = 0.05（第一種の過誤、片側）</p></li>
+<li><p><span class="math inline">β</span> = 0.2（第二種の過誤）</p></li>
 </ul>
-<p>以下は、正規近似を用いたサンプルサイズ計算の例です。 連続修正は行いません。正規近似に基づく症例数設計では、H0における<span class="math inline">\(p0\)</span>を用いて分散が計算されている点に注意してください。数理統計学を学ばれた方からみるとスコア検定に基づく方法に相当します。Wald検定に基づく例数設計とすると<span class="math inline">\(p1\)</span>を用いて分散が計算されることになります。中間解析を勉強するとWald検定に基づく方法でサンプルサイズ設計がされることもあると気付きます。中間解析では検定統計量間の相関を考えるため、漸近正規性を仮定したサンプルサイズ設計をするためWald型の統計量を利用します。</p>
+<p>以下は、正規近似を用いたサンプルサイズ計算の例です。 連続修正は行いません。正規近似に基づく症例数設計では、H0における<span class="math inline">p0</span>を用いて分散が計算されている点に注意してください。数理統計学を学ばれた方からみるとスコア検定に基づく方法に相当します。Wald検定に基づく例数設計とすると<span class="math inline">p1</span>を用いて分散が計算されることになります。中間解析を勉強するとWald検定に基づく方法でサンプルサイズ設計がされることもあると気付きます。中間解析では検定統計量間の相関を考えるため、漸近正規性を仮定したサンプルサイズ設計をするためWald型の統計量を利用します。</p>
 <p>　実務上では、抗がん剤の単群試験では中間解析を事前に規定して、2項分布に基づいてに基づいて無効中止や有効中止を考慮したくなる場面が多いです。それは患者さんにとっての倫理性や開発戦略の観点からも重要な要素です。中間解析を行う場合、無効中止や有効中止の基準を事前に規定する必要があります。無効中止や有効中止の基準は、試験の目的やデザインに応じて異なるため、試験統計家と相談して決定することが重要です。無効中止や有効中止の基準を事前に規定することで、試験の透明性が向上し、倫理的な問題を回避することができます。そのような場合は、単純な2値データの割合のサンプルサイズ設計では実施できず、適切な試験統計家がSimonの2段階デザインやFlemingの2段階デザインを用いて例数設計がなされます。また、単群試験において、ベイズ流の例数設計も提案されていることから、ベイズ流例数設計も考慮していただきたい。なお、中間解析やベイズ流例数設計は常に必要ではなく、SASでの実装はシンプルではないため、ここでは割愛します。別記事で説明します。</p>
 <p>通常の単群試験の例数設計は以下のように行います。以下のSASプログラムは、対照群のリスクp0 = 0.1、実験群のリスクp1 = 0.3、リスク差 = 0.2を想定しています。なお、sides = 2は両側検定を意味します。片側検定を行う場合は、sides = 1としてください。</p>
-<pre class="sas"><code>proc power;
-onesamplefreq test=z
-    method = normal
-    sides = 2
-    alpha = 0.05
-    nullproportion = 0.1
-    proportion = 0.3
-    ntotal = .
-    power = 0.8;
-run;</code></pre>
+<div class="sourceCode" id="cb1" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource sas number-lines code-with-copy"><code class="sourceCode"><span id="cb1-1"><a href="#cb1-1"></a>proc power;</span>
+<span id="cb1-2"><a href="#cb1-2"></a>onesamplefreq test=z</span>
+<span id="cb1-3"><a href="#cb1-3"></a>    method = normal</span>
+<span id="cb1-4"><a href="#cb1-4"></a>    sides = 2</span>
+<span id="cb1-5"><a href="#cb1-5"></a>    alpha = 0.05</span>
+<span id="cb1-6"><a href="#cb1-6"></a>    nullproportion = 0.1</span>
+<span id="cb1-7"><a href="#cb1-7"></a>    proportion = 0.3</span>
+<span id="cb1-8"><a href="#cb1-8"></a>    ntotal = .</span>
+<span id="cb1-9"><a href="#cb1-9"></a>    power = 0.8;</span>
+<span id="cb1-10"><a href="#cb1-10"></a>run;</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>対象者数が多い場合（シミュレーションによる確認要です）、上記の正規分布に基づく方法でも良いと考えます。しかし、一般的に2項分布による正確な検定に基づく症例数設計を利用することが標準的な方法です。理由は正規近似による例数設計が二項分布の中心極限定理を用いているため、あくまで対象者数が十分多い状況における中心極限定理を仮定しているためです。中心極限定理を利用せず、2項分布を用いて症例数設計をするSASプログラムは以下です。</p>
 <p>先ほどと異なり、test = exactを指定しています。これにより、2項分布に基づく正確な検定が行われます。これにより、サンプルサイズ計算がより正確になります。また、plotオプションを使用して、サンプルサイズに対する検出力の変化を視覚化しています。これにより、必要なサンプルサイズをより直感的に理解できます。</p>
-<pre class="sas"><code>proc power;
-    onesamplefreq test=exact
-        sides = 2
-        alpha = 0.05
-        nullproportion = 0.1
-        proportion = 0.3
-        ntotal = 30.
-        power = .;
-        plot x = n min =2 max = 100 step = 1 yopts = (ref  = 0.8);
-run;</code></pre>
+<div class="sourceCode" id="cb2" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource sas number-lines code-with-copy"><code class="sourceCode"><span id="cb2-1"><a href="#cb2-1"></a>proc power;</span>
+<span id="cb2-2"><a href="#cb2-2"></a>    onesamplefreq test=exact</span>
+<span id="cb2-3"><a href="#cb2-3"></a>        sides = 2</span>
+<span id="cb2-4"><a href="#cb2-4"></a>        alpha = 0.05</span>
+<span id="cb2-5"><a href="#cb2-5"></a>        nullproportion = 0.1</span>
+<span id="cb2-6"><a href="#cb2-6"></a>        proportion = 0.3</span>
+<span id="cb2-7"><a href="#cb2-7"></a>        ntotal = 30.</span>
+<span id="cb2-8"><a href="#cb2-8"></a>        power = .;</span>
+<span id="cb2-9"><a href="#cb2-9"></a>        plot x = n min =2 max = 100 step = 1 yopts = (ref  = 0.8);</span>
+<span id="cb2-10"><a href="#cb2-10"></a>run;</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Exact法に基づく症例数設計では、検出力は単調増加にならず、test = normalと異なり、N = xxのように数値が出力されません。そのため、SASの出力を結果を見ながら、目標とする検出力を満たす最小の整数値 or 目標とする検出力を満たす最大の整数値とします。個人的には、より保守的であるため後者を推奨します。実際、より大きなサンプルサイズを選ぶことで、検出力の目標値をより確実に達成できる可能性が高まります。ただし、リソースの制約がある場合は、目標検出力を満たす最小の症例数を選ぶことも実用的な選択肢となり得ます。どちらのアプローチを取るかは、研究の目的やリソースの制約によって相談の上、決定してください。</p>
 <section id="参考文献" class="level3" data-number="3.1.1">
 <h3 data-number="3.1.1" class="anchored" data-anchor-id="参考文献"><span class="header-section-number">3.1.1</span> 参考文献</h3>
@@ -339,23 +375,23 @@ run;</code></pre>
 <section id="連続量アウトカム" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="連続量アウトカム"><span class="header-section-number">4.1</span> 連続量アウトカム</h2>
 <p>連続量アウトカムの場合、サンプルサイズは以下の式で計算できます。 以下では優越性を示す検証的試験を想定しています。 twosamplemeans test = diffを用いて、2群間の平均値の差を検定する方法を想定しています。以下では、対照群の平均値μ0 = 0、実験群の平均値μ1 = 0.5、標準偏差σ = 1を想定しています。</p>
-<pre class="sas"><code>proc power;
-    twosamplemeans test=diff
-        meandiff = 0.5
-        stddev = 1
-        alpha = 0.05
-        power = 0.8
-        nptotal = .;
-run;</code></pre>
+<div class="sourceCode" id="cb3" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource sas number-lines code-with-copy"><code class="sourceCode"><span id="cb3-1"><a href="#cb3-1"></a>proc power;</span>
+<span id="cb3-2"><a href="#cb3-2"></a>    twosamplemeans test=diff</span>
+<span id="cb3-3"><a href="#cb3-3"></a>        meandiff = 0.5</span>
+<span id="cb3-4"><a href="#cb3-4"></a>        stddev = 1</span>
+<span id="cb3-5"><a href="#cb3-5"></a>        alpha = 0.05</span>
+<span id="cb3-6"><a href="#cb3-6"></a>        power = 0.8</span>
+<span id="cb3-7"><a href="#cb3-7"></a>        nptotal = .;</span>
+<span id="cb3-8"><a href="#cb3-8"></a>run;</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>複数の状況をまとめて計算する場合は、以下のようにします。</p>
-<pre class="sas"><code>proc power;
-    twosamplemeans test=diff
-        meandiff = 0.5 , 1 , 1.5
-        stddev = 1 , 2 , 3
-        alpha = 0.05
-        power = 0.8
-        ntotal = .;
-run;</code></pre>
+<div class="sourceCode" id="cb4" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource sas number-lines code-with-copy"><code class="sourceCode"><span id="cb4-1"><a href="#cb4-1"></a>proc power;</span>
+<span id="cb4-2"><a href="#cb4-2"></a>    twosamplemeans test=diff</span>
+<span id="cb4-3"><a href="#cb4-3"></a>        meandiff = 0.5 , 1 , 1.5</span>
+<span id="cb4-4"><a href="#cb4-4"></a>        stddev = 1 , 2 , 3</span>
+<span id="cb4-5"><a href="#cb4-5"></a>        alpha = 0.05</span>
+<span id="cb4-6"><a href="#cb4-6"></a>        power = 0.8</span>
+<span id="cb4-7"><a href="#cb4-7"></a>        ntotal = .;</span>
+<span id="cb4-8"><a href="#cb4-8"></a>run;</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>　平均値の差の検定は一般的であり、連続量のアウトカムを用いた試験では最も多く利用される方法です。平均値の差の検定は、通常、正規分布に従うと仮定される連続量データに適用されます。連続量アウトカムにおける経時測定データのサンプルサイズ設計が求められることもあるかと思います。その場合、最終観察時点における平均値の差を検定する方法として上記のプログラムを利用することが保守的で望ましいと考えます。例数設計としてはt検定に基づきより保守的なサンプルサイズ設計をする。統計解析においては、共分散分析やMMRMなどの同じEstimandを推定する方法で、より検出力の高い解析方法を適用することが治験の分野では求められると考えます。</p>
 <section id="参考文献-1" class="level3" data-number="4.1.1">
 <h3 data-number="4.1.1" class="anchored" data-anchor-id="参考文献-1"><span class="header-section-number">4.1.1</span> 参考文献</h3>
@@ -372,15 +408,15 @@ run;</code></pre>
 <li>β = 0.2（第二種の過誤）</li>
 </ul>
 <p>SASプログラムは以下となります。ここでは、対照群のリスク及びリスク差を指定している。リスク差は、対照群のp0に基づいて計算されるため、対照群のp0を指定する必要があります。</p>
-<pre class="sas"><code>proc power;
-twosamplefreq test=pchi
-    sides = 2
-    alpha = 0.05
-    refproportion = 0.1
-    proportiondiff = 0.2
-    npergroup = .
-    power = 0.8;
-run;</code></pre>
+<div class="sourceCode" id="cb5" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource sas number-lines code-with-copy"><code class="sourceCode"><span id="cb5-1"><a href="#cb5-1"></a>proc power;</span>
+<span id="cb5-2"><a href="#cb5-2"></a>twosamplefreq test=pchi</span>
+<span id="cb5-3"><a href="#cb5-3"></a>    sides = 2</span>
+<span id="cb5-4"><a href="#cb5-4"></a>    alpha = 0.05</span>
+<span id="cb5-5"><a href="#cb5-5"></a>    refproportion = 0.1</span>
+<span id="cb5-6"><a href="#cb5-6"></a>    proportiondiff = 0.2</span>
+<span id="cb5-7"><a href="#cb5-7"></a>    npergroup = .</span>
+<span id="cb5-8"><a href="#cb5-8"></a>    power = 0.8;</span>
+<span id="cb5-9"><a href="#cb5-9"></a>run;</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <section id="参考文献-2" class="level3" data-number="4.2.1">
 <h3 data-number="4.2.1" class="anchored" data-anchor-id="参考文献-2"><span class="header-section-number">4.2.1</span> 参考文献</h3>
 <ul>
@@ -402,39 +438,39 @@ run;</code></pre>
 <li>β = 0.2（第二種の過誤）</li>
 </ul>
 <p>SASでは以下のように実行します。ここでは、対照群の生存率S_c(3) = 0.3、実験群の生存率S_a(2) = 0.2を想定しています。登録期間は3年、フォローアップ期間は2年としています。これにより、試験のデザインや目的に応じたサンプルサイズを計算することができます。</p>
-<pre class="sas"><code>proc power;
-    twosamplesurvival test = logrank
-    curve("Control") = 3:0.3
-    curve("Experimental") = 3:0.2
-    groupsurvival = "Control" | "Experimental"
-    groupweights = (1 1)
-    accrualtime = 3 
-    followuptime = 2
-    ntotal = .
-    power = 0.8
-    alpha = 0.05
-    sides = 2;
-run;</code></pre>
+<div class="sourceCode" id="cb6" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource sas number-lines code-with-copy"><code class="sourceCode"><span id="cb6-1"><a href="#cb6-1"></a>proc power;</span>
+<span id="cb6-2"><a href="#cb6-2"></a>    twosamplesurvival test = logrank</span>
+<span id="cb6-3"><a href="#cb6-3"></a>    curve("Control") = 3:0.3</span>
+<span id="cb6-4"><a href="#cb6-4"></a>    curve("Experimental") = 3:0.2</span>
+<span id="cb6-5"><a href="#cb6-5"></a>    groupsurvival = "Control" | "Experimental"</span>
+<span id="cb6-6"><a href="#cb6-6"></a>    groupweights = (1 1)</span>
+<span id="cb6-7"><a href="#cb6-7"></a>    accrualtime = 3 </span>
+<span id="cb6-8"><a href="#cb6-8"></a>    followuptime = 2</span>
+<span id="cb6-9"><a href="#cb6-9"></a>    ntotal = .</span>
+<span id="cb6-10"><a href="#cb6-10"></a>    power = 0.8</span>
+<span id="cb6-11"><a href="#cb6-11"></a>    alpha = 0.05</span>
+<span id="cb6-12"><a href="#cb6-12"></a>    sides = 2;</span>
+<span id="cb6-13"><a href="#cb6-13"></a>run;</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>通常、生存時間の例数設計で3年間での生存割合20%や、30%ということを仮定できる状況は多くないと思います。例えば第2相試験では1年間の追跡しかしていない場合に3年生存割合を仮定することは難しいです。そこで、通常は生存時間Tが指数分布に従うとして以下の式を用いてハザードを基にサンプルサイズ設計は有用です。ただし、ハザード比は生存時間の分布に依存するため、注意が必要です。生存時間Tが指数分布に従う場合、ハザード比は以下のように表されます。</p>
-<p><span class="math display">\[
+<p><span class="math display">
 S(t) = 1-F(t) = exp(-λt) ⇔ λ = -\frac{log(S(t))}{t}
-\]</span></p>
+</span></p>
 <p>この関係を用いて、ある時点tとその時点のKM推定量の結果を用いて各群のハザードを指定してサンプルサイズ計算をする方法は以下となります。</p>
-<pre class="sas"><code>proc power;
-    twosamplesurvival test = logrank
-    groupsurvexphazards = (0.05 0.01)
-    groupweights = (1 1)
-    accrualtime = 3 
-    followuptime = 2
-    ntotal = .
-    power = 0.8
-    alpha = 0.05
-    sides = 2;
-run;</code></pre>
+<div class="sourceCode" id="cb7" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource sas number-lines code-with-copy"><code class="sourceCode"><span id="cb7-1"><a href="#cb7-1"></a>proc power;</span>
+<span id="cb7-2"><a href="#cb7-2"></a>    twosamplesurvival test = logrank</span>
+<span id="cb7-3"><a href="#cb7-3"></a>    groupsurvexphazards = (0.05 0.01)</span>
+<span id="cb7-4"><a href="#cb7-4"></a>    groupweights = (1 1)</span>
+<span id="cb7-5"><a href="#cb7-5"></a>    accrualtime = 3 </span>
+<span id="cb7-6"><a href="#cb7-6"></a>    followuptime = 2</span>
+<span id="cb7-7"><a href="#cb7-7"></a>    ntotal = .</span>
+<span id="cb7-8"><a href="#cb7-8"></a>    power = 0.8</span>
+<span id="cb7-9"><a href="#cb7-9"></a>    alpha = 0.05</span>
+<span id="cb7-10"><a href="#cb7-10"></a>    sides = 2;</span>
+<span id="cb7-11"><a href="#cb7-11"></a>run;</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>他にも、中央生存時間を用いて計算することもできる。これも生存時間アウトカムに指数分布を仮定すると簡単に示せます。</p>
-<p><span class="math display">\[
+<p><span class="math display">
 S(1/2) = exp(-λt) ⇔ λ = -\frac{log(S(1/2))}{t}
-\]</span></p>
+</span></p>
 <p>この関係を用いて、KM推定量の結果を用いて各群の中央生存時間からハザードを推定することもできる。いずれの方法もTに指数分布を仮定している。</p>
 <section id="参考文献-3" class="level3" data-number="4.3.1">
 <h3 data-number="4.3.1" class="anchored" data-anchor-id="参考文献-3"><span class="header-section-number">4.3.1</span> 参考文献</h3>
@@ -473,12 +509,12 @@ S(1/2) = exp(-λt) ⇔ λ = -\frac{log(S(1/2))}{t}
       // flash "checked"
       button.classList.add('code-copy-button-checked');
       var currentTitle = button.getAttribute("title");
-      button.setAttribute("title", "Copied!");
+      button.setAttribute("title", "コピーしました");
       let tooltip;
       if (window.bootstrap) {
         button.setAttribute("data-bs-toggle", "tooltip");
         button.setAttribute("data-bs-placement", "left");
-        button.setAttribute("data-bs-title", "Copied!");
+        button.setAttribute("data-bs-title", "コピーしました");
         tooltip = new bootstrap.Tooltip(button, 
           { trigger: "manual", 
             customClass: "code-copy-button-tooltip",

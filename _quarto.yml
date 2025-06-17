@@ -36,6 +36,7 @@ format:
   html:
     mainfont: "BIZ UDPGothic"
     toc: true
+    toc-depth: 2                 
     theme: cosmo
     css: styles.css
     number-sections: true
@@ -45,6 +46,18 @@ format:
     code-overflow: scroll
     code-fold: true
     code-annotations: select
+    code-copy: true            
+    code-line-numbers: false    
+    fig-format: svg
+    fig-height: 5                   
+    fig-width: 9                    
+    html-math-method: katex          
+    page-layout: full               
+    fontsize: normal                 
+    self-contained: false           
+    lang: "ja"                  
+    encoding: "UTF-8"
+    df-print: tibble                
     toc-title: "目次"
     abstract-title: "概要"
 

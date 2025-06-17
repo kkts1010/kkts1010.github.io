@@ -1,1 +1,17 @@
-/* css styles */
+/* タイトルブロック全体の調整 */
+.quarto-title-block {
+    margin-bottom: 2rem;
+}
+
+/* Abstract セクションの調整 */
+.abstract {
+    margin: 1rem 0;
+    padding: 0;
+    text-align: left;
+}
+
+.abstract-title {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+}

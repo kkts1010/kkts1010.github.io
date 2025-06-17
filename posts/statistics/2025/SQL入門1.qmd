@@ -6,43 +6,6 @@ date-modified: "2025-06-15"
 abstract-title: Abstract
 abstract: ""
 date: "2025-06-15"
-engine: knitr
-format:
-  html: 
-    fontsize: normal
-    page-layout: full
-    lang: "ja"
-    encoding: "UTF-8"
-    toc: true
-    toc-depth: 2
-    code-fold: show
-    html-math-method: katex
-    fig-format: svg
-    fig-height: 5
-    fig-width: 9
-    self-contained: true
-    number-sections: true
-    code-block-border-left: true
-    code-line-numbers: false
-    code-overflow: wrap
-    highlight-style: atom-one
-    df-print: tibble
-#   pdf:
-#     documentclass: bxjsarticle
-#     classoption: 
-#       - xelatex
-#       - ja=standard
-#     pdf-engine: xelatex
-#     mainfont: "Times New Roman"
-#     sansfont: "Times New Roman"
-#     monofont: "Courier New"
-#     CJKmainfont: "MS Mincho"  
-#     CJKsansfont: "MS Gothic" 
-#     toc: true
-#     toc-depth: 2
-#     number-sections: true
-#     colorlinks: true
-#     keep-tex: true
 editor: visual
 ---
 
@@ -71,7 +34,7 @@ editor: visual
 
 **Data Stepの場合：**
 
-```         
+```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}
 /* 各データセットを事前にソートする必要がある */
 proc sort data=dataset1; by id; run;
 proc sort data=dataset2; by id; run;
@@ -83,7 +46,7 @@ run;
 
 **Proc SQLの場合：**
 
-```         
+```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}     
 /* ソート不要で直接結合可能 */
 proc sql;
     create table merged as
@@ -97,7 +60,7 @@ quit;
 
 **Proc SQLでは、order byを用いることにより、データセットの併合と同時にデータをソートすることが可能である。そのため、データセットの併合後にProc sortで改めてソートすることはせずに、Proc SQLのみで目的に応じた並び順にすることが可能である。**
 
-```         
+```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}      
 proc sql;
     create table result as
     select * from dataset1 a
@@ -113,7 +76,7 @@ quit;
 
 **Proc SQLの解決策：**
 
-```         
+```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap} 
 /* 表4.1.5のような状況での外部結合 */
 proc sql;
     create table result as
@@ -134,7 +97,7 @@ quit;
 
 **Proc SQLの解決策：**
 
-```         
+```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}     
 proc sql;
     create table comparison as
     select subjid, paramcd, value,
@@ -153,7 +116,7 @@ quit;
 
 1つのデータセットを加工して、1つのデータセットを作成する場合の基本的なProc SQLの構文：他にも諸々の指定ができるが、基礎的な事項は以下の通りである。
 
-```         
+```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}
 Proc SQL ;
     create table 作成データセット名    as
     select      元のデータセット名.変数名1,
@@ -168,7 +131,7 @@ Proc SQL ;
 
 複数SQLステートメントのまとめ書き
 
-```         
+```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}    
 proc sql <オプション> ;
     sqlステートメント1 ;
     sqlステートメント2 ;
@@ -185,7 +148,7 @@ quit;
 
 ### `select`
 
-```         
+```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}       
 select  元のデータセット名.変数名1,
         元のデータセット名.変数名2 as 変更後の変数名2
 ```
@@ -224,7 +187,7 @@ select  元のデータセット名.変数名1,
 
 上記のProc SQLで作成したプログラムをデータステップおよびProc SQL以外のプロシジャで作成する場合：
 
-```         
+```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}
 Data 作成データセット名 ;
     set 元のデータセット名 ;
     where       データ抽出の条件1 ;
@@ -248,7 +211,7 @@ run ;
 
 # 参考データ
 
-```{markdown}
+```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}
 /* 付録. SAS プログラム (SAS Ver 9.1 日本語版) */
 
 /* 利用するフォーマットの指定 */
