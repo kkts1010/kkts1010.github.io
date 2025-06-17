@@ -6,30 +6,6 @@ date-modified: "2025-06-16"
 abstract-title: Abstract
 abstract: ""
 date: "2025-06-16"
-format:
-  html: 
-    fontsize: normal
-    page-layout: full
-    lang: "ja"
-    encoding: "UTF-8"
-    toc: true
-    toc-depth: 2
-    code-fold: show
-    html-math-method: katex
-    fig-format: svg
-    fig-height: 5
-    fig-width: 9
-    self-contained: true
-    number-sections: true
-    code-line-numbers: false
-    code-overflow: wrap
-    highlight-style: atom-one
-    df-print: tibble
-    code-copy: true
-    code-block-bg: true
-    code-block-border-left: "#28a745"
-    code-annotations: hover
-editor: visual
 ---
 
 # SAS Programing学習
@@ -42,7 +18,7 @@ editor: visual
 
 # SAS日付をマクロ化する方法
 
-```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 data _null_;
 
    dt = datetime();
@@ -94,7 +70,7 @@ run;
 
 # Path指定のTips
 
-```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}  
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 %LET execpath=" ";
 %MACRO setexecpath;
     %LET execpath=%SYSFUNC(GETOPTION(SYSIN));
@@ -197,7 +173,7 @@ run;
 
 # フォルダの自動作成
 
-```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}   
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* ディレクトリ自動作成マクロ */
 %macro create_dir_structure(path);
    %local parent_dir dir_name;
@@ -251,7 +227,7 @@ FILEEXIST関数による存在チェックを各段階で実行し、既に存�
 
 # 日付管理
 
-```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}       
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 日付情報取得 */
 data _null_;
   Date1 = put(date(), yymmdds10.);
@@ -319,7 +295,7 @@ create_dir_structureマクロの再帰処理により、深い階層構造でも
 
 # マクロライブラリの活用
 
-```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}  
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* マクロライブラリの一括読み込み */
 filename MACROLIB "&MACRO_PATH" ;
 %include MACROLIB (データ処理macro.sas);
@@ -350,7 +326,7 @@ FILENAME文で論理名「MACROLIB」を定義し、マクロ変数で指定さ�
 
 # プログラミングの動的生成
 
-```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}      
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 %macro create_pg(PGM_name,Table, Analysis_pop);
 filename ext "&Analysis_PGM./&PGM_name..sas";
 data _null_;
@@ -421,7 +397,7 @@ SASプログラミングで頻繁に使用される便利な関数を、実用�
 
 **機能：** 複数の文字列を連結し、各引数の前後の空白を自動削除
 
-```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}     
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 data example1;
     name = "田中";
     id = "001";
@@ -445,7 +421,7 @@ CATS関数は自動的に前後の空白を削除するため、TRIMやLEFT関�
 
 **機能：** 指定した区切り文字で複数の文字列を連結
 
-```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}      
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 data example2;
     year = 2025;
     month = 6;
@@ -468,7 +444,7 @@ run;
 
 **機能：** 指定した値がリストの何番目にあるかを返す
 
-```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 data ae_severity;
     input pt $ severity $;
     
@@ -511,7 +487,7 @@ pt=呼吸困難 severity=重度 severity_code=3 ctcae_grade=0
 
 **機能：** インデックス番号に基づいてリストから値を選択
 
-```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}   
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 data example4;
     do i = 1 to 4;
         /* 数値版：CHOOSEN */
@@ -535,7 +511,7 @@ run;
 
 **機能：** 最初の非欠損値を返す
 
-```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}       
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* サンプルデータの作成 */
 data sample_data;
     input ID X1 $ X2 $ X3 $;
@@ -578,7 +554,7 @@ run;
 
 **機能：** フォーマットが適用された値を文字列として取得
 
-```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}       
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 data DT1;
   format X yymmdd10.;
   X = '13jun2017'd;
@@ -615,7 +591,7 @@ run;
 
 **機能：** 欠損値の個数をカウント
 
-```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}     
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 data example7;
     input name $ age height weight;
     
@@ -638,7 +614,7 @@ run;
 
 **機能：** 条件に基づいて値を返す三項演算子
 
-```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 data DT1;
    length X1 $10.;
    X1="YES"; output;
@@ -665,7 +641,7 @@ Rのifelse関数みたいな気持ち。
 
 **機能：** 複数の変数を一度に欠損値に設定
 
-```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap} 
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 data example9;
     name = "田中";
     age = 25;
@@ -684,7 +660,7 @@ run;
 
 **機能：** データステップ内でマクロ変数を作成・更新
 
-```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}     
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 data example10;
     input dept $ sales;
     

@@ -6,42 +6,6 @@ date-modified: "2025-06-14"
 abstract-title: Abstract
 abstract: ""
 date: "2025-06-14"
-format:
-  html: 
-    fontsize: normal
-    page-layout: full
-    lang: "ja"
-    encoding: "UTF-8"
-    toc: true
-    toc-depth: 2
-    code-fold: show
-    html-math-method: katex
-    fig-format: svg
-    fig-height: 5
-    fig-width: 9
-    self-contained: true
-    number-sections: true
-    code-block-border-left: true
-    code-line-numbers: false
-    code-overflow: wrap
-    highlight-style: atom-one
-    df-print: tibble
-#   pdf:
-#     documentclass: bxjsarticle
-#     classoption: 
-#       - xelatex
-#       - ja=standard
-#     pdf-engine: xelatex
-#     mainfont: "Times New Roman"
-#     sansfont: "Times New Roman"
-#     monofont: "Courier New"
-#     CJKmainfont: "MS Mincho"  
-#     CJKsansfont: "MS Gothic" 
-#     toc: true
-#     toc-depth: 2
-#     number-sections: true
-#     colorlinks: true
-#     keep-tex: true
 editor: visual
 ---
 
@@ -93,7 +57,7 @@ SASプログラミングにおいて、毎回同じような処理を一から�
 ### SDTM to ADaM変換の場合
 
 | 処理項目 | 考察 | フレームワーク化判断 |
-|-------------------|-------------------|-----------------------------------|
+|-------------------|-------------------|----------------------------------|
 | Clear log and data | 毎回使う。対象とする。 | ✅ 完全自動化 |
 | Setting macros | 毎回使うところだけ対象とする。 | ⚡ 部分自動化 |
 | Setting library | 毎回違う。出来るだけ一箇所に集約したい。 | 🔧 設定管理 |
@@ -168,7 +132,7 @@ SASプログラミングにおいて、毎回同じような処理を一から�
 
 ### 全実行プログラム：環境分離の巧妙な仕組み
 
-``` sas
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 基本的にはマクロで実装 */
 %macro derive(dsn, title);
    proc printto log = "&path.¥&project._&dsn._log.txt" new;
@@ -187,8 +151,7 @@ SASプログラミングにおいて、毎回同じような処理を一から�
 
 Printtoでincludeを挟むだけで開発環境と本番実行環境を分離できる！ 開発時：それぞれのプログラムで実行。ログはログ画面へ出力される 本番実行時：ログはprinttoで指定したフォルダへ出力される
 
-``` sas
-
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 %macro derive(lib, dsn, key, where);
     proc sort data = &lib..&dsn out = work.&dsn;
         by &key.;
@@ -199,7 +162,7 @@ Printtoでincludeを挟むだけで開発環境と本番実行環境を分離で
 
 Macroはlibraryにして保管・管理しておくと楽です。今回のmacro.sasはそれ自体がマクロライブラリとして機能します。 フレームワークからライブラリが読み込まれるような仕様にしています。 個別プログラムの構造化 ログクリアとヘッダーの順序問題 常識的に考えるとheaderが先である。だって"head"erだから。でも少し考えてみてもいい。
 
-``` sas
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* パターン1 */
 dm "log; clear;";
 /* program name : test */
@@ -215,8 +178,7 @@ dm "log; clear;";
 
 PhUSE GPPの参考から持ってきました。立派なヘッダーです。 これを作るの時間かかるんじゃない？ → こういうものはフレームワークに持たせましょう。 ちょっと工夫すると結構作れちゃったりするものです。 よく見たら進捗管理ファイル、帳票一覧、ADaM仕様書にほとんどの情報が入っている。
 
-``` sas
-
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /***********************************************************************
 * Project         : Sample Drug, Sample Indication,Study1
 * Program name    : sample.sas
@@ -233,8 +195,7 @@ PhUSE GPPの参考から持ってきました。立派なヘッダーです。 �
 
 マクロはいつもどうやって使う？
 
-``` sas
-
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 1. %include statement */
 %include "macro.sas";
 
@@ -249,8 +210,7 @@ OPTIONS MSTORED SASMSTORE=mylib;
 
 # マクロをcallしましょう
 
-``` sas
-
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 1. %config */
 %config
 
@@ -269,7 +229,7 @@ libnameなどの設定を一括で。色々クリアする処理を入れる人�
 
 Sectionを設定しよう こっちもこんな感じでつらつらと記載。 どういう作りにするかは社内で共通化すれば良い。
 
-``` sas
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 1. /* --- general setting --- */ */
 /* 2. /* --- macro preparation --- */ */
 /* 3. /* --- data preparation --- */ */
@@ -279,7 +239,7 @@ Sectionを設定しよう こっちもこんな感じでつらつらと記載。
 
 Call Execute + Metadata Dataset 定番のcall executeとデータセットの合わせ技。 %generateはput statementでsas programをひたすら作ってくれるマクロ。
 
-``` sas
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 data _null_;
     set metadata;
     call execute('%generate(' || catx(',', parameter1, parameter2) || ')');
@@ -288,7 +248,7 @@ run;
 
 # 実際のcall excuteで作成するプログラム例
 
-``` sas
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /***********************************************************************
 * Project ID      :PM1234
 * Title          :Create a dataset, ADAE

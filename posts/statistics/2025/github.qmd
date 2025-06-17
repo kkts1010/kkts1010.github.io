@@ -6,43 +6,6 @@ date-modified: "2025-06-14"
 abstract-title: Abstract
 abstract: ""
 date: "2025-06-14"
-format:
-  html: 
-    fontsize: normal
-    page-layout: full
-    lang: "ja"
-    encoding: "UTF-8"
-    toc: true
-    toc-depth: 2
-    code-fold: show
-    html-math-method: katex
-    fig-format: svg
-    fig-height: 5
-    fig-width: 9
-    self-contained: true
-    number-sections: true
-    code-block-border-left: true
-    code-line-numbers: false
-    code-overflow: wrap
-    highlight-style: atom-one
-    df-print: tibble
-#   pdf:
-#     documentclass: bxjsarticle
-#     classoption: 
-#       - xelatex
-#       - ja=standard
-#     pdf-engine: xelatex
-#     mainfont: "Times New Roman"
-#     sansfont: "Times New Roman"
-#     monofont: "Courier New"
-#     CJKmainfont: "MS Mincho"  
-#     CJKsansfont: "MS Gothic" 
-#     toc: true
-#     toc-depth: 2
-#     number-sections: true
-#     colorlinks: true
-#     keep-tex: true
-editor: visual
 ---
 
 # githubのブログ更新手順について
@@ -51,7 +14,7 @@ GitHubでブログを更新する際の標準的な手順は以下の通りで�
 
 ## 一括実行
 
-```         
+```{.md eval=FALSE, code-line-numbers=true, code-overflow=wrap}
 quarto render
 git add .
 git commit -m "新記事追加/編集"
@@ -62,28 +25,28 @@ git push origin main
 
 なお、quartoが多くなってきた場合、特定のファイルのみでrenderすることも可能である。
 
-```         
+```{.md eval=FALSE, code-line-numbers=true, code-overflow=wrap}     
 quarto render
 ```
 
-```         
+```{.md eval=FALSE, code-line-numbers=true, code-overflow=wrap}     
 quarto render post.qmd
 ```
 
 ## 変更内容をステージングエリアに追加
 
-```         
+```{.md eval=FALSE, code-line-numbers=true, code-overflow=wrap}      
 git add .
 ```
 
 ## 変更をコミット
 
-```         
+```{.md eval=FALSE, code-line-numbers=true, code-overflow=wrap}       
 git commit -m "コミットメッセージ"
 ```
 
 ## リモートリポジトリにプッシュ
 
-```         
+```{.md eval=FALSE, code-line-numbers=true, code-overflow=wrap}    
 git push origin main
 ```
