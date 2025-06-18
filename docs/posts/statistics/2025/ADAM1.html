@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.30">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="坂本航太">
+
+<title>ADaM IG1.3 – Kota Sakamoto</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-9849038e97c5862c14c4eb81893d019b.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-945f87a38397f0f3b8ef34e2f394b6bc.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "一致なし",
+    "search-matching-documents-text": "一致した文書",
+    "search-copy-link-title": "検索へのリンクをコピー",
+    "search-hide-matches-text": "追加の検索結果を非表示",
+    "search-more-match-text": "追加の検索結果",
+    "search-more-matches-text": "追加の検索結果",
+    "search-clear-button-title": "消去",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "取消",
+    "search-submit-button-title": "検索",
+    "search-label": "サーチ"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Kota Sakamoto</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="サーチ"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="ナビゲーションを切り替える" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../posts/statistics/index.html"> 
+<span class="menu-text">Notes</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../posts/Web_tools/Web_tools.html"> 
+<span class="menu-text">Web Tools</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+    <a href="https://github.com/kkts1010/kkts1010.github.io/" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-github"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-page-left">
+      <h1 class="title">ADaM IG1.3</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">SAS</div>
+                <div class="quarto-category">解析プログラミング</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta column-page-left">
+
+      <div>
+      <div class="quarto-title-meta-heading">作者</div>
+      <div class="quarto-title-meta-contents">
+               <p>坂本航太 </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">公開</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">2025年6月18日</p>
+      </div>
+    </div>
+    
+      <div>
+      <div class="quarto-title-meta-heading">更新日</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date-modified">2025年6月18日</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">目次</h2>
+   
+  <ul class="collapse">
+  <li><a href="#adam-ig-1.3" id="toc-adam-ig-1.3" class="nav-link active" data-scroll-target="#adam-ig-1.3"><span class="header-section-number">1</span> ADaM IG 1.3</a>
+  <ul class="collapse">
+  <li><a href="#文献" id="toc-文献" class="nav-link" data-scroll-target="#文献"><span class="header-section-number">1.1</span> 文献</a></li>
+  </ul></li>
+  <li><a href="#adam-igの目次" id="toc-adam-igの目次" class="nav-link" data-scroll-target="#adam-igの目次"><span class="header-section-number">2</span> ADaM IGの目次</a>
+  <ul class="collapse">
+  <li><a href="#basic-data-structure-definitions" id="toc-basic-data-structure-definitions" class="nav-link" data-scroll-target="#basic-data-structure-definitions"><span class="header-section-number">2.1</span> 1.5.2 Basic Data Structure Definitions</a></li>
+  <li><a href="#analysis-datasets-and-adam-datasets" id="toc-analysis-datasets-and-adam-datasets" class="nav-link" data-scroll-target="#analysis-datasets-and-adam-datasets"><span class="header-section-number">2.2</span> Analysis Datasets and ADaM Datasets</a></li>
+  <li><a href="#fundamental-principles" id="toc-fundamental-principles" class="nav-link" data-scroll-target="#fundamental-principles"><span class="header-section-number">2.3</span> Fundamental Principles</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+
+
+
+
+
+<section id="adam-ig-1.3" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> ADaM IG 1.3</h1>
+<p>本記事では、自己学習用にADaM IGの文書を和訳する。基本的には以下の文献を読んでいただきたい。</p>
+<section id="文献" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="文献"><span class="header-section-number">1.1</span> 文献</h2>
+<ul>
+<li><a href="https://www.cdisc.org/standards/foundational/adam/adamig-v1-3">ADaMIG v1.3</a></li>
+</ul>
+</section>
+</section>
+<section id="adam-igの目次" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> ADaM IGの目次</h1>
+<p>本文書は以下のセクションで構成されています：</p>
+<ul>
+<li>第1章 はじめに では、ADaM標準の重要性と他のCDISCデータ標準との関係について全般的な紹介を行います。</li>
+<li>第2章 ADaM標準の基本原理 では、すべての解析データセットに適用される基本原則についてレビューし、大多数の解析状況を表現するのに十分な柔軟性を持つ2つの標準構造を紹介します。</li>
+<li>第3章 標準ADaM変数 では、ADaM標準データ構造で一般的に使用される標準変数を定義します。</li>
+<li>第4章 実装上の課題、標準的な解決策、および例 では、重要な追加的なガイダンスを提供します。</li>
+<li>第5章（付録） では、実装に関連する追加の背景資料やその他の補足資料について説明します。</li>
+</ul>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 40%">
+<col style="width: 31%">
+<col style="width: 27%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Section</th>
+<th>Title</th>
+<th>Page</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td><strong>INTRODUCTION</strong></td>
+<td>4</td>
+</tr>
+<tr class="even">
+<td>1.1</td>
+<td>Purpose</td>
+<td>4</td>
+</tr>
+<tr class="odd">
+<td>1.2</td>
+<td>Background</td>
+<td>4</td>
+</tr>
+<tr class="even">
+<td>1.3</td>
+<td>What Is Covered in the ADaMIG</td>
+<td>4</td>
+</tr>
+<tr class="odd">
+<td>1.3.1</td>
+<td>Other ADaM-related CDISC Documents</td>
+<td>5</td>
+</tr>
+<tr class="even">
+<td>1.4</td>
+<td>Organization of this Document</td>
+<td>6</td>
+</tr>
+<tr class="odd">
+<td>1.5</td>
+<td>Definitions</td>
+<td>6</td>
+</tr>
+<tr class="even">
+<td>1.5.1</td>
+<td>General ADaM Definitions</td>
+<td>6</td>
+</tr>
+<tr class="odd">
+<td>1.5.2</td>
+<td>Basic Data Structure Definitions</td>
+<td>7</td>
+</tr>
+<tr class="even">
+<td>1.6</td>
+<td>Analysis Datasets and ADaM Datasets</td>
+<td>7</td>
+</tr>
+<tr class="odd">
+<td>1.6.1</td>
+<td>Analysis Datasets Within the eCTD Folder Structure</td>
+<td>8</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td><strong>FUNDAMENTALS OF THE ADAM STANDARD</strong></td>
+<td>10</td>
+</tr>
+<tr class="even">
+<td>2.1</td>
+<td>Fundamental Principles</td>
+<td>10</td>
+</tr>
+<tr class="odd">
+<td>2.2</td>
+<td>Traceability</td>
+<td>10</td>
+</tr>
+<tr class="even">
+<td>2.3</td>
+<td>The ADaM Data Structures</td>
+<td>11</td>
+</tr>
+<tr class="odd">
+<td>2.3.1</td>
+<td>The ADaM Subject-Level Analysis Dataset (ADSL)</td>
+<td>11</td>
+</tr>
+<tr class="even">
+<td>2.3.2</td>
+<td>The ADaM Basic Data Structure (BDS)</td>
+<td>12</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td><strong>STANDARD ADAM VARIABLES</strong></td>
+<td>14</td>
+</tr>
+<tr class="odd">
+<td>3.1</td>
+<td>ADaM Variable Conventions</td>
+<td>14</td>
+</tr>
+<tr class="even">
+<td>3.1.1</td>
+<td>General Variable Conventions</td>
+<td>14</td>
+</tr>
+<tr class="odd">
+<td>3.1.2</td>
+<td>Timing Variable Conventions</td>
+<td>16</td>
+</tr>
+<tr class="even">
+<td>3.1.3</td>
+<td>Date and Time Imputation Flag Variables</td>
+<td>17</td>
+</tr>
+<tr class="odd">
+<td>3.1.4</td>
+<td>Flag Variable Conventions</td>
+<td>18</td>
+</tr>
+<tr class="even">
+<td>3.1.5</td>
+<td>Variable Naming Fragments</td>
+<td>19</td>
+</tr>
+<tr class="odd">
+<td>3.1.6</td>
+<td>Additional Information about Section 3</td>
+<td>21</td>
+</tr>
+<tr class="even">
+<td>3.2</td>
+<td>ADSL Variables</td>
+<td>21</td>
+</tr>
+<tr class="odd">
+<td>3.3</td>
+<td>ADaM Basic Data Structure (BDS) Variables</td>
+<td>31</td>
+</tr>
+<tr class="even">
+<td>3.3.1</td>
+<td>Identifier Variables for BDS Datasets</td>
+<td>31</td>
+</tr>
+<tr class="odd">
+<td>3.3.2</td>
+<td>Record-Level Treatment and Dose Variables for BDS Datasets</td>
+<td>31</td>
+</tr>
+<tr class="even">
+<td>3.3.3</td>
+<td>Timing Variables for BDS Datasets</td>
+<td>33</td>
+</tr>
+<tr class="odd">
+<td>3.3.4</td>
+<td>Analysis Parameter Variables for BDS Datasets</td>
+<td>38</td>
+</tr>
+<tr class="even">
+<td>3.3.4.1</td>
+<td>Analysis Parameter Variables</td>
+<td>38</td>
+</tr>
+<tr class="odd">
+<td>3.3.4.2</td>
+<td>PARAM, AVAL, and AVALC</td>
+<td>41</td>
+</tr>
+<tr class="even">
+<td>3.3.4.3</td>
+<td>Analysis Parameter Criteria Variables for BDS Datasets</td>
+<td>42</td>
+</tr>
+<tr class="odd">
+<td>3.3.5</td>
+<td>Analysis Descriptor Variables for BDS Datasets</td>
+<td>42</td>
+</tr>
+<tr class="even">
+<td>3.3.6</td>
+<td>Time-to-Event Variables for BDS Datasets</td>
+<td>44</td>
+</tr>
+<tr class="odd">
+<td>3.3.7</td>
+<td>Toxicity and Range Variables for BDS Datasets</td>
+<td>45</td>
+</tr>
+<tr class="even">
+<td>3.3.8</td>
+<td>Indicator Variables for BDS Datasets</td>
+<td>47</td>
+</tr>
+<tr class="odd">
+<td>3.3.9</td>
+<td>Datapoint Traceability Variables</td>
+<td>49</td>
+</tr>
+<tr class="even">
+<td>3.4</td>
+<td>Analysis-Enabling Variables</td>
+<td>50</td>
+</tr>
+<tr class="odd">
+<td>3.5</td>
+<td>Differences Between SDTM and ADaM Population and Baseline Flags</td>
+<td>50</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>4</td>
+<td><strong>IMPLEMENTATION ISSUES, STANDARD SOLUTIONS, AND EXAMPLES</strong></td>
+<td>51</td>
+</tr>
+<tr class="even">
+<td>4.1</td>
+<td>Examples of Treatment Variables for Common Trial Designs</td>
+<td>51</td>
+</tr>
+<tr class="odd">
+<td>4.2</td>
+<td>Creation of Derived Columns Versus Creation of Derived Rows</td>
+<td>53</td>
+</tr>
+<tr class="even">
+<td>4.2.1</td>
+<td>Rules for the Creation of Rows and Columns</td>
+<td>54</td>
+</tr>
+<tr class="odd">
+<td>4.2.1.1</td>
+<td>Rule 1: A parameter-invariant function of AVAL and BASE on the same row that does not involve a transform of BASE should be added as a new column</td>
+<td>54</td>
+</tr>
+<tr class="even">
+<td>4.2.1.2</td>
+<td>Rule 2: A transformation of AVAL that does not meet the conditions of Rule 1 should be added as a new parameter, and AVAL should contain the transformed value</td>
+<td>55</td>
+</tr>
+<tr class="odd">
+<td>4.2.1.3</td>
+<td>Rule 3: A function of one or more rows within the same parameter for the purpose of creating an analysis timepoint should be added as a new row for the same parameter</td>
+<td>56</td>
+</tr>
+<tr class="even">
+<td>4.2.1.4</td>
+<td>Rule 4: A function of multiple rows within a parameter should be added as a new parameter</td>
+<td>60</td>
+</tr>
+<tr class="odd">
+<td>4.2.1.5</td>
+<td>Rule 5: A function of more than one parameter should be added as a new parameter</td>
+<td>61</td>
+</tr>
+<tr class="even">
+<td>4.2.1.6</td>
+<td>Rule 6: When there is more than one definition of baseline, each additional definition of baseline requires the creation of its own set of rows</td>
+<td>62</td>
+</tr>
+<tr class="odd">
+<td>4.3</td>
+<td>Inclusion of All Observed and Derived Records for a Parameter Versus the Subset of Records Used for Analysis</td>
+<td>64</td>
+</tr>
+<tr class="even">
+<td>4.4</td>
+<td>Inclusion of Input Data that Are Not Analyzed but that Support a Derivation in the ADaM Dataset</td>
+<td>66</td>
+</tr>
+<tr class="odd">
+<td>4.5</td>
+<td>Identification of Records Used for Analysis</td>
+<td>70</td>
+</tr>
+<tr class="even">
+<td>4.5.1</td>
+<td>Identification of Records Used in a Timepoint Imputation Analysis</td>
+<td>70</td>
+</tr>
+<tr class="odd">
+<td>4.5.2</td>
+<td>Identification of Baseline Records</td>
+<td>72</td>
+</tr>
+<tr class="even">
+<td>4.5.3</td>
+<td>Identification of Post-Baseline Conceptual Timepoint Records</td>
+<td>73</td>
+</tr>
+<tr class="odd">
+<td>4.5.4</td>
+<td>Identification of Records Used for Analysis – General Case</td>
+<td>74</td>
+</tr>
+<tr class="even">
+<td>4.6</td>
+<td>Identification of Population-specific Analyzed Records</td>
+<td>75</td>
+</tr>
+<tr class="odd">
+<td>4.7</td>
+<td>Definition of Records which Satisfy a Predefined Criterion for Analysis Purposes</td>
+<td>78</td>
+</tr>
+<tr class="even">
+<td>4.7.1</td>
+<td>When the Criterion Has Binary Responses</td>
+<td>78</td>
+</tr>
+<tr class="odd">
+<td>4.7.2</td>
+<td>When the Criterion Has Multiple Responses</td>
+<td>80</td>
+</tr>
+<tr class="even">
+<td>4.8</td>
+<td>Examples of Timing Variables</td>
+<td>81</td>
+</tr>
+<tr class="odd">
+<td>4.9</td>
+<td>Examples of Predictor, Lab Toxicity Variables</td>
+<td>82</td>
+</tr>
+<tr class="even">
+<td>4.10</td>
+<td>Key Issues to Consider</td>
+<td>83</td>
+</tr>
+<tr class="odd">
+<td>4.10.1</td>
+<td>Adding Records to Create a Full Complement of Analysis Timepoints for Every Subject</td>
+<td>83</td>
+</tr>
+<tr class="even">
+<td>4.10.2</td>
+<td>Creating Multiple Datasets to Support Analysis of the Same Type of Data</td>
+<td>83</td>
+</tr>
+<tr class="odd">
+<td>4.10.3</td>
+<td>Size of ADaM Datasets</td>
+<td>83</td>
+</tr>
+<tr class="even">
+<td>4.10.4</td>
+<td>Traceability when the Multiple Imputation Method Is Used</td>
+<td>84</td>
+</tr>
+<tr class="odd">
+<td>4.10.5</td>
+<td>Copying Values onto a New Record</td>
+<td>85</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td><strong>APPENDICES</strong></td>
+<td>86</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>Appendix A: Abbreviations and Acronyms</td>
+<td>86</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>Appendix B: Revision History</td>
+<td>87</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>Appendix C: Representations and Warranties, Limitations of Liability, and Disclaimers</td>
+<td>88</td>
+</tr>
+</tbody>
+</table>
+<section id="basic-data-structure-definitions" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="basic-data-structure-definitions"><span class="header-section-number">2.1</span> 1.5.2 Basic Data Structure Definitions</h2>
+<ul>
+<li><p>Analysis parameter – 共通の定義を持つ値のグループを一意に特徴づけるために使用される行識別子。ADaM解析パラメータには、関連する解析値のグループを一意に識別するために必要なすべての情報が含まれていることに注意してください。対照的に、SDTM –TEST列は、関連する値のグループを識別するために–STRESU、–POS、–LOC、–SPECなどの修飾子列と組み合わせる必要がある場合があります。本文書では、「パラメータ」という語は「解析パラメータ」の同義語として使用されています。例：主要有効性解析パラメータは「座位収縮期血圧（mmHg）」です。</p></li>
+<li><p>Analysis timepoint – 解析パラメータ内の値を解析に使用される時間的または概念的グループに分類するために使用される行識別子。これらのグループ化は、観測された、計画された、または導出されたものである可能性があります。例：主要有効性解析は、第2週、第6週、およびエンドポイント解析タイムポイントで実施されました。</p></li>
+<li><p>Analysis value – （1）解析パラメータによって記述される数値（AVAL）または文字（AVALC）値。解析値は、入力データに存在する、入力データ値のカテゴリ化、または導出されたものである可能性があります。例：パラメータ「体格指数」の解析値は、収集された身長と体重からADaMデータセットで導出されました。（2）さらに、特定の関数の値は解析値とみなされます。例：ベースライン値（BASE）、ベースラインからの変化量（CHG）。 Parameter-variant – AVAL（またはAVALC）の関数として導出される列で、データセットで変数が設定される一部のパラメータに対して異なって計算される場合、パラメータ可変となります。したがって、列がパラメータ可変であるのは、その導出方法が行にあるパラメータに依存する場合です。例えば、AVALCATyはAVAL（またはAVALC）をカテゴリ化します。カテゴリはパラメータによって異なる可能性があり、これによりAVALCATyがパラメータ可変となります。</p></li>
+<li><p>Parameter-invariant – AVAL（またはAVALC）の関数として導出される列で、データセットで変数が設定されるすべてのパラメータに対して同じ方法で計算される場合、パラメータ不変となります。したがって、列がパラメータ不変であるのは、その導出方法が行にあるパラメータに依存しない場合です。パラメータ不変の導出は、適用されないパラメータに対してはnullのままにされる可能性がありますが、すべてのパラメータにわたって同じままです。例えば、ベースラインからの変化量変数の導出はCHG = AVAL-BASEであり、これはすべてのパラメータで同じ式です。したがって、CHGはパラメータ不変変数です。パラメータ不変性の概念は、BDSの整合性にとって不可欠であり、第4.2節「導出列の作成対導出行の作成」で定義されたルールの不可欠な構成要素であり、モデルが代わりに新しい行が必要であることを示している場合にプロデューサーによる「水平化」（新しい列の作成）を禁止するものです。</p></li>
+</ul>
+</section>
+<section id="analysis-datasets-and-adam-datasets" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="analysis-datasets-and-adam-datasets"><span class="header-section-number">2.2</span> Analysis Datasets and ADaM Datasets</h2>
+<p>現在、ADaMには3つの構造があります： - ADSL（SUBJECT LEVEL ANALYSIS DATASET） - BDS　（BASIC DATA STRUCTURE） - OCCDS（OCCURRENCE DATA STRUCTURE）</p>
+<p>ADaMの基本原則およびその他のADaM規則に従うが、定義された3つの構造（ADSL、BDS、OCCDS）のいずれにも従わない解析データセットは、ADAM OTHERクラスのADaMデータセットと見なされます。解析データセットメタデータのクラス要素の統制用語は、http://www.cdisc.org/terminology でダウンロードできます。</p>
+<p>解析データセットのカテゴリを示す図では、最上位レベルで「Analysis Datasets」があり、その下に「ADaM Datasets」と「Non-ADaM Analysis Datasets」に分かれています。 - ADaM Datasets ADaM Datasetsは以下の4つのカテゴリに分類されます：</p>
+<ol type="1">
+<li>ADSL: ADSL（被験者レベル解析データセット）</li>
+<li>BDS: ADLB<em>、ADEFF</em>、ADTTE*（基本データ構造の例）</li>
+<li>OCCDS: ADAE<em>、ADCM</em>（発生データ構造の例）</li>
+<li>OTHER: ADMV*（その他のADaMデータセットの例）</li>
+</ol>
+<ul>
+<li>Non-ADaM Analysis Datasets Non-ADaM Analysis Datasetsには：PATP<strong>、AXEVT</strong>（ADaMの基本原則に従わずに開発されたデータセットの例）</li>
+</ul>
+</section>
+<section id="fundamental-principles" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="fundamental-principles"><span class="header-section-number">2.3</span> Fundamental Principles</h2>
+<p>ADaMデータセットは、ADaMモデル文書に記載されている特定の基本原則に従う必要があります：</p>
+<ul>
+<li><p>ADaMデータセットおよび関連するメタデータは、臨床試験で実施される統計解析を支援するデータセットの内容とソースを明確かつ曖昧さなく伝達しなければなりません。</p></li>
+<li><p>ADaMデータセットおよび関連するメタデータは、値または変数のソースまたは導出を示すトレーサビリティを提供しなければなりません（すなわち、データの系譜または値とその前身との関係）。メタデータは、解析データがいつ、どのように導出または補完されたかを特定しなければなりません。</p></li>
+<li><p>ADaMデータセットは、一般的に利用可能なソフトウェアツールで容易に使用できなければなりません。</p></li>
+<li><p>ADaMデータセットは、明確で曖昧さのないコミュニケーションを促進するためのメタデータと関連付けられなければなりません。理想的には、メタデータは機械可読であることが望ましいです。</p></li>
+<li><p>ADaMデータセットは、最小限のプログラミングで統計解析を実行できる構造と内容を持つべきです。このようなデータセットは「Analysi Ready」と表現されます。ADaMデータセットには、特定の統計解析のレビューと再作成に必要なデータが含まれています。データリスティングやその他の非解析的な表示をサポートするためだけに、データを解析準備完了データセットに照合する必要はありません。</p></li>
+</ul>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "コピーしました");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "コピーしました");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
+        for (let i=0; i<annoteTargets.length; i++) {
+          const annoteTarget = annoteTargets[i];
+          const targetCell = annoteTarget.getAttribute("data-target-cell");
+          const targetAnnotation = annoteTarget.getAttribute("data-target-annotation");
+          const contentFn = () => {
+            const content = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+            if (content) {
+              const tipContent = content.cloneNode(true);
+              tipContent.classList.add("code-annotation-tip-content");
+              return tipContent.outerHTML;
+            }
+          }
+          const config = {
+            allowHTML: true,
+            content: contentFn,
+            onShow: (instance) => {
+              selectCodeLines(instance.reference);
+              instance.reference.classList.add('code-annotation-active');
+              window.tippy.hideAll();
+            },
+            onHide: (instance) => {
+              unselectCodeLines();
+              instance.reference.classList.remove('code-annotation-active');
+            },
+            maxWidth: 300,
+            delay: [50, 0],
+            duration: [200, 0],
+            offset: [5, 10],
+            arrow: true,
+            trigger: 'click',
+            appendTo: function(el) {
+              return el.parentElement.parentElement.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'quarto',
+            placement: 'right',
+            positionFixed: true,
+            popperOptions: {
+              modifiers: [
+              {
+                name: 'flip',
+                options: {
+                  flipVariations: false, // true by default
+                  allowedAutoPlacements: ['right'],
+                  fallbackPlacements: ['right', 'top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left'],
+                },
+              },
+              {
+                name: 'preventOverflow',
+                options: {
+                  mainAxis: false,
+                  altAxis: false
+                }
+              }
+              ]        
+            }      
+          };
+          window.tippy(annoteTarget, config); 
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="https://github.com/kkts1010/kkts1010.github.io/">
+<p>Kota Sakamoto</p>
+</a>
+  </li>  
+</ul>
+    </div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/kkts1010/kkts1010.github.io/">
+<p>Kota Sakamoto</p>
+</a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/kkt_1010">
+      <i class="bi bi-twitter" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

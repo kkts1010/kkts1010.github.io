@@ -293,6 +293,13 @@ window.Quarto = {
   <li><a href="#用途例" id="toc-用途例" class="nav-link" data-scroll-target="#用途例"><span class="header-section-number">3.3</span> 用途例</a></li>
   <li><a href="#specificationシートでの記載例" id="toc-specificationシートでの記載例" class="nav-link" data-scroll-target="#specificationシートでの記載例"><span class="header-section-number">3.4</span> Specificationシートでの記載例</a></li>
   </ul></li>
+  <li><a href="#sasマクロで変数名に一括でアンダースコアを付ける方法" id="toc-sasマクロで変数名に一括でアンダースコアを付ける方法" class="nav-link" data-scroll-target="#sasマクロで変数名に一括でアンダースコアを付ける方法"><span class="header-section-number">4</span> SASマクロで変数名に一括でアンダースコアを付ける方法</a>
+  <ul class="collapse">
+  <li><a href="#なぜアンダースコアを付けるのか" id="toc-なぜアンダースコアを付けるのか" class="nav-link" data-scroll-target="#なぜアンダースコアを付けるのか"><span class="header-section-number">4.1</span> なぜアンダースコアを付けるのか？</a></li>
+  <li><a href="#マクロの仕組み" id="toc-マクロの仕組み" class="nav-link" data-scroll-target="#マクロの仕組み"><span class="header-section-number">4.2</span> マクロの仕組み</a></li>
+  <li><a href="#実行例" id="toc-実行例" class="nav-link" data-scroll-target="#実行例"><span class="header-section-number">4.3</span> 実行例</a></li>
+  <li><a href="#adamデータセット作成における変数名管理の重要性" id="toc-adamデータセット作成における変数名管理の重要性" class="nav-link" data-scroll-target="#adamデータセット作成における変数名管理の重要性"><span class="header-section-number">4.4</span> ADaMデータセット作成における変数名管理の重要性</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -306,6 +313,55 @@ window.Quarto = {
 <section id="解析用データセット作成の流れ2" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> 解析用データセット作成の流れ2</h1>
 <p>本記事では、以下の私のブログを踏まえて、より具体的な解析データセット作成の流れをまとめていく。</p>
+<div id="listing-lst" class="quarto-listing quarto-listing-container-grid">
+<div class="list grid quarto-listing-cols-3">
+<div class="g-col-1" data-index="0" data-categories="U0FTJTJDJUU4JUE3JUEzJUU2JTlFJTkwJUUzJTgzJTk3JUUzJTgzJUFEJUUzJTgyJUIwJUUzJTgzJUE5JUUzJTgzJTlGJUUzJTgzJUIzJUUzJTgyJUIw" data-listing-date-sort="1749826800000" data-listing-file-modified-sort="1750155616031" data-listing-date-modified-sort="1749826800000" data-listing-reading-time-sort="12" data-listing-word-count-sort="2237">
+<a href="../../../posts/statistics/2025/解析用データセット作成の流れ1.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<div class="listing-item-img-placeholder card-img-top" style="height: 150px;">&nbsp;</div>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+解析用データセット作成の流れ1（フォルダ構造等）
+</h5>
+<div class="card-text listing-description delink">
+効率的なフォルダ構成でプロジェクトを管理する
+</div>
+<div class="card-attribution card-text-small justify">
+<div class="listing-author">
+坂本航太
+</div>
+<div class="listing-date">
+2025/06/14
+</div>
+</div>
+</div>
+</div></a>
+</div>
+<div class="g-col-1" data-index="1" data-categories="U0FTJTJDUiUyQyVFOCVBNyVBMyVFNiU5RSU5MCVFNyU5NCVBOCVFMyU4MyU4NyVFMyU4MyVCQyVFMyU4MiVCRiVFMyU4MiVCQiVFMyU4MyU4MyVFMyU4MyU4OA==" data-listing-date-sort="1749826800000" data-listing-file-modified-sort="1750156920867" data-listing-date-modified-sort="1749826800000" data-listing-reading-time-sort="24" data-listing-word-count-sort="4730">
+<a href="../../../posts/statistics/2025/解析用データセット仕様書.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<div class="listing-item-img-placeholder card-img-top" style="height: 150px;">&nbsp;</div>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+解析用データセット仕様書
+</h5>
+<div class="card-text listing-description delink">
+<p>個人的な解析データセット作成方法をまとめます。</p>
+</div>
+<div class="card-attribution card-text-small justify">
+<div class="listing-author">
+坂本航太
+</div>
+<div class="listing-date">
+2025/06/14
+</div>
+</div>
+</div>
+</div></a>
+</div>
+</div>
+<div class="listing-no-matching d-none">一致なし</div>
+</div>
 <section id="参考文献" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="参考文献"><span class="header-section-number">1.1</span> 参考文献</h2>
 <ul>
@@ -553,10 +609,10 @@ window.Quarto = {
 <span id="cb5-7"><a href="#cb5-7"></a>    set rawdata.dm;            /* 実データを処理 */</span>
 <span id="cb5-8"><a href="#cb5-8"></a>    </span>
 <span id="cb5-9"><a href="#cb5-9"></a>    /* データ処理 */</span>
-<span id="cb5-10"><a href="#cb5-10"></a>    studyid = studyid;</span>
-<span id="cb5-11"><a href="#cb5-11"></a>    usubjid = usubjid;</span>
-<span id="cb5-12"><a href="#cb5-12"></a>    age = age;</span>
-<span id="cb5-13"><a href="#cb5-13"></a>    sex = sex;</span>
+<span id="cb5-10"><a href="#cb5-10"></a>    studyid = _studyid;</span>
+<span id="cb5-11"><a href="#cb5-11"></a>    usubjid = _usubjid;</span>
+<span id="cb5-12"><a href="#cb5-12"></a>    age = _age;</span>
+<span id="cb5-13"><a href="#cb5-13"></a>    sex = _sex;</span>
 <span id="cb5-14"><a href="#cb5-14"></a>    </span>
 <span id="cb5-15"><a href="#cb5-15"></a>    /* 派生変数の作成 */</span>
 <span id="cb5-16"><a href="#cb5-16"></a>    if /* 条件 */ then saffl = 'Y';</span>
@@ -714,62 +770,104 @@ window.Quarto = {
 <li>品質向上: ヒューマンエラーが削減され、データの標準化が徹底されます。</li>
 <li>拡張性: 新しいコードリストの追加がExcelシートへの行追加だけで完了し、CDISC標準などへの準拠も効率的に行えます。</li>
 </ol>
+</section>
+</section>
+</section>
+<section id="sasマクロで変数名に一括でアンダースコアを付ける方法" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> SASマクロで変数名に一括でアンダースコアを付ける方法</h1>
+<p>このマクロは生データの変数名を統一するためのプログラムです。</p>
+<section id="なぜアンダースコアを付けるのか" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="なぜアンダースコアを付けるのか"><span class="header-section-number">4.1</span> なぜアンダースコアを付けるのか？</h2>
+<p>SASでデータ処理をしていると、変数名の管理が重要になってきます。特に：</p>
+<ol type="1">
+<li>データマージ時の名前衝突を防ぐ</li>
+<li>生データと加工データの区別</li>
+<li>一時的な変数の識別</li>
+</ol>
+<p>例えば、ageという変数があるデータに対して、_ageのように接頭辞を付けることで、元の生データであることを明確にできます。</p>
+</section>
+<section id="マクロの仕組み" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="マクロの仕組み"><span class="header-section-number">4.2</span> マクロの仕組み</h2>
+<p>このマクロは3つのステップで動作します：</p>
+<section id="ステップ1変数情報の取得" class="level3" data-number="4.2.1">
+<h3 data-number="4.2.1" class="anchored" data-anchor-id="ステップ1変数情報の取得"><span class="header-section-number">4.2.1</span> ステップ1：変数情報の取得</h3>
+<p>象データセットの変数一覧を取得します。</p>
+<div class="sourceCode" id="cb13" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource sas number-lines code-with-copy"><code class="sourceCode"><span id="cb13-1"><a href="#cb13-1"></a>proc contents data = work.&amp;raw. out = work.VAR noprint ;</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="ステップ2マクロ変数の動的生成" class="level3" data-number="4.2.2">
+<h3 data-number="4.2.2" class="anchored" data-anchor-id="ステップ2マクロ変数の動的生成"><span class="header-section-number">4.2.2</span> ステップ2：マクロ変数の動的生成</h3>
+<p>各変数名をマクロ変数として保存：</p>
+<ul>
+<li>VAR1_ → 1番目の変数名</li>
+<li>VAR2_ → 2番目の変数名</li>
+<li>MAXV → 総変数数</li>
+</ul>
+<div class="sourceCode" id="cb14" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource sas number-lines code-with-copy"><code class="sourceCode"><span id="cb14-1"><a href="#cb14-1"></a>data _null_ ;</span>
+<span id="cb14-2"><a href="#cb14-2"></a>  set work.VAR end = eof ;</span>
+<span id="cb14-3"><a href="#cb14-3"></a>  call symputx("VAR"||strip(put(VARNUM, 8.))||"_", NAME, 'G') ;</span>
+<span id="cb14-4"><a href="#cb14-4"></a>  if eof then call symputx('MAXV', _N_) ;</span>
+<span id="cb14-5"><a href="#cb14-5"></a>run ;</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="ステップ3一括リネーム" class="level3" data-number="4.2.3">
+<h3 data-number="4.2.3" class="anchored" data-anchor-id="ステップ3一括リネーム"><span class="header-section-number">4.2.3</span> ステップ3：一括リネーム</h3>
+<div class="sourceCode" id="cb15" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource sas number-lines code-with-copy"><code class="sourceCode"><span id="cb15-1"><a href="#cb15-1"></a>rename</span>
+<span id="cb15-2"><a href="#cb15-2"></a>%do i = 1 %to &amp;MAXV. ;</span>
+<span id="cb15-3"><a href="#cb15-3"></a>  &amp;&amp;VAR&amp;i._ = _&amp;&amp;VAR&amp;i._</span>
+<span id="cb15-4"><a href="#cb15-4"></a>%end ;</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="実行例" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="実行例"><span class="header-section-number">4.3</span> 実行例</h2>
+<div class="sourceCode" id="cb16" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource sas number-lines code-with-copy"><code class="sourceCode"><span id="cb16-1"><a href="#cb16-1"></a>%macro rawdata(raw=, sort=, out=&amp;raw);</span>
+<span id="cb16-2"><a href="#cb16-2"></a>proc contents data = work.&amp;raw. out = work.VAR noprint ;</span>
+<span id="cb16-3"><a href="#cb16-3"></a>run ;</span>
+<span id="cb16-4"><a href="#cb16-4"></a>proc sort data = work.VAR ; </span>
+<span id="cb16-5"><a href="#cb16-5"></a>  by VARNUM ;</span>
+<span id="cb16-6"><a href="#cb16-6"></a>run ;</span>
+<span id="cb16-7"><a href="#cb16-7"></a>data _null_ ;</span>
+<span id="cb16-8"><a href="#cb16-8"></a>  set work.VAR end = eof ;</span>
+<span id="cb16-9"><a href="#cb16-9"></a>  call symputx("VAR"||strip(put(VARNUM, 8.))||"_", NAME, 'G') ;</span>
+<span id="cb16-10"><a href="#cb16-10"></a>  if eof then call symputx('MAXV', _N_) ;</span>
+<span id="cb16-11"><a href="#cb16-11"></a>run ;</span>
+<span id="cb16-12"><a href="#cb16-12"></a>data work.&amp;out. ;</span>
+<span id="cb16-13"><a href="#cb16-13"></a>  set work.&amp;raw. ;</span>
+<span id="cb16-14"><a href="#cb16-14"></a>  rename</span>
+<span id="cb16-15"><a href="#cb16-15"></a>  %do i = 1 %to &amp;MAXV. ;</span>
+<span id="cb16-16"><a href="#cb16-16"></a>    &amp;&amp;VAR&amp;i._ = _&amp;&amp;VAR&amp;i._</span>
+<span id="cb16-17"><a href="#cb16-17"></a>  %end ;</span>
+<span id="cb16-18"><a href="#cb16-18"></a>  ;</span>
+<span id="cb16-19"><a href="#cb16-19"></a>run ;</span>
+<span id="cb16-20"><a href="#cb16-20"></a>%mend rawdata ;</span>
+<span id="cb16-21"><a href="#cb16-21"></a></span>
+<span id="cb16-22"><a href="#cb16-22"></a>/* まずirisデータをworkライブラリにコピー */</span>
+<span id="cb16-23"><a href="#cb16-23"></a>data work.iris;</span>
+<span id="cb16-24"><a href="#cb16-24"></a>  set sashelp.iris;</span>
+<span id="cb16-25"><a href="#cb16-25"></a>run;</span>
+<span id="cb16-26"><a href="#cb16-26"></a></span>
+<span id="cb16-27"><a href="#cb16-27"></a>/* マクロを実行 */</span>
+<span id="cb16-28"><a href="#cb16-28"></a>%rawdata(raw=iris, out=iris_renamed)</span>
+<span id="cb16-29"><a href="#cb16-29"></a></span>
+<span id="cb16-30"><a href="#cb16-30"></a>/* データの中身を確認 */</span>
+<span id="cb16-31"><a href="#cb16-31"></a>proc print data=work.iris_renamed(obs=5);</span>
+<span id="cb16-32"><a href="#cb16-32"></a>run;</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="adamデータセット作成における変数名管理の重要性" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="adamデータセット作成における変数名管理の重要性"><span class="header-section-number">4.4</span> ADaMデータセット作成における変数名管理の重要性</h2>
+<p>ADaMにおける変数命名の課題 ADaM（Analysis Data Model）データセット作成では、複数のソースから様々な変数を統合する必要があります：</p>
+<ul>
+<li><p>SDTMデータ（生データ）</p></li>
+<li><p>派生変数（計算結果）</p></li>
+<li><p>解析用変数（統計処理用）</p></li>
+<li><p>メタデータ（フラグや分類変数）</p>
+<p>これらが混在すると、データの出自が不明確になり、品質管理やバリデーションが困難になります。</p></li>
+</ul>
 
 
 
 </section>
 </section>
-</section>
 
-<div class="quarto-listing quarto-listing-container-grid" id="listing-lst">
-<div class="list grid quarto-listing-cols-3">
-<div class="g-col-1" data-index="0" data-categories="U0FTJTJDJUU4JUE3JUEzJUU2JTlFJTkwJUUzJTgzJTk3JUUzJTgzJUFEJUUzJTgyJUIwJUUzJTgzJUE5JUUzJTgzJTlGJUUzJTgzJUIzJUUzJTgyJUIw" data-listing-date-sort="1749826800000" data-listing-file-modified-sort="1750155616031" data-listing-date-modified-sort="1749826800000" data-listing-reading-time-sort="12" data-listing-word-count-sort="2237">
-<a href="../../../posts/statistics/2025/解析用データセット作成の流れ1.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<div class="listing-item-img-placeholder card-img-top" style="height: 150px;">&nbsp;</div>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-解析用データセット作成の流れ1（フォルダ構造等）
-</h5>
-<div class="card-text listing-description delink">
-効率的なフォルダ構成でプロジェクトを管理する
-</div>
-<div class="card-attribution card-text-small justify">
-<div class="listing-author">
-坂本航太
-</div>
-<div class="listing-date">
-2025/06/14
-</div>
-</div>
-</div>
-</div></a>
-</div>
-<div class="g-col-1" data-index="1" data-categories="U0FTJTJDUiUyQyVFOCVBNyVBMyVFNiU5RSU5MCVFNyU5NCVBOCVFMyU4MyU4NyVFMyU4MyVCQyVFMyU4MiVCRiVFMyU4MiVCQiVFMyU4MyU4MyVFMyU4MyU4OA==" data-listing-date-sort="1749826800000" data-listing-file-modified-sort="1750156920867" data-listing-date-modified-sort="1749826800000" data-listing-reading-time-sort="24" data-listing-word-count-sort="4730">
-<a href="../../../posts/statistics/2025/解析用データセット仕様書.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<div class="listing-item-img-placeholder card-img-top" style="height: 150px;">&nbsp;</div>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-解析用データセット仕様書
-</h5>
-<div class="card-text listing-description delink">
-<p>個人的な解析データセット作成方法をまとめます。</p>
-</div>
-<div class="card-attribution card-text-small justify">
-<div class="listing-author">
-坂本航太
-</div>
-<div class="listing-date">
-2025/06/14
-</div>
-</div>
-</div>
-</div></a>
-</div>
-</div>
-<div class="listing-no-matching d-none">一致なし</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

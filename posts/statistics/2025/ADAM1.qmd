@@ -1,0 +1,156 @@
+---
+title: "ADaM IG1.3"
+author: "坂本航太"
+categories: [SAS,解析プログラミング]
+date-modified: "2025-06-18"
+abstract-title: Abstract
+abstract: ""
+date: "2025-06-18"
+---
+
+# ADaM IG 1.3
+
+本記事では、自己学習用にADaM IGの文書を和訳する。基本的には以下の文献を読んでいただきたい。
+
+## 文献
+
+-   [ADaMIG v1.3](https://www.cdisc.org/standards/foundational/adam/adamig-v1-3)
+
+# ADaM IGの目次
+
+本文書は以下のセクションで構成されています：
+
+-   第1章 はじめに では、ADaM標準の重要性と他のCDISCデータ標準との関係について全般的な紹介を行います。
+-   第2章 ADaM標準の基本原理 では、すべての解析データセットに適用される基本原則についてレビューし、大多数の解析状況を表現するのに十分な柔軟性を持つ2つの標準構造を紹介します。
+-   第3章 標準ADaM変数 では、ADaM標準データ構造で一般的に使用される標準変数を定義します。
+-   第4章 実装上の課題、標準的な解決策、および例 では、重要な追加的なガイダンスを提供します。
+-   第5章（付録） では、実装に関連する追加の背景資料やその他の補足資料について説明します。
+
+| Section | Title | Page |
+|-----------------------------|-----------------------|--------------------|
+| 1 | **INTRODUCTION** | 4 |
+| 1.1 | Purpose | 4 |
+| 1.2 | Background | 4 |
+| 1.3 | What Is Covered in the ADaMIG | 4 |
+| 1.3.1 | Other ADaM-related CDISC Documents | 5 |
+| 1.4 | Organization of this Document | 6 |
+| 1.5 | Definitions | 6 |
+| 1.5.1 | General ADaM Definitions | 6 |
+| 1.5.2 | Basic Data Structure Definitions | 7 |
+| 1.6 | Analysis Datasets and ADaM Datasets | 7 |
+| 1.6.1 | Analysis Datasets Within the eCTD Folder Structure | 8 |
+|  |  |  |
+| 2 | **FUNDAMENTALS OF THE ADAM STANDARD** | 10 |
+| 2.1 | Fundamental Principles | 10 |
+| 2.2 | Traceability | 10 |
+| 2.3 | The ADaM Data Structures | 11 |
+| 2.3.1 | The ADaM Subject-Level Analysis Dataset (ADSL) | 11 |
+| 2.3.2 | The ADaM Basic Data Structure (BDS) | 12 |
+|  |  |  |
+| 3 | **STANDARD ADAM VARIABLES** | 14 |
+| 3.1 | ADaM Variable Conventions | 14 |
+| 3.1.1 | General Variable Conventions | 14 |
+| 3.1.2 | Timing Variable Conventions | 16 |
+| 3.1.3 | Date and Time Imputation Flag Variables | 17 |
+| 3.1.4 | Flag Variable Conventions | 18 |
+| 3.1.5 | Variable Naming Fragments | 19 |
+| 3.1.6 | Additional Information about Section 3 | 21 |
+| 3.2 | ADSL Variables | 21 |
+| 3.3 | ADaM Basic Data Structure (BDS) Variables | 31 |
+| 3.3.1 | Identifier Variables for BDS Datasets | 31 |
+| 3.3.2 | Record-Level Treatment and Dose Variables for BDS Datasets | 31 |
+| 3.3.3 | Timing Variables for BDS Datasets | 33 |
+| 3.3.4 | Analysis Parameter Variables for BDS Datasets | 38 |
+| 3.3.4.1 | Analysis Parameter Variables | 38 |
+| 3.3.4.2 | PARAM, AVAL, and AVALC | 41 |
+| 3.3.4.3 | Analysis Parameter Criteria Variables for BDS Datasets | 42 |
+| 3.3.5 | Analysis Descriptor Variables for BDS Datasets | 42 |
+| 3.3.6 | Time-to-Event Variables for BDS Datasets | 44 |
+| 3.3.7 | Toxicity and Range Variables for BDS Datasets | 45 |
+| 3.3.8 | Indicator Variables for BDS Datasets | 47 |
+| 3.3.9 | Datapoint Traceability Variables | 49 |
+| 3.4 | Analysis-Enabling Variables | 50 |
+| 3.5 | Differences Between SDTM and ADaM Population and Baseline Flags | 50 |
+|  |  |  |
+| 4 | **IMPLEMENTATION ISSUES, STANDARD SOLUTIONS, AND EXAMPLES** | 51 |
+| 4.1 | Examples of Treatment Variables for Common Trial Designs | 51 |
+| 4.2 | Creation of Derived Columns Versus Creation of Derived Rows | 53 |
+| 4.2.1 | Rules for the Creation of Rows and Columns | 54 |
+| 4.2.1.1 | Rule 1: A parameter-invariant function of AVAL and BASE on the same row that does not involve a transform of BASE should be added as a new column | 54 |
+| 4.2.1.2 | Rule 2: A transformation of AVAL that does not meet the conditions of Rule 1 should be added as a new parameter, and AVAL should contain the transformed value | 55 |
+| 4.2.1.3 | Rule 3: A function of one or more rows within the same parameter for the purpose of creating an analysis timepoint should be added as a new row for the same parameter | 56 |
+| 4.2.1.4 | Rule 4: A function of multiple rows within a parameter should be added as a new parameter | 60 |
+| 4.2.1.5 | Rule 5: A function of more than one parameter should be added as a new parameter | 61 |
+| 4.2.1.6 | Rule 6: When there is more than one definition of baseline, each additional definition of baseline requires the creation of its own set of rows | 62 |
+| 4.3 | Inclusion of All Observed and Derived Records for a Parameter Versus the Subset of Records Used for Analysis | 64 |
+| 4.4 | Inclusion of Input Data that Are Not Analyzed but that Support a Derivation in the ADaM Dataset | 66 |
+| 4.5 | Identification of Records Used for Analysis | 70 |
+| 4.5.1 | Identification of Records Used in a Timepoint Imputation Analysis | 70 |
+| 4.5.2 | Identification of Baseline Records | 72 |
+| 4.5.3 | Identification of Post-Baseline Conceptual Timepoint Records | 73 |
+| 4.5.4 | Identification of Records Used for Analysis – General Case | 74 |
+| 4.6 | Identification of Population-specific Analyzed Records | 75 |
+| 4.7 | Definition of Records which Satisfy a Predefined Criterion for Analysis Purposes | 78 |
+| 4.7.1 | When the Criterion Has Binary Responses | 78 |
+| 4.7.2 | When the Criterion Has Multiple Responses | 80 |
+| 4.8 | Examples of Timing Variables | 81 |
+| 4.9 | Examples of Predictor, Lab Toxicity Variables | 82 |
+| 4.10 | Key Issues to Consider | 83 |
+| 4.10.1 | Adding Records to Create a Full Complement of Analysis Timepoints for Every Subject | 83 |
+| 4.10.2 | Creating Multiple Datasets to Support Analysis of the Same Type of Data | 83 |
+| 4.10.3 | Size of ADaM Datasets | 83 |
+| 4.10.4 | Traceability when the Multiple Imputation Method Is Used | 84 |
+| 4.10.5 | Copying Values onto a New Record | 85 |
+|  |  |  |
+| 5 | **APPENDICES** | 86 |
+|  | Appendix A: Abbreviations and Acronyms | 86 |
+|  | Appendix B: Revision History | 87 |
+|  | Appendix C: Representations and Warranties, Limitations of Liability, and Disclaimers | 88 |
+
+## 1.5.2 Basic Data Structure Definitions
+
+-   Analysis parameter – 共通の定義を持つ値のグループを一意に特徴づけるために使用される行識別子。ADaM解析パラメータには、関連する解析値のグループを一意に識別するために必要なすべての情報が含まれていることに注意してください。対照的に、SDTM --TEST列は、関連する値のグループを識別するために--STRESU、--POS、--LOC、--SPECなどの修飾子列と組み合わせる必要がある場合があります。本文書では、「パラメータ」という語は「解析パラメータ」の同義語として使用されています。例：主要有効性解析パラメータは「座位収縮期血圧（mmHg）」です。
+
+-   Analysis timepoint – 解析パラメータ内の値を解析に使用される時間的または概念的グループに分類するために使用される行識別子。これらのグループ化は、観測された、計画された、または導出されたものである可能性があります。例：主要有効性解析は、第2週、第6週、およびエンドポイント解析タイムポイントで実施されました。
+
+-   Analysis value – （1）解析パラメータによって記述される数値（AVAL）または文字（AVALC）値。解析値は、入力データに存在する、入力データ値のカテゴリ化、または導出されたものである可能性があります。例：パラメータ「体格指数」の解析値は、収集された身長と体重からADaMデータセットで導出されました。（2）さらに、特定の関数の値は解析値とみなされます。例：ベースライン値（BASE）、ベースラインからの変化量（CHG）。 Parameter-variant – AVAL（またはAVALC）の関数として導出される列で、データセットで変数が設定される一部のパラメータに対して異なって計算される場合、パラメータ可変となります。したがって、列がパラメータ可変であるのは、その導出方法が行にあるパラメータに依存する場合です。例えば、AVALCATyはAVAL（またはAVALC）をカテゴリ化します。カテゴリはパラメータによって異なる可能性があり、これによりAVALCATyがパラメータ可変となります。
+
+-   Parameter-invariant – AVAL（またはAVALC）の関数として導出される列で、データセットで変数が設定されるすべてのパラメータに対して同じ方法で計算される場合、パラメータ不変となります。したがって、列がパラメータ不変であるのは、その導出方法が行にあるパラメータに依存しない場合です。パラメータ不変の導出は、適用されないパラメータに対してはnullのままにされる可能性がありますが、すべてのパラメータにわたって同じままです。例えば、ベースラインからの変化量変数の導出はCHG = AVAL-BASEであり、これはすべてのパラメータで同じ式です。したがって、CHGはパラメータ不変変数です。パラメータ不変性の概念は、BDSの整合性にとって不可欠であり、第4.2節「導出列の作成対導出行の作成」で定義されたルールの不可欠な構成要素であり、モデルが代わりに新しい行が必要であることを示している場合にプロデューサーによる「水平化」（新しい列の作成）を禁止するものです。
+
+##  Analysis Datasets and ADaM Datasets
+
+現在、ADaMには3つの構造があります：
+- ADSL（SUBJECT LEVEL ANALYSIS DATASET）
+- BDS　（BASIC DATA STRUCTURE）
+- OCCDS（OCCURRENCE DATA STRUCTURE）
+
+ADaMの基本原則およびその他のADaM規則に従うが、定義された3つの構造（ADSL、BDS、OCCDS）のいずれにも従わない解析データセットは、ADAM OTHERクラスのADaMデータセットと見なされます。解析データセットメタデータのクラス要素の統制用語は、http://www.cdisc.org/terminology でダウンロードできます。
+
+解析データセットのカテゴリを示す図では、最上位レベルで「Analysis Datasets」があり、その下に「ADaM Datasets」と「Non-ADaM Analysis Datasets」に分かれています。
+- ADaM Datasets
+ADaM Datasetsは以下の4つのカテゴリに分類されます：
+
+1. ADSL: ADSL（被験者レベル解析データセット）
+2. BDS: ADLB*、ADEFF*、ADTTE*（基本データ構造の例）
+3. OCCDS: ADAE*、ADCM*（発生データ構造の例）
+4. OTHER: ADMV*（その他のADaMデータセットの例）
+
+- Non-ADaM Analysis Datasets
+Non-ADaM Analysis Datasetsには：PATP**、AXEVT**（ADaMの基本原則に従わずに開発されたデータセットの例）
+
+## Fundamental Principles
+ADaMデータセットは、ADaMモデル文書に記載されている特定の基本原則に従う必要があります：
+
+- ADaMデータセットおよび関連するメタデータは、臨床試験で実施される統計解析を支援するデータセットの内容とソースを明確かつ曖昧さなく伝達しなければなりません。
+
+
+- ADaMデータセットおよび関連するメタデータは、値または変数のソースまたは導出を示すトレーサビリティを提供しなければなりません（すなわち、データの系譜または値とその前身との関係）。メタデータは、解析データがいつ、どのように導出または補完されたかを特定しなければなりません。
+
+
+- ADaMデータセットは、一般的に利用可能なソフトウェアツールで容易に使用できなければなりません。
+
+
+- ADaMデータセットは、明確で曖昧さのないコミュニケーションを促進するためのメタデータと関連付けられなければなりません。理想的には、メタデータは機械可読であることが望ましいです。
+
+
+- ADaMデータセットは、最小限のプログラミングで統計解析を実行できる構造と内容を持つべきです。このようなデータセットは「Analysi Ready」と表現されます。ADaMデータセットには、特定の統計解析のレビューと再作成に必要なデータが含まれています。データリスティングやその他の非解析的な表示をサポートするためだけに、データを解析準備完了データセットに照合する必要はありません。

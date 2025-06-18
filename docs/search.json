@@ -95,7 +95,7 @@
     "href": "posts/statistics/index.html",
     "title": "Notes",
     "section": "",
-    "text": "SASプログラミングTips1\n\n\n\nSAS\n\n解析プログラミング\n\n\n\n\n\n\n2025-06-16\n\n\n\n\n\n\n\n解析用データセット作成の流れ2\n\n\n\nSAS\n\n解析プログラミング\n\n\n\n\n\n\n2025-06-16\n\n\n\n\n\n\n\nMarkdown記法について\n\n\n\nMarkdown\n\n\n\n\n\n\n2025-06-15\n\n\n\n\n\n\n\nSQL入門1\n\n\n\nSAS\n\n解析プログラミング\n\n\n\n\n\n\n2025-06-15\n\n\n\n\n\n\n\ngithubのブログ更新手順について\n\n\n\ngithub\n\n\n\n\n\n\n2025-06-14\n\n\n\n\n\n\n\nSASプログラミング業務のフレームワーク\n\n\n\nSAS\n\n解析プログラミング\n\n\n\n\n\n\n2025-06-14\n\n\n\n\n\n\n\nSASマクロ入門1\n\n\n\nSAS\n\n解析プログラミング\n\n\n\n\n\n\n2025-06-14\n\n\n\n\n\n\n\n解析用データセット仕様書\n\n\n\nSAS\n\nR\n\n解析用データセット\n\n\n\n\n\n\n2025-06-14\n\n\n\n\n\n\n\n解析用データセット作成の流れ1（フォルダ構造等）\n\n\n\nSAS\n\n解析プログラミング\n\n\n\n\n\n\n2025-06-14\n\n\n\n\n\n\n\n第2相抗がん剤開発及び検証的試験の中間解析\n\n\n\n臨床試験\n\nSAS\n\n\n\n\n\n\n2025-05-24\n\n\n\n\n\n\n\n臨床試験のサンプルサイズ設計\n\n\n\n臨床試験\n\nSAS\n\n\n\n\n\n\n2025-05-17\n\n\n\n\n\n一致なし"
+    "text": "ADaM IG1.3\n\n\n\nSAS\n\n解析プログラミング\n\n\n\n\n\n\n2025-06-18\n\n\n\n\n\n\n\nSASプログラミングTips1\n\n\n\nSAS\n\n解析プログラミング\n\n\n\n\n\n\n2025-06-16\n\n\n\n\n\n\n\n解析用データセット作成の流れ2\n\n\n\nSAS\n\n解析プログラミング\n\n\n\n\n\n\n2025-06-16\n\n\n\n\n\n\n\nMarkdown記法について\n\n\n\nMarkdown\n\n\n\n\n\n\n2025-06-15\n\n\n\n\n\n\n\nSQL入門1\n\n\n\nSAS\n\n解析プログラミング\n\n\n\n\n\n\n2025-06-15\n\n\n\n\n\n\n\ngithubのブログ更新手順について\n\n\n\ngithub\n\n\n\n\n\n\n2025-06-14\n\n\n\n\n\n\n\nSASプログラミング業務のフレームワーク\n\n\n\nSAS\n\n解析プログラミング\n\n\n\n\n\n\n2025-06-14\n\n\n\n\n\n\n\nSASマクロ入門1\n\n\n\nSAS\n\n解析プログラミング\n\n\n\n\n\n\n2025-06-14\n\n\n\n\n\n\n\n解析用データセット仕様書\n\n\n\nSAS\n\nR\n\n解析用データセット\n\n\n\n\n\n\n2025-06-14\n\n\n\n\n\n\n\n解析用データセット作成の流れ1（フォルダ構造等）\n\n\n\nSAS\n\n解析プログラミング\n\n\n\n\n\n\n2025-06-14\n\n\n\n\n\n\n\n第2相抗がん剤開発及び検証的試験の中間解析\n\n\n\n臨床試験\n\nSAS\n\n\n\n\n\n\n2025-05-24\n\n\n\n\n\n\n\n臨床試験のサンプルサイズ設計\n\n\n\n臨床試験\n\nSAS\n\n\n\n\n\n\n2025-05-17\n\n\n\n\n\n一致なし"
   },
   {
     "objectID": "posts/statistics/2025/解析用データセット作成の流れ1.html",
@@ -574,11 +574,39 @@
     "text": "脚注\n\n\np値が設定した有意水準（通常0.05）を下回ること。↩︎\n統計的有意性とは独立した、実際的な重要性を示す指標。↩︎"
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Kota Sakamoto",
+    "objectID": "posts/statistics/2025/ADAM1.html",
+    "href": "posts/statistics/2025/ADAM1.html",
+    "title": "ADaM IG1.3",
     "section": "",
-    "text": "本サイトは個人の学習記録であり、内容の正確性は保証いたしません。所属組織とは無関係の個人的見解です。\n当サイトのご利用により生じたいかなる損害・トラブルについて当サイトでは一切の責任を負いかねます事をご了承ください。\n所属先\n\n岡山大学病院 新医療研究開発センター データサイエンス部\n\n連絡先\n本ブログ等について、誤り/疑問点がありましたら以下までご連絡ください。\n\nkota.sakamoto0514@gmail.com"
+    "text": "本記事では、自己学習用にADaM IGの文書を和訳する。基本的には以下の文献を読んでいただきたい。\n\n\n\nADaMIG v1.3"
+  },
+  {
+    "objectID": "posts/statistics/2025/ADAM1.html#文献",
+    "href": "posts/statistics/2025/ADAM1.html#文献",
+    "title": "ADaM IG1.3",
+    "section": "",
+    "text": "ADaMIG v1.3"
+  },
+  {
+    "objectID": "posts/statistics/2025/ADAM1.html#basic-data-structure-definitions",
+    "href": "posts/statistics/2025/ADAM1.html#basic-data-structure-definitions",
+    "title": "ADaM IG1.3",
+    "section": "2.1 1.5.2 Basic Data Structure Definitions",
+    "text": "2.1 1.5.2 Basic Data Structure Definitions\n\nAnalysis parameter – 共通の定義を持つ値のグループを一意に特徴づけるために使用される行識別子。ADaM解析パラメータには、関連する解析値のグループを一意に識別するために必要なすべての情報が含まれていることに注意してください。対照的に、SDTM –TEST列は、関連する値のグループを識別するために–STRESU、–POS、–LOC、–SPECなどの修飾子列と組み合わせる必要がある場合があります。本文書では、「パラメータ」という語は「解析パラメータ」の同義語として使用されています。例：主要有効性解析パラメータは「座位収縮期血圧（mmHg）」です。\nAnalysis timepoint – 解析パラメータ内の値を解析に使用される時間的または概念的グループに分類するために使用される行識別子。これらのグループ化は、観測された、計画された、または導出されたものである可能性があります。例：主要有効性解析は、第2週、第6週、およびエンドポイント解析タイムポイントで実施されました。\nAnalysis value – （1）解析パラメータによって記述される数値（AVAL）または文字（AVALC）値。解析値は、入力データに存在する、入力データ値のカテゴリ化、または導出されたものである可能性があります。例：パラメータ「体格指数」の解析値は、収集された身長と体重からADaMデータセットで導出されました。（2）さらに、特定の関数の値は解析値とみなされます。例：ベースライン値（BASE）、ベースラインからの変化量（CHG）。 Parameter-variant – AVAL（またはAVALC）の関数として導出される列で、データセットで変数が設定される一部のパラメータに対して異なって計算される場合、パラメータ可変となります。したがって、列がパラメータ可変であるのは、その導出方法が行にあるパラメータに依存する場合です。例えば、AVALCATyはAVAL（またはAVALC）をカテゴリ化します。カテゴリはパラメータによって異なる可能性があり、これによりAVALCATyがパラメータ可変となります。\nParameter-invariant – AVAL（またはAVALC）の関数として導出される列で、データセットで変数が設定されるすべてのパラメータに対して同じ方法で計算される場合、パラメータ不変となります。したがって、列がパラメータ不変であるのは、その導出方法が行にあるパラメータに依存しない場合です。パラメータ不変の導出は、適用されないパラメータに対してはnullのままにされる可能性がありますが、すべてのパラメータにわたって同じままです。例えば、ベースラインからの変化量変数の導出はCHG = AVAL-BASEであり、これはすべてのパラメータで同じ式です。したがって、CHGはパラメータ不変変数です。パラメータ不変性の概念は、BDSの整合性にとって不可欠であり、第4.2節「導出列の作成対導出行の作成」で定義されたルールの不可欠な構成要素であり、モデルが代わりに新しい行が必要であることを示している場合にプロデューサーによる「水平化」（新しい列の作成）を禁止するものです。"
+  },
+  {
+    "objectID": "posts/statistics/2025/ADAM1.html#analysis-datasets-and-adam-datasets",
+    "href": "posts/statistics/2025/ADAM1.html#analysis-datasets-and-adam-datasets",
+    "title": "ADaM IG1.3",
+    "section": "2.2 Analysis Datasets and ADaM Datasets",
+    "text": "2.2 Analysis Datasets and ADaM Datasets\n現在、ADaMには3つの構造があります： - ADSL（SUBJECT LEVEL ANALYSIS DATASET） - BDS　（BASIC DATA STRUCTURE） - OCCDS（OCCURRENCE DATA STRUCTURE）\nADaMの基本原則およびその他のADaM規則に従うが、定義された3つの構造（ADSL、BDS、OCCDS）のいずれにも従わない解析データセットは、ADAM OTHERクラスのADaMデータセットと見なされます。解析データセットメタデータのクラス要素の統制用語は、http://www.cdisc.org/terminology でダウンロードできます。\n解析データセットのカテゴリを示す図では、最上位レベルで「Analysis Datasets」があり、その下に「ADaM Datasets」と「Non-ADaM Analysis Datasets」に分かれています。 - ADaM Datasets ADaM Datasetsは以下の4つのカテゴリに分類されます：\n\nADSL: ADSL（被験者レベル解析データセット）\nBDS: ADLB、ADEFF、ADTTE*（基本データ構造の例）\nOCCDS: ADAE、ADCM（発生データ構造の例）\nOTHER: ADMV*（その他のADaMデータセットの例）\n\n\nNon-ADaM Analysis Datasets Non-ADaM Analysis Datasetsには：PATP、AXEVT（ADaMの基本原則に従わずに開発されたデータセットの例）"
+  },
+  {
+    "objectID": "posts/statistics/2025/ADAM1.html#fundamental-principles",
+    "href": "posts/statistics/2025/ADAM1.html#fundamental-principles",
+    "title": "ADaM IG1.3",
+    "section": "2.3 Fundamental Principles",
+    "text": "2.3 Fundamental Principles\nADaMデータセットは、ADaMモデル文書に記載されている特定の基本原則に従う必要があります：\n\nADaMデータセットおよび関連するメタデータは、臨床試験で実施される統計解析を支援するデータセットの内容とソースを明確かつ曖昧さなく伝達しなければなりません。\nADaMデータセットおよび関連するメタデータは、値または変数のソースまたは導出を示すトレーサビリティを提供しなければなりません（すなわち、データの系譜または値とその前身との関係）。メタデータは、解析データがいつ、どのように導出または補完されたかを特定しなければなりません。\nADaMデータセットは、一般的に利用可能なソフトウェアツールで容易に使用できなければなりません。\nADaMデータセットは、明確で曖昧さのないコミュニケーションを促進するためのメタデータと関連付けられなければなりません。理想的には、メタデータは機械可読であることが望ましいです。\nADaMデータセットは、最小限のプログラミングで統計解析を実行できる構造と内容を持つべきです。このようなデータセットは「Analysi Ready」と表現されます。ADaMデータセットには、特定の統計解析のレビューと再作成に必要なデータが含まれています。データリスティングやその他の非解析的な表示をサポートするためだけに、データを解析準備完了データセットに照合する必要はありません。"
   },
   {
     "objectID": "about.html",
@@ -621,6 +649,13 @@
     "title": "About",
     "section": "5 所属学会",
     "text": "5 所属学会\n\n日本計量生物学会"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Kota Sakamoto",
+    "section": "",
+    "text": "本サイトは個人の学習記録であり、内容の正確性は保証いたしません。所属組織とは無関係の個人的見解です。\n当サイトのご利用により生じたいかなる損害・トラブルについて当サイトでは一切の責任を負いかねます事をご了承ください。\n所属先\n\n岡山大学病院 新医療研究開発センター データサイエンス部\n\n連絡先\n本ブログ等について、誤り/疑問点がありましたら以下までご連絡ください。\n\nkota.sakamoto0514@gmail.com"
   },
   {
     "objectID": "posts/statistics/2025/github.html",
@@ -984,7 +1019,7 @@
     "href": "posts/statistics/2025/解析用データセット作成の流れ2.html",
     "title": "解析用データセット作成の流れ2",
     "section": "",
-    "text": "本記事では、以下の私のブログを踏まえて、より具体的な解析データセット作成の流れをまとめていく。\n\n\n\nPharmaSUG2010 - Paper AD16 Automating the Link between Metadata and Analysis Dataset Misha Rittmann, Octagon Research Solutions, Inc., Wayne, PA\nPharmaSUG2010 - Paper TT06 SAS Programming Techniques for Manipulating Metadata on the Database Level Chris Speck, PAREXEL International, Durham, NC\nPharmaSUG2011 – Paper CD17 Making a List, Checking it Twice (Part 1): Techniques for Specifying and Validating Analysis Datasets\nPharmaSUG2011 - Paper CD12ADaM Standard Naming Conventions are Good to HaveChristine Teng, Merck Sharp & Dohme Corp, Rahway, NJ"
+    "text": "本記事では、以下の私のブログを踏まえて、より具体的な解析データセット作成の流れをまとめていく。\n\n\n\n\n\n\n\n\n\n\n\n\n\n坂本航太\n\n\n2025/06/14\n\n\n\n\n\n\n\n\n\n\n\n\n個人的な解析データセット作成方法をまとめます。\n\n\n\n坂本航太\n\n\n2025/06/14\n\n\n\n\n\n\n一致なし\n\n\n\n\nPharmaSUG2010 - Paper AD16 Automating the Link between Metadata and Analysis Dataset Misha Rittmann, Octagon Research Solutions, Inc., Wayne, PA\nPharmaSUG2010 - Paper TT06 SAS Programming Techniques for Manipulating Metadata on the Database Level Chris Speck, PAREXEL International, Durham, NC\nPharmaSUG2011 – Paper CD17 Making a List, Checking it Twice (Part 1): Techniques for Specifying and Validating Analysis Datasets\nPharmaSUG2011 - Paper CD12ADaM Standard Naming Conventions are Good to HaveChristine Teng, Merck Sharp & Dohme Corp, Rahway, NJ"
   },
   {
     "objectID": "posts/statistics/2025/解析用データセット作成の流れ2.html#参考文献",
@@ -1040,7 +1075,7 @@
     "href": "posts/statistics/2025/解析用データセット作成の流れ2.html#空箱データセットを使った実データ処理",
     "title": "解析用データセット作成の流れ2",
     "section": "2.7 空箱データセットを使った実データ処理",
-    "text": "2.7 空箱データセットを使った実データ処理\n/* 空箱データセットを作成 */\n%include \"C:\\temp\\ADSL_shell.sas\";\n\n/* 実際のADSL作成 */\ndata derived.adsl;\n    if 0 then set adsl_shell;  /* 構造のみ継承、実際は読み込まない */\n    set rawdata.dm;            /* 実データを処理 */\n    \n    /* データ処理 */\n    studyid = studyid;\n    usubjid = usubjid;\n    age = age;\n    sex = sex;\n    \n    /* 派生変数の作成 */\n    if /* 条件 */ then saffl = 'Y';\n    else saffl = 'N';\n    \n    keep studyid usubjid age sex saffl;\nrun;"
+    "text": "2.7 空箱データセットを使った実データ処理\n/* 空箱データセットを作成 */\n%include \"C:\\temp\\ADSL_shell.sas\";\n\n/* 実際のADSL作成 */\ndata derived.adsl;\n    if 0 then set adsl_shell;  /* 構造のみ継承、実際は読み込まない */\n    set rawdata.dm;            /* 実データを処理 */\n    \n    /* データ処理 */\n    studyid = _studyid;\n    usubjid = _usubjid;\n    age = _age;\n    sex = _sex;\n    \n    /* 派生変数の作成 */\n    if /* 条件 */ then saffl = 'Y';\n    else saffl = 'N';\n    \n    keep studyid usubjid age sex saffl;\nrun;"
   },
   {
     "objectID": "posts/statistics/2025/解析用データセット作成の流れ2.html#重要なポイント",
@@ -1083,5 +1118,33 @@
     "title": "解析用データセット作成の流れ2",
     "section": "3.4 Specificationシートでの記載例",
     "text": "3.4 Specificationシートでの記載例\n目的: Excelで管理されているコードリストマスターから自動的にSAS formatを生成し、データの標準化を図る 処理フロー:\n\nExcelコードリストをSASデータセットとして読み込み\nPROC FORMAT用のCNTLIN形式に変換（数値・文字型の自動判定含む）\n作業用ライブラリでフォーマット作成・検証\n本番ライブラリに最終出力\n\n入力ファイル: codelist.xlsxと出力フォーマットである。\n\nSEX（文字型）: M=Male, F=Female, U=Unknown\nSEXN（数値型）: 1=男性, 2=女性\nNYFL（文字型）: Y=Yes, N=No\nAGEU（文字型）: YEARS=Years, MONTHS=Months\n\n\n3.4.1 実装のメリット\n\nExcel管理の利便性: 非プログラマーでもコードリストの更新が容易で、チーム間での共有も簡単です。\n混在データ型対応: 数値型と文字型のフォーマットが混在していても、自動的に適切な形式で生成されます。\n自動化による効率性: 手動でのフォーマット定義が不要になり、Excelファイルの更新が即座にSASフォーマットに反映されます。\n品質向上: ヒューマンエラーが削減され、データの標準化が徹底されます。\n拡張性: 新しいコードリストの追加がExcelシートへの行追加だけで完了し、CDISC標準などへの準拠も効率的に行えます。"
+  },
+  {
+    "objectID": "posts/statistics/2025/解析用データセット作成の流れ2.html#なぜアンダースコアを付けるのか",
+    "href": "posts/statistics/2025/解析用データセット作成の流れ2.html#なぜアンダースコアを付けるのか",
+    "title": "解析用データセット作成の流れ2",
+    "section": "4.1 なぜアンダースコアを付けるのか？",
+    "text": "4.1 なぜアンダースコアを付けるのか？\nSASでデータ処理をしていると、変数名の管理が重要になってきます。特に：\n\nデータマージ時の名前衝突を防ぐ\n生データと加工データの区別\n一時的な変数の識別\n\n例えば、ageという変数があるデータに対して、_ageのように接頭辞を付けることで、元の生データであることを明確にできます。"
+  },
+  {
+    "objectID": "posts/statistics/2025/解析用データセット作成の流れ2.html#マクロの仕組み",
+    "href": "posts/statistics/2025/解析用データセット作成の流れ2.html#マクロの仕組み",
+    "title": "解析用データセット作成の流れ2",
+    "section": "4.2 マクロの仕組み",
+    "text": "4.2 マクロの仕組み\nこのマクロは3つのステップで動作します：\n\n4.2.1 ステップ1：変数情報の取得\n象データセットの変数一覧を取得します。\nproc contents data = work.&raw. out = work.VAR noprint ;\n\n\n4.2.2 ステップ2：マクロ変数の動的生成\n各変数名をマクロ変数として保存：\n\nVAR1_ → 1番目の変数名\nVAR2_ → 2番目の変数名\nMAXV → 総変数数\n\ndata _null_ ;\n  set work.VAR end = eof ;\n  call symputx(\"VAR\"||strip(put(VARNUM, 8.))||\"_\", NAME, 'G') ;\n  if eof then call symputx('MAXV', _N_) ;\nrun ;\n\n\n4.2.3 ステップ3：一括リネーム\nrename\n%do i = 1 %to &MAXV. ;\n  &&VAR&i._ = _&&VAR&i._\n%end ;"
+  },
+  {
+    "objectID": "posts/statistics/2025/解析用データセット作成の流れ2.html#実行例",
+    "href": "posts/statistics/2025/解析用データセット作成の流れ2.html#実行例",
+    "title": "解析用データセット作成の流れ2",
+    "section": "4.3 実行例",
+    "text": "4.3 実行例\n%macro rawdata(raw=, sort=, out=&raw);\nproc contents data = work.&raw. out = work.VAR noprint ;\nrun ;\nproc sort data = work.VAR ; \n  by VARNUM ;\nrun ;\ndata _null_ ;\n  set work.VAR end = eof ;\n  call symputx(\"VAR\"||strip(put(VARNUM, 8.))||\"_\", NAME, 'G') ;\n  if eof then call symputx('MAXV', _N_) ;\nrun ;\ndata work.&out. ;\n  set work.&raw. ;\n  rename\n  %do i = 1 %to &MAXV. ;\n    &&VAR&i._ = _&&VAR&i._\n  %end ;\n  ;\nrun ;\n%mend rawdata ;\n\n/* まずirisデータをworkライブラリにコピー */\ndata work.iris;\n  set sashelp.iris;\nrun;\n\n/* マクロを実行 */\n%rawdata(raw=iris, out=iris_renamed)\n\n/* データの中身を確認 */\nproc print data=work.iris_renamed(obs=5);\nrun;"
+  },
+  {
+    "objectID": "posts/statistics/2025/解析用データセット作成の流れ2.html#adamデータセット作成における変数名管理の重要性",
+    "href": "posts/statistics/2025/解析用データセット作成の流れ2.html#adamデータセット作成における変数名管理の重要性",
+    "title": "解析用データセット作成の流れ2",
+    "section": "4.4 ADaMデータセット作成における変数名管理の重要性",
+    "text": "4.4 ADaMデータセット作成における変数名管理の重要性\nADaMにおける変数命名の課題 ADaM（Analysis Data Model）データセット作成では、複数のソースから様々な変数を統合する必要があります：\n\nSDTMデータ（生データ）\n派生変数（計算結果）\n解析用変数（統計処理用）\nメタデータ（フラグや分類変数）\nこれらが混在すると、データの出自が不明確になり、品質管理やバリデーションが困難になります。"
   }
 ]
