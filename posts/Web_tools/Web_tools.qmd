@@ -48,6 +48,13 @@ title: "Web Tools"
 -   [データサイエンス100本ノック（構造化データ加工編）のSAS版](https://github.com/Nikkei-R-DataScience/sas-100knocks-preprocess/blob/main/answer/sas100knocks.ipynb)
 -   [RTFファイルをPDF化するDDEプログラム](https://sasonediver.blog.fc2.com/blog-entry-342.html)
 
+## Rプログラミング（書籍）
+
+-   [R for Data Science (2nd Edtion)](https://r4ds.hadley.nz/)
+-   [Advanced R (2nd Edition)](https://adv-r.hadley.nz/)
+-   [R Cookbook, 2nd Edition](https://rc2e.com/)
+-   [Quarto 公式guide](https://quarto.org/docs/guide/)
+
 ## Rプログラミング（海外サイト）
 
 -   [Tidyverse style guide](https://style.tidyverse.org/index.html)
