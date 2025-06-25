@@ -1,0 +1,244 @@
+---
+title: "Proc Contents ProcedureとProc Dataset Procedure"
+author: "坂本航太"
+categories: [SAS,解析プログラミング]
+date-modified: "2025-06-24"
+abstract-title: Abstract
+abstract: ""
+date: "2025-06-25"
+---
+
+## SAS
+
+本記事では、`Proc Contents Procedure`と`Proc Dtaset Procecdure`について解説する。
+
+## Proc Contents Procedure
+
+CONTENTS プロシージャは、SAS データセットの内容を表示し、SAS ライブラリのディレクトリを印刷します。一般的に、CONTENTS プロシージャは DATASETS プロシージャの CONTENTS ステートメントと同じ機能を持ちます。CONTENTS プロシージャと PROC DATASETS の CONTENTS ステートメントの違いは以下の通りです：
+
+-   PROC CONTENTS の DATA= オプションにおける *libref* のデフォルトは Work です。CONTENTS ステートメントでは、デフォルトはプロシージャ入力ライブラリの libref です。
+
+-   PROC CONTENTS は順次ファイルを読み取ることができます。CONTENTS ステートメントはできません。
+
+## Proc Contents Procedureの特徴
+
+-   PROC CONTENTS reports metadata about the table and the metadata about the variables.
+-   データセットにおける`Variable`、`Type(Char、Num）` 、`Fromat`、`Label`をデータセット化できる！
+
+## 構文
+
+```         
+PROC CONTENTS <options>;
+```
+
+### **DATA=*SAS-file-specification***
+
+specifies an entire library or a specific SAS data set within a library. *SAS-file-specification* can take one of the following forms:
+
+### **\<*libref.*\>*SAS-data-set***
+
+names one SAS data set to process. The default for libref is the libref of the procedure input library. For example, to obtain the contents of the SAS data set HtWt from the procedure input library, use the following CONTENTS statement:
+
+```         
+contents data=HtWt;
+```
+
+To obtain the contents of a specific version from a generation group, use the GENNUM= data set option as shown in the following CONTENTS statement:
+
+```         
+contents data=HtWt(gennum=3);
+```
+
+### **\<*libref.*\>\_ALL\_**
+
+gives you information about all SAS data sets that have the type or types specified by the MEMTYPE= option. *libref* refers to the SAS library. The default for libref is the libref of the procedure input library.
+
+-   If you are using the \_ALL\_ keyword, you need Read access to all read-protected SAS data sets in the SAS library.
+
+-   DATA=\_ALL\_ automatically prints a listing of the SAS files that are contained in the SAS library. Note that for SAS views, all librefs that are associated with the views must be assigned in the current session in order for them to be processed for the listing.
+
+| Default | most recently created data set in your job or session, from any SAS library. |
+|------------------------------------|------------------------------------|
+| Tip | If you specify a read-protected data set in the DATA= option but do not give the Read password, by default the procedure looks in the PROC DATASETS statement for the Read password. However, if you do not specify the DATA= option and the default data set (last one created in the session) is Read protected, the procedure does not look in the PROC DATASETS statement for the Read password. |
+
+すなわち指定したlibraryに含まれるSASデータセット全てを指定することもできるし、指定したlibraryの特定のデータセットを指定することもできる。
+
+### **MEMTYPE=(*member-type(s)*)**
+
+restricts processing to one or more member types. The CONTENTS statement produces output only for member types DATA, VIEW, and ALL, which includes DATA and VIEW.
+
+MEMTYPE= in the CONTENTS statement differs from MEMTYPE= in most of the other statements in the DATASETS procedure in the following ways:
+
+-   A slash does not precede the option.
+
+-   You cannot enclose the MEMTYPE= option in parentheses to limit its effect to only the SAS file immediately preceding it.
+
+MEMTYPE= results in a directory of the library in which the DATA= member is located. However, MEMTYPE= does not limit the types of members whose contents are displayed unless the \_ALL\_ keyword is used in the DATA= option. For example, the following statements produce the contents of only the SAS data sets with the member type DATA:
+
+```         
+proc datasets memtype=data;   
+```
+
+mentypeはデータセットのみが欲しいときは指定したらよいと思うが、基本的にする必要はないだろう。
+
+### **NOPRINT**
+
+suppresses printing the output of the CONTENTS statement.
+
+### **ORDER=COLLATE \| CASECOLLATE \| IGNORECASE \| VARNUM**
+
+基本的にorder = varnumとしておけばよい。
+
+|  |  |
+|:-----------------------------------|:-----------------------------------|
+| COLLATE | prints a list of variables in alphabetical order beginning with uppercase and then lowercase names. |
+| CASECOLLATE | prints a list of variables in alphabetical order even if they include mixed-case names and numerics. |
+| IGNORECASE | prints a list of variables in alphabetical order ignoring the case of the letters. |
+| VARNUM | is the same as the VARNUM option. |
+
+| Note | The ORDER= option does not affect the order of the OUT= and OUT2= data sets. |
+|------------------------------------|------------------------------------|
+| See | [VARNUM](https://documentation.sas.com/doc/en/pgmsascdc/v_064/proc/p13a12sy6i71p6n1ekjmlniopcq8.htm#p0vwh5ho9ufb0pn1k2gj0ol938t0) |
+| Example | See [Using the ORDER= Option](https://documentation.sas.com/doc/en/pgmsascdc/v_064/proc/n05an0gd96r7ggn1qfa1iwxx6dx6.htm#n05an0gd96r7ggn1qfa1iwxx6dx6) to compare the default and the four options for ORDER=. |
+
+### **OUT=*SAS-data-set***
+
+names an output SAS data set.
+
+| Tip | OUT= does not suppress the printed output from the statement. If you want to suppress the printed output, you must use the NOPRINT option. |
+|------------------------------------|------------------------------------|
+| See | [The OUT= Data Set](https://documentation.sas.com/doc/en/pgmsascdc/v_064/proc/p1sy9ca8n2tv03n1savk4p9cmeq0.htm#p17vojw133aeyfn1u8modmp2mig9) for a description of the variables in the OUT= data set. |
+
+### **OUT2=*SAS-data-set***
+
+names the output data set to contain information about indexes and integrity constraints.
+
+| Note | When you use the OUT2=*PermanentLibrary*\_ALL\_ option within PROC CONTENTS or PROC DATASETS with the CONTENTS statement, you must also set the REPLACE=YES data set option or the REPLACE system option. |
+|------------------------------------|------------------------------------|
+| Tips | If UPDATECENTILES was not specified in the index definition, then the default value of 5 is used in the re-create variable of the OUT2 data set. |
+| OUT2= does not suppress the printed output from the statement. To suppress the printed output, use the NOPRINT option. |  |
+| See | [The OUT2= Data Set](https://documentation.sas.com/doc/en/pgmsascdc/v_064/proc/p1sy9ca8n2tv03n1savk4p9cmeq0.htm#n123ab3muv193gn1wtezylofxwd7) for a description of the variables in the OUT2= data set. |
+
+以下のようにしておけばよい
+
+```         
+proc contents data=sashelp.class out=out1 varnum ; run;
+```
+
+## Short Option
+
+Short Optionを使えば、データセットに格納されている順番で、**全変数**を1つのマクロ変数に格納できる！たまに便利では？
+
+-   参考記事：[PROC CONTENTSのSHORTオプションはアイディア次第で役に立ちそう。](https://sas-boubi.blogspot.com/2015/02/proc-contentsshort.html)
+
+```         
+
+*** 全変数名を（データセットに格納されてる順で）1つのマクロ変数に格納する ;
+ods output PositionShort = OUT1;
+    proc contents data=sashelp.class  short  varnum;
+    run;
+ods output close;
+
+data _NULL_ ;
+    set OUT1 ;
+    call symputx("VARS", VARIABLES);
+run;
+
+%put &VARS;
+```
+
+OUT1にVARIABLESという1変数が格納され、そこにデータセットに含まれる全変数が格納されている。
+
+# Proc Dtaset Procedure
+
+The DATASETS procedure is a utility procedure that manages your SAS files. With PROC DATASETS, you can do the following:
+
+-   copy SAS files from one SAS library to another
+
+-   rename SAS files
+
+-   repair SAS files
+
+-   delete SAS files
+
+-   list the SAS files that are contained in a SAS library
+
+-   list the attributes of a SAS data set:
+
+    -   the date on which the data was last modified
+
+    -   whether the data is compressed
+
+    -   whether the data is indexed
+
+-   manipulate passwords on SAS files
+
+-   append SAS data sets
+
+-   modify attributes of SAS data sets and variables within the data sets
+
+-   create and delete indexes on SAS data sets
+
+-   create and manage audit files for SAS data sets
+
+-   create and delete integrity constraints on SAS data sets
+
+-   create and manage extended attributes of data sets
+
+様々出来るが良く使うのは、データセットのlibname間のCopyとデータセットのSave、DElete、Killであろう。
+
+参考文献
+
+-   [Using PROC DATASETS for Efficient SAS Processing](https://www.lexjansen.com/nesug/nesug00/cc/cc4004.pdf)
+
+## Copy
+
+Used to copy or move a SAS member from one library to another.To limit copying to specific members, use either the SELECT or EXCLUDE options. To specify a different library to copy from use either the DATASETS LIBRARY option to specify a default library or use the IN= option. To move a member from one library to another and then delete the original member, use the MOVE optionThe following example moves two members from lib1 to lib2:
+
+```         
+LIBNAME lib1 ‘SAS-data-library’;
+LIBNAME lib2 ‘SAS-data-library’;
+PROC DATASETS;
+COPY IN=lib1 OUT=lib2 MOVE;
+SELECT member1 member2;
+RUN;
+```
+
+データセットのCopyについては`Proc Copy`も役に立つ
+
+-   [【PROC COPY】データセットを他のライブラリに一括コピー](https://sas-boubi.blogspot.com/2017/07/proc-copy_43.html)
+
+```         
+  PROC COPY
+       IN                =   コピー対象のライブラリ
+       OUT            =   出力先のライブラリ
+       MEMTYPE  =   (コピー対象のデータのタイプ) ;
+       SELECT     コピー対象のデータ ;
+       EXCLUDE  コピー対象外のデータ ;
+   RUN;
+```
+
+## Kill
+
+The following example shows how to delete all the members within a permanent SAS library using the KILL option:
+
+```         
+LIBNAME input ‘SAS-data-library’;
+PROC DATASETS LIBRARY=input KILL;
+RUN;
+```
+
+## データセットのattribを全部消す
+
+```         
+libname mylib 'c:\mylib';
+proc contents data=mylib.class;
+run;
+proc datasets lib=mylib memtype=data;
+   modify class;
+     attrib _all_ label=' ';
+     attrib _all_ format=;
+contents data=mylib.class;
+run;
+quit;
+```
