@@ -1,0 +1,849 @@
+---
+title: "臨床試験における有害事象データの集計：PROC SQL vs DATA STEP徹底比較"
+author: "坂本航太"
+categories: [SAS,解析プログラミング]
+date-modified: "2025-06-28"
+abstract-title: Abstract
+abstract: ""
+date: "2025-06-28"
+---
+
+# 臨床試験における有害事象データの集計：PROC SQL vs DATA STEP徹底比較
+
+臨床試験における有害事象（Adverse Event: AE）の集計は、薬剤の安全性評価において最も重要な分析の一つです。特に治療群間での比較は、薬剤の安全性プロファイルを理解する上で欠かせません。本記事では、標準的なADSL（Subject-Level Analysis Dataset）とADAE（Adverse Event Analysis Dataset）を使用して、Treatment群、Control群、Total の3つの観点からSOC（System Organ Class）/PT（Preferred Term）別の有害事象集計を実装する方法を詳しく解説します。
+
+標準データセットの作成 ADSLデータセット（被験者レベル）
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}       
+/* ADSL（被験者レベル分析データセット）の作成 */
+data adsl;
+    length usubjid $20 subjid $10 arm $20 saffl $1;
+    
+    /* 50名の被験者データを作成 */
+    do i = 1 to 50;
+        usubjid = cats("STUDY001-", put(i, z3.));
+        subjid = put(i, z3.);
+        
+        /* 治療群の割り当て（2:1でTreatment:Placebo） */
+        if mod(i, 3) = 0 then arm = "Placebo";
+        else arm = "Treatment";
+        
+        /* 安全性解析対象フラグ */
+        saffl = "Y";
+        
+        output;
+    end;
+    drop i;
+run;
+```
+
+**DATA STEPの基本解説：**
+
+-   `data adsl;` - 新しいデータセット「adsl」を作成開始
+
+-   `length` - 変数の型と最大長を事前定義（\$は文字型、数値は文字数）
+
+-   `do i = 1 to 50;` - 1から50まで繰り返し処理（50人の被験者作成）
+
+-   `cats()` - 複数の文字列を結合する関数（空白なしで連結）
+
+-   `put(i, z3.)` - 数値iを3桁のゼロパディング文字列に変換（001, 002, ...）
+
+-   `mod(i, 3)` - iを3で割った余りを計算（0, 1, 2のサイクル）
+
+-   `output;` - 現在の変数値でレコードを出力
+
+-   `drop i;` - 作業用変数iを最終データセットから除外
+
+-   `run;` - DATA STEPの実行
+
+### ADAEデータセット（有害事象レベル）
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}      
+/* ADAE（有害事象分析データセット）の作成 - より豊富なデータ */
+data adae;
+    length usubjid $20 subjid $10 aesoc $50 aedecod $100 aeser $1 aerel $1 aestdy 8;
+    
+    /* 心臓障害の有害事象 */
+    usubjid = "STUDY001-001"; subjid = "001"; aesoc = "心臓障害"; aedecod = "完全房室ブロック"; aeser = "Y"; aerel = "Y"; aestdy = 15; output;
+    usubjid = "STUDY001-001"; subjid = "001"; aesoc = "心臓障害"; aedecod = "徐脈"; aeser = "N"; aerel = "Y"; aestdy = 22; output;
+    
+    usubjid = "STUDY001-002"; subjid = "002"; aesoc = "心臓障害"; aedecod = "心不全慢性"; aeser = "Y"; aerel = "Y"; aestdy = 8; output;
+    usubjid = "STUDY001-002"; subjid = "002"; aesoc = "心臓障害"; aedecod = "心不全"; aeser = "N"; aerel = "N"; aestdy = 45; output;
+    
+    usubjid = "STUDY001-004"; subjid = "004"; aesoc = "心臓障害"; aedecod = "動悸"; aeser = "N"; aerel = "Y"; aestdy = 3; output;
+    usubjid = "STUDY001-007"; subjid = "007"; aesoc = "心臓障害"; aedecod = "洞停止"; aeser = "N"; aerel = "N"; aestdy = 34; output;
+    usubjid = "STUDY001-010"; subjid = "010"; aesoc = "心臓障害"; aedecod = "完全房室ブロック"; aeser = "Y"; aerel = "Y"; aestdy = 25; output;
+    usubjid = "STUDY001-013"; subjid = "013"; aesoc = "心臓障害"; aedecod = "徐脈"; aeser = "N"; aerel = "Y"; aestdy = 11; output;
+    usubjid = "STUDY001-016"; subjid = "016"; aesoc = "心臓障害"; aedecod = "心房細動"; aeser = "Y"; aerel = "N"; aestdy = 67; output;
+    usubjid = "STUDY001-019"; subjid = "019"; aesoc = "心臓障害"; aedecod = "狭心症"; aeser = "N"; aerel = "Y"; aestdy = 44; output;
+    
+    /* 胃腸障害の有害事象 */
+    usubjid = "STUDY001-005"; subjid = "005"; aesoc = "胃腸障害"; aedecod = "悪心"; aeser = "N"; aerel = "Y"; aestdy = 2; output;
+    usubjid = "STUDY001-005"; subjid = "005"; aesoc = "胃腸障害"; aedecod = "嘔吐"; aeser = "N"; aerel = "Y"; aestdy = 5; output;
+    usubjid = "STUDY001-008"; subjid = "008"; aesoc = "胃腸障害"; aedecod = "下痢"; aeser = "N"; aerel = "Y"; aestdy = 18; output;
+    usubjid = "STUDY001-011"; subjid = "011"; aesoc = "胃腸障害"; aedecod = "便秘"; aeser = "N"; aerel = "N"; aestdy = 28; output;
+    usubjid = "STUDY001-014"; subjid = "014"; aesoc = "胃腸障害"; aedecod = "悪心"; aeser = "N"; aerel = "Y"; aestdy = 4; output;
+    usubjid = "STUDY001-017"; subjid = "017"; aesoc = "胃腸障害"; aedecod = "腹痛"; aeser = "N"; aerel = "N"; aestdy = 32; output;
+    usubjid = "STUDY001-020"; subjid = "020"; aesoc = "胃腸障害"; aedecod = "消化不良"; aeser = "N"; aerel = "Y"; aestdy = 12; output;
+    
+    /* 神経系障害の有害事象 */
+    usubjid = "STUDY001-006"; subjid = "006"; aesoc = "神経系障害"; aedecod = "頭痛"; aeser = "N"; aerel = "Y"; aestdy = 1; output;
+    usubjid = "STUDY001-006"; subjid = "006"; aesoc = "神経系障害"; aedecod = "めまい"; aeser = "N"; aerel = "Y"; aestdy = 14; output;
+    usubjid = "STUDY001-009"; subjid = "009"; aesoc = "神経系障害"; aedecod = "傾眠"; aeser = "N"; aerel = "Y"; aestdy = 7; output;
+    usubjid = "STUDY001-012"; subjid = "012"; aesoc = "神経系障害"; aedecod = "頭痛"; aeser = "N"; aerel = "N"; aestdy = 21; output;
+    usubjid = "STUDY001-015"; subjid = "015"; aesoc = "神経系障害"; aedecod = "めまい"; aeser = "N"; aerel = "N"; aestdy = 19; output;
+    usubjid = "STUDY001-018"; subjid = "018"; aesoc = "神経系障害"; aedecod = "振戦"; aeser = "N"; aerel = "Y"; aestdy = 29; output;
+    
+    /* 皮膚および皮下組織障害 */
+    usubjid = "STUDY001-021"; subjid = "021"; aesoc = "皮膚および皮下組織障害"; aedecod = "発疹"; aeser = "N"; aerel = "Y"; aestdy = 9; output;
+    usubjid = "STUDY001-022"; subjid = "022"; aesoc = "皮膚および皮下組織障害"; aedecod = "そう痒症"; aeser = "N"; aerel = "Y"; aestdy = 16; output;
+    usubjid = "STUDY001-023"; subjid = "023"; aesoc = "皮膚および皮下組織障害"; aedecod = "紅斑"; aeser = "N"; aerel = "N"; aestdy = 23; output;
+    
+    /* 一般・全身障害および投与部位の状態 */
+    usubjid = "STUDY001-024"; subjid = "024"; aesoc = "一般・全身障害および投与部位の状態"; aedecod = "疲労"; aeser = "N"; aerel = "Y"; aestdy = 5; output;
+    usubjid = "STUDY001-025"; subjid = "025"; aesoc = "一般・全身障害および投与部位の状態"; aedecod = "発熱"; aeser = "N"; aerel = "N"; aestdy = 13; output;
+    usubjid = "STUDY001-026"; subjid = "026"; aesoc = "一般・全身障害および投与部位の状態"; aedecod = "無力症"; aeser = "N"; aerel = "Y"; aestdy = 27; output;
+run;
+```
+
+**Statement解説：**
+
+-   **ADAEデータの特徴：**
+
+    -   **aesoc**: 器官別大分類（MedDRA SOC相当）
+
+    -   **aedecod**: 基本語（MedDRA PT相当）
+
+    -   **aerel**: 因果関係（Y=あり, N=なし）
+
+    -   **aeser**: 重篤性（Y=重篤, N=非重篤）
+
+    -   **aestdy**: 投与開始からの日数
+
+## 治療群別有害事象集計の実装
+
+### Step1: 安全性解析対象データの準備
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+/* Step 3-1: 安全性解析対象データの準備と母集団サイズ取得 */
+proc sql;
+    /* 安全性解析対象のAEデータ抽出（ARM情報付き） */
+    create table ae_safety_arm as
+    select a.usubjid, a.aesoc, a.aedecod, a.aerel, a.aeser, 
+           case when s.arm = "Placebo" then "Control" 
+                else s.arm end as arm
+    from adae a
+    inner join adsl s on a.usubjid = s.usubjid and s.saffl = "Y";
+    
+    /* 各ARM別とTOTALの母集団サイズ取得 */
+    select count(*) into :total_n
+    from adsl
+    where saffl = "Y";
+    
+    select count(*) into :treatment_n
+    from adsl  
+    where saffl = "Y" and arm = "Treatment";
+    
+    select count(*) into :control_n
+    from adsl
+    where saffl = "Y" and arm = "Placebo";  /* 元データではPlacebo */
+quit;
+```
+
+**PROC SQLの基本解説：**
+
+**1. PROC SQLの開始と終了：**
+
+-   `proc sql;` - SQLプロシジャの開始
+
+-   `quit;` - SQLプロシジャの終了（他のプロシジャは`run;`だがSQLは`quit;`）
+
+**2. CREATE TABLE文：**
+
+-   `create table ae_safety_arm as` - 新しいテーブル「ae_safety_arm」を作成
+
+-   `select ... from ... where ...;` の結果でテーブルを作成
+
+**3. SELECT文の基本構造：**
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}       
+select 列名1, 列名2, 計算式 as 新しい列名 from テーブル名 where 条件;
+```
+
+**4. CASE文（条件分岐）：**
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}        
+case when 条件1 then 値1
+     else 値2 end as 新列名
+```
+
+-   IF-THEN-ELSEのSQL版
+
+-   `case when s.arm = "Placebo" then "Control"` - PlaceboをControlに表示変更
+
+**5. INNER JOIN（内部結合）：**
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}      
+from adae a
+inner join adsl s on a.usubjid = s.usubjid and s.saffl = "Y"
+```
+
+-   2つのテーブルを結合
+
+-   `a`, `s` はテーブルエイリアス（短縮名）
+
+-   `on` の条件を満たすレコードのみ結果に含める
+
+-   `and s.saffl = "Y"` で安全性解析対象のみ抽出
+
+**6. INTO句（マクロ変数への格納）：**
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+select count(*) into :total_n
+from adsl
+where saffl = "Y";
+```
+
+-   `count(*)` - レコード数をカウント
+
+-   `into :total_n` - 結果をマクロ変数&total_nに格納
+
+-   後で分母として使用
+
+### Step2: 治療群別SOC/PT集計の中核部分
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+proc sql;
+    create table ae_comprehensive as
+    
+    /* SOCレベル - ARM別 */
+    select aesoc, "" as aept, arm as arm_group,
+           compress(put(count(distinct usubjid), 8.)) || '(' || 
+           compress(put((count(distinct usubjid)/
+               case when arm = "Treatment" then &treatment_n
+                    when arm = "Control" then &control_n
+                    else &total_n end)*100, 8.1)) || ')' as c,
+           case when arm = "Treatment" then 1
+                when arm = "Control" then 2
+                else 3 end as arm_order
+    from (select aesoc, usubjid, arm
+          from ae_safety_arm
+          group by aesoc, usubjid, arm) as subj_arm
+    group by aesoc, arm
+    
+    union all
+    
+    /* SOCレベル - Total */
+    select aesoc, "" as aept, "Total" as arm_group,
+           compress(put(count(distinct usubjid), 8.)) || '(' || 
+           compress(put((count(distinct usubjid)/&total_n)*100, 8.1)) || ')' as c,
+           3 as arm_order
+    from (select aesoc, usubjid
+          from ae_safety_arm
+          group by aesoc, usubjid) as subj_total
+    group by aesoc
+    
+    union all
+    
+    /* PTレベル - ARM別 */
+    select aesoc, aedecod as aept, arm as arm_group,
+           compress(put(count(distinct usubjid), 8.)) || '(' || 
+           compress(put((count(distinct usubjid)/
+               case when arm = "Treatment" then &treatment_n
+                    when arm = "Control" then &control_n
+                    else &total_n end)*100, 8.1)) || ')' as c,
+           case when arm = "Treatment" then 1
+                when arm = "Control" then 2
+                else 3 end as arm_order
+    from (select aesoc, aedecod, usubjid, arm
+          from ae_safety_arm
+          group by aesoc, aedecod, usubjid, arm) as subj_arm
+    group by aesoc, aedecod, arm
+    
+    union all
+    
+    /* PTレベル - Total */
+    select aesoc, aedecod as aept, "Total" as arm_group,
+           compress(put(count(distinct usubjid), 8.)) || '(' || 
+           compress(put((count(distinct usubjid)/&total_n)*100, 8.1)) || ')' as c,
+           3 as arm_order
+    from (select aesoc, aedecod, usubjid
+          from ae_safety_arm
+          group by aesoc, aedecod, usubjid) as subj_total
+    group by aesoc, aedecod;
+quit;
+```
+
+**1. サブクエリ（副問い合わせ）：**
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}      
+from (select aesoc, usubjid, arm
+      from ae_safety_arm
+      group by aesoc, usubjid, arm) as subj_arm
+```
+
+-   `()` 内のSELECT文が先に実行される
+
+-   その結果を`subj_arm`という名前のテーブルとして使用
+
+-   **重要な目的**: 同一被験者の同一SOCで複数AEがある場合の重複除去
+
+**2. GROUP BY句：**
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}   
+group by aesoc, usubjid, arm
+```
+
+-   指定した列の組み合わせでデータをグループ化
+
+-   各グループに対して集計関数（COUNT, SUMなど）を適用
+
+-   例：被験者001の心臓障害は1つのグループとして扱われる
+
+**3. 集計関数：**
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}    
+count(distinct usubjid)  -- ユニークな被験者数をカウント
+```
+
+**4. 文字列処理：**
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+compress(put(count(distinct usubjid), 8.)) || '(' || 
+compress(put((count(distinct usubjid)/&total_n)*100, 8.1)) || ')' as c
+```
+
+-   `put()` - 数値を文字列に変換
+
+-   `compress()` - 不要な空白を除去
+
+-   `||` - 文字列結合演算子
+
+-   結果例：「5(10.0)」形式の文字列作成
+
+**5. OUTER UNION CORRESPONDING：**
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"} 
+select ... from ...
+union all  
+select ... from ...
+```
+
+-   複数のSELECT結果を縦に結合
+
+<!-- -->
+
+-   `all` - 重複行も含めて全て結合
+
+### Step3: データの転置と整形
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+/* Step 4-1: ソート処理（転置前に必要） */
+proc sort data=ae_comprehensive;
+    by aesoc aept arm_order arm_group;
+run;
+
+/* Step 4-2: 転置処理 */
+proc transpose data=ae_comprehensive out=ae_arm_pivot;
+    by aesoc aept;
+    id arm_group;
+    var c;
+run;
+```
+
+**重要なポイント：**
+
+**1. PROC SORTの必要性：**
+
+-   PROC TRANSPOSEはBY変数で指定した順序でデータが並んでいることを要求
+
+-   事前にソートしないとエラーが発生
+
+**2. PROC TRANSPOSEの解説：**
+
+-   `data=ae_comprehensive` - 入力データセット
+
+-   `out=ae_arm_pivot` - 出力データセット名
+
+-   `by aesoc aept;` - グループ化変数（これらの組み合わせごとに転置）
+
+-   `id arm_group;` - 新しい列名になる変数（Treatment, Control, Totalが列名になる）
+
+-   `var c;` - 転置する値の変数
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+転置前:
+aesoc    aept  arm_group  c
+心臓障害  ""   Treatment  2(6.7)
+心臓障害  ""   Control    1(3.3)
+心臓障害  ""   Total      3(6.0)
+
+転置後:
+aesoc    aept  Treatment  Control  Total
+心臓障害  ""   2(6.7)     1(3.3)   3(6.0)
+```
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+//* Step 4-3: 表示用整形 */
+data final_display_ordered;
+    set ae_arm_pivot;
+    
+    /* 欠損値処理 */
+    if Treatment = "" then Treatment = "0(0.0)";
+    if Control = "" then Control = "0(0.0)";
+    if Total = "" then Total = "0(0.0)";
+    
+    /* 階層表示 */
+    length display_term $100;
+    if aept = "" then display_term = aesoc;
+    else display_term = "  " || aept;
+    
+    /* ソート用変数 */
+    if aept = "" then sort_level = 1;  /* SOCレベル */
+    else sort_level = 2;               /* PTレベル */
+    
+    drop _name_;
+run;
+```
+
+**DATA STEPでの後処理解説：**
+
+-   `set ae_arm_pivot;` - 入力データセットを読み込み
+
+-   `if Y = "" then Y = "0(0.0)";` - 空文字列を"0(0.0)"に置換
+
+-   `"  " || aept` - PTの前に2つのスペースでインデント追加
+
+-   **階層表示の仕組み**:
+
+```         
+-    SOCレベル: `display_term = aesoc`（例：「心臓障害」）
+
+-    PTレベル: `display_term = "  " || aept`（例：「 完全房室ブロック」）
+```
+
+## 修正されたAppendixプログラム（列順序修正版）
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+/*======================================================================================*/
+/* プログラム名: 治療群別有害事象集計 (SOC/PT別) - シンプル版                           */
+/* 作成者: [作成者名]                                                                   */
+/* 作成日: [作成日]                                                                     */
+/* 目的: 臨床試験における有害事象データの治療群別集計                                   */
+/*      Treatment群、Control群、Total の3つの観点からSOC/PT別に集計                   */
+/*======================================================================================*/
+
+/*---------------------------------------------------------------------------------------*/
+/* Step 1: ADSLデータセット（被験者レベル）の作成                                       */
+/*---------------------------------------------------------------------------------------*/
+data adsl;
+    length usubjid $20 subjid $10 arm $20 saffl $1;
+    
+    /* 50名の被験者データを作成 */
+    do i = 1 to 50;
+        usubjid = cats("STUDY001-", put(i, z3.));
+        subjid = put(i, z3.);
+        
+        /* 治療群の割り当て（2:1でTreatment:Placebo） */
+        if mod(i, 3) = 0 then arm = "Placebo";
+        else arm = "Treatment";
+        
+        /* 安全性解析対象フラグ */
+        saffl = "Y";
+        
+        output;
+    end;
+    drop i;
+run;
+
+/*---------------------------------------------------------------------------------------*/
+/* Step 2: ADAEデータセット（有害事象レベル）の作成                                     */
+/*---------------------------------------------------------------------------------------*/
+data adae;
+    length usubjid $20 subjid $10 aesoc $50 aedecod $100 aeser $1 aerel $1 aestdy 8;
+    
+    /* 心臓障害の有害事象 */
+    usubjid = "STUDY001-001"; subjid = "001"; aesoc = "心臓障害"; aedecod = "完全房室ブロック"; aeser = "Y"; aerel = "Y"; aestdy = 15; output;
+    usubjid = "STUDY001-001"; subjid = "001"; aesoc = "心臓障害"; aedecod = "徐脈"; aeser = "N"; aerel = "Y"; aestdy = 22; output;
+    
+    usubjid = "STUDY001-002"; subjid = "002"; aesoc = "心臓障害"; aedecod = "心不全慢性"; aeser = "Y"; aerel = "Y"; aestdy = 8; output;
+    usubjid = "STUDY001-002"; subjid = "002"; aesoc = "心臓障害"; aedecod = "心不全"; aeser = "N"; aerel = "N"; aestdy = 45; output;
+    
+    usubjid = "STUDY001-004"; subjid = "004"; aesoc = "心臓障害"; aedecod = "動悸"; aeser = "N"; aerel = "Y"; aestdy = 3; output;
+    usubjid = "STUDY001-007"; subjid = "007"; aesoc = "心臓障害"; aedecod = "洞停止"; aeser = "N"; aerel = "N"; aestdy = 34; output;
+    usubjid = "STUDY001-010"; subjid = "010"; aesoc = "心臓障害"; aedecod = "完全房室ブロック"; aeser = "Y"; aerel = "Y"; aestdy = 25; output;
+    usubjid = "STUDY001-013"; subjid = "013"; aesoc = "心臓障害"; aedecod = "徐脈"; aeser = "N"; aerel = "Y"; aestdy = 11; output;
+    usubjid = "STUDY001-016"; subjid = "016"; aesoc = "心臓障害"; aedecod = "心房細動"; aeser = "Y"; aerel = "N"; aestdy = 67; output;
+    usubjid = "STUDY001-019"; subjid = "019"; aesoc = "心臓障害"; aedecod = "狭心症"; aeser = "N"; aerel = "Y"; aestdy = 44; output;
+    
+    /* 胃腸障害の有害事象 */
+    usubjid = "STUDY001-005"; subjid = "005"; aesoc = "胃腸障害"; aedecod = "悪心"; aeser = "N"; aerel = "Y"; aestdy = 2; output;
+    usubjid = "STUDY001-005"; subjid = "005"; aesoc = "胃腸障害"; aedecod = "嘔吐"; aeser = "N"; aerel = "Y"; aestdy = 5; output;
+    usubjid = "STUDY001-008"; subjid = "008"; aesoc = "胃腸障害"; aedecod = "下痢"; aeser = "N"; aerel = "Y"; aestdy = 18; output;
+    usubjid = "STUDY001-011"; subjid = "011"; aesoc = "胃腸障害"; aedecod = "便秘"; aeser = "N"; aerel = "N"; aestdy = 28; output;
+    usubjid = "STUDY001-014"; subjid = "014"; aesoc = "胃腸障害"; aedecod = "悪心"; aeser = "N"; aerel = "Y"; aestdy = 4; output;
+    usubjid = "STUDY001-017"; subjid = "017"; aesoc = "胃腸障害"; aedecod = "腹痛"; aeser = "N"; aerel = "N"; aestdy = 32; output;
+    usubjid = "STUDY001-020"; subjid = "020"; aesoc = "胃腸障害"; aedecod = "消化不良"; aeser = "N"; aerel = "Y"; aestdy = 12; output;
+    
+    /* 神経系障害の有害事象 */
+    usubjid = "STUDY001-006"; subjid = "006"; aesoc = "神経系障害"; aedecod = "頭痛"; aeser = "N"; aerel = "Y"; aestdy = 1; output;
+    usubjid = "STUDY001-006"; subjid = "006"; aesoc = "神経系障害"; aedecod = "めまい"; aeser = "N"; aerel = "Y"; aestdy = 14; output;
+    usubjid = "STUDY001-009"; subjid = "009"; aesoc = "神経系障害"; aedecod = "傾眠"; aeser = "N"; aerel = "Y"; aestdy = 7; output;
+    usubjid = "STUDY001-012"; subjid = "012"; aesoc = "神経系障害"; aedecod = "頭痛"; aeser = "N"; aerel = "N"; aestdy = 21; output;
+    usubjid = "STUDY001-015"; subjid = "015"; aesoc = "神経系障害"; aedecod = "めまい"; aeser = "N"; aerel = "N"; aestdy = 19; output;
+    usubjid = "STUDY001-018"; subjid = "018"; aesoc = "神経系障害"; aedecod = "振戦"; aeser = "N"; aerel = "Y"; aestdy = 29; output;
+    
+    /* 皮膚および皮下組織障害 */
+    usubjid = "STUDY001-021"; subjid = "021"; aesoc = "皮膚および皮下組織障害"; aedecod = "発疹"; aeser = "N"; aerel = "Y"; aestdy = 9; output;
+    usubjid = "STUDY001-022"; subjid = "022"; aesoc = "皮膚および皮下組織障害"; aedecod = "そう痒症"; aeser = "N"; aerel = "Y"; aestdy = 16; output;
+    usubjid = "STUDY001-023"; subjid = "023"; aesoc = "皮膚および皮下組織障害"; aedecod = "紅斑"; aeser = "N"; aerel = "N"; aestdy = 23; output;
+    
+    /* 一般・全身障害および投与部位の状態 */
+    usubjid = "STUDY001-024"; subjid = "024"; aesoc = "一般・全身障害および投与部位の状態"; aedecod = "疲労"; aeser = "N"; aerel = "Y"; aestdy = 5; output;
+    usubjid = "STUDY001-025"; subjid = "025"; aesoc = "一般・全身障害および投与部位の状態"; aedecod = "発熱"; aeser = "N"; aerel = "N"; aestdy = 13; output;
+    usubjid = "STUDY001-026"; subjid = "026"; aesoc = "一般・全身障害および投与部位の状態"; aedecod = "無力症"; aeser = "N"; aerel = "Y"; aestdy = 27; output;
+run;
+
+/*---------------------------------------------------------------------------------------*/
+/* Step 3: 治療群別有害事象集計の実行                                                   */
+/*---------------------------------------------------------------------------------------*/
+
+/* Step 3-1: 安全性解析対象データの準備と母集団サイズ取得 */
+proc sql;
+    /* 安全性解析対象のAEデータ抽出（ARM情報付き） */
+    create table ae_safety_arm as
+    select a.usubjid, a.aesoc, a.aedecod, a.aerel, a.aeser, 
+           case when s.arm = "Placebo" then "Control" 
+                else s.arm end as arm
+    from adae a
+    inner join adsl s on a.usubjid = s.usubjid and s.saffl = "Y";
+    
+    /* 各ARM別とTOTALの母集団サイズ取得 */
+    select count(*) into :total_n
+    from adsl
+    where saffl = "Y";
+    
+    select count(*) into :treatment_n
+    from adsl  
+    where saffl = "Y" and arm = "Treatment";
+    
+    select count(*) into :control_n
+    from adsl
+    where saffl = "Y" and arm = "Placebo";  /* 元データではPlacebo */
+quit;
+
+/* Step 3-2: 治療群別SOC/PT集計の実行 */
+proc sql;
+    create table ae_comprehensive as
+    
+    /* SOCレベル - ARM別 */
+    select aesoc, "" as aept, arm as arm_group,
+           compress(put(count(distinct usubjid), 8.)) || '(' || 
+           compress(put((count(distinct usubjid)/
+               case when arm = "Treatment" then &treatment_n
+                    when arm = "Control" then &control_n
+                    else &total_n end)*100, 8.1)) || ')' as c,
+           case when arm = "Treatment" then 1
+                when arm = "Control" then 2
+                else 3 end as arm_order
+    from (select aesoc, usubjid, arm
+          from ae_safety_arm
+          group by aesoc, usubjid, arm) as subj_arm
+    group by aesoc, arm
+    
+    union all
+    
+    /* SOCレベル - Total */
+    select aesoc, "" as aept, "Total" as arm_group,
+           compress(put(count(distinct usubjid), 8.)) || '(' || 
+           compress(put((count(distinct usubjid)/&total_n)*100, 8.1)) || ')' as c,
+           3 as arm_order
+    from (select aesoc, usubjid
+          from ae_safety_arm
+          group by aesoc, usubjid) as subj_total
+    group by aesoc
+    
+    union all
+    
+    /* PTレベル - ARM別 */
+    select aesoc, aedecod as aept, arm as arm_group,
+           compress(put(count(distinct usubjid), 8.)) || '(' || 
+           compress(put((count(distinct usubjid)/
+               case when arm = "Treatment" then &treatment_n
+                    when arm = "Control" then &control_n
+                    else &total_n end)*100, 8.1)) || ')' as c,
+           case when arm = "Treatment" then 1
+                when arm = "Control" then 2
+                else 3 end as arm_order
+    from (select aesoc, aedecod, usubjid, arm
+          from ae_safety_arm
+          group by aesoc, aedecod, usubjid, arm) as subj_arm
+    group by aesoc, aedecod, arm
+    
+    union all
+    
+    /* PTレベル - Total */
+    select aesoc, aedecod as aept, "Total" as arm_group,
+           compress(put(count(distinct usubjid), 8.)) || '(' || 
+           compress(put((count(distinct usubjid)/&total_n)*100, 8.1)) || ')' as c,
+           3 as arm_order
+    from (select aesoc, aedecod, usubjid
+          from ae_safety_arm
+          group by aesoc, aedecod, usubjid) as subj_total
+    group by aesoc, aedecod;
+quit;
+
+/*---------------------------------------------------------------------------------------*/
+/* Step 4: データの転置と整形                                                           */
+/*---------------------------------------------------------------------------------------*/
+
+/* Step 4-1: ソート処理（転置前に必要） */
+proc sort data=ae_comprehensive;
+    by aesoc aept arm_order arm_group;
+run;
+
+/* Step 4-2: 転置処理 */
+proc transpose data=ae_comprehensive out=ae_arm_pivot;
+    by aesoc aept;
+    id arm_group;
+    var c;
+run;
+
+/* Step 4-3: 表示用整形 */
+data final_display_ordered;
+    retain display_term Treatment Control Total;  /* 列順序の明示的制御 */
+    set ae_arm_pivot;
+    
+    /* 欠損値処理 */
+    if Treatment = "" then Treatment = "0(0.0)";
+    if Control = "" then Control = "0(0.0)";
+    if Total = "" then Total = "0(0.0)";
+    
+    /* 階層表示 */
+    length display_term $100;
+    if aept = "" then display_term = aesoc;
+    else display_term = "  " || aept;
+    
+    /* ソート用変数 */
+    if aept = "" then sort_level = 1;  /* SOCレベル */
+    else sort_level = 2;               /* PTレベル */
+    
+    drop _name_;
+run;
+
+/* Step 4-4: 最終ソート */
+proc sort data=final_display_ordered;
+    by aesoc sort_level aept;
+run;
+
+/*---------------------------------------------------------------------------------------*/
+/* Step 5: 結果表示                                                                     */
+/*---------------------------------------------------------------------------------------*/
+
+/* Step 5-1: 最終結果の表示 */
+proc print data=final_display_ordered noobs;
+    title1 "有害事象集計表（治療群別）";
+    title3 "被験者数 (%)";
+run;
+
+/*---------------------------------------------------------------------------------------*/
+/* Step 6: 検証用出力                                                                   */
+/*---------------------------------------------------------------------------------------*/
+
+/* Step 6-1: 基本統計の確認 */
+proc sql;
+    title "データ整合性チェック";
+    select "元AE総件数" as check_point, 
+           count(*) as count_value
+    from adae
+    
+    union all
+    
+    select "安全性解析対象AE件数" as check_point,
+           count(*) as count_value
+    from ae_safety_arm
+    
+    union all
+    
+    select "Treatment群被験者数" as check_point,
+           &treatment_n as count_value from (select 1 as dummy)
+           
+    union all
+    
+    select "Control群被験者数" as check_point,
+           &control_n as count_value from (select 1 as dummy)
+           
+    union all
+    
+    select "Total被験者数" as check_point,
+           &total_n as count_value from (select 1 as dummy);
+quit;
+
+/* Step 6-2: SOC別詳細検証 */
+proc sql;
+   title "SOC別被験者数検証";
+   select aesoc,
+          count(distinct case when arm = "Treatment" then usubjid else null end) as treatment_subj,
+          count(distinct case when arm = "Control" then usubjid else null end) as control_subj,
+          count(distinct usubjid) as total_subj
+   from ae_safety_arm
+   group by aesoc
+   order by total_subj desc;
+quit;
+
+/* Step 6-3: 治療群配分の確認 */
+proc freq data=adsl;
+   tables arm / nocum;
+   title "治療群配分";
+run;
+
+
+
+/*---------------------------------------------------------------------------------------*/
+/* プログラム終了                                                                       */
+/*---------------------------------------------------------------------------------------*/
+
+/* タイトルクリア */
+title;
+
+/* マクロ変数の確認（ログ出力） */
+%put NOTE: Treatment群被験者数 = &treatment_n;
+%put NOTE: Control群被験者数 = &control_n;
+%put NOTE: Total被験者数 = &total_n;
+
+%put NOTE: 治療群別有害事象集計プログラム実行完了;
+
+/*======================================================================================*/
+/* プログラム終了                                                                       */
+/* 出力データセット:                                                                    */
+/*   - final_display_ordered: 最終的な治療群別集計表                                   */
+/*   - ae_safety_arm: 安全性解析対象AEデータ                                           */
+/*   - ae_comprehensive: 中間集計データ                                                */
+/*======================================================================================*/
+```
+
+## 結果の検証とデバッグ
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}      
+/* 集計結果の検証 */
+proc sql;
+    /* 元データとの整合性チェック */
+    select "元AE総件数" as check_point, 
+           count(*) as count_value
+    from adae
+    
+    union all
+    
+    select "安全性解析対象AE件数" as check_point,
+           count(*) as count_value
+    from ae_safety_arm
+    
+    union all
+    
+    select "Treatment群被験者数" as check_point,
+           &treatment_n as count_value
+           
+    union all
+    
+    select "Control群被験者数" as check_point,
+           &control_n as count_value
+           
+    union all
+    
+    select "Total被験者数" as check_point,
+           &total_n as count_value;
+quit;
+```
+
+**検証SQLの解説：**
+
+-   `union all` - 複数のSELECT結果を縦に結合（重複も含める）
+
+-   `&treatment_n` - 事前に計算したマクロ変数の値を表示
+
+-   **検証の重要性**: 各ステップで期待する件数が得られているか確認
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}    
+/* SOC別被験者数の詳細検証 */
+proc sql;
+    select aesoc,
+           count(distinct case when arm = "Treatment" then usubjid end) as treatment_subj,
+           count(distinct case when arm = "Control" then usubjid end) as control_subj,
+           count(distinct usubjid) as total_subj
+    from ae_safety_arm
+    where aerel = "Y"  /* 因果関係ありのみ */
+    group by aesoc
+    order by total_subj desc;
+quit;
+```
+
+**CASE文の高度な使用：**
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"} 
+count(distinct case when arm = "Treatment" then usubjid end)
+```
+
+-   `case when ... then ... end` - 条件を満たす場合のみ値を返す
+
+-   Treatment群の場合のみusubjidをカウント対象にする
+
+-   1つのクエリで治療群別の集計が可能
+
+## 初心者向けSQL学習のポイント
+
+### 1. SQLの基本構文理解
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}    
+SELECT 何を選ぶか
+FROM どのテーブルから  
+WHERE どんな条件で
+GROUP BY どうグループ化するか
+ORDER BY どう並び替えるか
+```
+
+### 2. JOINの理解
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}      
+/* 内部結合の例 */
+from adae a                    -- メインテーブル
+inner join adsl s              -- 結合するテーブル  
+on a.usubjid = s.usubjid       -- 結合条件
+and s.saffl = "Y"              -- 追加フィルタ
+```
+
+### 3. 集計関数の使い分け
+
+-   `count(*)` - 全行数
+
+-   `count(distinct 列名)` - ユニークな値の数
+
+-   `sum()` - 合計
+
+-   `min()`, `max()` - 最小値、最大値
+
+### 4. サブクエリの読み方
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}      
+from (select ... from ... group by ...) as 別名
+```
+
+-   内側のクエリから読む
+
+-   外側のクエリは内側の結果を使用
+
+## まとめ
+
+本記事では、臨床試験における有害事象データの治療群別集計を、PROC SQLを用いて段階的に実装しました。初心者の方にとって重要なポイントは：
+
+### 実践のコツ
+
+1.  **小さく始める**: 複雑なクエリは段階的に構築
+
+2.  **中間結果確認**: 各ステップで`PROC PRINT`で結果確認
+
+3.  **エラー対処**: エラーメッセージから問題箇所を特定
+
+4.  **コメント活用**: 処理の目的を明記
+
+この段階的アプローチにより、初心者でも確実に治療群別有害事象集計をマスターできます。重要なのは、各ステップの目的を理解しながら進めることです。

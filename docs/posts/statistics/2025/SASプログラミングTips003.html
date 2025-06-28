@@ -8,7 +8,7 @@
 
 <meta name="author" content="坂本航太">
 
-<title>Good Programming Practices in Clnical Trial – Kota Sakamoto</title>
+<title>プログラミング一般的な考え方（MUST DO , MUST NOT DO) – Kota Sakamoto</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -118,7 +118,7 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-page-left">
-      <h1 class="title">Good Programming Practices in Clnical Trial</h1>
+      <h1 class="title">プログラミング一般的な考え方（MUST DO , MUST NOT DO)</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">SAS</div>
                 <div class="quarto-category">解析プログラミング</div>
@@ -161,11 +161,9 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">目次</h2>
    
   <ul class="collapse">
-  <li><a href="#年のweb記事についてです" id="toc-年のweb記事についてです" class="nav-link active" data-scroll-target="#年のweb記事についてです"><span class="header-section-number">1</span> 2006年のWeb記事についてです。</a>
-  <ul class="collapse">
-  <li><a href="#must-do-and-must-not-do-categories" id="toc-must-do-and-must-not-do-categories" class="nav-link" data-scroll-target="#must-do-and-must-not-do-categories"><span class="header-section-number">1.1</span> Must Do and Must Not Do Categories</a></li>
-  <li><a href="#参考" id="toc-参考" class="nav-link" data-scroll-target="#参考"><span class="header-section-number">1.2</span> 参考</a></li>
-  </ul></li>
+  <li><a href="#sasプログラミングtipsについてまとめます" id="toc-sasプログラミングtipsについてまとめます" class="nav-link active" data-scroll-target="#sasプログラミングtipsについてまとめます"><span class="header-section-number">1</span> SASプログラミングTipsについてまとめます。</a></li>
+  <li><a href="#must-do-and-must-not-do-categories" id="toc-must-do-and-must-not-do-categories" class="nav-link" data-scroll-target="#must-do-and-must-not-do-categories"><span class="header-section-number">2</span> Must Do and Must Not Do Categories</a></li>
+  <li><a href="#参考" id="toc-参考" class="nav-link" data-scroll-target="#参考"><span class="header-section-number">3</span> 参考</a></li>
   </ul>
 </nav>
     </div>
@@ -176,11 +174,13 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="年のweb記事についてです" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span> 2006年のWeb記事についてです。</h1>
+<section id="sasプログラミングtipsについてまとめます" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="sasプログラミングtipsについてまとめます"><span class="header-section-number">1</span> SASプログラミングTipsについてまとめます。</h2>
+<p>本記事では、組織でSASプログラミングを実行する際に、注意すべきことをまとめます。また初学者向けにPitfall and Bad Habitsについてまとめます。</p>
 <p>引用：</p>
 <ul>
 <li><a href="https://www.lexjansen.com/pharmasug/2006/ApplicationsDevelopment/AD17.pdf">Good Programming Practices in Clinical Trial – a Check Program</a></li>
+<li><a href="https://www.lexjansen.com/pharmasug/2025/AP/PharmaSUG-2025-AP-039.pdf">How Not to SAS: Avoiding Common Pitfalls and Bad Habits</a></li>
 </ul>
 <p>Abstract</p>
 <ul>
@@ -190,8 +190,8 @@ ul.task-list li input[type="checkbox"] {
 <p>ということで、MUST DO、MUST NOT DO、AVOID、RECCOMENTを組織として決めたら良い。</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 62%">
-<col style="width: 37%">
+<col style="width: 10%">
+<col style="width: 89%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -218,10 +218,11 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 </tbody>
 </table>
-<section id="must-do-and-must-not-do-categories" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="must-do-and-must-not-do-categories"><span class="header-section-number">1.1</span> Must Do and Must Not Do Categories</h2>
-<section id="must-do" class="level3" data-number="1.1.1">
-<h3 data-number="1.1.1" class="anchored" data-anchor-id="must-do"><span class="header-section-number">1.1.1</span> MUST DO</h3>
+</section>
+<section id="must-do-and-must-not-do-categories" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="must-do-and-must-not-do-categories"><span class="header-section-number">2</span> Must Do and Must Not Do Categories</h2>
+<section id="must-do" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="must-do"><span class="header-section-number">2.1</span> MUST DO</h3>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 100%">
@@ -233,10 +234,13 @@ ul.task-list li input[type="checkbox"] {
 </thead>
 <tbody>
 <tr class="odd">
-<td>Make a backup copy of the program prior to updates (Not checked by the program).</td>
+<td><p>Make a backup copy of the program prior to updates (Not checked by the program).</p>
+<p>プログラムはフォルダとして、yyyymmddで日付管理をしましょう。1つのフォルダで管理するのは間違っています。</p>
+<p>都度、プログラムを実行する際にフォルダを移動させましょう。注意点：プロジェクトのプログラムが開発が終了したら、最後は1つのプログラムで全プログラムが実行されて、.rtfで解析帳票が出てくるようにしましょう。途中でExcelに吐き出してExcelで結果を加工するのはご法度です。ありえません。</p></td>
 </tr>
 <tr class="even">
-<td>Use program documentation, e.g.&nbsp;Headers and Comments. Write documentation in English. Imbedded comments within the body of the program code should detail the modular flow.</td>
+<td><p>Use program documentation, e.g.&nbsp;Headers and Comments. Write documentation in English. Imbedded comments within the body of the program code should detail the modular flow.</p>
+<p>これも大事です。手動でHeadersをつけるの大変ですので、自動化させましょう。ただし、プログラム内にはコメントを残すのが良いです。</p></td>
 </tr>
 <tr class="odd">
 <td>Typically, write only one SAS® statement per line.</td>
@@ -245,25 +249,32 @@ ul.task-list li input[type="checkbox"] {
 <td>Use indentation to arrange the code clearly.</td>
 </tr>
 <tr class="odd">
-<td>Use unique names for datasets and files within the program / macro.</td>
+<td><p>Use unique names for datasets and files within the program / macro.</p>
+<p>これも大事です。var、tmpが楽でよいですが、きちんと名前をつけましょう。</p></td>
 </tr>
 <tr class="even">
-<td>Reference datasets and/or files explicitly in each step or proc.</td>
+<td><p>Reference datasets and/or files explicitly in each step or proc.</p>
+<p>1つの帳票に対して原則1つのプログラムです。</p></td>
 </tr>
 <tr class="odd">
-<td>Display ‘Draft’ in the output before program validation.</td>
+<td><p>Display ‘Draft’ in the output before program validation.</p>
+<p>これもいいですね。1人でやるのは悩ましいが。</p></td>
 </tr>
 <tr class="even">
-<td>Reset global options to original settings – if changed by the program / macro.</td>
+<td><p>Reset global options to original settings – if changed by the program / macro.</p>
+<p>global optionsやproc datasetでwork フォルダを空にしたりlogをresetしましょう。</p></td>
 </tr>
 <tr class="odd">
-<td>Delete all temporary datasets after program execution.</td>
+<td><p>Delete all temporary datasets after program execution.</p>
+<p>上と同じ考えですね。</p></td>
 </tr>
 <tr class="even">
-<td>Use ‘RUN;’ or ‘QUIT;’ at the end of each data step / proc.</td>
+<td><p>Use ‘RUN;’ or ‘QUIT;’ at the end of each data step / proc.</p>
+<p>これは基本です。</p></td>
 </tr>
 <tr class="odd">
-<td>Use defensive coding.</td>
+<td><p>Use defensive coding.</p>
+<p>よく分かりません。</p></td>
 </tr>
 <tr class="even">
 <td>Display the name of the program on the output when running outside of RAGE (our document control system).</td>
@@ -274,8 +285,8 @@ ul.task-list li input[type="checkbox"] {
 </tbody>
 </table>
 </section>
-<section id="must-not-do" class="level3" data-number="1.1.2">
-<h3 data-number="1.1.2" class="anchored" data-anchor-id="must-not-do"><span class="header-section-number">1.1.2</span> MUST NOT DO</h3>
+<section id="must-not-do" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="must-not-do"><span class="header-section-number">2.2</span> MUST NOT DO</h3>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 100%">
@@ -287,16 +298,30 @@ ul.task-list li input[type="checkbox"] {
 </thead>
 <tbody>
 <tr class="odd">
-<td>Hard-Code data.</td>
+<td><p>Hard-Code data.</p>
+<p>手で記載するのをやめましょう。表のheaderやグラフにおけるY軸、X軸のlength等はマクロ変数、Rであれば事前にベクトルにしておきましょう。</p>
+<p>/* ハードコードの悪い例 */ data work.sales_analysis; set mylib.sales_data; where year = 2024 and region = ‘Tokyo’; /* 年度と地域を直接記述 */</p>
+<p>/* 固定値を直接計算に使用 */ bonus = salary * 0.15; /* ボーナス率15%をハードコード */</p>
+<p>/* ファイルパスをハードコード */ if _n_ = 1 then call symputx(‘output_path’, ‘C:\Reports\sales_2024.xlsx’); run;</p>
+<p>/* マクロ変数で設定値を管理 */ %let target_year = 2024; %let target_region = Tokyo; %let bonus_rate = 0.15; %let output_dir = C:\Reports; %let library_name = mylib;</p>
+<p>/* または外部設定ファイルから読み込み */ %include “C:\Config\sas_config.sas”;</p>
+<p>data work.sales_analysis; set &amp;library_name..sales_data; where year = &amp;target_year and region = “&amp;target_region”;</p>
+<p>/* マクロ変数を使用 */ bonus = salary * &amp;bonus_rate; run;</p>
+<p>/* 動的なファイル名生成 */ %let output_file = &amp;output_dir.\sales_&amp;target_year..xlsx;</p>
+<p>proc export data=work.sales_analysis outfile=“&amp;output_file” dbms=xlsx replace; run;</p></td>
 </tr>
 <tr class="even">
-<td>Manually edit output.</td>
+<td><p>Manually edit output.</p>
+<p>これは論外です。どんな理由であれ解析結果を手で直すことはあってはなりません。</p>
+<p>上のHard codingと同様に事前にマクロ変数やベクトルで準備しておきましょう。</p></td>
 </tr>
 <tr class="odd">
-<td>Overwrite input data.</td>
+<td><p>Overwrite input data.</p>
+<p>これはlibname statementにおいて、readonly optionをつけておきましょうか。</p></td>
 </tr>
 <tr class="even">
-<td>Use macro names that are already used by CARE Standard macros (our standardized reporting macros)</td>
+<td><p>Use macro names that are already used by CARE Standard macros (our standardized reporting macros)</p>
+<p>既にあるマクロと同じ名前は利用してはいけません。</p></td>
 </tr>
 <tr class="odd">
 <td>Use of SAS® keywords for dataset and variable names.</td>
@@ -306,14 +331,13 @@ ul.task-list li input[type="checkbox"] {
 <p>Any programmers that have supported clinical trial analysis and reporting understand the complexity of derived datasets that are ready to produce tables and graphs for efficacy and safety analysis. Taking data from several domains, many-to-many merging, transposing data, imputing dates and values, averaging within visits for duplicate results, and creating intermediate datasets for the final ADaM are more complex than we expect.</p>
 </section>
 </section>
-<section id="参考" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="参考"><span class="header-section-number">1.2</span> 参考</h2>
+<section id="参考" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="参考"><span class="header-section-number">3</span> 参考</h2>
 <ul>
 <li><a href="https://www.lexjansen.com/pharmasug/2011/CD/PharmaSUG-2011-CD19.pdf">Challenges in Implementing ADaM datasets: Balancing the Analysis-Ready and Traceability Concepts</a></li>
 </ul>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

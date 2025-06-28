@@ -1,0 +1,347 @@
+---
+title: "SASプログラミングのPitfalls and Bad Habits"
+author: "坂本航太"
+categories: [SAS,解析プログラミング]
+date-modified: "2025-06-28"
+abstract-title: Abstract
+abstract: ""
+date: "2025-06-28"
+---
+
+## 本記事では、以下の文献を参考にSASのPitfallsとBad Hatibsをまとめます。
+
+[How Not to SAS: Avoiding Common Pitfalls and Bad Habits](https://www.lexjansen.com/pharmasug/2025/AP/PharmaSUG-2025-AP-039.pdf)
+
+SAS is a powerful tool for data analysis, but its flexibility can sometimes lead you into developing bad programming habits. Although these shortcuts might not break your programs immediately, they can lead to inefficient, error-prone, and hard-to-maintain code. This paper identifies common pitfalls and provides straightforward, practical solutions to avoid them.
+
+Effective code organization is foundational to successful SAS programming. Yet, it's easy to overlook best practices and fall into poor habits. Here are three common pitfalls you should avoid:
+
+## CODE ORGANIZATION ＆ READABILITY
+
+Good Practice
+
+-   Use Clear and concise SAS Comments in SAS Code
+
+    -   block comments like /\* my comment \*/
+
+    -   single-line comments like \* my comment;
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+/* my program comment */
+data one; set sashelp.cars;
+*subset to certain car types - SUV;
+where type = "SUV";
+run;
+```
+
+Bad Tips
+
+-   WRITE ALL YOUR CODE IN ONE LONG, CONTINUOUS BLOCK
+
+「コードを延々とスクロールして見ることは、忍耐力と視力を試すエキサイティングな方法だから」。コードを1つの巨大なブロックとして書くのは、よくある有害な習慣です。このような方法はデバッグやコード修正を煩雑にし、エラーが見逃される可能性を高めます。
+
+**推奨される方法：モジュラーにコードを書く**
+
+コードをより小さく、論理的なステップに分割し、明確なヘッダーやモジュラーセクションを使って各ブロックの目的を定義しましょう。モジュラーコードは読みやすさを向上させるだけでなく、他のプロジェクトや分析でセクションを簡単に再利用でき、貴重な時間を節約できます。
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+/* 悪い例：すべてが1つのブロック */
+data work.analysis;set mylib.rawdata;if age >= 18 and status='Active';length category $20;if score >= 90 then category='Excellent';else if score >= 80 then category='Good';else category='Needs Improvement';run;proc sort data=work.analysis;by category descending score;run;proc means data=work.analysis mean std;class category;var score;output out=work.summary mean=avg_score std=std_score;run;
+
+/* 良い例：モジュラー構造 */
+/*************************************/
+/* Step 1: Data Filtering & Cleanup */
+/*************************************/
+data work.filtered_data;
+    set mylib.rawdata;
+    where age >= 18 and status = 'Active';
+run;
+
+/********************************/
+/* Step 2: Category Assignment */
+/********************************/
+data work.categorized_data;
+    set work.filtered_data;
+    length category $20;
+    
+    if score >= 90 then category = 'Excellent';
+    else if score >= 80 then category = 'Good';
+    else category = 'Needs Improvement';
+run;
+
+/************************/
+/* Step 3: Data Sorting */
+/************************/
+proc sort data=work.categorized_data;
+    by category descending score;
+run;
+
+/****************************/
+/* Step 4: Summary Analysis */
+/****************************/
+proc means data=work.categorized_data mean std;
+    class category;
+    var score;
+    output out=work.summary 
+           mean=avg_score 
+           std=std_score;
+run;
+```
+
+Good Practice：
+
+-   Use modular, structured code
+
+    -   clearly separate different steps with comments
+    -   さっきと同じことですね。
+
+Bad Tips：
+
+-   USE UNCLEAR OR ARBITRARY VARIABLE NAMES （**不明確または恣意的な変数名を使用する）**
+
+VAR1やXのような暗号的な変数名を使うことは、あなたのコードを、あなた自身や後にそのコードを引き継ぐ人にとって解けないパズルゲームに変えてしまいます。VAR1、X、TEMPのような貧弱な変数名を選択することは、可読性を低下させ、コードに混乱をもたらします（Program 2）。また、汎用的な名前は、エラーや結果の誤解釈の可能性を高めます。
+
+**推奨：意味のある説明的な変数名を使用する**
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+data new;
+    set old;
+    x = a * b;
+    y = x + c;
+    if z > 10 then flag = 1;
+    temp = var1 / var2;
+run;
+```
+
+Good Practice：Use meaningful and descriptive variable names
+
+意味のある説明的な変数名（Xの代わりにCustomerAgeなど）を使用することで、あなたや同僚が各変数の目的と内容を素早く把握できるようになります（Program 3）。アンダースコア（customer_age）やキャメルケース（CustomerAge）などの一貫した命名規則を採用することで、さらに明確性が向上します。明確に命名された変数は、デバッグを簡素化し、分析中のエラーの可能性を大幅に削減します。
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+data salaryinfo2021;
+    set salaryinfo2020;
+    newsalary = oldsalary + increase;
+run;
+```
+
+## DEBUGGING ＆ ERROR HANDLING
+
+Proper debugging and error handling are critical for creating reliable SAS programs. Here are common pitfalls and the best practices you should follow:
+
+Bad Tips:
+
+-   IGNORING THE SAS LOG WINDOW
+
+Red text is just a suggestion. Who needs to debug when you can keep running the code? Ignoring the log window means missing critical information about errors and warnings, causing unnoticed mistakes and incorrect results.
+
+Good Practices:
+
+-   Check all the messages in your log
+
+Always check for ERROR, WARNING, and NOTE messages in your log. Each of these messages can indicate fatal failures in your code . Understanding SAS Log Messages:
+
+-   ERROR: Critical issues that prevent SAS from executing your code. Your results are incomplete or incorrect until these are resolved.
+
+-   WARNING: Potential issues that SAS identifies but doesn't stop execution. These should be reviewed and addressed to ensure accuracy.
+
+-   NOTE: Informational messages about code execution. These offer insights into dataset creation, memory usage, and other operational details.
+
+Bad Tips:
+
+-   NEVER USE DEBUGGING OPTIONS
+
+Skipping debugging options is a great way to keep your coding life exciting—who doesn’t love spending hours chasing hidden bugs? Avoiding the use of debugging options can significantly hinder your ability to troubleshoot and resolve standard SAS code and macro-related issues efficiently.
+
+Good Practices:
+
+-   Use system options to help your debug SAS code
+
+便利なGlobal option
+
+-   MSGLEVEL=I: Provides additional informational messages in the log, especially useful when merging datasets to identify issues such as mismatches or data alignment problems.（ndefined）
+
+-   SOURCE: Displays the original SAS statements in the log.
+
+-   SOURCE2: Shows included SAS code from %INCLUDE statements.
+
+-   FMTERR: Issues an error if a specified format cannot be found.
+
+-   DSNFERR: Issues an error when a referenced dataset does not exist.
+
+-   OBS=0: Compiles the program without executing it, useful for syntax checking.
+
+-   NOREPLACE: Prevents accidental overwriting of existing datasets.
+
+プログラム開発時（デバック環境）と本番環境実行時でglobal optionを使い分けることができると上級者になれるかもしれないですね。
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+options MSGLEVEL=I 
+        SOURCE 
+        SOURCE2 
+        FMTERR 
+        DSNFERR 
+        OBS=0 
+        NOREPLACE;
+```
+
+マクロ実行時は以下のglobal optionが役に立つ。
+
+Use debugging options specifically designed for macros: OPTIONS MPRINT SYMBOLGEN MLOGIC;
+
+-   MPRINT: Displays the actual SAS statements generated by macro execution, helping you identify issues within macros.
+
+-   SYMBOLGEN: Shows the resolution of macro variables, assisting you in confirming that macro variables resolve correctly.
+
+-   MLOGIC: Provides detailed information about macro execution, including macro parameter values and logical branching, useful for troubleshooting complex macro logic.
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+/* Turn on options */
+options mprint symbolgen mlogic mautosource mcompilenote=ALL;
+```
+
+Bad Tips:
+
+-   RUNNING CODE WITHOUT VERIFYING INPUT DATA
+
+Just assume your dataset is perfect—because real-world data is always flawless, right? Trusting imported data without verification can lead to incorrect analyses, wasted time, and unreliable results.
+
+Good Practices:
+
+Assume all data is “guilty until proven innocent”
+
+-   Inspect dataset properties using PROC CONTENTS, PROC MEANS, and PROC FREQ before analysis.
+
+-   Validate key uniqueness, check for missing values, and confirm data quality before merging datasets.
+
+-   Check for numeric-to-character conversions and unexpected results to avoid unintended data type changes and associated analytical errors.
+
+## DATA MANAGEMENT MISTAKES
+
+Efficient data management is crucial in SAS programming to avoid data loss, facilitate easy retrieval, and ensure accurate analyses. Here are some common mistakes to avoid and best practices to adopt:
+
+Bad Tips:
+
+-   STORE ALL YOUR DATA IN WORK
+
+Because who doesn’t enjoy the adrenaline rush of potentially losing hours of work? Storing all data in the temporary WORK library is risky because data stored there is deleted once your SAS session ends. This practice can lead to significant data loss, especially if you encounter unexpected session closures or interruptions.
+
+Good Practices:
+
+-   Store important data in permanent libraries
+
+Store important datasets in permanent libraries to ensure data persistence beyond the current session. Permanent libraries help secure your data, enabling long-term storage, sharing across sessions, and preventing accidental data loss.
+
+BAD TIP:
+
+-   AVOID USING LIBRARIES Why make things easy when you can spend extra hours hunting for files? Avoiding the use of libraries can lead to disorganized file management, making it challenging to locate datasets and maintain clean project structures.
+
+Good Practice:
+
+-   Create and use SAS libraries Use SAS libraries to streamline data management by logically grouping related datasets. Clearly named and structured libraries improve data accessibility, simplify data sharing, and enhance project collaboration.
+
+BAD TIP:
+
+-   RUNNING CODE ON PRODUCTION DATABASE WITHOUT TESTING IT FIRST Nothing spices up the workday quite like taking unnecessary risks with live data! Running untested code directly on a production database risks data integrity, can cause significant disruptions, and might lead to costly errors or downtime.
+
+Good Practice:
+
+-   Use a development or test environment for creating code
+
+    Always test your code thoroughly in a safe, isolated environment before deploying it to production.Comprehensive testing helps identify potential issues early, ensuring that your code operates reliably and safeguards the production environment.
+
+## WORKING WITH DATES ＆ TIMES IN SAS
+
+Accurate handling of dates and times is critical for reliable analyses in SAS. Mistakes in this area can lead to serious analytical errors and confusion. Here are common pitfalls and best practices to adopt:
+
+UNDERSTANDING SAS DATES
+
+SAS dates are numeric values representing the number of days since January 1, 1960. This numeric representation simplifies calculations involving dates, such as finding differences between two dates or shifting dates by specific intervals.
+
+Example:
+
+-   January 1, 1960, is represented as 0.
+
+-   January 2, 1960, is represented as 1.
+
+-   December 31, 1959, is represented as -1. When printed or displayed, SAS applies date formats to convert these numeric values into readable dates.
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+data _null_;
+ today_date = today();
+ put today_date= date9.;
+run;
+
+today_date=17MAR2025
+```
+
+Good Practice:
+
+-   Efficiently handle date values
+
+    -   SAS dates, times, and datetime values are stored as numbers, making them ideal for calculations and comparisons.
+
+    -   Use the DATEPART(datetime_variable) function to easily extract date values from datetime variables.
+
+    -   Utilize the INTNX function for precise date shifting, such as adjusting to the first day of the next month.
+
+    ``` sas
+    data one;
+    dtvalue=2064365417;
+    StartDate=put(datepart(dtvalue), date9.);
+    EndDate=put(intnx('DAY', datepart(dtvalue), 3), date9.);
+    run;
+    ```
+
+## AUTOMATION＆REUSABILITY
+
+Automation and reuse of code are essential for improving efficiency, accuracy, and maintainability in your SAS workflows. Here are two common pitfalls to avoid and best practices to adopt:
+
+ここは、基本的にマクロを使おうという趣旨。原文を参照。
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+## Bad
+
+data report1;
+ set sales;
+ where year = 2025;
+run;
+data report2;
+ set expenses;
+ where year = 2025;
+run;
+```
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+## Good
+%let report_year = 2025;
+data report1;
+ set sales;
+ where year = &report_year;
+run;
+data report2;
+ set expenses;
+ where year = &report_year;
+run;
+```
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+## Bad
+
+proc means data=dataset1;
+ var sales;
+run;
+proc means data=dataset2;
+ var sales;
+run;
+```
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+## Good
+%macro summarize_sales(dataset);
+proc means data=&dataset;
+ var sales;
+run;
+%mend;
+%summarize_sales(dataset1);
+%summarize_sales(dataset2);
+```

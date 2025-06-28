@@ -1,0 +1,1227 @@
+---
+title: "PROGRAMMING FOR JOB SECURITY REVISITED:"
+author: "坂本航太"
+categories: [SAS,解析プログラミング]
+date-modified: "2025-06-24"
+abstract-title: Abstract
+abstract: ""
+date: "2025-06-25"
+---
+
+本記事では、以下の2つの文献をまとめる。
+
+参考文献
+
+-   [PROGRAMMING FOR JOB SECURITY: TIPS AND TECHNIQUES TO MAXIMIZE YOUR INDISPENSABILITY](https://support.sas.com/resources/papers/proceedings-archive/SEUGI1997/CARPENTE_TECSHOW.PDF)
+
+-   [PROGRAMMING FOR JOB SECURITY REVISITED: EVEN MORE TIPS AND TECHNIQUES TO MAXIMIZE YOUR INDISPENSABILITY](https://support.sas.com/resources/papers/proceedings/proceedings/sugi23/Training/p275.pdf)
+
+# 【風刺】SASプログラミングで絶対にやってはいけない「悪魔の技法」完全版
+
+> **重要**: この記事は、Arthur L. Carpenter氏とTony Payne氏の風刺的な論文「Programming for Job Security」シリーズを基に、SASプログラミングのアンチパターンを紹介するものです。これらの技法は**絶対に実用してはいけません**。
+
+## はじめに
+
+「保守しやすいコードは少ない人員で管理できる。つまり、あなたの雇用が危険にさらされる」
+
+この皮肉な視点から、意図的に読みにくく、保守困難なSASコードを書く「技法」を紹介します。もちろん、これは**反面教師**として学ぶべき内容です。
+
+> "Don't be irreplaceable, if you can't be replaced, you can't be promoted." - Dilbert's Laws of Work
+
+## 🚫 プログラミングスタイル（やってはいけないこと）
+
+### 論理的分離の回避
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}     
+/* 悪い例：本来分けるべき処理を無理やり1つにまとめる */
+data result;
+   set patients;
+   if age < 18 then group='pediatric'; else group='adult';
+   weight_kg = weight_lb / 2.2;
+   bmi = weight_kg / (height_m * height_m);
+   if bmi > 30 then obese_flag = 1; else obese_flag = 0;
+   /* 複数の異なる処理が混在 */
+run;
+```
+
+**解説**: このコードは年齢分類、重量変換、BMI計算、肥満判定という4つの異なる処理を1つのデータステップに混在させています。本来なら機能ごとに分割すべきですが、すべてを混ぜることで何をしているのか分かりにくくしています。
+
+### 過度なネスト化（3層以上で複雑さ倍増）
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}        
+/* 悪い例：無意味に深いネスト */
+date = mdy(month(date), day(date), year(date));
+depth2 = input(substr(station, index(station,'-')+1), 3.);
+name = substr(name, index(name,',')+1, length(name));
+```
+
+**解説**:
+
+-   1行目：既にSAS日付値の変数を、わざわざ分解して再構築する無意味な処理
+
+-   2行目：文字列から数値抽出を3つの関数で複雑にネスト
+
+-   3行目：名前の後半部分を取得する処理を複雑化 これらは全て、より単純な方法で書けるものを意図的に複雑にしています。
+
+### 関数の不適切な使用
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}      
+/* 悪い例：関数で置き換え可能な処理を冗長に記述 */
+if a < 0 then b = a*-1;
+else b = a;
+/* ABS(a)で済む処理 */
+
+/* 悪い例：非標準的な書き方 */
+ab = (a*(a>0) + b*(b>0))/((a>0)+(b>0));
+/* 2つの正数の平均を求める処理 */
+```
+
+**解説**:
+
+-   1つ目：`ABS(a)`関数で済む絶対値計算を、わざわざIF文で書いている
+
+-   2つ目：2つの正数の平均を求めるのに、論理値を数値として使う複雑な式を使用。`(a+b)/2`で済むところを意図的に分かりにくくしている
+
+### マクロの悪用
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}     
+/* 悪い例：ローカル・グローバル変数の混乱 */
+%macro inside(aa);
+    %put inside &aa;
+%mend inside;
+
+%macro outside;
+    %let aa = 5;
+    %inside(3)
+    %put outside &aa;
+%mend outside;
+
+%outside
+/* 出力: inside 3, outside 5 */
+```
+
+**解説**: マクロパラメータとマクロ変数の名前を同じにして混乱を誘発。`%inside(3)`では引数として3が渡されるため「inside 3」と出力されますが、`%outside`マクロ内の`&aa`は依然として5のままです。これによりマクロ変数のスコープについて混乱を招きます。
+
+### 不必要な複雑化
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}    
+/* 悪い例：PROC SQLを無理やり複数ステップに分解 */
+proc sort data=sales;
+    by region;
+proc summary data=sales nway;
+    by region;
+    var saleprce;
+    output out=stats mean=meansale;
+data report;
+    merge stats sales;
+    by region;
+    if saleprce gt meansale;
+
+/* 本来は以下の1ステップで済む */
+proc sql;
+    create table report as
+    select * from sales
+    having saleprce gt mean(saleprce)
+    group by region;
+```
+
+**解説**: 1つのSQL文で書ける処理を、わざわざSORT→SUMMARY→DATA stepの3段階に分けています。これにより一時データセット（stats）が作成され、処理が複雑になり、エラーの可能性も増加します。
+
+## 🎭 システムオプションの悪用
+
+### デバッグ機能の無効化
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}      
+/* 悪い例：重要な情報を隠す */
+options NOSOURCE NOSOURCE2 NONOTES NOLABEL NOMACRO;
+```
+
+**解説**:
+
+-   `NOSOURCE`: 実行されたSASコードをログに表示しない
+
+-   `NOSOURCE2`: %INCLUDEで読み込まれたコードも表示しない
+
+-   `NONOTES`: 通常のNOTEメッセージを非表示
+
+-   `NOLABEL`: 変数ラベルを無効化
+
+-   `NOMACRO`: マクロ機能自体を無効化 これらによりデバッグが困難になります。
+
+### 観測数制御の悪用
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}     
+/* 悪い例：事前告知なしでのデータ制限 */
+options obs=100 firstobs=50;  /* 隠して設定 */
+```
+
+**解説**: データセットの50-100番目の観測値のみを処理対象にしていますが、これを他の人に知らせていません。全データを処理していると思い込ませる悪質な手法です。
+
+### ワークエリアの操作
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}   
+/* 悪い例：一時ファイルの場所を変更 */
+options user=sasuser;
+data new;  /* 実際はSASUSER.NEWに保存される */
+    set project.master;
+```
+
+**解説**: `USER=`オプションにより、一時的なデータセット`NEW`が`SASUSER`ライブラリに保存されます。セッション終了後も残存し、ディスク容量の問題や混乱を引き起こします。
+
+### 危険なオプション
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+/* 悪い例：エラー時即座終了 */
+options ERRORABEND;
+
+/* 悪い例：年の解釈を混乱させる */
+options YEARCUTOFF=1800;
+data a;
+    date = '23mar98'd;
+    year = year(date);  /* 1897になる */
+```
+
+**解説**:
+
+-   `ERRORABEND`: エラー発生時にSASセッションが即座に終了し、ログも確認できない
+
+-   `YEARCUTOFF=1800`: 2桁年表記の解釈基準を1800年に設定。'98'が1998年ではなく1898年と解釈される
+
+### S=オプションによる列数制限
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}       
+/* 悪い例：最初の10桁のみ読み取り */
+options s=10;
+data new;
+    set olddata    /* OLDDATになる */
+        master
+        adj;
+    profit =
+        sales + tax;  /* TAXが使われない */
+    cnt+1;  /* PROFITの計算に含まれる */
+```
+
+**解説**: `S=10`により、各行の最初の10文字のみが読み取られます。`olddata`は`olddat`に、`sales + tax`は`sales +`のみが読まれ、変数`tax`は無視されます。また、`cnt+1;`が前の行に繋がってしまいます。
+
+## 📝 編集スタイル（可読性を破壊する方法）
+
+### インデントの無視
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}       
+/* 悪い例：インデントなし */
+data sasclass.biomass;
+infile rawdat missover;
+input @1 STATION $
+@12 DATE DATE7.
+@20 BMPOLY
+@25 BMCRUS
+@31 BMMOL
+@36 BMOTHR
+@41 BMTOTL ;
+```
+
+**解説**: インデントがないため、どの行がどのステートメントに属するかが分かりにくくなっています。特にINPUTステートメントの変数リストが見づらく、修正時にミスを誘発しやすくなります。
+
+### 複数ステートメントの詰め込み
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}       
+/* 悪い例：1行に複数ステートメント */
+data new;set old;if age>65 then senior=1;else senior=0;weight_kg=weight_lb/2.2;output;
+```
+
+**解説**: 5つのステートメントを1行に詰め込んでいます。どこで1つのステートメントが終わり、次が始まるのかが分からず、デバッグや修正が困難になります。
+
+### 行の途中での改行
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}   
+/* 悪い例：意味のない場所での改行 */
+data sasclass.biomass;infile rawdat
+missover;
+input @1 STATION $ @12 DATE DATE7.
+@20 BMPOLY @25 BMCRUS @31 BMMOL @36
+BMOTHR @41 BMTOTL ;
+```
+
+**解説**: 文法的に意味のない場所で改行しています。`infile rawdat`と`missover`オプションが分離され、`input`ステートメントも不自然に分割されています。
+
+### 画面外への重要コード配置
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"} 
+/* 悪い例：80桁以降に重要な変数を配置 */
+                                                                              /*80桁*/
+data newdata;
+    set olddata (drop=name                                                   fname
+                     address city state);  /* 重要な変数が見えない */
+```
+
+**解説**: 80桁以降に重要な変数名を配置しています。多くのエディタでは80桁以降が表示されないか、画面外に隠れるため、重要な処理内容が見えなくなります。
+
+### 会社ロゴ形式のコード
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+/* 悪い例：見た目重視のコード配置 */
+         data
+      sasclass.biomass;
+      infile cards missover;
+      input @1 STATION $
+      @12 DATE DATE7.
+      @20 BMPOLY
+   @25 BMCRUS @31 BMMOL
+  @36 BMOTHR @41 BMTOTL
+      ; format
+      date date7.
+      ;label BMCRUS=
+   'CRUSTACEAN BIOMASS'
+         BMMOL=
+   'MOLLUSC BIOMASS'
+      ;
+      run;
+```
+
+**解説**: 機能性を完全に無視して、見た目の形（おそらく会社ロゴや図形）を優先してコードを配置しています。読みやすさが完全に犠牲になっています。
+
+## 💬 コメントの悪用
+
+### 実行可能コメント
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}       
+/* 悪い例：コメント内に実行文を隠す */
+* The comments in this section do more ;
+* than it seems ;
+* ;
+* modify data to prep for; proc means ;
+* after adjusting the data using ;
+* the; var for weight ;
+```
+
+**解説**: 一見コメントに見えますが、実際には`proc means; var for weight;`という実行可能なコードが隠されています。3行目の`* ;`でコメントが終了し、4-6行目が実際に実行されます。
+
+### ネストできないコメントの悪用
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}     
+/* 悪い例：未完了コメントでコード全体を隠す */
+/* *****************
+* Apply the
+* ***very ***
+* important adjustment;
+data yearly;
+    set yearly;
+    income = income*adjust;
+run;
+/* Plot the adjusted income */
+proc gplot data=yearly......
+```
+
+**解説**: 最初の`/*`コメントが閉じられていないため、その後のコード全体がコメント扱いになります。`/* Plot the adjusted income */`の`*/`で最初のコメントが閉じられ、それ以降のコードが実行されます。
+
+### 埋め込みコメントによる部分実行
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}   
+/* 悪い例：コメント内の一部のみ実行 */
+/* *****************
+REMOVE FOR PRODUCTION
+proc print data=big obs=25;
+    title1 'Test print of BIG';
+    var company dept mgr /*clerk*/;
+data big;
+    set big;
+    if name='me' then salary=salary+5;
+*END OF REMOVED SECTION;
+****************** */
+```
+
+**解説**: 全体がコメントで囲まれているように見えますが、`/*clerk*/`の部分で一時的にコメントが閉じ、その後のdataステップが実行されます。給与を不正に操作するコードが隠されて実行されてしまいます。
+
+## 🔤 命名規則の悪用
+
+### 混乱を招く命名
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}       
+/* 悪い例：意味不明な変数名 */
+data analysis;
+    set patient_data;
+    /* デバッグ時は meaningful names を使い、後でCHANGEコマンドで変更 */
+    /* ===> c 'age' 'qwrtxzqr' all */
+    QWRTXZQR = age;           /* 年齢なのに意味不明な名前 */
+    QWRTZXQR = weight;        /* 似たような名前で混乱 */
+    QWRZTXQR = height;        /* 微妙な違いで判別困難 */
+    HHHIIHIH = height;        /* HとIの区別が困難 */
+    WVWVWVVW = weight;        /* VとWの区別が困難 */
+    testnuml = test_result;   /* 1（数字）とl（小文字L）の混用 */
+    test0001 = test_id;       /* 0（ゼロ）とO（オー）の混用 */
+    QWRT2XQR = group;         /* ZとNの混用 */
+```
+
+**解説**:
+
+-   母音を避けた無意味な文字列を使用
+
+-   似たような文字の組み合わせで視覚的混乱を誘発
+
+-   数字と文字の見た目が似ているものを混用（1とl、0とO、2とZ）
+
+-   コメントで「デバッグ時には意味のある名前を使い、後で置換する」という悪質な手法を示唆
+
+### SASキーワードの変数名使用
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}       
+/* 悪い例：SASキーワードを変数名に使用 */
+DATA SET; 
+SET DATA;
+DO = 5+ TO -15;  /* DO loopに見えるが変数代入 */
+```
+
+**解説**: `DATA`、`SET`、`DO`、`TO`などのSASキーワードを変数名として使用しています。`DO = 5+ TO -15;`は一見DO loopに見えますが、実際は変数`DO`に`5 + TO - 15`を代入するステートメントです。
+
+### 誤解を招く命名
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}        
+/* 悪い例：変数名と内容が一致しない */
+data patients;
+    set raw_data;
+    SEX = fish_count;        /* SEXという名前だが魚の数 */
+    WEIGHT = height_cm;      /* WEIGHTという名前だが身長 */
+    INCHES = height_cm;      /* INCHESだがセンチメートル */
+    
+    /* 出力先も混乱させる */
+    IF SEX = 'MALES' THEN OUTPUT FEMALES;
+    
+    /* ラベルでさらに混乱 */
+    LABEL sex = 'Sex of the Patient';  /* 実際は魚の数 */
+```
+
+**解説**:
+
+-   変数名と実際の内容が完全に異なる（SEXに魚の数、WEIGHTに身長など）
+
+-   OUTPUT文で条件と出力先が逆転（MALESの条件でFEMALESデータセットに出力）
+
+-   LABELでさらに混乱を助長（魚の数に「患者の性別」というラベル）
+
+### 一貫性のない命名
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}      
+/* 悪い例：YES/NOの値が一貫しない */
+data flags;
+    set survey;
+    /* 通常: YES=0, NO=1 */
+    response1 = (answer='YES') * 0 + (answer='NO') * 1;
+    
+    /* どこかで例外: YES=1, NO=0 */
+    response2 = (answer='YES') * 1 + (answer='NO') * 0;
+    
+    /* さらに混乱: Y=NOの意味、N=YESの意味 */
+    if answer='YES' then code='N';
+    else if answer='NO' then code='Y';
+```
+
+**解説**:
+
+-   同じプログラム内でYES/NOのコーディングが一貫していない
+
+-   通常の論理（YES=1, NO=0）とは逆の設定
+
+-   最後は完全に逆転（YESなのにN、NOなのにY）
+
+## 🌀 データステップの境界をぼかす技法
+
+### コメントによる境界隠し
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}       
+/* 悪い例：セミコロンなしコメントで次ステップを隠す */
+data new; 
+    set old;
+    x = 5 * y;
+    /* この行で次のステップが始まっている
+    data second; 
+    set gudstuff;
+    x = zzstuff;
+/* 結果：NEWにはzsstuffの値が入る */
+```
+
+**解説**: 4行目のコメントにセミコロンがないため、5-7行目がコメント扱いになりません。実際には1つのDATAステップで2つのSETステートメントが実行され、最後の`x = zzstuff;`の値が最終的に変数xに残ります。
+
+### コロンによる巧妙な隠蔽
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}      
+/* 悪い例：セミコロンの代わりにコロンを使用 */
+data new; 
+    set old;
+    x = 5 * y;
+    /* この行で次のステップが始まっている:
+    data second; 
+    set gudstuff;
+    x = zzstuff;
+```
+
+**解説**: コメント行の最後がセミコロンではなくコロンになっています。SASではコロンはコメントの終了記号として認識されないため、次のdataステップが隠されて実行されます。
+
+### 不完全な引用符による隠蔽
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}       
+/* 悪い例：不完全な引用符で後続コードを隠す */
+data new;
+    y = 5;
+    frankwt = 0;
+    x = 5 * y;
+    length name $6;
+    name = 'weight;
+    data second; set gudstuff;  /* この行が隠されている */
+    *for weight use Franks';
+    x = frankwt;
+proc print; run;
+/* 結果：xは常に0（25ではない） */
+```
+
+**解説**:
+
+-   6行目で開始された文字列リテラル`'weight;`が閉じられていない
+
+-   そのため7-8行目が文字列の一部として扱われ、実行されない
+
+-   9行目の`'`で文字列が閉じられ、その後のコードが実行される
+
+-   結果として`x = frankwt;`（0）が実行され、期待された`x = 5 * y;`（25）は無効になる
+
+## 🔥 さらに極端な技法（上級者向け悪魔術）
+
+### ソースコードの隠蔽・削除
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}        
+/* 悪い例：コンパイル後にソースを削除・改名 */
+/* SCL source code for SAS/AF applications */
+/* Compiled DATA steps */
+/* Compiled stored macros */
+/* DATA step views */
+/* SQL views（DESCRIBE optionで復元可能だが...） */
+
+/* エディタの文字色を背景色と同じにして隠す */
+```
+
+**解説**:
+
+-   コンパイル済みのSAS/AFアプリケーション、ストアドマクロなどの元ソースコードを削除
+
+-   DATA step viewやSQL viewのソースも隠蔽
+
+-   エディタで文字色を背景色と同じにして視覚的に見えなくする これらにより、動作するプログラムがあっても、どのように動作しているかが分からなくなります。
+
+### AUTOEXEC.SASとCONFIG.SASの悪用
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}      
+/* 悪い例：AUTOEXEC.SASでセッション終了 */
+ENDSAS;
+/* または */
+ABORT;
+/* または */
+%MACRO DUMMY;  /* %MENDまでのすべてのコードを無効化 */
+
+/* 悪い例：CONFIG.SASで隠れたERRORABEND設定 */
+-ERRORABEND
+
+/* 悪い例：AUTOEXEC.SASの最後に未完了コメント */
+/* 以降のすべてのコードがコメント扱いに */
+```
+
+**解説**:
+
+-   `ENDSAS`や`ABORT`をAUTOEXEC.SASに入れると、ユーザーのプログラムが実行される前にセッションが終了
+
+-   `%MACRO DUMMY;`を入れると、`%MEND`が現れるまでのすべてのコードがマクロ定義として扱われ実行されない
+
+-   CONFIG.SASでの`ERRORABEND`設定は非常に見つけにくい
+
+-   AUTOEXEC.SASの最後に`/*`を入れると、以降のすべての投入コードがコメント扱いになる
+
+### 危険なデータステップ技法
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}       
+/* 悪い例：BYステートメント変数の途中変更 */
+data merged;
+    merge data1 data2;
+    by id;
+    id = id + 1;  /* BYステートメント変数を変更 */
+```
+
+**解説**: MERGEステートメントのBY変数`id`を、マージ処理の途中で変更しています。これにより予期しないマージ結果が生成され、データの整合性が失われます。
+
+### POINT/NOBSオプションの落とし穴
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}    
+/* 悪い例：削除された観測値との相互作用 */
+data a;
+    do i = 1 to 5;
+        output;
+    end;
+run;
+/* FSEDITでi=2の観測値を削除 */
+
+data b;
+    do point=1 to nobs;
+        set a point=point nobs=nobs;
+        output;
+    end;
+    stop;
+run;
+/* 結果：削除された観測値が読まれ、iの値が不正になる */
+```
+
+**解説**:
+
+-   データセットAから観測値2（i=2）を削除
+
+-   POINT/NOBSオプションで順次読み取ると、削除された位置でも読み取りが行われる
+
+-   削除された観測値を読み取ると、変数iには予期しない値（この場合は1）が入る
+
+-   結果として観測値2の位置でi=1が読まれ、データの整合性が失われる
+
+### マクロクォート関数の悪用
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}        
+/* 悪い例：マクロ変数の解決を阻害 */
+%macro doit(city);
+    %put &city;
+    %let city=%nrstr(&city);  /* 文字列として固定 */
+    %put &city;
+    %if &city = LA %then
+        %put CITY is LOS ANGELES;
+    %else 
+        %put city is not LA;  /* 常にこちらが実行される */
+%mend doit;
+
+%doit(LA)
+/* 出力: LA, &city, city is not LA */
+```
+
+**解説**:
+
+-   `%nrstr(&city)`により、マクロ変数`&city`が文字列リテラル「&city」として固定される
+
+-   以降の比較`&city = LA`では、「&city」と「LA」が比較されるため、常にfalseになる
+
+-   引数として「LA」を渡しても、条件判定では常に「not LA」の結果になる
+
+### 特殊システムオプションの悪用
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}         
+/* 悪い例：エラーメッセージ抑制 */
+options DKRICOND=NOWARN;  /* DROP/KEEP/RENAME文のエラーを隠す */
+
+/* 悪い例：データセット置き換え防止 */
+options NOREPLACE;  /* 永続データセットの置き換えを阻止 */
+
+/* 悪い例：WORK領域のクリーンアップ抑制 */
+options NOWORKINIT NOWORKTERM;  /* セッション終了後もファイル残存 */
+```
+
+**解説**:
+
+-   `DKRICOND=NOWARN`: DROP/KEEP/RENAMEステートメントで存在しない変数を指定してもエラーが出ない
+
+-   `NOREPLACE`: 既存の永続データセットを上書きしようとするとエラーになる（一見良いが、予期しない場所で設定されると混乱）
+
+-   `NOWORKINIT/NOWORKTERM`: SASセッション終了後もWORKライブラリのファイルが残り、ディスク容量やセキュリティの問題を引き起こす
+
+## ✅ 正しいプログラミング実践（推奨事項）
+
+### 良いコードの原則
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}     
+/* 良い例：読みやすく保守しやすいコード */
+options MSGLEVEL=I SOURCE FMTERR DSNFERR NOREPLACE;
+
+/* Step 1: Demographics data preparation */
+data adam.adsl;
+    set raw.demographics;
+    
+    /* Treatment group coding */
+    if trt01a = 'Placebo' then trt01pn = 1;
+    else if trt01a = 'Active 10mg' then trt01pn = 2;
+    else if trt01a = 'Active 20mg' then trt01pn = 3;
+    
+    /* Age group classification */
+    if age < 65 then agegroup = 'Under 65';
+    else agegroup = '65 and Over';
+    
+    /* Safety population flag */
+    if cmstdt ne . then saffl = 'Y';
+    else saffl = 'N';
+    
+    /* Variable labels */
+    label trt01pn = 'Treatment Group (Numeric)'
+          agegroup = 'Age Group'
+          saffl = 'Safety Population Flag';
+run;
+
+/* Step 2: Data validation */
+proc freq data=adam.adsl;
+    tables trt01pn*trt01a / missing;
+    title1 'Treatment Group Verification';
+run;
+
+proc means data=adam.adsl n nmiss min max;
+    var age;
+    title1 'Age Distribution Check';
+run;
+```
+
+**解説**:
+
+-   明確なコメントで各ステップの目的を説明
+
+-   意味のある変数名とラベルを使用
+
+-   処理を論理的に分離（データ準備→検証）
+
+-   品質管理オプションを適切に設定
+
+-   一貫したインデントとフォーマット
+
+### 臨床試験での品質管理
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}       
+/* Step 3: Efficacy endpoint derivation */
+data adam.adeff;
+    set adam.adsl(keep=usubjid trt01pn saffl);
+    
+    /* Merge with vital signs */
+    merge adam.adsl(in=demo)
+          raw.vitals(in=vital 
+                     keep=usubjid visitnum aval param);
+    by usubjid;
+    
+    /* Only include subjects with baseline and post-baseline values */
+    if demo and vital;
+    
+    /* Derive change from baseline */
+    retain baseline;
+    if visitnum = 1 then baseline = aval;
+    else if visitnum > 1 and baseline ne . then do;
+        chg = aval - baseline;
+        pchg = (chg / baseline) * 100;
+    end;
+    
+    /* Quality checks */
+    if baseline = . then put "WARNING: Missing baseline for " usubjid=;
+    if aval = . and visitnum > 1 then put "WARNING: Missing post-baseline value for " usubjid= visitnum=;
+    
+    label chg = 'Change from Baseline'
+          pchg = 'Percent Change from Baseline'
+          baseline = 'Baseline Value';
+run;
+```
+
+**解説**:
+
+-   データセットの結合条件を明確に指定（`in=demo and vital`）
+
+-   ベースライン値の適切な保持と計算
+
+-   品質チェックを組み込み、問題があればログに出力
+
+-   計算ロジックを段階的に記述し、理解しやすくする
+
+-   派生変数には適切なラベルを付与
+
+## 🧠 心理的トリックと認知バイアスの悪用
+
+### 先入観を利用した混乱
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}        
+/* 悪い例：一般的な変数名で全く違う内容を格納 */
+data demographics;
+    set patient_roster;
+    
+    /* 通常なら患者情報だが... */
+    age = protocol_version;      /* 年齢ではなくプロトコル番号 */
+    sex = randomization_seed;    /* 性別ではなく乱数シード */
+    height = study_duration;     /* 身長ではなく研究期間 */
+    weight = site_number;        /* 体重ではなく施設番号 */
+    
+    /* ラベルで更なる混乱を誘発 */
+    label age = 'Patient Age (Years)'
+          sex = 'Patient Gender'
+          height = 'Height (cm)'
+          weight = 'Weight (kg)';
+run;
+```
+
+**解説**: プログラマーの先入観を悪用した極めて悪質な手法。変数名から期待される内容と実際の内容が完全に異なり、さらにラベルでも嘘の情報を提供しています。これにより重大な解析エラーを引き起こす可能性があります。
+
+### 視覚的類似性を利用した混乱
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}    
+/* 悪い例：見た目が似ている文字・数字の混用 */
+data confusion;
+    /* 数字の1と小文字のl */
+    testnum1 = score_1;
+    testnuml = score_l;  /* 実際は小文字のL */
+    
+    /* 数字の0と大文字のO */
+    patient0 = id_zero;
+    patientO = id_oh;    /* 実際は大文字のO */
+    
+    /* 数字の2とアルファベットのZ */
+    group2 = treatment_2;
+    groupZ = treatment_z; /* 実際はZ */
+    
+    /* IとlとlIの組み合わせ */
+    IlllIlIl = result_a;  /* 何がIで何がlか判別不可能 */
+    lIlIlIll = result_b;
+run;
+```
+
+**解説**: フォントによっては区別が困難な文字を意図的に混用しています。特にプログラミング用でないフォントでは、これらの違いを見分けることは非常に困難になります。
+
+## 🔄 プロシージャの悪用
+
+### PROC SQLの危険な使用法
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}      
+/* 悪い例：副作用のあるSQL */
+proc sql;
+    /* 一見単純な選択に見えるが... */
+    create table summary as
+    select *,
+           (select count(*) from work.temp_calc 
+            where temp_calc.id = main.id) as calc_count
+    from main_data as main;
+    
+    /* work.temp_calcは実際には存在せず、
+       このクエリ実行中に副作用で作成される隠しプロセスがある */
+quit;
+
+/* 隠された前処理（別の場所に配置） */
+data work.temp_calc / view=work.temp_calc;
+    set main_data;
+    /* 複雑な計算でmain_dataを変更 */
+    call execute('data main_data; modify main_data; id = id + 1000; run;');
+run;
+```
+
+**解説**:
+
+-   一見単純なSELECTクエリに見えるが、サブクエリが隠された副作用を持つ
+
+-   VIEWを使って実行時に元データを変更する隠れた処理を組み込む
+
+-   `CALL EXECUTE`により、クエリ実行中に予期しないデータ変更が発生
+
+### PROC SORTの落とし穴
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}         
+/* 悪い例：NODUPKEY vs NODUPLICATESの混乱 */
+/* 同じファイル名で異なる結果を生成 */
+proc sort data=patients out=clean_data NODUPKEY;
+    by patient_id visit_date;
+run;
+/* patient_idとvisit_dateの組み合わせで重複削除 */
+
+/* どこか別の場所で... */
+proc sort data=patients out=clean_data NODUPLICATES;
+    by patient_id visit_date;
+run;
+/* 完全に同一の行のみ重複削除（結果が異なる） */
+```
+
+**解説**:
+
+-   `NODUPKEY`と`NODUPLICATES`は似ているが動作が異なる
+
+-   同じ出力データセット名を使うことで、どちらが実行されたかが分からなくなる
+
+-   結果として異なるデータセットが同じ名前で作成される
+
+## 🎭 マクロプログラミングの悪魔術
+
+### 動的マクロ生成の混乱
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}       
+/* 悪い例：実行時にマクロを動的生成して混乱させる */
+%macro generate_confusion(type);
+    %if &type = A %then %do;
+        %macro process_data;
+            data result; set input; value = value * 2; run;
+        %mend;
+    %end;
+    %else %if &type = B %then %do;
+        %macro process_data;
+            data result; set input; value = value / 2; run;
+        %mend;
+    %end;
+    %else %do;
+        %macro process_data;
+            data result; set input; value = .; run;
+        %mend;
+    %end;
+%mend;
+
+/* 実行時に決定される処理内容 */
+%generate_confusion(A)
+%process_data  /* 何が実行されるかは実行時まで不明 */
+```
+
+**解説**:
+
+-   実行時に条件によって異なるマクロ定義を生成
+
+-   同名のマクロ`process_data`が異なる処理を行う
+
+-   プログラムを読んだだけでは実際の処理内容が予測できない
+
+### マクロ変数の隠蔽と再定義
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}       
+/* 悪い例：グローバル変数を局所的に再定義 */
+%let important_factor = 1.5;  /* グローバル設定 */
+
+%macro sneaky_calculation(data);
+    %local important_factor;  /* 局所的に再定義 */
+    %let important_factor = 0.1;  /* 全く違う値 */
+    
+    data &data._adjusted;
+        set &data;
+        adjusted_value = original_value * &important_factor;
+    run;
+    
+    %put NOTE: Applied factor &important_factor to &data;
+%mend;
+
+/* 使用者は1.5倍されると期待するが... */
+%sneaky_calculation(patient_data)  /* 実際は0.1倍 */
+```
+
+**解説**:
+
+-   グローバル変数と同名の局所変数を定義
+
+-   使用者はグローバル値（1.5）が使われると期待
+
+-   実際は局所変数の値（0.1）が使用される
+
+-   PUTステートメントで正しい値を表示するため、ログを見ても気づきにくい
+
+### マクロクォート関数の連鎖
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}        
+/* 悪い例：複数のクォート関数を連鎖させて混乱 */
+%macro quote_chaos(input);
+    %let step1 = %nrstr(&input);
+    %let step2 = %superq(step1);
+    %let step3 = %nrbquote(&step2);
+    %let step4 = %unquote(&step3);
+    
+    %if &step4 = &input %then
+        %put SUCCESS: Values match;
+    %else
+        %put ERROR: Values do not match - &step4 vs &input;
+%mend;
+
+%quote_chaos(test_value)
+```
+
+**解説**:
+
+-   複数のマクロクォート関数を意味もなく連鎖
+
+-   各ステップで文字列の扱いが微妙に変化
+
+-   最終的な比較結果が予測困難
+
+-   デバッグが非常に困難
+
+## 🗃️ データアクセスとライブラリの混乱
+
+### ライブラリ参照の動的変更
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}      
+/* 悪い例：実行中にライブラリ参照を変更 */
+libname mydata "/path/to/original/data";
+
+data important_analysis;
+    set mydata.patients;  /* 最初のデータソース */
+    
+    /* 途中で同じライブラリ名を別パスに変更 */
+    call execute('libname mydata "/path/to/different/data";');
+    
+    /* この後のmydata参照は別のデータを指す */
+    merge mydata.treatments mydata.outcomes;  /* 異なるデータソース */
+    by patient_id;
+run;
+```
+
+**解説**:
+
+-   `CALL EXECUTE`を使って実行中にライブラリ参照を変更
+
+-   同一プログラム内で同じライブラリ名が異なるデータを指すことになる
+
+-   データの整合性が完全に失われる可能性
+
+### 隠れたデータ変更
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}      
+/* 悪い例：読み取り専用に見えるが実際は変更している */
+data summary_report;
+    set master_data;  /* 読み取りのみに見える */
+    
+    /* 隠されたMODIFYステートメント */
+    if _n_ = 1 then do;
+        call execute('
+            data master_data;
+                modify master_data;
+                if patient_id = "DUMMY001" then delete;
+            run;
+        ');
+    end;
+    
+    /* 集計処理 */
+    summary_stat = mean(value);
+    output;
+run;
+```
+
+**解説**:
+
+-   一見データを読み取りのみしているように見える
+
+-   実際は`CALL EXECUTE`で元データを変更している
+
+-   集計レポート作成時に元データが変更されるという予期しない副作用
+
+## 📊 統計プロシージャの悪用
+
+### PROC REGの隠れた前提条件違反
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}       
+/* 悪い例：前提条件を満たさないデータで回帰分析 */
+proc reg data=patient_data;
+    model outcome = treatment age weight;  /* 一見正常な回帰式 */
+    
+    /* 隠された問題：
+       - outcomeには欠測値が50%
+       - treatmentは完全に共線性のある3つのダミー変数
+       - ageとweightは完全相関（r=1.0）
+       - データには外れ値が意図的に挿入済み
+    */
+run;
+```
+
+**解説**:
+
+-   統計的前提条件を全く満たさないデータで分析実行
+
+-   多重共線性、欠測値、外れ値などの問題を隠蔽
+
+-   結果は統計的に無意味だが、出力は正常に見える
+
+### PROC FREQの誤解を招く使用
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}        
+/* 悪い例：意図的に誤解を招くクロス集計 */
+proc freq data=clinical_data;
+    /* 一見、治療効果の評価に見えるが... */
+    tables treatment*outcome / chisq;
+    
+    /* 実際のデータには重大な問題：
+       - outcomeは治療開始前の状態
+       - treatmentは別の研究での割り付け
+       - 同一患者が複数回カウントされている
+    */
+    
+    title "Treatment Effect Analysis";  /* 誤解を招くタイトル */
+run;
+```
+
+**解説**:
+
+-   変数名から因果関係があるように見せかける
+
+-   実際は時系列が逆転していたり、関係のないデータ
+
+-   タイトルで意図的に誤解を招く
+
+## 🔒 セキュリティと権限の悪用
+
+### パスワードとアクセス制御の隠蔽
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}     
+/* 悪い例：隠されたデータベース接続 */
+%let hidden_pw = %substr(%sysfunc(compress('pass1word2',,'kd')),1,8);
+
+libname secret oracle user=admin password="&hidden_pw" 
+                   path="//hidden.server.com:1521/secret_db"
+                   schema=confidential;
+
+/* 一見通常のデータ処理 */
+data public_summary;
+    set secret.classified_data;  /* 実際は機密データにアクセス */
+    /* パスワードは暗号化されて見えない */
+run;
+```
+
+**解説**:
+
+-   パスワードを関数で暗号化・難読化
+
+-   機密データベースへの隠れたアクセス
+
+-   表面上は通常のデータ処理に見せかけ
+
+## 🌐 オペレーティングシステム固有の悪用
+
+### Windows環境での隠れた設定
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}       
+/* 悪い例：アイコンのプロパティで隠れたオプション設定 */
+/* SASアイコンのプロパティで以下を設定（見えない場所） */
+/*
+Target: "C:\SAS\sas.exe" -CONFIG "C:\hidden\malicious.cfg" 
+                          -AUTOEXEC "C:\hidden\autoexec.sas"
+                          -SYSIN "C:\decoy\normal_program.sas"
+                          -ARCH=BIT16
+*/
+
+/* 実際に実行されるのは hidden/autoexec.sas の内容 */
+/* ユーザーは normal_program.sas が実行されると思っている */
+```
+
+**解説**:
+
+-   Windowsのアイコンプロパティで隠れた設定を行う
+
+-   ユーザーには見えない設定ファイルや自動実行ファイルを指定
+
+-   16ビットモードで実行して性能を意図的に低下
+
+-   ユーザーが期待するプログラムとは異なるものを実行
+
+### 外部DLLとシステムコールの悪用
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}      
+/* 悪い例：外部ライブラリで隠れた処理 */
+filename hidden 'hidden_malicious.dll';
+
+data _null_;
+    /* 表面上は時刻の取得 */
+    current_time = datetime();
+    
+    /* 実際は外部DLLで隠れた処理を実行 */
+    call module(hidden, 'secret_function', current_time, result);
+    
+    /* DLLの中身：
+       - ファイルシステムの操作
+       - ネットワーク通信
+       - データの外部送信
+       - ログの改竄
+    */
+run;
+```
+
+**解説**:
+
+-   外部DLLを使って隠れた処理を実行
+
+-   SASのログには通常の処理のみ記録
+
+-   実際の悪意ある処理はDLL内に隠蔽
+
+-   システム権限を悪用した危険な操作
+
+## ⚠️ 実際の被害例と教訓
+
+### 臨床試験での重大インシデント
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}        
+/* 実際にあった危険な例（教育目的で再現） */
+
+/* 悪い例：効果量の計算で隠れたバイアス */
+data efficacy_analysis;
+    set clinical_data;
+    
+    /* 表面的には標準的な効果量計算 */
+    if treatment = 'Active' then trt_num = 1;
+    else if treatment = 'Placebo' then trt_num = 0;
+    
+    /* 隠されたバイアス：特定の患者のみ除外 */
+    if patient_id in ('001', '047', '089') and trt_num = 0 then delete;
+    /* これらは偶然プラセボ群で改善した患者 */
+    
+    /* 通常の統計計算 */
+    effect_size = (active_mean - placebo_mean) / pooled_sd;
+run;
+
+/* 結果：人為的に効果が過大評価される */
+```
+
+**解説**:
+
+-   一見正常な効果量計算に見える
+
+-   実際は特定の患者（プラセボ群で改善した例）を意図的に除外
+
+-   結果として薬剤効果が過大評価される
+
+-   規制当局への提出データに重大な問題を作り出す
+
+### データ管理での混乱事例
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}   
+/* 実際にあった混乱例 */
+
+/* 悪い例：バックアップのつもりが本番データを破壊 */
+%let backup_date = %sysfunc(today(), yymmddd6.);
+
+/* 本番データの「バックアップ」 */
+data backup.patient_data_&backup_date;
+    set production.patient_data;
+run;
+
+/* 隠れた問題：productionとbackupが同じ場所を指している */
+/* libname production "//server/data/current"; */
+/* libname backup    "//server/data/current"; */
+
+/* 結果：バックアップではなく上書きが発生 */
+```
+
+**解説**:
+
+-   バックアップ処理のつもりで実装
+
+-   実際は両方のライブラリが同じ場所を指している
+
+-   バックアップではなく本番データの上書きが発生
+
+-   データロストの原因となる
+
+## まとめ
+
+この記事で紹介した「技法」は、実際のプログラムでは**絶対に使用してはいけません**。これらは全て、実際に遭遇する可能性のある問題パターンです。
+
+> "In reality there is a constant demand for SAS programmers. Just knowing how to write good, clean, and tight SAS code provides a high level of job security."
+
+良いSASプログラマーになるためには：
+
+1.  **可読性を重視**したコード作成
+
+2.  **適切な命名規則**の遵守
+
+3.  **十分なドキュメント化**とコメント
+
+4.  **論理的な構造**の維持
+
+5.  **品質管理オプション**の適切な使用
+
+6.  **一貫した**プログラミングスタイル
+
+7.  **他者が保守しやすい**コード設計
+
+特に臨床試験の統計解析では、コードの品質が直接患者の安全性と規制当局への信頼性に関わるため、これらの原則を厳格に守ることが重要です。
+
+*この記事は、Arthur L. Carpenter氏とTony Payne氏の「Programming for Job Security」シリーズを基に作成されました。元の論文は風刺的な内容ですが、実際のプログラミングにおいて避けるべき問題を明確にする優れた教材として、SAS界隈で長く愛され続けています。*
+
+**参考文献:**
+
+-   Carpenter, Arthur L. (1993, 1996). "Programming For Job Security: Tips and techniques to Maximize Your Indispensability"
+
+-   Carpenter, Arthur L. & Payne, Tony. "Programming For Job Security Revisited: Even More Tips and Techniques to Maximize Your Indispensability"

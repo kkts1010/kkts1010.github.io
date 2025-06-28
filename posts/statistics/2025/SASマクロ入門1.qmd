@@ -76,7 +76,7 @@ SASプログラムをサブミットすると、まず、①マクロプロセ�
 
 マクロ変数名は最大32文字、最初の文字は英字またはアンダースコア、その後の文字は英字・数字・アンダースコアが使用可能である。また大文字と小文字は区別されない。設定値AF、DMS、SQL、SYSは該当する自動マクロ変数と名前が重複する可能性があるため、避けたほうがよい。
 
-```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}      
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 %let greeting = Hello World;
 %put &greeting.;
 %put 「Hello World」と表示;
@@ -105,7 +105,7 @@ run;
 
 また、CALL SYMPUTXルーチンを利用すれば、DATAステップでデータセットの変数の内容をマクロ変数に格納できる。次章で説明する制御構文と併せて、データセットの内容に応じて、プログラムを変更させることが可能になり、プログラムに柔軟性を与えられる。
 
-```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}       
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 call symputx('マクロ変数名', 格納したい値(DATAステップの変数名));
 
 /* 男女別の生徒数を数えて、それぞれをマクロ変数に格納する; */
@@ -125,7 +125,7 @@ run;
 
 また、SQLプロシジャのINTO句を利用して、データセットの変数の内容をマクロ変数に格納することも可能である。
 
-```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}  
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 proc sql;
 select 変数名1, 変数名2, ..., 変数名N
 into :マクロ変数名1, :マクロ変数名2, ..., :マクロ変数名N
@@ -146,7 +146,7 @@ quit;
 
 マクロ変数は、DATAステップと違って、すべて文字型変数として扱われる。このため、マクロプロセッサに数値演算をさせるような場面では、注意が必要である。数値の場合は%eval関数、小数を含む場合は%sysevalf関数に演算式を渡す必要がある。（ただし、%evalと%sysevalfは、演算のおよそについても調査した上で利用しないと）
 
-```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap} 
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 %let not5 = 1 + 4;
 %put &not5.; /* 「1 + 4」と表示; */
 
@@ -187,7 +187,7 @@ quit;
 
 マクロプログラムは%macroおよび%mendステートメントを利用して作成する。
 
-```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}      
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 %macro マクロプログラム名; （簡略したいテキスト） %mend マクロプログラム名;
 ```
 
@@ -199,7 +199,7 @@ quit;
 
 基準となるプログラムをコピー&ペーストして、一部分を書き換えたい場合があ る。この基準となるプログラムをマクロプログラム内に格納して、書き換えたい箇所を呼び出し時に受け取れるマクロ変数として、マクロプログラムに指定できる。このマクロプログラム呼び出し時に受け取るマクロ変数をマクロパラメータという。マクロパラメータも、ユーザーが任意の名前を設定可能で、そのマクロプログラム内で参照可能なマクロ変数となる。マクロパラメータとしてデータセット名(dsn)および変数名(var)を指定する例を以下に示す。
 
-```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}    
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 呼び出し時にマクロパラメータを指定; */
 %macro univariate2(dsn, var); /* マクロ名の後にマクロパラメータを設定; */
 
@@ -224,7 +224,7 @@ DATAステップでは、条件分岐のIFステートメント、反復処理�
 
 制御構文の例として、条件分岐の%ifステートメントについて説明する。
 
-```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 %if 条件文 %then %do;
 (条件文がTrueの場合の処理)
 %end;
@@ -240,7 +240,7 @@ DATAステップでは、条件分岐のIFステートメント、反復処理�
 
 また、DATAステップでは、条件分岐から反復処理の%doステートメントについて説明する。
 
-```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}       
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 %macro list_by_4years(startyr, endyr);
     title1 "Customer List of &yr. to &endyr.";
     proc print data = work.customer;
@@ -279,7 +279,7 @@ DATAステップでは、条件分岐のIFステートメント、反復処理�
 
 マクロ変数にもスコープ、つまりプログラム中で参照可能な範囲がある。スコープによってglobal マクロ変数とlocal マクロ変数に区分される。global マクロ変数は、プログラムのどこからでも値を参照可能である。一方、local 変数は、その変数が宣言されたマクロプログラム内部でのみ値を参照可能である。
 
-```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}      
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* マクロ変数のスコープ; */
 %global global_var; /* グローバルマクロ変数を宣言; */
 
@@ -320,7 +320,7 @@ DATAステップでは、条件分岐のIFステートメント、反復処理�
 
 3.  マクロを呼び出す側のプログラムで、以下のMAUTOSOURCE及びSASAUTOSの2つのオプションを指定する。このとき、SASAUTOSに（1）のフォルダを指定する。
 
-```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}    
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* マクロをライブラリとして活用する; */
 options mautosource sasautos=(sasautos, "C:\sasYearlyMacros");
 /* （1）の sasautos内容ないこと; */
@@ -349,7 +349,7 @@ options mautosource sasautos=(sasautos, "C:\sasYearlyMacros" "C:\sasYearMacros")
 
 そのマクロプログラムが、どんな機能を提供するマクロか、出力は何か、入力は何かの3点を明示することは、便利でマクロを作成するうえで重要である。そのマクロプログラムのマクロパラメータとして明示する。そのマクロパラメータも馴染みやすいネーミングを心掛けたい。また、コメントも適切に活用して必要な情報を補記するべき利用を使用して説明する。以下に、データクリーニングの名前(Cody's Data Cleaning Techniques Using SAS）に掲載されたもののマクロプログラムの冒頭部分である。
 
-```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}    
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 %macro auto_outliers(
     Dsn=,       /* Data set name */
     ID=,        /* Name of ID variable */ 
@@ -389,7 +389,7 @@ options mautosource sasautos=(sasautos, "C:\sasYearlyMacros" "C:\sasYearMacros")
 
 SASデータセットをデータセット別にシートを分けてExcelファイルに変換してほしいと依頼を受ける。もちろんデータセットの教だけprocexportまたはsetステートメントを記述してもよいのだが、そのような縮り返し処理はマクロ化したときに自動転するのがよい。なお、以下でマクロプログラムが直後されたフォルダ内のSASデータセットを、同フォルダに既定のExcelファイルを指定する必要がある。
 
-```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}        
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 %macro sas2xlsx;
 
     /* データセット一覧を取得する */
@@ -416,7 +416,7 @@ SASデータセットをデータセット別にシートを分けてExcelファ
 
 医療機関医療品の承認申請では、原則として申請電子データ提出が求められており、既導データをXPT形式で提出する必要がある。このためSASデータセットをXPT形式に変換する機会がよくある。なお、以下ではfilel.sasという名前でマクロプログラムを保存し、指定したデータセットが配置されたフォルダに配置してくれる。細部の具い事例である。
 
-```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}    
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 指定フォルダ内のSASデータセットをXPTファイルに一括変換する; */
 option nofmterr nologic print symbol;
 %let xpt = %str(C:\workXpt);  
