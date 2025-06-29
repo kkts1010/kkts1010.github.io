@@ -1,0 +1,431 @@
+---
+title: "加工プログラム例―少数ステップでの処理―"
+author: "坂本航太"
+categories: [SAS,解析プログラミング]
+abstract-title: Abstract
+abstract: ""
+date: "2025-06-29"
+---
+
+### SASプログラマ必見！ADaM作成を効率化するデータステップ重要機能6選
+
+こんにちは！臨床試験のSASプログラマの皆さん、日々の業務でADaMデータセットの作成に多くの時間を費やしていませんか？
+
+ADaMの仕様は複雑で、元となるSDTMデータから多くの新しい変数を導出したり、レコードを跨いだ計算を行ったりする必要があります。こうした処理を愚直にコーディングすると、プログラムが長くなり、ミスも起こりがちです。
+
+しかし、SASデータステップには、こうした複雑なデータ加工を驚くほどスマートに解決するための強力な機能が備わっています。
+
+この記事では、あなたのADaM作成業務を劇的に効率化する、6つの重要な関数とステートメントを厳選し、具体的な活用例とともに徹底解説します。
+
+### 【第1部】データステップの基本機能とADaM作成への応用
+
+まずは、データ加工の基本となる6つの機能の役割と、ADaM作成における具体的な使い方を見ていきましょう。
+
+#### 1 & 2. `LENGTH`関数と`SUBSTR`関数 - 文字列操作の基本
+
+-   **`LENGTH`関数:** 文字列の長さを返します。
+
+-   **`SUBSTR`関数:** 文字列の一部を抜き出（抽出）します。
+
+##### 実行可能なサンプルコード
+
+`PROC TRANSPOSE`で生成されるようなデータ（変数名`_NAME_`を持つ）から、パラメータ(`PARAM`)と訪問番号(`VISITNUM`)を分割する例です。
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}    
+/* 1. サンプルデータ作成 */
+data transposed_data;
+  input _NAME_ $ AVAL;
+  cards;
+TC_1 212
+HDL_1 50
+TC_2 224
+HDL_2 64
+;
+run;
+
+/* 2. LENGTHとSUBSTRを使った処理 */
+data parsed_data;
+  set transposed_data;
+
+  /* LENGTH関数で全体の長さを取得 */
+  NAME_LEN = length(_NAME_); 
+
+  /* SUBSTR関数で文字列を分割 */
+  PARAM    = substr(_NAME_, 1, NAME_LEN - 2); 
+  VISITNUM = input(substr(_NAME_, NAME_LEN, 1), 8.); 
+
+  drop NAME_LEN;
+run;
+
+/* 3. 結果表示 */
+title "LENGTHとSUBSTRによる変数名分割の結果";
+proc print data=parsed_data;
+run;
+title;
+```
+
+### 3. `RETAIN`ステートメント - 値を次の行へ引き継ぐ魔法
+
+##### 「RETAIN」とは？
+
+`RETAIN`ステートメントで指定された変数は、データステップのループを越えて値を保持します。 通常、変数はループの開始時に欠損値にリセットされますが、
+
+`RETAIN`を使うと前の行の値を引き継ぐことができます。
+
+##### 実行可能なサンプルコード
+
+1から5までの累積和（1, 1+2, 1+2+3, ...）を計算する例です。
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}   
+/* 1. サンプルデータ作成 (入力データは不要) */
+
+/* 2. RETAINを使った処理 */
+data sample_sum;
+  retain SUM 0; /* SUM変数の値を保持し、初期値を0に設定 */ 
+
+  do i = 1 to 5;
+    SUM = SUM + i; /* 前のループのSUMに現在のiを足す */ 
+    output;
+  end;
+run;
+
+/* 3. 結果表示 */
+title "RETAINによる累積和の計算結果";
+proc print data=sample_sum;
+run;
+title;
+```
+
+### 4 & 5. `first.by` / `last.by`変数 - グループ処理の案内人
+
+##### 「first.by」「last.by」とは？
+
+`BY`ステートメントと一緒に使う特殊な一時変数です。 BYグループ内で、
+
+-   `first.by変数`: グループの**最初の行**である場合に `1` になります。
+
+-   `last.by変数`: グループの**最後の行**である場合に `1` になります。
+
+##### 実行可能なサンプルコード
+
+`BDS`データセットで、被験者ごと、パラメータごとにレコード番号（`ASEQ`）を振る例です。
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}        
+/* 1. サンプルデータ作成 */
+data ADVS;
+  input USUBJID $ PARAMCD $ AVAL;
+  cards;
+P01 HR 70
+P01 HR 72
+P01 DIABP 80
+P02 HR 65
+P02 HR 68
+P02 DIABP 75
+;
+run;
+
+/* 2. first.byを使った処理 */
+proc sort data=ADVS;
+  by USUBJID PARAMCD;
+run;
+
+data ADVS_ASEQ;
+  set ADVS;
+  by USUBJID PARAMCD;
+
+  if first.PARAMCD then ASEQ = 0; /* パラメータが切り替わったらASEQを0にリセット */
+  ASEQ = ASEQ + 1;
+run;
+
+/* 3. 結果表示 */
+title "first.byによるグループ内連番(ASEQ)の作成結果";
+proc print data=ADVS_ASEQ;
+run;
+title;
+```
+
+### 6. `VNAME`関数 - 変数名を文字列として取得
+
+##### 「VNAME」とは？
+
+`VNAME`関数は、引数に指定した**変数の名前**を文字列として返します。
+
+##### 実行可能なサンプルコード
+
+`ARRAY`ステートメントと組み合わせて、横持ちデータから縦持ちデータを作成する際に、`PARAMCD`を動的に生成する例です。
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}    
+/* 1. サンプルデータ作成 (横持ち) */
+data source_data;
+  input USUBJID $ TC_1 HDL_1 TC_2 HDL_2;
+  cards;
+P01 212 50 224 64
+;
+run;
+
+/* 2. VNAMEを使った処理 */
+data vertical_data;
+  set source_data;
+  array aval_group[*] TC_1 HDL_1 TC_2 HDL_2; /* アスタリスク(*)で変数を指定 */
+
+  do i = 1 to dim(aval_group);
+    AVAL = aval_group{i};
+
+    /* VNAMEで変数名(例: "TC_1")を取得 */
+    VAR_NAME = VNAME(aval_group{i});
+
+    /* 変数名からPARAMCDとVISITNUMを動的に生成 */
+    PARAMCD  = scan(VAR_NAME, 1, '_');
+    VISITNUM = input(scan(VAR_NAME, 2, '_'), 8.);
+    
+    output;
+  end;
+  keep USUBJID PARAMCD VISITNUM AVAL;
+run;
+
+/* 3. 結果表示 */
+title "VNAMEによる動的な縦持ち変換の結果";
+proc print data=vertical_data;
+run;
+title;
+```
+
+### 【第2部】さらにステップアップ！各機能の応用テクニック
+
+基本を理解したところで、次はいよいよ実践です。これらの機能を組み合わせることで、どのような強力な処理が実現できるか見ていきましょう。
+
+#### 応用例1：`RETAIN`と`first.by`によるグループ情報の引き継ぎ（Fill Down）
+
+**シナリオ:** `ADSL`にしかない被験者レベルの情報（例: 治験薬群 `ARM`）を、`ADVS`のような測定データセットの全レコードにコピーします。これにより、`ADVS`データセット単体で、治験薬群による層別解析が可能になります。
+
+**解説:** `MERGE`でデータを結合しただけでは、`ARM`の値は各被験者の最初のレコードにしか入りません。そこで`RETAIN`を使い、`first.USUBJID`（被験者の最初の行）のタイミングで`ARM`の値を一度キャッチし、その値を`last.USUBJID`（被験者の最後の行）まで保持し続けることで、グループ内の全レコードに値を「引き継ぐ」ことができます。
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}      
+/* ADSLとADVSをマージし、RETAINでARM情報を引き継ぐ */
+data ADVS_with_ARM;
+  merge ADSL(keep=USUBJID ARM) ADVS(in=in_vs);
+  by USUBJID;
+
+  retain RETAINED_ARM;
+  if first.USUBJID then RETAINED_ARM = ARM;
+  ARM = RETAINED_ARM;
+  
+  if in_vs;
+  drop RETAINED_ARM;
+run;
+```
+
+#### 応用例2：`RETAIN`と`first.by`によるAUCの計算
+
+**シナリオ:** 薬物動態データ（`ADPC`）において、台形公式を用いて血中濃度時間曲線下面積（`AUC`）を算出します。これは重要な薬物動態パラメータの一つです。
+
+**解説:** 台形公式 `(値1 + 値2) * (時間2 - 時間1) / 2` を計算するには、現在行の値/時間に加え、**前**の行の値/時間が必要です。`RETAIN`を使って前の行の時間（`PREV_ATPT`）と値（`PREV_AVAL`）を保持します。`first.by`でパラメータが切り替わるタイミングを検知し、累積AUCや保持している変数を初期化することで、パラメータごとに正しく計算を実行できます。
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}     
+/* ADPCデータでAUCを計算 */
+data ADPC_AUC;
+  set ADPC;
+  by USUBJID PARAMCD;
+
+  retain PREV_ATPT PREV_AVAL AUC_CUM;
+
+  if first.PARAMCD then do;
+    AUC_CUM = 0;
+    call missing(PREV_ATPT, PREV_AVAL);
+  end;
+
+  if not missing(PREV_AVAL) then do;
+    AUC_INTERVAL = (AVAL + PREV_AVAL) * (ATPT - PREV_ATPT) / 2;
+    AUC_CUM + AUC_INTERVAL;
+  end;
+
+  PREV_ATPT = ATPT;
+  PREV_AVAL = AVAL;
+run;
+```
+
+#### 応用例3：`last.by`と`RETAIN`によるグループ集計
+
+**シナリオ:** `PROC MEANS`や`PROC SQL`と`MERGE`を組み合わせる複数ステップの処理を、1回の`DATA`ステップで実現し、各被験者のバイタルサイン（`AVAL`）の最大値を求めます。
+
+**解説:** このテクニックのキモは`last.by`です。`RETAIN`と`max`関数を使い、各レコードを読み進めるごと に、その時点での最大値を計算し保持し続けます。そして、`if last.USUBJID then output;`とすることで、計算は全レコードで行いつつ、最終的な集計結果は各被験者の最後のレコードを処理したタイミングで**一度だけ**出力します。これにより、プログラムのステップを削減し、処理を効率化できます。
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}       
+/* 各被験者のバイタルサインの最大値を求める */
+data VS_MAX;
+  set ADVS_SORTED; /* 事前にUSUBJIDでソート済み */
+  by USUBJID;
+  retain MAX_AVAL;
+
+  if first.USUBJID then MAX_AVAL = .;
+  
+  MAX_AVAL = max(MAX_AVAL, AVAL);
+  
+  if last.USUBJID then output;
+run;
+```
+
+#### 応用例4：`VNAME`による汎用的なデータ品質チェック（QC）
+
+**シナリオ:** 複数の変数（`AVAL`, `BASE`, `CHG`）に負の値が含まれていないかチェックし、問題があれば具体的な変数名と情報をログに出力します。
+
+**解説:** データ品質チェック（QC）では、同じロジックを多くの変数に適用することが多々あります。`ARRAY`でチェック対象の変数をグループ化し、`VNAME`でエラーが発生した**変数名を動的に取得**することで、保守性の高いプログラムを作成できます。もし将来、チェック対象の変数が追加されても、`ARRAY`ステートメントに変数名を加えるだけで対応でき、ログ出力部分のコードを修正する必要がありません。
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}     
+/* 汎用的なQCプログラム */
+data _NULL_; /* データセットを作成しない場合は _NULL_ を使う */
+  set ADVS;
+  array checks[*] AVAL BASE CHG;
+
+  do i = 1 to dim(checks);
+    if checks[i] < 0 then do;
+      VAR_NAME = VNAME(checks[i]);
+      put "ERROR: Negative value found in " VAR_NAME= "at OBS=" _N_ "for USUBJID=" USUBJID;
+    end;
+  end;
+run;
+```
+
+### まとめ：機能を組み合わせて、データ加工の達人へ
+
+今回ご紹介した6つの機能は、それぞれが強力ですが、真価は**組み合わせる**ことで発揮されます。`BY`ステートメント、`RETAIN`、`first.by`を組み合わせれば、複雑なグループ処理が1つのデータステップで完結します。`ARRAY`、`VNAME`、`SUBSTR`を組み合わせれば、保守性の高い動的なプログラムが実現できます。
+
+これらの武器を使いこなし、日々のADaM作成業務をより速く、より正確に進めていきましょう！
+
+### Appendix: 応用テクニックのサンプルプログラム集
+
+記事の第2部で紹介した応用テクニックを、実際に動作させて試せる完全なサンプルプログラムです。
+
+#### 応用例1：`RETAIN`によるグループ情報の引き継ぎ（Fill Down）
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}       
+/* 1. サンプルデータ作成 */
+data ADSL;
+  input USUBJID $ ARM $;
+  cards;
+P01 Drug A
+P02 Drug B
+;
+run;
+data ADVS;
+  input USUBJID $ VISIT $ AVAL;
+  cards;
+P01 VISIT 1 120
+P01 VISIT 2 125
+P02 VISIT 1 110
+P02 VISIT 2 112
+;
+run;
+/* 2. メイン処理 */
+proc sort data=ADVS; by USUBJID; run;
+proc sort data=ADSL; by USUBJID; run;
+data ADVS_with_ARM;
+  merge ADSL(keep=USUBJID ARM) ADVS(in=in_vs);
+  by USUBJID;
+  retain RETAINED_ARM;
+  if first.USUBJID then RETAINED_ARM = ARM;
+  ARM = RETAINED_ARM;
+  if in_vs;
+  drop RETAINED_ARM;
+run;
+/* 3. 結果表示 */
+title "応用例1: ARM情報を全レコードに引き継いだ結果";
+proc print data=ADVS_with_ARM;
+run;
+title;
+```
+
+#### 応用例2：`RETAIN`と`first.by`によるAUCの計算
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}     
+/* 1. サンプルデータ作成 */
+data ADPC;
+  input USUBJID $ PARAMCD $ ATPT AVAL;
+  cards;
+PK-01 AUC 0 0
+PK-01 AUC 1 50
+PK-01 AUC 2 40
+PK-01 AUC 4 20
+PK-01 AUC 8 5
+;
+run;
+/* 2. メイン処理 */
+data ADPC_AUC;
+  set ADPC;
+  by USUBJID PARAMCD;
+  retain PREV_ATPT PREV_AVAL AUC_CUM;
+  if first.PARAMCD then do;
+    AUC_CUM = 0;
+    call missing(PREV_ATPT, PREV_AVAL);
+  end;
+  if not missing(PREV_AVAL) then do;
+    AUC_INTERVAL = (AVAL + PREV_AVAL) * (ATPT - PREV_ATPT) / 2;
+    AUC_CUM + AUC_INTERVAL;
+  end;
+  PREV_ATPT = ATPT;
+  PREV_AVAL = AVAL;
+run;
+/* 3. 結果表示 */
+title "応用例2: AUCを計算した結果";
+proc print data=ADPC_AUC;
+run;
+title;
+```
+
+#### 応用例3：`last.by`と`RETAIN`によるグループ集計
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}       
+/* 1. サンプルデータ作成 */
+data ADVS_SORTED;
+  input USUBJID $ AVAL;
+  cards;
+P01 120
+P01 135
+P01 128
+P02 110
+P02 105
+;
+run;
+/* 2. メイン処理 */
+data VS_MAX;
+  set ADVS_SORTED;
+  by USUBJID;
+  retain MAX_AVAL;
+  if first.USUBJID then MAX_AVAL = .;
+  MAX_AVAL = max(MAX_AVAL, AVAL);
+  if last.USUBJID then output;
+  drop AVAL;
+run;
+/* 3. 結果表示 */
+title "応用例3: 各被験者の最大値を求めた結果";
+proc print data=VS_MAX;
+run;
+title;
+```
+
+#### 応用例4：`VNAME`による汎用的なデータ品質チェック（QC）
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}       
+/* 1. サンプルデータ作成 (意図的に負の値を含む) */
+data ADVS_QC;
+  input USUBJID $ AVAL BASE CHG;
+  cards;
+P01 120 120 0
+P01 110 120 -10
+P02 100 105 -5
+;
+run;
+/* 2. メイン処理 (結果はデータセットではなくログに出力) */
+title "応用例4: QCチェックの結果 (SASログを確認してください)";
+data _NULL_;
+  set ADVS_QC;
+  array checks[*] AVAL BASE CHG;
+  do i = 1 to dim(checks);
+    if checks[i] < 0 then do;
+      VAR_NAME = VNAME(checks[i]);
+      put "ERROR: Negative value found in " VAR_NAME= "at OBS=" _N_ "for USUBJID=" USUBJID;
+    end;
+  end;
+run;
+title;
+```

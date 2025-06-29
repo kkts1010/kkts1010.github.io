@@ -1,0 +1,29 @@
+---
+title: "TTE総説論文"
+author: "坂本航太"
+categories: [薬剤疫学]
+date-modified: "2025-06-29"
+abstract-title: Abstract
+abstract: ""
+date: "2025-06-29"
+---
+
+本記事では、薬剤疫学会で公開された下記2つの論文を勉強する。
+
+-   企画／標的試験エミュレーション：観察研究における因果推論の新たなパラダイム　序文
+
+    -   <https://www.jstage.jst.go.jp/browse/jjpe/advpub/0/_contents/-char/ja>
+
+-   標的試験エミュレーション：観察研究における因果推論を強化するためのフレームワーク
+
+    -   <https://www.lexjansen.com/pharmasug/2025/AP/PharmaSUG-2025-AP-039.pdf>
+
+## 要約
+
+-   観察研究におけるバイアス
+
+    -   ランダム化の欠如による交絡
+
+    -   不適切な研究デザインがもたらす選択バイアス
+
+    -   Immortal Time bias

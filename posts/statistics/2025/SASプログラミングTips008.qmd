@@ -1,0 +1,40 @@
+---
+title: "SASのProc SGPLOTに関するTips"
+author: "坂本航太"
+categories: [SAS,解析プログラミング]
+abstract-title: Abstract
+abstract: ""
+date: "2025-06-29"
+---
+
+## SGPlotに関する基礎的事項と発展的な内容をまとめる。
+
+参考文献
+
+-   2023年SAS User総会：太田さん資料：
+
+    -   [小さく始めるSGPLOT／SGPANEL ～データに語らせよう～](https://sas-user2023.ywstat.jp/download.html?n=26&key=wnww33sztp2z)
+
+-   [SAS One DashのSGplotブログ](https://sasonediver.blog.fc2.com/blog-category-56.html)
+
+-   [武田薬品：舟尾先生、SAS Sgplot超入門](https://nfunao.web.fc2.com/files/Intoroduction_to_SAS_SGPLOT.pdf)
+
+Tips
+
+-   [vlineにおいて最終時点のみ線で結ばないⅡ](https://sasonediver.blog.fc2.com/blog-entry-795.html)
+
+-   [SGPlotのカプランマイヤー図にログランク検定のp値を書き入れる](https://sasonediver.blog.fc2.com/blog-entry-182.html)
+
+-   [SGPlot内に記述統計量を書き込む方法](https://sasonediver.blog.fc2.com/blog-entry-141.html)
+
+## Introduction
+
+SGPLOTプロシジャとは、ODS Graphics機能で使用できるStatistical Graphics Proceduresに分類されるプロシジャ。解析用データセットや他Procedureにて計算した統計量データを用いて、様々なグラフを生成することができる。
+
+ODS Graphics機能
+
+代表的な作成できるグラフ
+
+-   散布図
+
+-   折れ線グラフ

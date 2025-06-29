@@ -8,7 +8,7 @@
 
 <meta name="author" content="坂本航太">
 
-<title>臨床試験における有害事象データの集計：PROC SQL vs DATA STEP徹底比較 – Kota Sakamoto</title>
+<title>臨床試験における有害事象データの集計：PROC SQL – Kota Sakamoto</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -153,7 +153,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-page-left">
-      <h1 class="title">臨床試験における有害事象データの集計：PROC SQL vs DATA STEP徹底比較</h1>
+      <h1 class="title">臨床試験における有害事象データの集計：PROC SQL</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">SAS</div>
                 <div class="quarto-category">解析プログラミング</div>
@@ -174,16 +174,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">公開</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">2025年6月28日</p>
+        <p class="date">2025年6月25日</p>
       </div>
     </div>
     
-      <div>
-      <div class="quarto-title-meta-heading">更新日</div>
-      <div class="quarto-title-meta-contents">
-        <p class="date-modified">2025年6月28日</p>
-      </div>
-    </div>
       
     </div>
     
@@ -196,7 +190,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">目次</h2>
    
   <ul class="collapse">
-  <li><a href="#臨床試験における有害事象データの集計proc-sql-vs-data-step徹底比較" id="toc-臨床試験における有害事象データの集計proc-sql-vs-data-step徹底比較" class="nav-link active" data-scroll-target="#臨床試験における有害事象データの集計proc-sql-vs-data-step徹底比較"><span class="header-section-number">1</span> 臨床試験における有害事象データの集計：PROC SQL vs DATA STEP徹底比較</a>
+  <li><a href="#臨床試験における有害事象データの集計proc-sql" id="toc-臨床試験における有害事象データの集計proc-sql" class="nav-link active" data-scroll-target="#臨床試験における有害事象データの集計proc-sql"><span class="header-section-number">1</span> 臨床試験における有害事象データの集計：PROC SQL</a>
   <ul class="collapse">
   <li><a href="#治療群別有害事象集計の実装" id="toc-治療群別有害事象集計の実装" class="nav-link" data-scroll-target="#治療群別有害事象集計の実装"><span class="header-section-number">1.1</span> 治療群別有害事象集計の実装</a></li>
   <li><a href="#修正されたappendixプログラム列順序修正版" id="toc-修正されたappendixプログラム列順序修正版" class="nav-link" data-scroll-target="#修正されたappendixプログラム列順序修正版"><span class="header-section-number">1.2</span> 修正されたAppendixプログラム（列順序修正版）</a></li>
@@ -214,8 +208,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<section id="臨床試験における有害事象データの集計proc-sql-vs-data-step徹底比較" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span> 臨床試験における有害事象データの集計：PROC SQL vs DATA STEP徹底比較</h1>
+<section id="臨床試験における有害事象データの集計proc-sql" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> 臨床試験における有害事象データの集計：PROC SQL</h1>
 <p>臨床試験における有害事象（Adverse Event: AE）の集計は、薬剤の安全性評価において最も重要な分析の一つです。特に治療群間での比較は、薬剤の安全性プロファイルを理解する上で欠かせません。本記事では、標準的なADSL（Subject-Level Analysis Dataset）とADAE（Adverse Event Analysis Dataset）を使用して、Treatment群、Control群、Total の3つの観点からSOC（System Organ Class）/PT（Preferred Term）別の有害事象集計を実装する方法を詳しく解説します。</p>
 <p>標準データセットの作成 ADSLデータセット（被験者レベル）</p>
 <div class="sourceCode" id="cb1" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource sas number-lines code-with-copy"><code class="sourceCode"><span id="cb1-1"><a href="#cb1-1"></a>/* ADSL（被験者レベル分析データセット）の作成 */</span>

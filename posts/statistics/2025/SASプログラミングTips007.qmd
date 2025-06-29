@@ -1,0 +1,334 @@
+---
+title: "SAS：要約統計量作成マクロ"
+author: "坂本航太"
+categories: [SAS,解析プログラミング]
+abstract-title: Abstract
+abstract: ""
+date: "2025-06-29"
+---
+
+## 大阪SAS User総会にて紹介されていたプログラムの紹介
+
+-   第3回：演題4「要約統計量マクロ」坂尻大樹さん
+
+    -   [要約統計量マクロ](https://www.docswell.com/s/6484025/K24D4R-2024-03-31-110922)
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+/* 疑似データの作成 */
+data AAA;
+   input Name $ Age Height Treatment $;
+   datalines;
+アルフレッド 14 69.2 A群
+アリス 13 56.8 B群
+バーバラ 13 65.5 A群
+キャロル 14 62.9 B群
+ヘンリー 14 63.7 A群
+ジェームズ 12 . B群
+ジェーン 12 59.9 A群
+ジャネット 15 62.7 B群
+ジェフリー 13 62.6 A群
+ジョン 12 59.1 B群
+;
+run;
+
+/* 分析設定 */
+%let DS = AAA;
+%let VAR = HEIGHT;
+%let CVAR = TREATMENT;
+
+/* ステップ1: 原データから桁数を取得 */
+data SUMMARY_KETA1;
+   set &DS.;
+   if &VAR. ^= . then KETA = length(cats(&VAR. - int(&VAR.)));
+run;
+
+proc summary data=SUMMARY_KETA1;
+   var KETA;
+   output out=SUMMARY_KETA2 max=MAXKETA;
+run;
+
+data SUMMARY_KETA3;
+   set SUMMARY_KETA2;
+   if MAXKETA = 1 then KETA = 0;  /* 小数点第0桁=整数値 */
+   else KETA = MAXKETA - 2;        /* 小数点第X桁を格納 */
+   
+   call symputx("KETA", KETA);
+run;
+
+/* ステップ2: クラスデータを作成 */
+data SUMMARY_CLASS;
+   length &CVAR. $8.;
+   &CVAR. = "A群"; output;
+   &CVAR. = "B群"; output;
+run;
+
+/* ステップ3: 要約統計量を算出 */
+proc summary data=&DS. classdata=SUMMARY_CLASS exclusive nway;
+   class &CVAR.;
+   var &VAR.;
+   output out=SUMMARY_1 N= MEAN= STD= MIN= MEDIAN= MAX= NMISS= Q1= Q3= /autoname;
+run;
+
+data SUMMARY_2;
+   length PREOUT1-PREOUT9 $12.;
+   set SUMMARY_1;
+   
+   /* 表示桁数の設定 */
+   PREOUT1 = cats(&VAR._N);
+   
+   /* 平均値 */
+   if &VAR._MEAN ^= . then 
+       PREOUT2 = cats(put(round(&VAR._MEAN, 0.1), 8.1));
+   else 
+       PREOUT2 = "-";
+   
+   /* 標準偏差 */
+   if &VAR._STD ^= . then 
+       PREOUT3 = cats(put(round(&VAR._STD, 0.01), 8.2));
+   else 
+       PREOUT3 = "-";
+   
+   /* 最小値 */
+   if &VAR._MIN ^= . then 
+       PREOUT4 = cats(put(round(&VAR._MIN, 1), 8.0));
+   else 
+       PREOUT4 = "-";
+       
+   /* 第一四分位値 */
+   if &VAR._Q1 ^= . then 
+       PREOUT5 = cats(put(round(&VAR._Q1, 0.1), 8.1));
+   else 
+       PREOUT5 = "-";
+       
+   /* 中央値 */
+   if &VAR._MEDIAN ^= . then 
+       PREOUT6 = cats(put(round(&VAR._MEDIAN, 0.1), 8.1));
+   else 
+       PREOUT6 = "-";
+       
+   /* 第三四分位値 */
+   if &VAR._Q3 ^= . then 
+       PREOUT7 = cats(put(round(&VAR._Q3, 0.1), 8.1));
+   else 
+       PREOUT7 = "-";
+       
+   /* 最大値 */
+   if &VAR._MAX ^= . then 
+       PREOUT8 = cats(put(round(&VAR._MAX, 1), 8.0));
+   else 
+       PREOUT8 = "-";
+       
+   /* 欠測数 */
+   PREOUT9 = cats(&VAR._NMISS);
+   
+   /* ID変数 */
+   ID + 1;
+   keep ID &CVAR. PREOUT1-PREOUT9;
+run;
+
+/* ステップ4: 整形&出力 */
+proc transpose data=SUMMARY_2 out=SUMMARY_3 (drop=_NAME_)
+   prefix=OUT;
+   var PREOUT1-PREOUT9;
+   id ID;
+run;
+
+/* 統計項目ラベルを追加 */
+data SUMMARY_FINAL;
+   length STAT_ITEM $12.;
+   set SUMMARY_3;
+   select(_N_);
+       when(1) STAT_ITEM = "症例数";
+       when(2) STAT_ITEM = "平均値";
+       when(3) STAT_ITEM = "標準偏差";
+       when(4) STAT_ITEM = "最小値";
+       when(5) STAT_ITEM = "第一四分位値";
+       when(6) STAT_ITEM = "中央値";
+       when(7) STAT_ITEM = "第三四分位値";
+       when(8) STAT_ITEM = "最大値";
+       when(9) STAT_ITEM = "欠測数";
+   end;
+run;
+
+/* 結果出力 */
+proc print data=SUMMARY_FINAL noobs;
+   title "統計量サマリー（&CVAR.別 - &VAR.）";
+   var STAT_ITEM OUT1 OUT2;
+run;
+```
+
+## 各プログラムの工夫点
+
+## 1. 桁数自動取得の工夫
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}      
+data SUMMARY_KETA1;
+    set &DS.;
+    if &VAR. ^= . then KETA = length(cats(&VAR. - int(&VAR.)));
+run;
+```
+
+**工夫点:**
+
+-   **小数点以下の桁数を自動検出**: `&VAR. - int(&VAR.)`で小数点以下のみを抽出
+
+-   **文字列変換による桁数計算**: `cats()`で文字列に変換し、`length()`で桁数を取得
+
+-   **例**: 62.75の場合 → 62.75 - 62 = 0.75 → "0.75" → length = 4文字 → 小数点第2位
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}       
+data SUMMARY_KETA3;
+    set SUMMARY_KETA2;
+    if MAXKETA = 1 then KETA = 0;  /* 小数点第0桁=整数値 */
+    else KETA = MAXKETA - 2;        /* 小数点第X桁を格納 */
+    
+    call symputx("KETA", KETA);
+run;
+```
+
+**工夫点:**
+
+-   **整数判定**: MAXKETA=1は"0"（整数）を意味するため、KETA=0に設定
+
+-   **桁数計算**: "0.75"なら4文字-2="."と"0"を除く=2桁
+
+-   **マクロ変数への格納**: `call symputx()`でグローバルマクロ変数に設定
+
+## 2. クラスデータ作成の工夫
+
+### 数値変数（年齢）の場合:
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}      
+data SUMMARY_CLASS;
+    if _N_ = 0 then set &DS.(keep=&CVAR.);
+    do &CVAR. = &CSTR. to &CEND.;
+        output;
+    end;
+    stop;
+run;
+```
+
+**工夫点:**
+
+-   **変数定義の継承**: `if _N_ = 0 then set`で元データの変数属性を継承
+
+-   **連続値の生成**: `do`ループで指定範囲の全ての値を生成
+
+-   **効率的な処理**: `stop`で無限ループを防止
+
+### 文字変数（治療群）の場合:
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}    
+data SUMMARY_CLASS;
+    length &CVAR. $8.;
+    &CVAR. = "A群"; output;
+    &CVAR. = "B群"; output;
+run;
+```
+
+**工夫点:**
+
+-   **文字変数の明示的定義**: `length`で文字変数の長さを指定
+
+-   **必要な値のみ生成**: 存在する治療群のみを明示的に作成
+
+## 3. 統計量計算での工夫
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}    
+proc summary data=&DS. classdata=SUMMARY_CLASS exclusive nway;
+    class &CVAR.;
+    var &VAR.;
+    output out=SUMMARY_1 N= MEAN= STD= MIN= MEDIAN= MAX= NMISS= Q1= Q3= /autoname;
+run;
+```
+
+**工夫点:**
+
+-   **CLASSDATA使用**: 存在しないクラス値も強制的に出力（0件でも表示）
+
+-   **EXCLUSIVE**: 元データにないクラス値も処理対象に含める
+
+-   **NWAY**: 最下位レベルのクロス集計のみ出力
+
+-   **AUTONAME**: 変数名を自動生成（HEIGHT_N, HEIGHT_MEAN等）
+
+## 4. 数値フォーマットの工夫
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}       
+if &VAR._MEAN ^= . then 
+    PREOUT2 = cats(put(round(&VAR._MEAN, 0.1), 8.1));
+else 
+    PREOUT2 = "-";
+```
+
+**工夫点:**
+
+-   **統計量別の桁数制御**:
+
+    -   平均値: 小数点第1位（0.1で四捨五入、8.1で表示）
+
+    -   標準偏差: 小数点第2位（0.01で四捨五入、8.2で表示）
+
+    -   最小値・最大値: 整数（1で四捨五入、8.0で表示）
+
+-   **欠損値の統一処理**: 欠損値は全て"-"で表示
+
+-   **文字列への変換**: `cats()`で余分な空白を除去
+
+## 5. データ構造変換の工夫
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}       
+proc transpose data=SUMMARY_2 out=SUMMARY_3 (drop=_NAME_)
+    prefix=OUT;
+    var PREOUT1-PREOUT9;
+    id ID;
+run;
+```
+
+**工夫点:**
+
+-   **行列の転置**: 統計量（行）×群（列）の表形式に変換
+
+-   **列名の制御**: `prefix=OUT`で列名をOUT1, OUT2...に統一
+
+-   **不要変数の削除**: `drop=_NAME_`で転置時の不要変数を除去
+
+## 6. 最終出力での工夫
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}       
+data SUMMARY_FINAL;
+    length STAT_ITEM $12.;
+    set SUMMARY_3;
+    select(_N_);
+        when(1) STAT_ITEM = "症例数";
+        when(2) STAT_ITEM = "平均値";
+        /* ... */
+    end;
+run;
+```
+
+**工夫点:**
+
+-   **日本語ラベル**: 統計量に分かりやすい日本語名を付与
+
+-   **順序の制御**: `select(_N_)`で行番号に基づいた処理
+
+-   **表示用の最終調整**: ユーザーフレンドリーな出力形式
+
+## 7. マクロ設計の工夫
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}       
+%let DS = AAA;
+%let VAR = HEIGHT;
+%let CVAR = AGE;  /* または Treatment *
+```
+
+**工夫点:**
+
+-   **パラメータ化**: データセット名、変数名を簡単に変更可能
+
+-   **汎用性**: 数値・文字変数どちらでも対応
+
+-   **再利用性**: マクロ変数を変更するだけで異なる分析に適用可能
+
+これらの工夫により、元の複雑な`%SUMMARY`マクロの機能を再現しつつ、理解しやすく保守しやすいコードになっています。

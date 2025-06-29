@@ -1,0 +1,302 @@
+---
+title: "Proc Transpose/ARRAYによる転置"
+author: "坂本航太"
+categories: [SAS,解析プログラミング]
+abstract-title: Abstract
+abstract: ""
+date: "2025-06-29"
+---
+
+### SAS初心者必見！横持ちデータを縦持ちに変換する3つの方法【ADaM対応・完全コード付き】
+
+こんにちは！SASプログラミングを学び始めたばかりの皆さん、データ形式の「横持ち」「縦持ち」で困ったことはありませんか？
+
+臨床試験データの標準モデルであるADaMでは、基本的に「1行に1つの分析結果」を格納する**縦持ち形式**が求められます。しかし、元のデータは被験者IDごとに検査結果が横に並んだ**横持ち形式**であることがよくあります。
+
+今回は、この横持ちデータを縦持ちに変換するための代表的な3つの方法を、ADaM変数（`PARAM`, `AVAL`, `AVISITN`など）を使いながら、初心者向けにじっくり解説していきます。すべてのコードはコピー＆ペーストで実行可能です。
+
+#### 準備：今回のサンプルデータとゴール
+
+まず、変換元となる横持ちデータ（`source_data`）を見てみましょう。被験者ごと、訪問ごと（VISIT 1, 2, 3）の検査値（TC: 総コレステロール, HDL: HDLコレステロール）が横に並んでいます。
+
+**【変換元】横持ちデータ**
+
+```         
+USUBJID | TC_1 | HDL_1 | TC_2 | HDL_2 | TC_3 | HDL_3
+-------------------------------------------------------
+P01     | 212  | 50    | 224  | 64    | 204  | 73
+P02     | 206  | 58    | 208  | 63    | 212  | 58
+P03     | 221  | 47    | 236  | 70    | 242  | 38
+```
+
+そして、このデータを以下の縦持ち形式に変換するのが今回のゴールです。
+
+**【ゴール】縦持ちデータ (ADaM風)**
+
+```         
+USUBJID | PARAMN | PARAM     | AVISITN | AVAL
+-------------------------------------------------
+P01     | 1      | TC        | 1       | 212
+P01     | 1      | TC        | 2       | 224
+P01     | 1      | TC        | 3       | 204
+P01     | 2      | HDL       | 1       | 50
+...     | ...    | ...       | ...     | ...
+```
+
+それでは、具体的な変換方法を見ていきましょう！
+
+### 方法1：`PROC TRANSPOSE` - SASの変形マジック
+
+`PROC TRANSPOSE`は、その名の通りデータセットの行と列を入れ替える（転置する）ための強力なプロシジャです。
+
+#### ステップ1：まず転置してみる
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}   
+proc transpose data=source_data out=transposed_data(rename=(COL1=AVAL _NAME_=VARNAME));
+  by USUBJID;
+  var TC_1--TC_3 HDL_1--HDL_3;
+run;
+```
+
+-   `proc transpose ...; run;`: `PROC TRANSPOSE`の開始と終了を示します。
+
+-   `data=source_data`: 変換の対象データセットを指定します。
+
+-   `out=transposed_data(...)`: 変換後のデータセット名と、オプションを指定します。
+
+-   `rename=(...)`: 自動生成される変数名を、より分かりやすい名前に変更します。
+
+-   `by USUBJID;`: **非常に重要**なステートメントです。「どの変数を基準にグループ化するか」を指定します。今回は`USUBJID`ごとに行をまとめたいので、`USUBJID`を指定します。
+
+-   `var ...;`: どの変数を縦持ちに変換（転置）するかを指定します。
+
+#### ステップ2：データステップでADaM変数に整える
+
+次に、この中間データをデータステップで加工し、`VARNAME`から`PARAM`と`AVISITN`を作り出します。
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}      
+data final_data_transpose;
+  set transposed_data;
+  
+  PARAM   = scan(VARNAME, 1, '_');
+  AVISITN = input(scan(VARNAME, 2, '_'), 8.);
+  
+  if PARAM = 'TC' then PARAMN = 1;
+  else if PARAM = 'HDL' then PARAMN = 2;
+  
+  drop VARNAME;
+run;
+```
+
+`scan`関数は、指定した区切り文字（今回は`_`）で文字列を分割してくれる便利な関数です。これで`PROC TRANSPOSE`を使った変換が完成です！
+
+### 方法2：`ARRAY`ステートメント - 最もスマートな方法
+
+`ARRAY`は\*\*「複数の変数を一時的にグループ化して、番号で扱えるようにする」\*\*機能です。 これを使いこなすと、非常に効率的なプログラミングが可能になります。
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}    
+data final_data_array;
+  set source_data;
+  
+  /*【重要ポイント】
+   * '--'記法は変数の物理的順序に依存しエラーの原因になりうるため、
+   * ここでは変数をすべて明示的にリストアップします。
+   */
+  array aval_group{2, 3} TC_1 TC_2 TC_3 HDL_1 HDL_2 HDL_3; 
+  
+  array params{2} $ _temporary_ ('TC', 'HDL');
+  array paramns{2} _temporary_ (1, 2);
+  
+  do j = 1 to 2; [cite: 434]
+    do i = 1 to 3; [cite: 435]
+      PARAMN  = paramns{j};
+      PARAM   = params{j};
+      AVISITN = i;
+      AVAL    = aval_group{j, i}; [cite: 436]
+      output; [cite: 437]
+    end;
+  end;
+  
+  keep USUBJID PARAMN PARAM AVISITN AVAL;
+run;
+```
+
+-   `array aval_group{2, 3} ...;`: 2行3列の二次元配列を定義します。 SASはリストされた変数を**行優先**で配列に格納します。
+
+-   `_temporary_`: このオプションで定義した配列は、データセットに出力されない一時的な作業領域として使えます。
+
+-   `do j = 1 to 2; do i = 1 to 3;`: 外側のループで検査項目を、内側のループで訪問を回しています。
+
+この方法は、一つのデータステップで完結するため、非常に効率的でコードもスッキリします。
+
+### 方法3：マクロ - 同じ作業はSASに任せよう
+
+最後は、地道な`DATA`ステップの繰り返しを自動化するマクロを使った方法です。
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}    
+%macro reshape(param_nm, param_num);
+  %do visit = 1 %to 3;
+    data temp_&param_nm._&visit.;
+      set source_data;
+      PARAMN  = &param_num.;
+      PARAM   = "&param_nm.";
+      AVISITN = &visit.;
+      AVAL    = &param_nm._&visit;
+      keep USUBJID PARAMN PARAM AVISITN AVAL;
+    run;
+  %end;
+%mend reshape;
+
+%reshape(TC, 1);
+%reshape(HDL, 2);
+
+data final_data_macro;
+  /*【重要ポイント】
+   * '--'記法はデータセットの物理的順序に依存しエラーの原因になるため、
+   * ここでは結合したいデータセット名をすべて明示的にリストアップします。
+   */
+  set temp_TC_1 temp_TC_2 temp_TC_3
+      temp_HDL_1 temp_HDL_2 temp_HDL_3;
+run;
+```
+
+-   `%macro ... %mend;`: このブロックで一連の処理をマクロとして定義します。
+
+-   `%do ... %end;`: マクロ内で繰り返し処理を行います。
+
+-   `&param_nm.`や`&visit.`はマクロ変数と呼ばれ、マクロ呼び出し時に指定された値に置き換わります。
+
+この方法は、一つ一つの処理は単純ですが、中間データセットが複数作られるのが特徴です。
+
+### まとめとAppendix
+
+3つの方法を紹介しましたが、いかがでしたか？
+
+|  |  |  |  |
+|------------------|------------------|------------------|------------------|
+| アプローチ | メリット | デメリット | こんな人におすすめ |
+| **`PROC TRANSPOSE`** | 大量の変数を一度に転置できる | 複数ステップが必要になることがある | まずはSASのプロシジャに慣れたい人 |
+| **`ARRAY`** | **コードが簡潔で最も効率的** | 配列の概念（特に二次元）に慣れが必要 | SASでのデータ加工を極めたい人 |
+| **マクロ** | 繰り返し処理を自動化できる | 中間データセットが多くなりがち | 特定の定型処理を何度も再利用したい人 |
+
+初学者の皆さんは、まずは`PROC TRANSPOSE`から試してみて、慣れてきたらぜひ`ARRAY`ステートメントに挑戦してみてください。
+
+#### **Appendix: 全手法の完全なサンプルプログラム**
+
+以下に、本稿で紹介した3つのアプローチについて、横持ちの疑似データ作成から縦持ちデータへ変換するまでの一連のSASプログラムを掲載します。
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}     
+/* ============================================== */
+/* 1. 変換元となる横持ちデータを作成              */
+/* ============================================== */
+data source_data;
+  input USUBJID $ TC_1 HDL_1 TC_2 HDL_2 TC_3 HDL_3;
+  cards;
+P01 212 50 224 64 204 73
+P02 206 58 208 63 212 58
+P03 221 47 236 70 242 38
+;
+run;
+
+title "変換前の横持ちデータ (source_data)";
+proc print data=source_data;
+run;
+title;
+
+/* ============================================== */
+/* 手法1: PROC TRANSPOSE を使用したプログラム       */
+/* ============================================== */
+proc transpose data=source_data out=transposed_data(rename=(COL1=AVAL _NAME_=VARNAME));
+  by USUBJID;
+  var TC_1--TC_3 HDL_1--HDL_3;
+run;
+
+data final_data_transpose;
+  set transposed_data;
+  PARAM   = scan(VARNAME, 1, '_');
+  AVISITN = input(scan(VARNAME, 2, '_'), 8.);
+  if PARAM = 'TC' then PARAMN = 1;
+  else if PARAM = 'HDL' then PARAMN = 2;
+  drop VARNAME;
+run;
+
+proc sort data=final_data_transpose;
+  by USUBJID PARAMN AVISITN;
+run;
+
+title "手法1 (PROC TRANSPOSE) による変換結果";
+proc print data=final_data_transpose;
+run;
+title;
+
+/* ============================================== */
+/* 手法2: ARRAY を使用したプログラム              */
+/* ============================================== */
+data final_data_array;
+  set source_data;
+  
+  array aval_group{2, 3} TC_1 TC_2 TC_3 HDL_1 HDL_2 HDL_3;
+  
+  array params{2} $ _temporary_ ('TC', 'HDL');
+  array paramns{2} _temporary_ (1, 2);
+  
+  do j = 1 to 2;
+    do i = 1 to 3;
+      PARAMN  = paramns{j};
+      PARAM   = params{j};
+      AVISITN = i;
+      AVAL    = aval_group{j, i};
+      output;
+    end;
+  end;
+  
+  keep USUBJID PARAMN PARAM AVISITN AVAL;
+run;
+
+proc sort data=final_data_array;
+  by USUBJID PARAMN AVISITN;
+run;
+
+title "手法2 (ARRAY) による変換結果";
+proc print data=final_data_array;
+run;
+title;
+
+/* ============================================== */
+/* 手法3: マクロを使用したプログラム              */
+/* ============================================== */
+%macro reshape(param_nm, param_num);
+  %do visit = 1 %to 3;
+    data temp_&param_nm._&visit.;
+      set source_data;
+      PARAMN  = &param_num.;
+      PARAM   = "&param_nm.";
+      AVISITN = &visit.;
+      AVAL    = &param_nm._&visit;
+      
+      keep USUBJID PARAMN PARAM AVISITN AVAL;
+    run;
+  %end;
+%mend reshape;
+
+%reshape(TC, 1);
+%reshape(HDL, 2);
+
+data final_data_macro;
+  set temp_TC_1 temp_TC_2 temp_TC_3
+      temp_HDL_1 temp_HDL_2 temp_HDL_3;
+run;
+
+proc sort data=final_data_macro;
+  by USUBJID PARAMN AVISITN;
+run;
+
+title "手法3 (マクロ) による変換結果";
+proc print data=final_data_macro;
+run;
+title;
+
+proc datasets lib=work nolist;
+  delete temp_:;
+quit;
+```

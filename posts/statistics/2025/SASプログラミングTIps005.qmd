@@ -1,5 +1,5 @@
 ---
-title: "PROGRAMMING FOR JOB SECURITY REVISITED:"
+title: "PROGRAMMING FOR JOB SECURITY REVISITED"
 author: "坂本航太"
 categories: [SAS,解析プログラミング]
 date-modified: "2025-06-24"
@@ -32,7 +32,7 @@ date: "2025-06-25"
 
 ### 論理的分離の回避
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}     
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 悪い例：本来分けるべき処理を無理やり1つにまとめる */
 data result;
    set patients;
@@ -48,7 +48,7 @@ run;
 
 ### 過度なネスト化（3層以上で複雑さ倍増）
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}        
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 悪い例：無意味に深いネスト */
 date = mdy(month(date), day(date), year(date));
 depth2 = input(substr(station, index(station,'-')+1), 3.);
@@ -65,7 +65,7 @@ name = substr(name, index(name,',')+1, length(name));
 
 ### 関数の不適切な使用
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}      
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 悪い例：関数で置き換え可能な処理を冗長に記述 */
 if a < 0 then b = a*-1;
 else b = a;
@@ -84,7 +84,7 @@ ab = (a*(a>0) + b*(b>0))/((a>0)+(b>0));
 
 ### マクロの悪用
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}     
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 悪い例：ローカル・グローバル変数の混乱 */
 %macro inside(aa);
     %put inside &aa;
@@ -104,7 +104,7 @@ ab = (a*(a>0) + b*(b>0))/((a>0)+(b>0));
 
 ### 不必要な複雑化
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}    
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 悪い例：PROC SQLを無理やり複数ステップに分解 */
 proc sort data=sales;
     by region;
@@ -131,7 +131,7 @@ proc sql;
 
 ### デバッグ機能の無効化
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}      
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 悪い例：重要な情報を隠す */
 options NOSOURCE NOSOURCE2 NONOTES NOLABEL NOMACRO;
 ```
@@ -150,7 +150,7 @@ options NOSOURCE NOSOURCE2 NONOTES NOLABEL NOMACRO;
 
 ### 観測数制御の悪用
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}     
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 悪い例：事前告知なしでのデータ制限 */
 options obs=100 firstobs=50;  /* 隠して設定 */
 ```
@@ -159,7 +159,7 @@ options obs=100 firstobs=50;  /* 隠して設定 */
 
 ### ワークエリアの操作
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}   
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 悪い例：一時ファイルの場所を変更 */
 options user=sasuser;
 data new;  /* 実際はSASUSER.NEWに保存される */
@@ -189,7 +189,7 @@ data a;
 
 ### S=オプションによる列数制限
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}       
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 悪い例：最初の10桁のみ読み取り */
 options s=10;
 data new;
@@ -207,7 +207,7 @@ data new;
 
 ### インデントの無視
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}       
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 悪い例：インデントなし */
 data sasclass.biomass;
 infile rawdat missover;
@@ -224,7 +224,7 @@ input @1 STATION $
 
 ### 複数ステートメントの詰め込み
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}       
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 悪い例：1行に複数ステートメント */
 data new;set old;if age>65 then senior=1;else senior=0;weight_kg=weight_lb/2.2;output;
 ```
@@ -232,7 +232,8 @@ data new;set old;if age>65 then senior=1;else senior=0;weight_kg=weight_lb/2.2;o
 **解説**: 5つのステートメントを1行に詰め込んでいます。どこで1つのステートメントが終わり、次が始まるのかが分からず、デバッグや修正が困難になります。
 
 ### 行の途中での改行
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}   
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 悪い例：意味のない場所での改行 */
 data sasclass.biomass;infile rawdat
 missover;
@@ -245,7 +246,7 @@ BMOTHR @41 BMTOTL ;
 
 ### 画面外への重要コード配置
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"} 
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 悪い例：80桁以降に重要な変数を配置 */
                                                                               /*80桁*/
 data newdata;
@@ -283,7 +284,7 @@ data newdata;
 
 ### 実行可能コメント
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}       
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 悪い例：コメント内に実行文を隠す */
 * The comments in this section do more ;
 * than it seems ;
@@ -297,7 +298,7 @@ data newdata;
 
 ### ネストできないコメントの悪用
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}     
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 悪い例：未完了コメントでコード全体を隠す */
 /* *****************
 * Apply the
@@ -315,7 +316,7 @@ proc gplot data=yearly......
 
 ### 埋め込みコメントによる部分実行
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}   
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 悪い例：コメント内の一部のみ実行 */
 /* *****************
 REMOVE FOR PRODUCTION
@@ -335,7 +336,7 @@ data big;
 
 ### 混乱を招く命名
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}       
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 悪い例：意味不明な変数名 */
 data analysis;
     set patient_data;
@@ -363,7 +364,7 @@ data analysis;
 
 ### SASキーワードの変数名使用
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}       
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 悪い例：SASキーワードを変数名に使用 */
 DATA SET; 
 SET DATA;
@@ -374,7 +375,7 @@ DO = 5+ TO -15;  /* DO loopに見えるが変数代入 */
 
 ### 誤解を招く命名
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}        
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 悪い例：変数名と内容が一致しない */
 data patients;
     set raw_data;
@@ -399,7 +400,7 @@ data patients;
 
 ### 一貫性のない命名
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}      
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 悪い例：YES/NOの値が一貫しない */
 data flags;
     set survey;
@@ -426,7 +427,7 @@ data flags;
 
 ### コメントによる境界隠し
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}       
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 悪い例：セミコロンなしコメントで次ステップを隠す */
 data new; 
     set old;
@@ -442,7 +443,7 @@ data new;
 
 ### コロンによる巧妙な隠蔽
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}      
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 悪い例：セミコロンの代わりにコロンを使用 */
 data new; 
     set old;
@@ -457,7 +458,7 @@ data new;
 
 ### 不完全な引用符による隠蔽
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}       
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 悪い例：不完全な引用符で後続コードを隠す */
 data new;
     y = 5;
@@ -486,7 +487,7 @@ proc print; run;
 
 ### ソースコードの隠蔽・削除
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}        
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 悪い例：コンパイル後にソースを削除・改名 */
 /* SCL source code for SAS/AF applications */
 /* Compiled DATA steps */
@@ -507,7 +508,7 @@ proc print; run;
 
 ### AUTOEXEC.SASとCONFIG.SASの悪用
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}      
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 悪い例：AUTOEXEC.SASでセッション終了 */
 ENDSAS;
 /* または */
@@ -534,7 +535,7 @@ ABORT;
 
 ### 危険なデータステップ技法
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}       
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 悪い例：BYステートメント変数の途中変更 */
 data merged;
     merge data1 data2;
@@ -546,7 +547,7 @@ data merged;
 
 ### POINT/NOBSオプションの落とし穴
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}    
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 悪い例：削除された観測値との相互作用 */
 data a;
     do i = 1 to 5;
@@ -577,7 +578,7 @@ run;
 
 ### マクロクォート関数の悪用
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}        
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 悪い例：マクロ変数の解決を阻害 */
 %macro doit(city);
     %put &city;
@@ -603,7 +604,7 @@ run;
 
 ### 特殊システムオプションの悪用
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}         
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 悪い例：エラーメッセージ抑制 */
 options DKRICOND=NOWARN;  /* DROP/KEEP/RENAME文のエラーを隠す */
 
@@ -626,7 +627,7 @@ options NOWORKINIT NOWORKTERM;  /* セッション終了後もファイル残存
 
 ### 良いコードの原則
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}     
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 良い例：読みやすく保守しやすいコード */
 options MSGLEVEL=I SOURCE FMTERR DSNFERR NOREPLACE;
 
@@ -679,7 +680,7 @@ run;
 
 ### 臨床試験での品質管理
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}       
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* Step 3: Efficacy endpoint derivation */
 data adam.adeff;
     set adam.adsl(keep=usubjid trt01pn saffl);
@@ -727,7 +728,7 @@ run;
 
 ### 先入観を利用した混乱
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}        
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 悪い例：一般的な変数名で全く違う内容を格納 */
 data demographics;
     set patient_roster;
@@ -750,7 +751,7 @@ run;
 
 ### 視覚的類似性を利用した混乱
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}    
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 悪い例：見た目が似ている文字・数字の混用 */
 data confusion;
     /* 数字の1と小文字のl */
@@ -777,7 +778,7 @@ run;
 
 ### PROC SQLの危険な使用法
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}      
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 悪い例：副作用のあるSQL */
 proc sql;
     /* 一見単純な選択に見えるが... */
@@ -809,7 +810,7 @@ run;
 
 ### PROC SORTの落とし穴
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}         
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 悪い例：NODUPKEY vs NODUPLICATESの混乱 */
 /* 同じファイル名で異なる結果を生成 */
 proc sort data=patients out=clean_data NODUPKEY;
@@ -836,7 +837,7 @@ run;
 
 ### 動的マクロ生成の混乱
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}       
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 悪い例：実行時にマクロを動的生成して混乱させる */
 %macro generate_confusion(type);
     %if &type = A %then %do;
@@ -871,7 +872,7 @@ run;
 
 ### マクロ変数の隠蔽と再定義
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}       
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 悪い例：グローバル変数を局所的に再定義 */
 %let important_factor = 1.5;  /* グローバル設定 */
 
@@ -903,7 +904,7 @@ run;
 
 ### マクロクォート関数の連鎖
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}        
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 悪い例：複数のクォート関数を連鎖させて混乱 */
 %macro quote_chaos(input);
     %let step1 = %nrstr(&input);
@@ -934,7 +935,7 @@ run;
 
 ### ライブラリ参照の動的変更
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}      
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 悪い例：実行中にライブラリ参照を変更 */
 libname mydata "/path/to/original/data";
 
@@ -960,7 +961,7 @@ run;
 
 ### 隠れたデータ変更
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}      
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 悪い例：読み取り専用に見えるが実際は変更している */
 data summary_report;
     set master_data;  /* 読み取りのみに見える */
@@ -993,7 +994,7 @@ run;
 
 ### PROC REGの隠れた前提条件違反
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}       
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 悪い例：前提条件を満たさないデータで回帰分析 */
 proc reg data=patient_data;
     model outcome = treatment age weight;  /* 一見正常な回帰式 */
@@ -1017,7 +1018,7 @@ run;
 
 ### PROC FREQの誤解を招く使用
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}        
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 悪い例：意図的に誤解を招くクロス集計 */
 proc freq data=clinical_data;
     /* 一見、治療効果の評価に見えるが... */
@@ -1045,7 +1046,7 @@ run;
 
 ### パスワードとアクセス制御の隠蔽
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}     
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 悪い例：隠されたデータベース接続 */
 %let hidden_pw = %substr(%sysfunc(compress('pass1word2',,'kd')),1,8);
 
@@ -1072,7 +1073,7 @@ run;
 
 ### Windows環境での隠れた設定
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}       
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 悪い例：アイコンのプロパティで隠れたオプション設定 */
 /* SASアイコンのプロパティで以下を設定（見えない場所） */
 /*
@@ -1098,7 +1099,7 @@ Target: "C:\SAS\sas.exe" -CONFIG "C:\hidden\malicious.cfg"
 
 ### 外部DLLとシステムコールの悪用
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}      
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 悪い例：外部ライブラリで隠れた処理 */
 filename hidden 'hidden_malicious.dll';
 
@@ -1132,7 +1133,7 @@ run;
 
 ### 臨床試験での重大インシデント
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}        
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 実際にあった危険な例（教育目的で再現） */
 
 /* 悪い例：効果量の計算で隠れたバイアス */
@@ -1166,7 +1167,7 @@ run;
 
 ### データ管理での混乱事例
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}   
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 実際にあった混乱例 */
 
 /* 悪い例：バックアップのつもりが本番データを破壊 */
