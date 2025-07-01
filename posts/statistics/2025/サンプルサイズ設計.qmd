@@ -31,31 +31,14 @@ abstract: "私が頻用する基本的なサンプルサイズ設計について
 
 単群試験で2値アウトカムの場合、サンプルサイズは、$P0$（閾値奏効割合）、$P1$（期待奏効割合）、$α$（第一種の過誤確率）、$β$（第二種の過誤確率）を事前に仮定することで計算できます。閾値奏効割合とは、これ以上の奏効割合がなければ治療効果がない（開発中止をしたい）と考えられる割合のことです。期待奏効割合とは、治療効果があると考えられる割合（次相に進みたい程度）のことです。これらの割合は臨床仮説や先行研究に基づいて決定するため、試験統計家がコメントすることはあまりありません。ICHガイドラインに準じて、SASプログラムは全て両側検定として両側有意水準5%としています。これは、なお、ICH E9では以下のような記載があります。すなわち、GCP準拠の治験においては原則として以下の記載に準じて試験計画を考える必要があります。
 
-
 「規制上の観点から、本ガイドラインの施行に伴い、原則として片側仮説を検証する場合は2.5％、両側仮説の場合は5％とすることとした。」
 
 なお、ICH E9にはQ＆AがありQ2で有意水準について言及されている。
 
 ::: callout-note
-## Q2
+片側検定又は両側検定のどちらを用いるか、またそこでの有意水準をいくらにすべき かを、優越性試験と非劣性試験のそれぞれで説明願いたい。
 
-片側検定又は両側検定のどちらを用いるか、またそこでの有意水準をいくらにすべき
-かを、優越性試験と非劣性試験のそれぞれで説明願いたい。
-
-(答)
-ガイドラインでは、同等性を示す場合には両側信頼区間、非劣性試験では片側信頼
-区間による解析を行うことが記載されているが、一般には推測を片側と考えるか両側
-と考えるかには議論があり一概に決められるものではないとされている。また、有意
-水準についても、個々の試験において適切な基準を設定すべきである旨の記載がある。
-しかしながら、推論を片側とするか両側とするかにより統計的な判断に大きな差異
-が生じることは規制上の観点から望ましくない。また、一方で、臨床試験における有
-効性の評価では、検定により有意差があるか否かを判断するだけでなく、試験治療効
-果の大きさ(比較群間の差の大きさ)がどの程度であるかを推定することも重要である。
-そこで、今後は、検証的試験においては、仮説の検定においてどちらの方法を用いる
-場合であっても、効果の推定には95％信頼係数の両側信頼区間を用い、検定の際の有水準は、これによる判断との整合性を図るため、優越性試験、非劣性試験のいずれにおいても、片側2.5％又は両側5％とすることを原則とする。用量反応試験についても、用量反応性を示すことにより薬剤の有効性を検証するような試験においては上記と同様である。ただし、適切な説明ができるのであれば、より強固な有効性の根拠を
-示すために有意水準を厳しくする、稀少疾病用医薬品にみられる例のように十分な被
-験者を集めることが困難な場合は有意水準を緩くする、などの措置をとってもよい。
-なお、生物学的同等性試験については、「後発医薬品の生物学的同等性試験ガイドライン(平成9年12月22日医薬審第487号)」により、90％信頼係数の両側信頼区間を用いるとされているが、臨床効果を指標に標準製剤との同等性を検証しようとする場合(臨床的同等性試験)は、上記と同様に95％信頼係数の両側信頼区間を用いることを原則とする。
+(答) ガイドラインでは、同等性を示す場合には両側信頼区間、非劣性試験では片側信頼 区間による解析を行うことが記載されているが、一般には推測を片側と考えるか両側 と考えるかには議論があり一概に決められるものではないとされている。また、有意 水準についても、個々の試験において適切な基準を設定すべきである旨の記載がある。 しかしながら、推論を片側とするか両側とするかにより統計的な判断に大きな差異 が生じることは規制上の観点から望ましくない。また、一方で、臨床試験における有 効性の評価では、検定により有意差があるか否かを判断するだけでなく、試験治療効 果の大きさ(比較群間の差の大きさ)がどの程度であるかを推定することも重要である。 そこで、今後は、検証的試験においては、仮説の検定においてどちらの方法を用いる 場合であっても、効果の推定には95％信頼係数の両側信頼区間を用い、検定の際の有水準は、これによる判断との整合性を図るため、優越性試験、非劣性試験のいずれにおいても、片側2.5％又は両側5％とすることを原則とする。用量反応試験についても、用量反応性を示すことにより薬剤の有効性を検証するような試験においては上記と同様である。ただし、適切な説明ができるのであれば、より強固な有効性の根拠を 示すために有意水準を厳しくする、稀少疾病用医薬品にみられる例のように十分な被 験者を集めることが困難な場合は有意水準を緩くする、などの措置をとってもよい。 なお、生物学的同等性試験については、「後発医薬品の生物学的同等性試験ガイドライン(平成9年12月22日医薬審第487号)」により、90％信頼係数の両側信頼区間を用いるとされているが、臨床効果を指標に標準製剤との同等性を検証しようとする場合(臨床的同等性試験)は、上記と同様に95％信頼係数の両側信頼区間を用いることを原則とする。
 :::
 
 　特に重要なのは、「適切な説明ができるのであれば、より強固な有効性の根拠を示すために有意水準を厳しくする、稀少疾病用医薬品にみられる例のように十分な被験者を集めることが困難な場合は有意水準を緩くする、などの措置をとってもよい。」の記載である。すなわち、両側10%や片側5%も、きちんと説明をして納得していただければ許容されるということである。これらの【5%か2.5%か】の議論については、以下のJCOGプロトコールマニュアルにも記載がある。
@@ -68,22 +51,21 @@ abstract: "私が頻用する基本的なサンプルサイズ設計について
 
 試験計画時の例：
 
--    $p0$ = 0.1（閾値奏効割合）
+-   $p0$ = 0.1（閾値奏効割合）
 
--    $p1$ = 0.3（期待奏効割合）
+-   $p1$ = 0.3（期待奏効割合）
 
--    $α$ = 0.05（第一種の過誤、片側）
+-   $α$ = 0.05（第一種の過誤、片側）
 
--    $β$ = 0.2（第二種の過誤）
-
+-   $β$ = 0.2（第二種の過誤）
 
 以下は、正規近似を用いたサンプルサイズ計算の例です。 連続修正は行いません。正規近似に基づく症例数設計では、H0における$p0$を用いて分散が計算されている点に注意してください。数理統計学を学ばれた方からみるとスコア検定に基づく方法に相当します。Wald検定に基づく例数設計とすると$p1$を用いて分散が計算されることになります。中間解析を勉強するとWald検定に基づく方法でサンプルサイズ設計がされることもあると気付きます。中間解析では検定統計量間の相関を考えるため、漸近正規性を仮定したサンプルサイズ設計をするためWald型の統計量を利用します。
 
-　実務上では、抗がん剤の単群試験では中間解析を事前に規定して、2項分布に基づいてに基づいて無効中止や有効中止を考慮したくなる場面が多いです。それは患者さんにとっての倫理性や開発戦略の観点からも重要な要素です。中間解析を行う場合、無効中止や有効中止の基準を事前に規定する必要があります。無効中止や有効中止の基準は、試験の目的やデザインに応じて異なるため、試験統計家と相談して決定することが重要です。無効中止や有効中止の基準を事前に規定することで、試験の透明性が向上し、倫理的な問題を回避することができます。そのような場合は、単純な2値データの割合のサンプルサイズ設計では実施できず、適切な試験統計家がSimonの2段階デザインやFlemingの2段階デザインを用いて例数設計がなされます。また、単群試験において、ベイズ流の例数設計も提案されていることから、ベイズ流例数設計も考慮していただきたい。なお、中間解析やベイズ流例数設計は常に必要ではなく、SASでの実装はシンプルではないため、ここでは割愛します。別記事で説明します。 
+　実務上では、抗がん剤の単群試験では中間解析を事前に規定して、2項分布に基づいてに基づいて無効中止や有効中止を考慮したくなる場面が多いです。それは患者さんにとっての倫理性や開発戦略の観点からも重要な要素です。中間解析を行う場合、無効中止や有効中止の基準を事前に規定する必要があります。無効中止や有効中止の基準は、試験の目的やデザインに応じて異なるため、試験統計家と相談して決定することが重要です。無効中止や有効中止の基準を事前に規定することで、試験の透明性が向上し、倫理的な問題を回避することができます。そのような場合は、単純な2値データの割合のサンプルサイズ設計では実施できず、適切な試験統計家がSimonの2段階デザインやFlemingの2段階デザインを用いて例数設計がなされます。また、単群試験において、ベイズ流の例数設計も提案されていることから、ベイズ流例数設計も考慮していただきたい。なお、中間解析やベイズ流例数設計は常に必要ではなく、SASでの実装はシンプルではないため、ここでは割愛します。別記事で説明します。
 
 通常の単群試験の例数設計は以下のように行います。以下のSASプログラムは、対照群のリスクp0 = 0.1、実験群のリスクp1 = 0.3、リスク差 = 0.2を想定しています。なお、sides = 2は両側検定を意味します。片側検定を行う場合は、sides = 1としてください。
 
-```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 proc power;
 onesamplefreq test=z
     method = normal
@@ -100,32 +82,293 @@ run;
 
 先ほどと異なり、test = exactを指定しています。これにより、2項分布に基づく正確な検定が行われます。これにより、サンプルサイズ計算がより正確になります。また、plotオプションを使用して、サンプルサイズに対する検出力の変化を視覚化しています。これにより、必要なサンプルサイズをより直感的に理解できます。
 
-```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 proc power;
     onesamplefreq test=exact
         sides = 2
         alpha = 0.05
         nullproportion = 0.1
         proportion = 0.3
-        ntotal = 30.
+        ntotal = 2 to 100
         power = .;
-        plot x = n min =2 max = 100 step = 1 yopts = (ref  = 0.8);
 run;
 ```
 
-Exact法に基づく症例数設計では、検出力は単調増加にならず、test = normalと異なり、N = xxのように数値が出力されません。そのため、SASの出力を結果を見ながら、目標とする検出力を満たす最小の整数値 or 目標とする検出力を満たす最大の整数値とします。個人的には、より保守的であるため後者を推奨します。実際、より大きなサンプルサイズを選ぶことで、検出力の目標値をより確実に達成できる可能性が高まります。ただし、リソースの制約がある場合は、目標検出力を満たす最小の症例数を選ぶことも実用的な選択肢となり得ます。どちらのアプローチを取るかは、研究の目的やリソースの制約によって相談の上、決定してください。
+Exact法に基づく症例数設計では、検出力は単調増加にならず、test = normalと異なり、N = xxのように数値が出力されません。そのため、SASの出力を結果を見ながら、目標とする検出力を満たす最小の整数値 or 目標とする検出力を満たす最大の整数値とします。個人的には、より保守的であるため後者を推奨します。実際、より大きなサンプルサイズを選ぶことで、検出力の目標値をより確実に達成できる可能性が高まります。ただし、リソースの制約がある場合は、目標検出力を満たす最小の症例数を選ぶことも実用的な選択肢となり得ます。基本的にtest = exactとすることを推奨します。
+
+## 検定仮説について：片側検定と両側検定、有意水準、優越性、非劣性
+
+上のプログラムでは、よく利用されるであろう両側検定（`sides=2` ）を指定して、両側有意水準を`alpha=0.05`を指定しています。この説ではここら辺のシナリオについて、もう少し深堀したいと思います。
+
+sides optionについて、SAS helpでは以下のように説明されています。
+
+::: callout-note
+
+**SIDES=keyword-list**
+
+:   specifies the number of sides (or tails) and the direction of the statistical test. For information about specifying the keyword-list, see the section [Specifying Value Lists in Analysis Statements](https://documentation.sas.com/doc/en/statug/15.2/statug_power_details03.htm). You can specify the following keywords:
+
+    **1**
+
+    :   specifies a one-sided test, with the alternative hypothesis in the same direction as the effect.
+
+    **2**
+
+    :   specifies a two-sided test.
+
+    **U**
+
+    :   specifies an upper one-sided test, with the alternative hypothesis indicating a proportion greater than the null value.
+
+    **L**
+
+    :   specifies a lower one-sided test, with the alternative hypothesis indicating a proportion less than the null value.
+
+    If the effect size is zero, then [SIDES=](https://documentation.sas.com/doc/en/statug/15.2/statug_power_syntax35.htm#statug.power.powofrqsides)1 is not permitted; instead, specify the direction of the test explicitly in this case with either [SIDES=](https://documentation.sas.com/doc/en/statug/15.2/statug_power_syntax35.htm#statug.power.powofrqsides)L or [SIDES=](https://documentation.sas.com/doc/en/statug/15.2/statug_power_syntax35.htm#statug.power.powofrqsides)U. By default, SIDES=2.
+:::
+
+### パラメータの正しい役割
+
+SASの`proc power`におけるパラメータは、以下のように解釈するのが正解です。
+
+-   **`nullproportion` (または `nullp`)**: **帰無仮説 (H₀)で「真実ではないか」と疑う基準値**です。これを `p₀` とします。今回の例では **`p₀ = 0.1`** です。
+
+-   **`proportion` (または `p`)**: **対立仮説 (H₁) が正しいとした場合に「実際にはこの値だろう」と想定する具体的な値**です。この値を使って検出力（Power）を計算します。これを `p_alt` とします。今回の例では **`p_alt = 0.3`** です。
+
+**重要なのは、仮説に登場する `p` は「未知の真の比率」という記号であり、`proportion`パラメータの値 (0.3) そのものではない、という点です。**
+
+### 仮説の正しい立て方
+
+上記の役割を踏まえると、今回の例 (`nullpropotion=0.1`, `p=0.3`) における仮説は以下のようになります。
+
+-   **帰無仮説 (H₀)**: 真の比率は **0.1** に等しい。
+
+    -   $H_0 : p=0.1$
+
+-   **対立仮説 (H₁)**:
+
+    -   **片側（上側）検定 (`SIDES=U`) の場合**
+
+        -   真の比率は **0.1** より大きい。
+
+        -   $H_1 : p>0.1$
+
+    -   **片側（下側）検定 (`SIDES=L`) の場合**
+
+        -   真の比率は **0.1** より小さい。
+
+        -   $H_1 : p<0.1$
+
+二項検定の検出力は、「もし対立仮説が真実だったとしたら、どれくらいの確率で正しく帰無仮説を棄却できるか」を計算しています。
+
+計算は、大きく分けて2つのステップで行われます。
+
+### \## 計算の具体的なステップ
+
+ここでは、前の例に出てきた値を使って具体的に説明します。
+
+-   **帰無仮説 (H₀)**: p=0.1
+
+-   **対立仮説 (H₁) で想定する真の値**: palt​=0.3
+
+-   **サンプルサイズ (n)**: 100
+
+-   **有意水準 (α)**: 0.05
+
+-   **検定の種類**: 片側上側検定 (H1​:p\>0.1)
+
+#### **ステップ1：棄却域（帰無仮説を棄却する領域）を決める**
+
+まず、「もし帰無仮説 (p=0.1) が正しいとしたら」という世界で考えます。このとき、100人中何人以上の成功が観察されたら、「これは偶然とは考えにくい、帰無仮説は間違いだろう」と判断するか、その境界線（**臨界値**）を決めます。これは、その値以上になる確率が有意水準α (5%) を下回るように設定します。`n=100`, `p=0.1` の二項分布に従うとすると、成功数が `k` 回以上になる確率 P(X≥k) が `0.05` 以下になる最小の `k` を探します。
+
+計算すると、`k=16` となります。
+
+-   P(X≥15∣p=0.1)≈0.06 (まだ5%より大きい)
+
+-   P(X≥16∣p=0.1)≈0.03 (5%を下回った！)
+
+つまり、**「もし真の比率が0.1なら、成功数が16回以上になることは滅多にない(確率3%)。だから、もし16回以上の成功を観測したら、帰無仮説を棄却しよう」とルールを決めます。この「16回以上」が棄却域**です。
+
+#### **ステップ2：棄却域に入る確率（検出力）を計算する**
+
+次に、「もし対立仮説 (p=0.3) が真実だったとしたら」という世界に切り替えます。この世界で、ステップ1で決めた棄却域（成功数が16回以上）に入る確率を計算します。これこそが**検出力**です。`n=100`, `p=0.3` の二項分布に従うとして、成功数が16回以上になる確率 P(X≥16∣p=0.3) を計算します。この確率を計算すると、およそ **0.998**、つまり **99.8%** となります。これが検出力です。つまり、「もし真の比率が0.3であれば、サンプルサイズ100の実験で『p\>0.1である』と正しく結論付けられる確率は99.8%である」ということを意味します。
+
+臨床試験において、片側検定というと一般的に`SIDES=U`を指すことが一般的である。帰無仮説の`p0`より大きいかどうかを検証したいためです。抗がん剤の第2相試験はまさにそれが頻繁に利用される。Simonの2段階デザインやFlemmigデザインの数理を勉強すると理解が深まるだろう。そのため、実務上で片側検定と言われた場合は`SIDES=1`と指定すると、指定した値に応じて、SASが指定した治療効果の方向に基づいて、対立仮説が自動的に決定される。今回の例 (`nullpropotion=0.1`, `p=0.3`) でいえば、$0.1<0.3$であるため、SASが自動で、 $H_1 : null proportion = 0.1 < p$の仮説を指定してくれている。結果的に、`SIDES=U`を指定することと同じになる。一方、例 (`nullpropotion=0.1`, `p=0.05`) でいえば、$0.1<0.05$であるため、SASが自動で$H_1 : p < 0.1$\$
+
+の仮説を指定してくれている。結果的に、`SIDES=L`を指定することと同じになる。実務上は、基本的にUpperを考えることが多いし、pの対立仮説の方が多いため実務上の問題はない。ただし、統計家として、`SIDES=1` で適当に指定するより、正しく理解して`SIDES=U` を指定することを標準にすべきである。この姿勢は特に、非劣性試験/同等性試験の検定問題を考えるときに正しく指定できる力となる。
+
+### 非劣性試験におけるmargin option
+
+SASの`proc power`の`onesamplefreq`には`margin option`がある。SAS helpでは以下のように記載されている。
+
+::: callout-note
+MARGIN=number-list
+
+specifies the equivalence or noninferiority or superiority margin, depending on the analysis.
+
+The MARGIN= option can be used with one-sided analyses (SIDES = 1 \| U \| L), in which case it specifies the margin added to the null proportion value in the hypothesis test, resulting in a noninferiority or superiority test (depending on the agreement between the effect and hypothesis directions and the sign of the margin). A test with a null proportion and a margin m is the same as a test with null proportion and no margin.
+
+The MARGIN= option can also be used with equivalence analyses (TEST=EQUIV_ADJZ \| EQUIV_EXACT \| EQUIV_Z) when the NULLPROPORTION= option is used, in which case it specifies the lower and upper equivalence bounds as and , where is the value of the NULLPROPORTION= option and m is the value of the MARGIN= option.
+
+The MARGIN= option cannot be used in conjunction with the SIDES=2 option. (Instead, specify an equivalence analysis by using TEST=EQUIV_ADJZ or TEST=EQUIV_EXACT or TEST=EQUIV_Z). Also, the MARGIN= option cannot be used with the CI= option.
+
+Values must be strictly between –1 and 1. In addition, the sum of NULLPROPORTION and MARGIN must be strictly between 0 and 1 for one-sided analyses, and the derived lower equivalence bound (2 \* NULLPROPORTION – MARGIN) must be strictly between 0 and 1 for equivalence analyses.
+
+For information about specifying the number-list, see the section Specifying Value Lists in Analysis Statements.
+:::
+
+# 単群非劣性試験の統計設計：SAS PROC POWERによる実践的アプローチ
+
+## はじめに
+
+臨床試験の世界では、従来の2群比較試験（RCT）が金本位とされていますが、希少疾患の治療薬開発や倫理的制約がある状況では、単群試験での評価が必要となることがあります。本記事では、歴史的対照を用いた単群非劣性試験の統計設計について、SAS PROC POWERを用いた具体的な実装方法を解説します。
+
+## 単群非劣性試験とは
+
+### 基本概念
+
+単群非劣性試験は、新治療を単一群で評価し、歴史的対照（過去の研究や文献値）と比較して「劣らない」ことを示す統計手法です。これは以下のような状況で用いられます：
+
+-   **希少疾患**: 患者数の制約により対照群の設定が困難
+
+-   **倫理的制約**: プラセボ群や無治療群の設定が非倫理的
+
+-   **歴史的対照が確立**: 標準治療の効果が文献で明確
+
+-   **探索的研究**: Phase II試験での preliminary evaluation
+
+## 統計的仮説設定
+
+### 抽象的な仮説設定
+
+単群非劣性試験の一般的な仮説は以下のように設定されます：
+
+#### パラメータ定義
+
+-   **p**: 新治療の真の反応率
+
+-   **p₀**: 歴史的対照の反応率
+
+-   **δ**: 非劣性マージン（δ \> 0）
+
+#### 仮説設定
+
+**帰無仮説（H₀）**: p ≤ p₀ - δ
+
+**対立仮説（H₁）**: p \> p₀ - δ
+
+### 仮説の臨床的解釈
+
+-   **H₀**: 新治療は歴史的対照より非劣性マージン以上劣る（臨床的に許容できない）
+
+-   **H₁**: 新治療は歴史的対照に対し非劣性である（臨床的に許容可能）
+
+## 実臨床での事例：希少血液疾患治療薬の開発
+
+### 研究背景
+
+ある希少な血液疾患の新薬開発を想定しましょう：
+
+-   **対象疾患**: 希少な血液疾患
+
+-   **評価項目**: 6ヶ月後の完全寛解率
+
+-   **歴史的対照**: 既存標準治療での完全寛解率 10%
+
+-   **新薬の期待効果**: 15%の完全寛解率
+
+-   **非劣性マージン**: 2%（臨床的に許容できる効果の低下）
+
+### 具体的な仮説設定
+
+この設定では：
+
+-   p₀ = 0.10（歴史的対照）
+
+-   δ = 0.02（非劣性マージン）
+
+-   実効的境界値 = 0.10 - 0.02 = 0.08
+
+**帰無仮説**: p ≤ 0.08 **対立仮説**: p \> 0.08
+
+## SAS PROC POWERによる実装
+
+### 基本的な検出力計算
+
+```         
+/* 単群非劣性試験の検出力計算 */
+proc power;
+   onesamplefreq test=exact
+      sides = U                   /* 上側片側検定 */
+      nullproportion = 0.1        /* 歴史的対照の効果 */
+      proportion = 0.15           /* 新薬の想定効果 */
+      margin = -0.02              /* 非劣性マージン（負値で指定） */
+      ntotal = 130                /* 計画症例数 */
+      power = .;                  /* 検出力を計算 */
+   title "単群非劣性試験：検出力計算";
+run;
+```
+
+### SASパラメータの詳細説明
+
+| パラメータ       | 説明                                 | 値    |
+|------------------|--------------------------------------|-------|
+| `test=exact`     | 正確検定（小サンプル・低事象率向け） | \-    |
+| `sides=U`        | 上側片側検定                         | \-    |
+| `proportion`     | 新治療の想定反応率（p）              | 0.15  |
+| `nullproportion` | 歴史的対照の反応率（p₀）             | 0.10  |
+| `margin`         | 非劣性マージン（-δ、負値で指定）     | -0.02 |
+| `ntotal`         | 計画症例数                           | 130   |
+
+### なぜ`margin`は負の値なのか
+
+SASでは以下の計算を行います：
+
+```         
+実効的帰無仮説の境界 = nullproportion + margin = 0.10 + (-0.02) = 0.08
+```
+
+これにより、「p \> 0.08」という対立仮説を検定することになります。
+
+## 同等性検定について
+
+他にも`Test Option`にて様々な検定仮説を選択することができる。
+
+中々利用しないが、TOSTという二重片側検定を用いた同等性試験もありえる。TOST（Two One-Sided Tests）を用いた同等性試験は、主に後発品（ジェネリック医薬品）の生物学的同等性試験で使用される統計手法です。機会があれば、紹介します。
+
+::: callout-note
+
+**TEST= ADJZ \| EQUIV_ADJZ \| EQUIV_EXACT \| EQUIV_Z \| EXACT \| Z\
+TEST**
+
+:   specifies the statistical analysis. [TEST=](https://documentation.sas.com/doc/en/statug/15.2/statug_power_syntax35.htm#statug.power.powofrqtest)ADJZ specifies a normal-approximate *z* test with continuity adjustment. [TEST=](https://documentation.sas.com/doc/en/statug/15.2/statug_power_syntax35.htm#statug.power.powofrqtest)EQUIV_ADJZ specifies a normal-approximate two-sided equivalence test based on the z statistic with continuity adjustment and a TOST (two one-sided tests) procedure. [TEST=](https://documentation.sas.com/doc/en/statug/15.2/statug_power_syntax35.htm#statug.power.powofrqtest)EQUIV_EXACT specifies the exact binomial two-sided equivalence test based on a TOST (two one-sided tests) procedure. [TEST=](https://documentation.sas.com/doc/en/statug/15.2/statug_power_syntax35.htm#statug.power.powofrqtest)EQUIV_Z specifies a normal-approximate two-sided equivalence test based on the z statistic without any continuity adjustment, which is the same as the chi-square statistic, and a TOST (two one-sided tests) procedure. [TEST](https://documentation.sas.com/doc/en/statug/15.2/statug_power_syntax35.htm#statug.power.powofrqtest) or [TEST=](https://documentation.sas.com/doc/en/statug/15.2/statug_power_syntax35.htm#statug.power.powofrqtest)EXACT (the default) specifies the exact binomial test. [TEST=](https://documentation.sas.com/doc/en/statug/15.2/statug_power_syntax35.htm#statug.power.powofrqtest)Z specifies a normal-approximate *z* test without any continuity adjustment, which is the same as the chi-square test when [SIDES=](https://documentation.sas.com/doc/en/statug/15.2/statug_power_syntax35.htm#statug.power.powofrqsides)2.
+:::
+
+## 信頼区間の基づくサンプルサイズ設計
+
+SASでは、信頼区間に基づくサンプルサイズ設計も完備されている。The following statements performs a confidence interval precision analysis for the Wilson score-based confidence interval for a binomial proportion. The default value of the ALPHA= option specifies a confidence level of 0.95.
+
+``` sas
+proc power;
+   onesamplefreq ci=wilson
+      halfwidth = 0.1
+      proportion = 0.3
+      ntotal = 70
+      probwidth = .;
+run;
+```
 
 ### 参考文献
-* [OneSampleFreq Statement](https://documentation.sas.com/doc/en/statug/15.2/statug_power_syntax35.htm)
+
+-   [OneSampleFreq Statement](https://documentation.sas.com/doc/en/statug/15.2/statug_power_syntax35.htm)
 
 # 並行群間比較計画
 
 ## 連続量アウトカム
 
-連続量アウトカムの場合、サンプルサイズは以下の式で計算できます。 以下では優越性を示す検証的試験を想定しています。
-twosamplemeans test = diffを用いて、2群間の平均値の差を検定する方法を想定しています。以下では、対照群の平均値μ0 = 0、実験群の平均値μ1 = 0.5、標準偏差σ = 1を想定しています。
+連続量アウトカムの場合、サンプルサイズは以下の式で計算できます。 以下では優越性を示す検証的試験を想定しています。 twosamplemeans test = diffを用いて、2群間の平均値の差を検定する方法を想定しています。以下では、対照群の平均値μ0 = 0、実験群の平均値μ1 = 0.5、標準偏差σ = 1を想定しています。
 
-```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 proc power;
     twosamplemeans test=diff
         meandiff = 0.5
@@ -138,7 +381,7 @@ run;
 
 複数の状況をまとめて計算する場合は、以下のようにします。
 
-```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 proc power;
     twosamplemeans test=diff
         meandiff = 0.5 , 1 , 1.5
@@ -148,15 +391,16 @@ proc power;
         ntotal = .;
 run;
 ```
+
 　平均値の差の検定は一般的であり、連続量のアウトカムを用いた試験では最も多く利用される方法です。平均値の差の検定は、通常、正規分布に従うと仮定される連続量データに適用されます。連続量アウトカムにおける経時測定データのサンプルサイズ設計が求められることもあるかと思います。その場合、最終観察時点における平均値の差を検定する方法として上記のプログラムを利用することが保守的で望ましいと考えます。例数設計としてはt検定に基づきより保守的なサンプルサイズ設計をする。統計解析においては、共分散分析やMMRMなどの同じEstimandを推定する方法で、より検出力の高い解析方法を適用することが治験の分野では求められると考えます。
 
 ### 参考文献
- [TwoSampleMeans Statement](https://documentation.sas.com/doc/en/statug/15.2/statug_power_syntax93.htm)
+
+[TwoSampleMeans Statement](https://documentation.sas.com/doc/en/statug/15.2/statug_power_syntax93.htm)
 
 ## 2値アウトカム
 
 2値アウトカムの場合、サンプルサイズは以下の式で計算できます。リスク差（割合の差）に基づいて優越性を検討することを想定しています。p0を対照群のリスク、p1を実験群のリスクとします。リスク差は、対照群のリスクp0に基づいて計算されるため、対照群のp0を指定する必要があります。以下では、対照群のリスクp0 = 0.1、実験群のリスクp1 = 0.3、リスク差 = 0.2を想定しています。
-
 
 -   p0 = 0.1（対照群の和依頼）
 -   p1 = 0.3（実験群の割合）
@@ -165,7 +409,7 @@ run;
 
 SASプログラムは以下となります。ここでは、対照群のリスク及びリスク差を指定している。リスク差は、対照群のp0に基づいて計算されるため、対照群のp0を指定する必要があります。
 
-```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 proc power;
 twosamplefreq test=pchi
     sides = 2
@@ -176,29 +420,29 @@ twosamplefreq test=pchi
     power = 0.8;
 run;
 ```
-### 参考文献
-* [TWOSAMPLEFREQ Statement](https://documentation.sas.com/doc/en/statug/15.2/statug_power_syntax83.htm)
 
+### 参考文献
+
+-   [TWOSAMPLEFREQ Statement](https://documentation.sas.com/doc/en/statug/15.2/statug_power_syntax83.htm)
 
 ## 生存時間アウトカム
+
 生存時間アウトカムの場合、サンプルサイズは以下の式で計算できます。以下では優越性を示す検証的試験を想定しています。アウトカムはハザード比として、生存時間解析のノンパラメトリック検定（ログランク検定等）を前提とした例数設計を想定する。例えば生存時間アウトカムとして生存割合（死亡、生存）を前提として例数設計を考える場合、本節に基づく方法での例数設計も考えられるが、より保守的に2値データに基づく例数設計を行うことが望ましい場合もありえます。この違いについては、別記事で説明します。生存時間の例数設計については、SAS user総会の[SASプロシジャを用いた生存時間データに対する例数設計の変革](https://www.sas.com/content/dam/SAS/ja_jp/doc/event/sas-user-groups/usergroups2016-d-11.pdf)が参考になります。
 
 SASのtwosamplesurvival statementではLakatosの方法が採用されています。これは区分指数分布を前提としており解析的にN = xxの形で表すことはできません。教育的な立場だと、解析的にN = xxの形で表すことができる方法としてFreedmanの方法やSchoenfeldの方法がありますが、上記のSASユーザー総会の資料によると、Lakatosの方法の方が性能が良いことが報告されているそうです。実務上もproc power procedureを用いて、再現可能な状態で例数設計を行うことが望ましいので、基本的にLakatosの方法を採用します。
 
-生存時間アウトカムに基づく症例数設計では以下のような情報が必要です。特徴的なのは、登録期間とフォローアップ期間の情報が必要な点です。登録期間は、患者さんを試験に登録するための期間であり、フォローアップ期間は、患者さんを追跡するための期間です。これらの情報は、試験のデザインや目的に応じて異なるため、試験統計家と相談して決定することが重要です。
-なお、通常登録は一様に登録されると仮定され、一様分布を仮定することがデフォルトです。
+生存時間アウトカムに基づく症例数設計では以下のような情報が必要です。特徴的なのは、登録期間とフォローアップ期間の情報が必要な点です。登録期間は、患者さんを試験に登録するための期間であり、フォローアップ期間は、患者さんを追跡するための期間です。これらの情報は、試験のデザインや目的に応じて異なるため、試験統計家と相談して決定することが重要です。 なお、通常登録は一様に登録されると仮定され、一様分布を仮定することがデフォルトです。
 
--  S_c(3) = 0.3（対照群Cの3年あたりの生存率）
--  S_a(2) = 0.2（実験群Aの3年あたりの生存率）
--  登録期間：A = 3年
--  フォローアップ期間：F = 2年
+-   S_c(3) = 0.3（対照群Cの3年あたりの生存率）
+-   S_a(2) = 0.2（実験群Aの3年あたりの生存率）
+-   登録期間：A = 3年
+-   フォローアップ期間：F = 2年
 -   α = 0.05（第一種の過誤、両側）
 -   β = 0.2（第二種の過誤）
 
-
 SASでは以下のように実行します。ここでは、対照群の生存率S_c(3) = 0.3、実験群の生存率S_a(2) = 0.2を想定しています。登録期間は3年、フォローアップ期間は2年としています。これにより、試験のデザインや目的に応じたサンプルサイズを計算することができます。
 
-```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 proc power;
     twosamplesurvival test = logrank
     curve("Control") = 3:0.3
@@ -222,7 +466,7 @@ $$
 
 この関係を用いて、ある時点tとその時点のKM推定量の結果を用いて各群のハザードを指定してサンプルサイズ計算をする方法は以下となります。
 
-```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 proc power;
     twosamplesurvival test = logrank
     groupsurvexphazards = (0.05 0.01)
@@ -235,6 +479,7 @@ proc power;
     sides = 2;
 run;
 ```
+
 他にも、中央生存時間を用いて計算することもできる。これも生存時間アウトカムに指数分布を仮定すると簡単に示せます。
 
 $$
@@ -244,4 +489,5 @@ $$
 この関係を用いて、KM推定量の結果を用いて各群の中央生存時間からハザードを推定することもできる。いずれの方法もTに指数分布を仮定している。
 
 ### 参考文献
-* [TwoSsampleSurvival Statement](https://documentation.sas.com/doc/en/statug/15.2/statug_power_syntax104.htm)
+
+-   [TwoSsampleSurvival Statement](https://documentation.sas.com/doc/en/statug/15.2/statug_power_syntax104.htm)

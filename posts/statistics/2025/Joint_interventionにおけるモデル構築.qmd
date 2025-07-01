@@ -1,0 +1,251 @@
+---
+title: "Joint Interventionにおけるモデル構築"
+author: "坂本航太"
+categories: [方法論]
+date-modified: "2025-07-01"
+abstract-title: Abstract
+abstract: ""
+date: "2025-07-01"
+---
+
+# 線形回帰とロジスティック回帰におけるJoint Effectの解析モデルの等価性
+
+## はじめに
+
+疫学研究において、2つの二値曝露（A₁, A₂）がアウトカムに与える共同効果（Joint Effect）を評価する場面は頻繁にあります。その際のモデリング戦略として、一般的に以下の2つのアプローチが考えられます。
+
+1.  **4カテゴリーのダミー変数モデル**: 参照群（例: A₁=0, A₂=0）を基準に、3つのダミー変数を作成する
+
+2.  **交互作用モデル**: 主効果（A₁, A₂）と交互作用項（A₁ × A₂）をモデルに投入する
+
+本稿では、まず線形回帰モデルにおける両者の数学的な等価性を詳細に示し、Rを用いた数値シミュレーションでその結果を実証します。さらに、この関係がロジスティック回帰モデルにも拡張できることを確認します。
+
+## 線形回帰モデルにおける等価性の証明
+
+線形回帰の枠組みでは、2つのモデルが数学的に全く同じものであることを明確に示せます。
+
+### モデルの定義
+
+アウトカムをY、曝露グループごとのサンプル平均を Ȳₐ₁ₐ₂ とします。
+
+#### 1. ダミー変数モデル (Model D)
+
+参照群を (A₁=0, A₂=0) とします。
+
+```         
+E[Y] = β₀ + β₁D₁₀ + β₂D₀₁ + β₃D₁₁
+```
+
+最小二乗法（OLS）による係数βの推定量は、サンプル平均との差で直感的に表現できます。
+
+-   β̂₀ = Ȳ₀₀
+
+-   β̂₁ = Ȳ₁₀ − Ȳ₀₀
+
+-   β̂₂ = Ȳ₀₁ − Ȳ₀₀
+
+-   β̂₃ = Ȳ₁₁ − Ȳ₀₀
+
+ここで、β̂₃が参照群に対する共同効果の直接的な推定量となります。
+
+#### 2. 交互作用モデル (Model I)
+
+```         
+E[Y] = γ₀ + γ₁A₁ + γ₂A₂ + γ₃(A₁ × A₂)
+```
+
+このモデルの係数γも同様にサンプル平均から導出できます。
+
+-   γ̂₀ = Ȳ₀₀
+
+-   γ̂₁ = Ȳ₁₀ − Ȳ₀₀ （A₁の主効果）
+
+-   γ̂₂ = Ȳ₀₁ − Ȳ₀₀ （A₂の主効果）
+
+-   γ̂₃ = Ȳ₁₁ − Ȳ₁₀ − Ȳ₀₁ + Ȳ₀₀ （交互作用）
+
+Model Iにおける共同効果は、係数の線形和 γ̂₁ + γ̂₂ + γ̂₃ で表されます。これを展開すると、
+
+```         
+(Ȳ₁₀ − Ȳ₀₀) + (Ȳ₀₁ − Ȳ₀₀) + (Ȳ₁₁ − Ȳ₁₀ − Ȳ₀₁ + Ȳ₀₀) = Ȳ₁₁ − Ȳ₀₀
+```
+
+となり、これはModel Dのβ̂₃と代数的に完全に一致します。
+
+### 標準誤差の等価性
+
+点推定量の正体が同じ（どちらも Ȳ₁₁ − Ȳ₀₀）であるため、標準誤差も必然的に同じになります。
+
+```         
+Var(β̂₃) = Var(γ̂₁ + γ̂₂ + γ̂₃) = Var(Ȳ₁₁ − Ȳ₀₀) = σ²/n₁₁ + σ²/n₀₀
+```
+
+したがって、両モデルは同じ情報を異なるパラメータで表現した\*\*再パラメータ化（re-parameterization）\*\*の関係にあり、導き出される結論は同一です。
+
+## Rによる実証：線形回帰
+
+理論的な等価性を、シミュレーションデータを用いてRで確認します。
+
+``` {.r eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+# パッケージの読み込み（必要に応じてインストール）
+# install.packages("emmeans")
+library(emmeans)
+
+# 再現性のためのシード設定
+set.seed(123)
+
+# 1. データ生成
+n <- 400
+df <- data.frame(
+  A1 = rbinom(n, 1, 0.5),
+  A2 = rbinom(n, 1, 0.4)
+)
+
+# Yを生成 (A1=1, A2=1のときに強い効果を持たせる)
+df$Y_linear <- 10 + 2*df$A1 + 3*df$A2 + 5*df$A1*df$A2 + rnorm(n, 0, 4)
+
+# 2. 4カテゴリーのダミー変数を作成
+# 参照群を A1=0, A2=0 に設定
+df$group <- factor(paste0("A1=", df$A1, ", A2=", df$A2))
+df$group <- relevel(df$group, ref = "A1=0, A2=0")
+
+# 3. モデルのフィッティング
+# Model D: ダミー変数モデル
+model_D_lm <- lm(Y_linear ~ group, data = df)
+cat("--- ダミー変数モデル (Model D) の結果 ---\n")
+print(summary(model_D_lm))
+
+# Model I: 交互作用モデル
+model_I_lm <- lm(Y_linear ~ A1 * A2, data = df)
+cat("\n--- 交互作用モデル (Model I) の結果 ---\n")
+print(summary(model_I_lm))
+
+# 4. 共同効果の比較
+cat("\n--- 共同効果の点推定値と標準誤差の比較 ---\n")
+
+# Model Dから共同効果を直接取得
+beta3 <- summary(model_D_lm)$coefficients["groupA1=1, A2=1",]
+cat(sprintf("Model D (ダミー) の共同効果: Estimate = %.4f, SE = %.4f\n", beta3[1], beta3[2]))
+
+# Model Iから共同効果を計算
+# 方法1: emmeansパッケージを使用
+joint_effect <- emmeans(model_I_lm, ~ A1*A2)
+contrast_result <- contrast(joint_effect, method = list("Joint Effect (1,1 vs 0,0)" = c(-1, 0, 0, 1)))
+contrast_summary <- summary(contrast_result)
+cat(sprintf("Model I (交互作用) の共同効果: Estimate = %.4f, SE = %.4f (emmeansを使用)\n",
+            contrast_summary$estimate[1], contrast_summary$SE[1]))
+
+# 方法2: 手動計算による確認
+# γ1 + γ2 + γ3 = 共同効果
+coef_I <- summary(model_I_lm)$coefficients
+joint_manual <- coef_I["A1", "Estimate"] + coef_I["A2", "Estimate"] + coef_I["A1:A2", "Estimate"]
+cat(sprintf("Model I (交互作用) の共同効果: Estimate = %.4f (手動計算)\n", joint_manual))
+
+# 標準誤差の手動計算（共分散行列を使用）
+vcov_matrix <- vcov(model_I_lm)
+# γ1 + γ2 + γ3 の分散を計算
+contrast_vector <- c(0, 1, 1, 1)  # (Intercept, A1, A2, A1:A2)
+joint_var <- t(contrast_vector) %*% vcov_matrix %*% contrast_vector
+joint_se_manual <- sqrt(joint_var)
+cat(sprintf("Model I (交互作用) の共同効果: SE = %.4f (手動計算)\n", joint_se_manual))
+```
+
+### 実行結果の要約
+
+上記のRコードを実行すると、以下の結果が得られます。
+
+**Model D** の `groupA1=1, A2=1` の係数：
+
+-   Estimate: **10.1044**
+
+-   Std. Error: **0.5856**
+
+**Model I** から計算したJoint Effect：
+
+-   emmeansを使用: Estimate = **10.1044**, SE = **0.5856**
+
+-   手動計算: Estimate = **10.1044**, SE = **0.5856**
+
+この結果は、共同効果の点推定値と標準誤差が、**小数点以下4桁まで完全に一致**することを示しており、理論的な等価性を実証しています。
+
+## ロジスティック回帰モデルへの拡張
+
+この等価性の原則は、ロジスティック回帰にもそのまま適用される。再パラメータ化の関係は、この線形予測子の部分で成立するため、共同効果の対数オッズ比とその標準誤差も、2つのモデルで完全に一致します。
+
+### Rによる実証：ロジスティック回帰
+
+``` {.r eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+# 再現性のためのシード設定
+set.seed(456)
+
+# 1. ロジスティック回帰用のデータ生成
+logit_p <- -2 + 0.5*df$A1 + 0.8*df$A2 + 1.2*df$A1*df$A2
+prob <- exp(logit_p) / (1 + exp(logit_p))
+df$Y_logistic <- rbinom(n, 1, prob)
+
+# 2. モデルのフィッティング
+# Model D: ダミー変数モデル
+model_D_glm <- glm(Y_logistic ~ group, data = df, family = "binomial")
+# Model I: 交互作用モデル
+model_I_glm <- glm(Y_logistic ~ A1 * A2, data = df, family = "binomial")
+
+# 3. 共同効果（対数オッズ比）の比較
+cat("\n--- ロジスティック回帰における共同効果の比較 ---\n")
+
+# Model Dから直接取得
+beta3_glm <- summary(model_D_glm)$coefficients["groupA1=1, A2=1",]
+cat(sprintf("Model D (ダミー) の共同効果(LOR): Estimate = %.4f, SE = %.4f\n", beta3_glm[1], beta3_glm[2]))
+
+# Model Iから計算
+joint_effect_glm <- emmeans(model_I_glm, ~ A1*A2)
+contrast_glm <- contrast(joint_effect_glm, method = list("Joint Effect (1,1 vs 0,0)" = c(-1, 0, 0, 1)))
+contrast_glm_summary <- summary(contrast_glm)
+cat(sprintf("Model I (交互作用) の共同効果(LOR): Estimate = %.4f, SE = %.4f (emmeansを使用)\n",
+            contrast_glm_summary$estimate[1], contrast_glm_summary$SE[1]))
+
+# 手動計算による確認
+coef_glm <- summary(model_I_glm)$coefficients
+joint_manual_glm <- coef_glm["A1", "Estimate"] + coef_glm["A2", "Estimate"] + coef_glm["A1:A2", "Estimate"]
+cat(sprintf("Model I (交互作用) の共同効果(LOR): Estimate = %.4f (手動計算)\n", joint_manual_glm))
+
+# 標準誤差の手動計算
+vcov_matrix_glm <- vcov(model_I_glm)
+contrast_vector <- c(0, 1, 1, 1)  # (Intercept, A1, A2, A1:A2)
+joint_var_glm <- t(contrast_vector) %*% vcov_matrix_glm %*% contrast_vector
+joint_se_manual_glm <- sqrt(joint_var_glm)
+cat(sprintf("Model I (交互作用) の共同効果(LOR): SE = %.4f (手動計算)\n", joint_se_manual_glm))
+```
+
+### 実行結果の要約
+
+**Model D (logistic)** の `groupA1=1, A2=1` の係数：
+
+-   Estimate: **1.6801**
+
+-   Std. Error: **0.3567**
+
+**Model I (logistic)** から計算したJoint Effect：
+
+-   emmeansを使用: Estimate = **1.6801**, SE = **0.3567**
+
+-   手動計算: Estimate = **1.6801**, SE = **0.3567**
+
+ロジスティック回帰においても、共同効果の対数オッズ比とその標準誤差が**完全に一致**することが確認できました。
+
+## 結論
+
+2つの二値曝露を扱う際、4カテゴリーのダミー変数モデルと交互作用モデルは、単なる再パラメータ化の関係にあります。そのため、線形回帰・ロジスティック回帰を問わず、適切に計算すれば共同効果の点推定値と標準誤差は完全に一致します。
+
+**実証結果のポイント：**
+
+-   線形回帰、ロジスティック回帰ともに、ダミー変数モデルを使おうが交互作用モデルを使おうが同じ結果
+
+-   点推定値だけでなく標準誤差も小数点以下4桁まで完全に一致
+
+モデルの選択は、研究の目的に応じて行うべきです。
+
+-   **ダミー変数モデル**: 各曝露パターンの効果を、共通の参照群と比較して直接的に解釈したい場合に直感的です
+
+-   **交互作用モデル**: 主効果からの逸脱、つまり交互作用の大きさとその有意性を直接評価したい場合に適しています
+
+Joint Intervention Exposureにおいてはどちらのモデルを使おうが結果は同じとなる。あくまで解析には興味がなく、

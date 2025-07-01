@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.30">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="坂本航太">
+
+<title>Joint Interventionにおけるモデル構築 – Kota Sakamoto</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-9849038e97c5862c14c4eb81893d019b.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-945f87a38397f0f3b8ef34e2f394b6bc.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "一致なし",
+    "search-matching-documents-text": "一致した文書",
+    "search-copy-link-title": "検索へのリンクをコピー",
+    "search-hide-matches-text": "追加の検索結果を非表示",
+    "search-more-match-text": "追加の検索結果",
+    "search-more-matches-text": "追加の検索結果",
+    "search-clear-button-title": "消去",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "取消",
+    "search-submit-button-title": "検索",
+    "search-label": "サーチ"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Kota Sakamoto</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="サーチ"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="ナビゲーションを切り替える" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../posts/statistics/index.html"> 
+<span class="menu-text">Notes</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../posts/Web_tools/Web_tools.html"> 
+<span class="menu-text">Web Tools</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+    <a href="https://github.com/kkts1010/kkts1010.github.io/" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-github"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-page-left">
+      <h1 class="title">Joint Interventionにおけるモデル構築</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">方法論</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta column-page-left">
+
+      <div>
+      <div class="quarto-title-meta-heading">作者</div>
+      <div class="quarto-title-meta-contents">
+               <p>坂本航太 </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">公開</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">2025年7月1日</p>
+      </div>
+    </div>
+    
+      <div>
+      <div class="quarto-title-meta-heading">更新日</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date-modified">2025年7月1日</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">目次</h2>
+   
+  <ul class="collapse">
+  <li><a href="#線形回帰とロジスティック回帰におけるjoint-effectの解析モデルの等価性" id="toc-線形回帰とロジスティック回帰におけるjoint-effectの解析モデルの等価性" class="nav-link active" data-scroll-target="#線形回帰とロジスティック回帰におけるjoint-effectの解析モデルの等価性"><span class="header-section-number">1</span> 線形回帰とロジスティック回帰におけるJoint Effectの解析モデルの等価性</a>
+  <ul class="collapse">
+  <li><a href="#はじめに" id="toc-はじめに" class="nav-link" data-scroll-target="#はじめに"><span class="header-section-number">1.1</span> はじめに</a></li>
+  <li><a href="#線形回帰モデルにおける等価性の証明" id="toc-線形回帰モデルにおける等価性の証明" class="nav-link" data-scroll-target="#線形回帰モデルにおける等価性の証明"><span class="header-section-number">1.2</span> 線形回帰モデルにおける等価性の証明</a></li>
+  <li><a href="#rによる実証線形回帰" id="toc-rによる実証線形回帰" class="nav-link" data-scroll-target="#rによる実証線形回帰"><span class="header-section-number">1.3</span> Rによる実証：線形回帰</a></li>
+  <li><a href="#ロジスティック回帰モデルへの拡張" id="toc-ロジスティック回帰モデルへの拡張" class="nav-link" data-scroll-target="#ロジスティック回帰モデルへの拡張"><span class="header-section-number">1.4</span> ロジスティック回帰モデルへの拡張</a></li>
+  <li><a href="#結論" id="toc-結論" class="nav-link" data-scroll-target="#結論"><span class="header-section-number">1.5</span> 結論</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+
+
+
+
+
+<section id="線形回帰とロジスティック回帰におけるjoint-effectの解析モデルの等価性" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> 線形回帰とロジスティック回帰におけるJoint Effectの解析モデルの等価性</h1>
+<section id="はじめに" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="はじめに"><span class="header-section-number">1.1</span> はじめに</h2>
+<p>疫学研究において、2つの二値曝露（A₁, A₂）がアウトカムに与える共同効果（Joint Effect）を評価する場面は頻繁にあります。その際のモデリング戦略として、一般的に以下の2つのアプローチが考えられます。</p>
+<ol type="1">
+<li><p><strong>4カテゴリーのダミー変数モデル</strong>: 参照群（例: A₁=0, A₂=0）を基準に、3つのダミー変数を作成する</p></li>
+<li><p><strong>交互作用モデル</strong>: 主効果（A₁, A₂）と交互作用項（A₁ × A₂）をモデルに投入する</p></li>
+</ol>
+<p>本稿では、まず線形回帰モデルにおける両者の数学的な等価性を詳細に示し、Rを用いた数値シミュレーションでその結果を実証します。さらに、この関係がロジスティック回帰モデルにも拡張できることを確認します。</p>
+</section>
+<section id="線形回帰モデルにおける等価性の証明" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="線形回帰モデルにおける等価性の証明"><span class="header-section-number">1.2</span> 線形回帰モデルにおける等価性の証明</h2>
+<p>線形回帰の枠組みでは、2つのモデルが数学的に全く同じものであることを明確に示せます。</p>
+<section id="モデルの定義" class="level3" data-number="1.2.1">
+<h3 data-number="1.2.1" class="anchored" data-anchor-id="モデルの定義"><span class="header-section-number">1.2.1</span> モデルの定義</h3>
+<p>アウトカムをY、曝露グループごとのサンプル平均を Ȳₐ₁ₐ₂ とします。</p>
+<section id="ダミー変数モデル-model-d" class="level4" data-number="1.2.1.1">
+<h4 data-number="1.2.1.1" class="anchored" data-anchor-id="ダミー変数モデル-model-d"><span class="header-section-number">1.2.1.1</span> 1. ダミー変数モデル (Model D)</h4>
+<p>参照群を (A₁=0, A₂=0) とします。</p>
+<pre><code>E[Y] = β₀ + β₁D₁₀ + β₂D₀₁ + β₃D₁₁</code></pre>
+<p>最小二乗法（OLS）による係数βの推定量は、サンプル平均との差で直感的に表現できます。</p>
+<ul>
+<li><p>β̂₀ = Ȳ₀₀</p></li>
+<li><p>β̂₁ = Ȳ₁₀ − Ȳ₀₀</p></li>
+<li><p>β̂₂ = Ȳ₀₁ − Ȳ₀₀</p></li>
+<li><p>β̂₃ = Ȳ₁₁ − Ȳ₀₀</p></li>
+</ul>
+<p>ここで、β̂₃が参照群に対する共同効果の直接的な推定量となります。</p>
+</section>
+<section id="交互作用モデル-model-i" class="level4" data-number="1.2.1.2">
+<h4 data-number="1.2.1.2" class="anchored" data-anchor-id="交互作用モデル-model-i"><span class="header-section-number">1.2.1.2</span> 2. 交互作用モデル (Model I)</h4>
+<pre><code>E[Y] = γ₀ + γ₁A₁ + γ₂A₂ + γ₃(A₁ × A₂)</code></pre>
+<p>このモデルの係数γも同様にサンプル平均から導出できます。</p>
+<ul>
+<li><p>γ̂₀ = Ȳ₀₀</p></li>
+<li><p>γ̂₁ = Ȳ₁₀ − Ȳ₀₀ （A₁の主効果）</p></li>
+<li><p>γ̂₂ = Ȳ₀₁ − Ȳ₀₀ （A₂の主効果）</p></li>
+<li><p>γ̂₃ = Ȳ₁₁ − Ȳ₁₀ − Ȳ₀₁ + Ȳ₀₀ （交互作用）</p></li>
+</ul>
+<p>Model Iにおける共同効果は、係数の線形和 γ̂₁ + γ̂₂ + γ̂₃ で表されます。これを展開すると、</p>
+<pre><code>(Ȳ₁₀ − Ȳ₀₀) + (Ȳ₀₁ − Ȳ₀₀) + (Ȳ₁₁ − Ȳ₁₀ − Ȳ₀₁ + Ȳ₀₀) = Ȳ₁₁ − Ȳ₀₀</code></pre>
+<p>となり、これはModel Dのβ̂₃と代数的に完全に一致します。</p>
+</section>
+</section>
+<section id="標準誤差の等価性" class="level3" data-number="1.2.2">
+<h3 data-number="1.2.2" class="anchored" data-anchor-id="標準誤差の等価性"><span class="header-section-number">1.2.2</span> 標準誤差の等価性</h3>
+<p>点推定量の正体が同じ（どちらも Ȳ₁₁ − Ȳ₀₀）であるため、標準誤差も必然的に同じになります。</p>
+<pre><code>Var(β̂₃) = Var(γ̂₁ + γ̂₂ + γ̂₃) = Var(Ȳ₁₁ − Ȳ₀₀) = σ²/n₁₁ + σ²/n₀₀</code></pre>
+<p>したがって、両モデルは同じ情報を異なるパラメータで表現した**再パラメータ化（re-parameterization）**の関係にあり、導き出される結論は同一です。</p>
+</section>
+</section>
+<section id="rによる実証線形回帰" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="rによる実証線形回帰"><span class="header-section-number">1.3</span> Rによる実証：線形回帰</h2>
+<p>理論的な等価性を、シミュレーションデータを用いてRで確認します。</p>
+<div class="sourceCode" id="cb5" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># パッケージの読み込み（必要に応じてインストール）</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="co"># install.packages("emmeans")</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="fu">library</span>(emmeans)</span>
+<span id="cb5-4"><a href="#cb5-4"></a></span>
+<span id="cb5-5"><a href="#cb5-5"></a><span class="co"># 再現性のためのシード設定</span></span>
+<span id="cb5-6"><a href="#cb5-6"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb5-7"><a href="#cb5-7"></a></span>
+<span id="cb5-8"><a href="#cb5-8"></a><span class="co"># 1. データ生成</span></span>
+<span id="cb5-9"><a href="#cb5-9"></a>n <span class="ot">&lt;-</span> <span class="dv">400</span></span>
+<span id="cb5-10"><a href="#cb5-10"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb5-11"><a href="#cb5-11"></a>  <span class="at">A1 =</span> <span class="fu">rbinom</span>(n, <span class="dv">1</span>, <span class="fl">0.5</span>),</span>
+<span id="cb5-12"><a href="#cb5-12"></a>  <span class="at">A2 =</span> <span class="fu">rbinom</span>(n, <span class="dv">1</span>, <span class="fl">0.4</span>)</span>
+<span id="cb5-13"><a href="#cb5-13"></a>)</span>
+<span id="cb5-14"><a href="#cb5-14"></a></span>
+<span id="cb5-15"><a href="#cb5-15"></a><span class="co"># Yを生成 (A1=1, A2=1のときに強い効果を持たせる)</span></span>
+<span id="cb5-16"><a href="#cb5-16"></a>df<span class="sc">$</span>Y_linear <span class="ot">&lt;-</span> <span class="dv">10</span> <span class="sc">+</span> <span class="dv">2</span><span class="sc">*</span>df<span class="sc">$</span>A1 <span class="sc">+</span> <span class="dv">3</span><span class="sc">*</span>df<span class="sc">$</span>A2 <span class="sc">+</span> <span class="dv">5</span><span class="sc">*</span>df<span class="sc">$</span>A1<span class="sc">*</span>df<span class="sc">$</span>A2 <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, <span class="dv">4</span>)</span>
+<span id="cb5-17"><a href="#cb5-17"></a></span>
+<span id="cb5-18"><a href="#cb5-18"></a><span class="co"># 2. 4カテゴリーのダミー変数を作成</span></span>
+<span id="cb5-19"><a href="#cb5-19"></a><span class="co"># 参照群を A1=0, A2=0 に設定</span></span>
+<span id="cb5-20"><a href="#cb5-20"></a>df<span class="sc">$</span>group <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">paste0</span>(<span class="st">"A1="</span>, df<span class="sc">$</span>A1, <span class="st">", A2="</span>, df<span class="sc">$</span>A2))</span>
+<span id="cb5-21"><a href="#cb5-21"></a>df<span class="sc">$</span>group <span class="ot">&lt;-</span> <span class="fu">relevel</span>(df<span class="sc">$</span>group, <span class="at">ref =</span> <span class="st">"A1=0, A2=0"</span>)</span>
+<span id="cb5-22"><a href="#cb5-22"></a></span>
+<span id="cb5-23"><a href="#cb5-23"></a><span class="co"># 3. モデルのフィッティング</span></span>
+<span id="cb5-24"><a href="#cb5-24"></a><span class="co"># Model D: ダミー変数モデル</span></span>
+<span id="cb5-25"><a href="#cb5-25"></a>model_D_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(Y_linear <span class="sc">~</span> group, <span class="at">data =</span> df)</span>
+<span id="cb5-26"><a href="#cb5-26"></a><span class="fu">cat</span>(<span class="st">"--- ダミー変数モデル (Model D) の結果 ---</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb5-27"><a href="#cb5-27"></a><span class="fu">print</span>(<span class="fu">summary</span>(model_D_lm))</span>
+<span id="cb5-28"><a href="#cb5-28"></a></span>
+<span id="cb5-29"><a href="#cb5-29"></a><span class="co"># Model I: 交互作用モデル</span></span>
+<span id="cb5-30"><a href="#cb5-30"></a>model_I_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(Y_linear <span class="sc">~</span> A1 <span class="sc">*</span> A2, <span class="at">data =</span> df)</span>
+<span id="cb5-31"><a href="#cb5-31"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">--- 交互作用モデル (Model I) の結果 ---</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb5-32"><a href="#cb5-32"></a><span class="fu">print</span>(<span class="fu">summary</span>(model_I_lm))</span>
+<span id="cb5-33"><a href="#cb5-33"></a></span>
+<span id="cb5-34"><a href="#cb5-34"></a><span class="co"># 4. 共同効果の比較</span></span>
+<span id="cb5-35"><a href="#cb5-35"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">--- 共同効果の点推定値と標準誤差の比較 ---</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb5-36"><a href="#cb5-36"></a></span>
+<span id="cb5-37"><a href="#cb5-37"></a><span class="co"># Model Dから共同効果を直接取得</span></span>
+<span id="cb5-38"><a href="#cb5-38"></a>beta3 <span class="ot">&lt;-</span> <span class="fu">summary</span>(model_D_lm)<span class="sc">$</span>coefficients[<span class="st">"groupA1=1, A2=1"</span>,]</span>
+<span id="cb5-39"><a href="#cb5-39"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">"Model D (ダミー) の共同効果: Estimate = %.4f, SE = %.4f</span><span class="sc">\n</span><span class="st">"</span>, beta3[<span class="dv">1</span>], beta3[<span class="dv">2</span>]))</span>
+<span id="cb5-40"><a href="#cb5-40"></a></span>
+<span id="cb5-41"><a href="#cb5-41"></a><span class="co"># Model Iから共同効果を計算</span></span>
+<span id="cb5-42"><a href="#cb5-42"></a><span class="co"># 方法1: emmeansパッケージを使用</span></span>
+<span id="cb5-43"><a href="#cb5-43"></a>joint_effect <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(model_I_lm, <span class="sc">~</span> A1<span class="sc">*</span>A2)</span>
+<span id="cb5-44"><a href="#cb5-44"></a>contrast_result <span class="ot">&lt;-</span> <span class="fu">contrast</span>(joint_effect, <span class="at">method =</span> <span class="fu">list</span>(<span class="st">"Joint Effect (1,1 vs 0,0)"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>)))</span>
+<span id="cb5-45"><a href="#cb5-45"></a>contrast_summary <span class="ot">&lt;-</span> <span class="fu">summary</span>(contrast_result)</span>
+<span id="cb5-46"><a href="#cb5-46"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">"Model I (交互作用) の共同効果: Estimate = %.4f, SE = %.4f (emmeansを使用)</span><span class="sc">\n</span><span class="st">"</span>,</span>
+<span id="cb5-47"><a href="#cb5-47"></a>            contrast_summary<span class="sc">$</span>estimate[<span class="dv">1</span>], contrast_summary<span class="sc">$</span>SE[<span class="dv">1</span>]))</span>
+<span id="cb5-48"><a href="#cb5-48"></a></span>
+<span id="cb5-49"><a href="#cb5-49"></a><span class="co"># 方法2: 手動計算による確認</span></span>
+<span id="cb5-50"><a href="#cb5-50"></a><span class="co"># γ1 + γ2 + γ3 = 共同効果</span></span>
+<span id="cb5-51"><a href="#cb5-51"></a>coef_I <span class="ot">&lt;-</span> <span class="fu">summary</span>(model_I_lm)<span class="sc">$</span>coefficients</span>
+<span id="cb5-52"><a href="#cb5-52"></a>joint_manual <span class="ot">&lt;-</span> coef_I[<span class="st">"A1"</span>, <span class="st">"Estimate"</span>] <span class="sc">+</span> coef_I[<span class="st">"A2"</span>, <span class="st">"Estimate"</span>] <span class="sc">+</span> coef_I[<span class="st">"A1:A2"</span>, <span class="st">"Estimate"</span>]</span>
+<span id="cb5-53"><a href="#cb5-53"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">"Model I (交互作用) の共同効果: Estimate = %.4f (手動計算)</span><span class="sc">\n</span><span class="st">"</span>, joint_manual))</span>
+<span id="cb5-54"><a href="#cb5-54"></a></span>
+<span id="cb5-55"><a href="#cb5-55"></a><span class="co"># 標準誤差の手動計算（共分散行列を使用）</span></span>
+<span id="cb5-56"><a href="#cb5-56"></a>vcov_matrix <span class="ot">&lt;-</span> <span class="fu">vcov</span>(model_I_lm)</span>
+<span id="cb5-57"><a href="#cb5-57"></a><span class="co"># γ1 + γ2 + γ3 の分散を計算</span></span>
+<span id="cb5-58"><a href="#cb5-58"></a>contrast_vector <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>)  <span class="co"># (Intercept, A1, A2, A1:A2)</span></span>
+<span id="cb5-59"><a href="#cb5-59"></a>joint_var <span class="ot">&lt;-</span> <span class="fu">t</span>(contrast_vector) <span class="sc">%*%</span> vcov_matrix <span class="sc">%*%</span> contrast_vector</span>
+<span id="cb5-60"><a href="#cb5-60"></a>joint_se_manual <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(joint_var)</span>
+<span id="cb5-61"><a href="#cb5-61"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">"Model I (交互作用) の共同効果: SE = %.4f (手動計算)</span><span class="sc">\n</span><span class="st">"</span>, joint_se_manual))</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="実行結果の要約" class="level3" data-number="1.3.1">
+<h3 data-number="1.3.1" class="anchored" data-anchor-id="実行結果の要約"><span class="header-section-number">1.3.1</span> 実行結果の要約</h3>
+<p>上記のRコードを実行すると、以下の結果が得られます。</p>
+<p><strong>Model D</strong> の <code>groupA1=1, A2=1</code> の係数：</p>
+<ul>
+<li><p>Estimate: <strong>10.1044</strong></p></li>
+<li><p>Std. Error: <strong>0.5856</strong></p></li>
+</ul>
+<p><strong>Model I</strong> から計算したJoint Effect：</p>
+<ul>
+<li><p>emmeansを使用: Estimate = <strong>10.1044</strong>, SE = <strong>0.5856</strong></p></li>
+<li><p>手動計算: Estimate = <strong>10.1044</strong>, SE = <strong>0.5856</strong></p></li>
+</ul>
+<p>この結果は、共同効果の点推定値と標準誤差が、<strong>小数点以下4桁まで完全に一致</strong>することを示しており、理論的な等価性を実証しています。</p>
+</section>
+</section>
+<section id="ロジスティック回帰モデルへの拡張" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="ロジスティック回帰モデルへの拡張"><span class="header-section-number">1.4</span> ロジスティック回帰モデルへの拡張</h2>
+<p>この等価性の原則は、ロジスティック回帰にもそのまま適用される。再パラメータ化の関係は、この線形予測子の部分で成立するため、共同効果の対数オッズ比とその標準誤差も、2つのモデルで完全に一致します。</p>
+<section id="rによる実証ロジスティック回帰" class="level3" data-number="1.4.1">
+<h3 data-number="1.4.1" class="anchored" data-anchor-id="rによる実証ロジスティック回帰"><span class="header-section-number">1.4.1</span> Rによる実証：ロジスティック回帰</h3>
+<div class="sourceCode" id="cb6" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># 再現性のためのシード設定</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="fu">set.seed</span>(<span class="dv">456</span>)</span>
+<span id="cb6-3"><a href="#cb6-3"></a></span>
+<span id="cb6-4"><a href="#cb6-4"></a><span class="co"># 1. ロジスティック回帰用のデータ生成</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a>logit_p <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">2</span> <span class="sc">+</span> <span class="fl">0.5</span><span class="sc">*</span>df<span class="sc">$</span>A1 <span class="sc">+</span> <span class="fl">0.8</span><span class="sc">*</span>df<span class="sc">$</span>A2 <span class="sc">+</span> <span class="fl">1.2</span><span class="sc">*</span>df<span class="sc">$</span>A1<span class="sc">*</span>df<span class="sc">$</span>A2</span>
+<span id="cb6-6"><a href="#cb6-6"></a>prob <span class="ot">&lt;-</span> <span class="fu">exp</span>(logit_p) <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(logit_p))</span>
+<span id="cb6-7"><a href="#cb6-7"></a>df<span class="sc">$</span>Y_logistic <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(n, <span class="dv">1</span>, prob)</span>
+<span id="cb6-8"><a href="#cb6-8"></a></span>
+<span id="cb6-9"><a href="#cb6-9"></a><span class="co"># 2. モデルのフィッティング</span></span>
+<span id="cb6-10"><a href="#cb6-10"></a><span class="co"># Model D: ダミー変数モデル</span></span>
+<span id="cb6-11"><a href="#cb6-11"></a>model_D_glm <span class="ot">&lt;-</span> <span class="fu">glm</span>(Y_logistic <span class="sc">~</span> group, <span class="at">data =</span> df, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
+<span id="cb6-12"><a href="#cb6-12"></a><span class="co"># Model I: 交互作用モデル</span></span>
+<span id="cb6-13"><a href="#cb6-13"></a>model_I_glm <span class="ot">&lt;-</span> <span class="fu">glm</span>(Y_logistic <span class="sc">~</span> A1 <span class="sc">*</span> A2, <span class="at">data =</span> df, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
+<span id="cb6-14"><a href="#cb6-14"></a></span>
+<span id="cb6-15"><a href="#cb6-15"></a><span class="co"># 3. 共同効果（対数オッズ比）の比較</span></span>
+<span id="cb6-16"><a href="#cb6-16"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">--- ロジスティック回帰における共同効果の比較 ---</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb6-17"><a href="#cb6-17"></a></span>
+<span id="cb6-18"><a href="#cb6-18"></a><span class="co"># Model Dから直接取得</span></span>
+<span id="cb6-19"><a href="#cb6-19"></a>beta3_glm <span class="ot">&lt;-</span> <span class="fu">summary</span>(model_D_glm)<span class="sc">$</span>coefficients[<span class="st">"groupA1=1, A2=1"</span>,]</span>
+<span id="cb6-20"><a href="#cb6-20"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">"Model D (ダミー) の共同効果(LOR): Estimate = %.4f, SE = %.4f</span><span class="sc">\n</span><span class="st">"</span>, beta3_glm[<span class="dv">1</span>], beta3_glm[<span class="dv">2</span>]))</span>
+<span id="cb6-21"><a href="#cb6-21"></a></span>
+<span id="cb6-22"><a href="#cb6-22"></a><span class="co"># Model Iから計算</span></span>
+<span id="cb6-23"><a href="#cb6-23"></a>joint_effect_glm <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(model_I_glm, <span class="sc">~</span> A1<span class="sc">*</span>A2)</span>
+<span id="cb6-24"><a href="#cb6-24"></a>contrast_glm <span class="ot">&lt;-</span> <span class="fu">contrast</span>(joint_effect_glm, <span class="at">method =</span> <span class="fu">list</span>(<span class="st">"Joint Effect (1,1 vs 0,0)"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>)))</span>
+<span id="cb6-25"><a href="#cb6-25"></a>contrast_glm_summary <span class="ot">&lt;-</span> <span class="fu">summary</span>(contrast_glm)</span>
+<span id="cb6-26"><a href="#cb6-26"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">"Model I (交互作用) の共同効果(LOR): Estimate = %.4f, SE = %.4f (emmeansを使用)</span><span class="sc">\n</span><span class="st">"</span>,</span>
+<span id="cb6-27"><a href="#cb6-27"></a>            contrast_glm_summary<span class="sc">$</span>estimate[<span class="dv">1</span>], contrast_glm_summary<span class="sc">$</span>SE[<span class="dv">1</span>]))</span>
+<span id="cb6-28"><a href="#cb6-28"></a></span>
+<span id="cb6-29"><a href="#cb6-29"></a><span class="co"># 手動計算による確認</span></span>
+<span id="cb6-30"><a href="#cb6-30"></a>coef_glm <span class="ot">&lt;-</span> <span class="fu">summary</span>(model_I_glm)<span class="sc">$</span>coefficients</span>
+<span id="cb6-31"><a href="#cb6-31"></a>joint_manual_glm <span class="ot">&lt;-</span> coef_glm[<span class="st">"A1"</span>, <span class="st">"Estimate"</span>] <span class="sc">+</span> coef_glm[<span class="st">"A2"</span>, <span class="st">"Estimate"</span>] <span class="sc">+</span> coef_glm[<span class="st">"A1:A2"</span>, <span class="st">"Estimate"</span>]</span>
+<span id="cb6-32"><a href="#cb6-32"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">"Model I (交互作用) の共同効果(LOR): Estimate = %.4f (手動計算)</span><span class="sc">\n</span><span class="st">"</span>, joint_manual_glm))</span>
+<span id="cb6-33"><a href="#cb6-33"></a></span>
+<span id="cb6-34"><a href="#cb6-34"></a><span class="co"># 標準誤差の手動計算</span></span>
+<span id="cb6-35"><a href="#cb6-35"></a>vcov_matrix_glm <span class="ot">&lt;-</span> <span class="fu">vcov</span>(model_I_glm)</span>
+<span id="cb6-36"><a href="#cb6-36"></a>contrast_vector <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>)  <span class="co"># (Intercept, A1, A2, A1:A2)</span></span>
+<span id="cb6-37"><a href="#cb6-37"></a>joint_var_glm <span class="ot">&lt;-</span> <span class="fu">t</span>(contrast_vector) <span class="sc">%*%</span> vcov_matrix_glm <span class="sc">%*%</span> contrast_vector</span>
+<span id="cb6-38"><a href="#cb6-38"></a>joint_se_manual_glm <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(joint_var_glm)</span>
+<span id="cb6-39"><a href="#cb6-39"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">"Model I (交互作用) の共同効果(LOR): SE = %.4f (手動計算)</span><span class="sc">\n</span><span class="st">"</span>, joint_se_manual_glm))</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="実行結果の要約-1" class="level3" data-number="1.4.2">
+<h3 data-number="1.4.2" class="anchored" data-anchor-id="実行結果の要約-1"><span class="header-section-number">1.4.2</span> 実行結果の要約</h3>
+<p><strong>Model D (logistic)</strong> の <code>groupA1=1, A2=1</code> の係数：</p>
+<ul>
+<li><p>Estimate: <strong>1.6801</strong></p></li>
+<li><p>Std. Error: <strong>0.3567</strong></p></li>
+</ul>
+<p><strong>Model I (logistic)</strong> から計算したJoint Effect：</p>
+<ul>
+<li><p>emmeansを使用: Estimate = <strong>1.6801</strong>, SE = <strong>0.3567</strong></p></li>
+<li><p>手動計算: Estimate = <strong>1.6801</strong>, SE = <strong>0.3567</strong></p></li>
+</ul>
+<p>ロジスティック回帰においても、共同効果の対数オッズ比とその標準誤差が<strong>完全に一致</strong>することが確認できました。</p>
+</section>
+</section>
+<section id="結論" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="結論"><span class="header-section-number">1.5</span> 結論</h2>
+<p>2つの二値曝露を扱う際、4カテゴリーのダミー変数モデルと交互作用モデルは、単なる再パラメータ化の関係にあります。そのため、線形回帰・ロジスティック回帰を問わず、適切に計算すれば共同効果の点推定値と標準誤差は完全に一致します。</p>
+<p><strong>実証結果のポイント：</strong></p>
+<ul>
+<li><p>線形回帰、ロジスティック回帰ともに、ダミー変数モデルを使おうが交互作用モデルを使おうが同じ結果</p></li>
+<li><p>点推定値だけでなく標準誤差も小数点以下4桁まで完全に一致</p></li>
+</ul>
+<p>モデルの選択は、研究の目的に応じて行うべきです。</p>
+<ul>
+<li><p><strong>ダミー変数モデル</strong>: 各曝露パターンの効果を、共通の参照群と比較して直接的に解釈したい場合に直感的です</p></li>
+<li><p><strong>交互作用モデル</strong>: 主効果からの逸脱、つまり交互作用の大きさとその有意性を直接評価したい場合に適しています</p></li>
+</ul>
+<p>Joint Intervention Exposureにおいてはどちらのモデルを使おうが結果は同じとなる。あくまで解析には興味がなく、</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "コピーしました");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "コピーしました");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
+        for (let i=0; i<annoteTargets.length; i++) {
+          const annoteTarget = annoteTargets[i];
+          const targetCell = annoteTarget.getAttribute("data-target-cell");
+          const targetAnnotation = annoteTarget.getAttribute("data-target-annotation");
+          const contentFn = () => {
+            const content = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+            if (content) {
+              const tipContent = content.cloneNode(true);
+              tipContent.classList.add("code-annotation-tip-content");
+              return tipContent.outerHTML;
+            }
+          }
+          const config = {
+            allowHTML: true,
+            content: contentFn,
+            onShow: (instance) => {
+              selectCodeLines(instance.reference);
+              instance.reference.classList.add('code-annotation-active');
+              window.tippy.hideAll();
+            },
+            onHide: (instance) => {
+              unselectCodeLines();
+              instance.reference.classList.remove('code-annotation-active');
+            },
+            maxWidth: 300,
+            delay: [50, 0],
+            duration: [200, 0],
+            offset: [5, 10],
+            arrow: true,
+            trigger: 'click',
+            appendTo: function(el) {
+              return el.parentElement.parentElement.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'quarto',
+            placement: 'right',
+            positionFixed: true,
+            popperOptions: {
+              modifiers: [
+              {
+                name: 'flip',
+                options: {
+                  flipVariations: false, // true by default
+                  allowedAutoPlacements: ['right'],
+                  fallbackPlacements: ['right', 'top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left'],
+                },
+              },
+              {
+                name: 'preventOverflow',
+                options: {
+                  mainAxis: false,
+                  altAxis: false
+                }
+              }
+              ]        
+            }      
+          };
+          window.tippy(annoteTarget, config); 
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="https://github.com/kkts1010/kkts1010.github.io/">
+<p>Kota Sakamoto</p>
+</a>
+  </li>  
+</ul>
+    </div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/kkts1010/kkts1010.github.io/">
+<p>Kota Sakamoto</p>
+</a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/kkt_1010">
+      <i class="bi bi-twitter" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

@@ -1,0 +1,226 @@
+---
+title: "データセット作成のTips"
+author: "坂本航太"
+categories: [SAS,解析プログラミング]
+abstract-title: Abstract
+abstract: ""
+date: "2025-06-29"
+---
+
+## SASデータ処理の舞台裏！`RENAME`と変数変換の賢いテクニック
+
+SASでデータ処理をしていると、時には「あれ？これってどういう意図があるんだろう？」と首をかしげるコードに出会うことがありますよね。今回は、そんな疑問を解消する、ちょっと高度だけど非常に便利なデータ変換テクニックをご紹介します！
+
+例として、次のようなSASコードを見てみましょう。
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+*-----------------------------------------------------------------------------*;
+* DATA PROCESS ;
+*-----------------------------------------------------------------------------*;
+/* オリジナルデータセットから新しいデータセットを作成 */
+data work.ProcessedData ;
+  /* 変数の長さと型を定義 */
+  length PatientID $15 VisitDate $10 Gender $1 GenderNum 8 AgeYears 8 UnitAge $5 ;
+  /* 元データセットを読み込み、特定変数をリネームして取り込む */
+  set work.RawData ( rename = (Gender = _Gender Age = _Age ) ) ;
+
+  /* 新しい変数の値を設定 */
+  PatientID = cats("PAT-", _N_); /* 患者IDを自動生成 */
+  VisitDate = "2024-06-15" ; /* 仮の訪問日を設定 */
+
+  /* 年齢データの変換 */
+  AgeYears = input( _Age, best. ) ; /* _Age（元の年齢データ）を数値に変換 */
+  UnitAge = "YEARS" ; /* 年齢の単位を設定 */
+
+  /* 性別データの変換と数値化 */
+  if _Gender = "1" then Gender = "M" ; /* _Genderが"1"なら"M"（男性）に */
+  else if _Gender = "2" then Gender = "F" ; /* _Genderが"2"なら"F"（女性）に */
+  GenderNum = input( _Gender, best.) ; /* _Genderを数値としてGenderNumに格納 */
+
+  /* 新しいデータセットに残す変数を指定 */
+  keep PatientID VisitDate Gender GenderNum AgeYears UnitAge ;
+
+proc sort data=work.ProcessedData ;
+  by PatientID ; /* 患者IDでソート */
+run ;
+
+---
+
+data work.DAT9 ;
+  merge work.DAT9_1 work.DAT9_2 work.DAT9_3 work.DAT9_4 ;
+  by SUBJID ;
+
+  /* 日付・時刻データの変換例 */
+  /* 元データ: "2023-01-01 10" のような形式 */
+  FPAYDT  = input( substr(FPAYDTC, 1, 10), yymmdd10. ); /* 日付部分のみを抽出してSAS日付値に変換 */
+  PAYDT1  = input( substr(PAYDTC1, 1, 10), yymmdd10. ); /* 同上 */
+  PAYDT2  = input( substr(PAYDTC2, 1, 10), yymmdd10. ); /* 同上 */
+  
+  /* 完全な日時文字列を作成（例: "2023-01-01 10:00"）*/
+  _FPAYDTC = strip( FPAYDTC ) || ":00" ; 
+  _PAYDTC1 = strip( PAYDTC1 ) || ":00" ;
+  _PAYDTC2 = strip( PAYDTC2 ) || ":00" ;
+
+  /* 支払い期間に応じた時間差の計算 */
+  if PAYPD = '第1期' then do ;
+    ELATIME = round( ( input( _FPAYDTC, e8601dt19. ) - input( _PAYDTC1, e8601dt19. ) ) / ( 60*60 ) , 1e-10 ); /* 時間単位の差分を計算 */
+  end ;
+  if PAYPD = '第2期' then do ;  
+    ELATIME = round( ( input( _FPAYDTC, e8601dt19. ) - input( _PAYDTC2, e8601dt19. ) ) / ( 60*60 ), 1e-10 ) ; /* 時間単位の差分を計算 */
+  end ;
+
+run ;
+
+---
+
+data work.SCRCM ;
+  length SUBJID $12 SCRCMFL $1 ;
+  merge work.CM work.SCR;
+  by SBJID ;
+  SUBJID = SBJID ; /* 変数名を合わせる */
+
+  /* 日付形式の変換例 */
+  /* 元データ: "YYYY/MM/DD" -> SASが扱える "YYYY-MM-DD" に変換 */
+  if CMSTDTC ^= "" then _CMSTDTC = tranwrd ( CMSTDTC , "/", "-" ) ;
+  if CMENDTC ^= "" then _CMENDTC = tranwrd ( CMENDTC , "/", "-" ) ;
+
+  /* 期間内に該当するかフラグを立てる */
+  if ( CMSTDTC ^= "" and CMENDTC ^= "" ) and input ( _CMSTDTC, yymmdd10. ) <= SCRDT <= input ( _CMENDTC, yymmdd10. ) then SCRCMFL = "Y" ;
+  /* 開始日または終了日と完全に一致する場合も対象 */
+  if SCRDT ^= . and ( input ( _CMSTDTC, yymmdd10. ) = SCRDT or SCRDT = input ( _CMENDTC, yymmdd10. )) then SCRCMFL = "Y" ;
+  /* 上記条件に当てはまらない場合は"N" */
+  if SCRCMFL = "" then SCRCMFL = "N" ;
+  /* 開始日または終了日が欠損している場合はフラグをクリア */
+  if ( CMSTDTC = "" or CMENDTC = "" ) and SCRCMFL ^= "Y" then SCRCMFL = "" ;
+  /* 開始日がSCRDTより未来の場合は"N" */
+  if CMSTDTC ^= "" and input ( _CMSTDTC, yymmdd10.) > SCRDT then SCRCMFL = "N" ;
+
+  keep SUBJID SCRCMFL ;
+proc sort ;
+  by SUBJID decending SCRCMFL ;
+run ;
+```
+
+このコード、特に注目してほしいのは、`set`ステートメントの\*\*`rename`オプション**と、その後に続く`Gender = _Gender;`のような処理、そして**日付・時刻を扱う際に登場する様々な関数\*\*です。「せっかく`rename`で名前を変えたのに、なんでまた元の名前の変数に代入し直すの？」と感じるかもしれませんね。実はここに、**データ処理のベストプラクティス**が隠されているんです！
+
+### `RENAME`の賢い使い方と「\_変数名」の秘密
+
+まず、`set work.RawData ( rename = (Gender = _Gender Age = _Age ) )`の部分。 これは、元のデータセット`work.RawData`から変数を読み込む際に、`Gender`という変数名を一時的に`_Gender`に、`Age`を`_Age`にそれぞれ変更して、新しいデータセット`work.ProcessedData`に持ち込む、という指示です。
+
+なぜこんなことをするのでしょうか？
+
+#### 1. データ型や値の「変換」をするため
+
+これが最も大きな理由です。多くの場合、元データ（ここでは`work.RawData`）の`Gender`変数は「1（男性）」や「2（女性）」のような**数値コード**で格納されていることがあります。しかし、最終的に使いたいのは「M（Male）」や「F（Female）」のような、より直感的で標準化された**文字データ**だったりします。
+
+このコードでは、まさにその変換を行っています。
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}      
+if _Gender = "1" then Gender = "M" ;
+  else if _Gender = "2" then Gender = "F" ;
+```
+
+ここで、一時的に`_Gender`という名前で保持しておいた元の数値コードを参照し、新しい`Gender`変数に変換後の「M」や「F」を代入しています。`_Age`についても同様に、文字列として読み込まれた年齢データを`input`関数を使って**数値型**の`AgeYears`に変換しています。もし`rename`で直接`Gender`や`Age`として読み込んでしまうと、このような**元の値を使った条件分岐やデータ型変換**が難しくなってしまいますよね。
+
+### `RENAME`オプションの具体例
+
+ここで、`rename`オプションの働きをもう少し具体的に見てみましょう。
+
+**元のデータセット `work.RawData` のイメージ:**
+
+|           |        |     |           |
+|-----------|--------|-----|-----------|
+| PatientID | Gender | Age | Diagnosis |
+| P001      | 1      | 35  | 一般健診  |
+| P002      | 2      | 48  | 頭痛      |
+| P003      | 1      | 22  | 発熱      |
+| P004      | 2      | 60  | 高血圧    |
+
+この`work.RawData`データセットを、`set`ステートメントで読み込む際に、次のように指定しています。
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}       
+set work.RawData ( rename = (Gender = _Gender Age = _Age ) ) ;
+```
+
+この一行が実行されると、`work.ProcessedData`データステップの内部では、`Gender`は`_Gender`として、`Age`は`_Age`として扱われます。つまり、データステップの**その瞬間**、変数は以下のように見えている、とイメージしてください。
+
+**`data work.ProcessedData` ステップ内部での変数の見え方（一時的）:**
+
+|           |              |           |           |
+|-----------|--------------|-----------|-----------|
+| PatientID | **\_Gender** | **\_Age** | Diagnosis |
+| P001      | 1            | 35        | 一般健診  |
+| P002      | 2            | 48        | 頭痛      |
+| P003      | 1            | 22        | 発熱      |
+| P004      | 2            | 60        | 高血圧    |
+
+このように元の変数名を一時的に変更しておくことで、その後の処理で新しい`Gender`や`AgeYears`といった変数を心置きなく作成できるわけです。
+
+### 日付・時刻処理の強力な仲間たち：`INPUT`, `SUBSTR`, `STRIP`, `TRANWRD`
+
+提供されたコードには、**日付や時刻の文字列をSASが認識できる数値（SAS日付値やSAS日時値）に変換する**ための様々な関数が使われています。これらは非常に頻繁に利用されるので、ぜひ使い方を覚えておきましょう。
+
+#### 1. `INPUT`関数とフォーマット (`YYMMDD10.`, `E8601DT19.`)
+
+`INPUT`関数は、**文字列をSASが扱える数値に変換する**ための万能選手です。特に日付や時刻の文字列を扱う際には、その文字列がどのような形式（フォーマット）であるかを指定する必要があります。
+
+-   **`YYYYMMDD10.`**: `YYYY-MM-DD`形式の文字列（例: "2023-01-01"）をSAS日付値に変換します。
+
+   ``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}       
+    FPAYDT = input( substr(FPAYDTC, 1, 10), yymmdd10. );
+    /* FPAYDTCが "2023-01-01 10" の場合、"2023-01-01" の部分だけを抽出して変換 */
+    ```
+
+-   **`E8601DT19.`**: `YYYY-MM-DDTHH:MM:SS`または`YYYY-MM-DD HH:MM:SS`形式のISO 8601日時文字列（例: "2023-01-01 10:00:00"）をSAS日時値に変換します。SAS日時値は、1960年1月1日0時0分0秒からの秒数を表す数値です。
+
+  ``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}     
+    ELATIME = round( ( input( _FPAYDTC, e8601dt19. ) - input( _PAYDTC1, e8601dt19. ) ) / ( 60*60 ) , 1e-10 );
+    /* _FPAYDTCと_PAYDTC1（いずれも"YYYY-MM-DD HH:MM"形式）を日時値に変換し、その差を時間単位で計算 */ 
+    ```
+
+#### 2. `SUBSTR`関数
+
+`SUBSTR`関数は、\*\*文字列の一部を抜き出す（部分文字列を抽出する）\*\*ために使われます。
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}        
+FPAYDT = input( substr(FPAYDTC, 1, 10), yymmdd10. );
+/* FPAYDTC（例: "2023-01-01 10"）の1文字目から10文字目（つまり"2023-01-01"）を抽出 */
+```
+
+この例では、日付と時間の情報が混ざった文字列から、日付の部分だけを取り出して`INPUT`関数に渡しています。
+
+#### 3. `STRIP`関数
+
+`STRIP`関数は、**文字列の先頭や末尾にある余分な半角スペースを取り除く**ために使われます。特にファイルから読み込んだデータは、固定長形式などで不要なスペースが含まれていることがあるため、後の処理で問題を起こさないように`STRIP`で整形することが推奨されます。
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}      
+_FPAYDTC = strip( FPAYDTC ) || ":00" ;
+/* FPAYDTCの末尾のスペースを取り除き、"2023-01-01 10" を "2023-01-01 10:00" のように変換 */
+```
+
+この例では、`STRIP`を使って`FPAYDTC`から不要なスペースを削除し、それに`:00`を結合して、`E8601DT19.`フォーマットで読み取れる「時:分」の形式に整えています。
+
+#### 4. `TRANWRD`関数
+
+`TRANWRD`関数は、**文字列中の特定の文字列を別の文字列に置き換える**ために使われます。
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}       
+_CMSTDTC = tranwrd ( CMSTDTC , "/", "-" ) ;
+/* CMSTDTC（例: "2023/01/01"）の "/" を "-" に置き換え、"2023-01-01" に変換 */
+```
+
+これは、元のデータの日付区切りがスラッシュ（`/`）なのに、SASの標準的な日付フォーマット（`YYYYMMDD10.`など）がハイフン（`-`）を要求する場合によく使われます。`INPUT`関数で正しく変換できるように、事前に`TRANWRD`で文字列を整形しているわけですね。
+
+### まとめ：賢いデータ変換は「RENAME」から！
+
+このように、`set`ステートメントでの`rename`オプション、そして`INPUT`, `SUBSTR`, `STRIP`, `TRANWRD`といった関数を組み合わせることで、SASはどんな形式のデータでも柔軟に処理し、**分析に適した形にクリーンアップ**できます。
+
+-   **元の値を一時的に保持しつつ、**
+
+-   **データ型や値を変換・整形し、**
+
+-   **新しい標準化された変数を作成する**
+
+この一連の流れを理解することで、より柔軟で堅牢なSASプログラムを書けるようになります。ぜひ皆さんのデータ処理にもこれらのテクニックを取り入れてみてくださいね！
+
+データ処理は奥が深いですが、一つ一つのテクニックを理解していくと、どんどん楽しくなりますよ！何か他にSASに関する疑問があれば、いつでも聞いてくださいね！

@@ -31,7 +31,7 @@ ADaMの仕様は複雑で、元となるSDTMデータから多くの新しい変
 
 `PROC TRANSPOSE`で生成されるようなデータ（変数名`_NAME_`を持つ）から、パラメータ(`PARAM`)と訪問番号(`VISITNUM`)を分割する例です。
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}    
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 1. サンプルデータ作成 */
 data transposed_data;
   input _NAME_ $ AVAL;
@@ -76,7 +76,7 @@ title;
 
 1から5までの累積和（1, 1+2, 1+2+3, ...）を計算する例です。
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}   
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 1. サンプルデータ作成 (入力データは不要) */
 
 /* 2. RETAINを使った処理 */
@@ -110,7 +110,7 @@ title;
 
 `BDS`データセットで、被験者ごと、パラメータごとにレコード番号（`ASEQ`）を振る例です。
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}        
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 1. サンプルデータ作成 */
 data ADVS;
   input USUBJID $ PARAMCD $ AVAL;
@@ -154,7 +154,7 @@ title;
 
 `ARRAY`ステートメントと組み合わせて、横持ちデータから縦持ちデータを作成する際に、`PARAMCD`を動的に生成する例です。
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}    
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 1. サンプルデータ作成 (横持ち) */
 data source_data;
   input USUBJID $ TC_1 HDL_1 TC_2 HDL_2;
@@ -200,7 +200,7 @@ title;
 
 **解説:** `MERGE`でデータを結合しただけでは、`ARM`の値は各被験者の最初のレコードにしか入りません。そこで`RETAIN`を使い、`first.USUBJID`（被験者の最初の行）のタイミングで`ARM`の値を一度キャッチし、その値を`last.USUBJID`（被験者の最後の行）まで保持し続けることで、グループ内の全レコードに値を「引き継ぐ」ことができます。
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}      
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* ADSLとADVSをマージし、RETAINでARM情報を引き継ぐ */
 data ADVS_with_ARM;
   merge ADSL(keep=USUBJID ARM) ADVS(in=in_vs);
@@ -221,7 +221,7 @@ run;
 
 **解説:** 台形公式 `(値1 + 値2) * (時間2 - 時間1) / 2` を計算するには、現在行の値/時間に加え、**前**の行の値/時間が必要です。`RETAIN`を使って前の行の時間（`PREV_ATPT`）と値（`PREV_AVAL`）を保持します。`first.by`でパラメータが切り替わるタイミングを検知し、累積AUCや保持している変数を初期化することで、パラメータごとに正しく計算を実行できます。
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}     
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* ADPCデータでAUCを計算 */
 data ADPC_AUC;
   set ADPC;
@@ -250,7 +250,7 @@ run;
 
 **解説:** このテクニックのキモは`last.by`です。`RETAIN`と`max`関数を使い、各レコードを読み進めるごと に、その時点での最大値を計算し保持し続けます。そして、`if last.USUBJID then output;`とすることで、計算は全レコードで行いつつ、最終的な集計結果は各被験者の最後のレコードを処理したタイミングで**一度だけ**出力します。これにより、プログラムのステップを削減し、処理を効率化できます。
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}       
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 各被験者のバイタルサインの最大値を求める */
 data VS_MAX;
   set ADVS_SORTED; /* 事前にUSUBJIDでソート済み */
@@ -271,7 +271,7 @@ run;
 
 **解説:** データ品質チェック（QC）では、同じロジックを多くの変数に適用することが多々あります。`ARRAY`でチェック対象の変数をグループ化し、`VNAME`でエラーが発生した**変数名を動的に取得**することで、保守性の高いプログラムを作成できます。もし将来、チェック対象の変数が追加されても、`ARRAY`ステートメントに変数名を加えるだけで対応でき、ログ出力部分のコードを修正する必要がありません。
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}     
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 汎用的なQCプログラム */
 data _NULL_; /* データセットを作成しない場合は _NULL_ を使う */
   set ADVS;
@@ -298,7 +298,7 @@ run;
 
 #### 応用例1：`RETAIN`によるグループ情報の引き継ぎ（Fill Down）
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}       
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 1. サンプルデータ作成 */
 data ADSL;
   input USUBJID $ ARM $;
@@ -337,7 +337,7 @@ title;
 
 #### 応用例2：`RETAIN`と`first.by`によるAUCの計算
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}     
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 1. サンプルデータ作成 */
 data ADPC;
   input USUBJID $ PARAMCD $ ATPT AVAL;
@@ -374,7 +374,7 @@ title;
 
 #### 応用例3：`last.by`と`RETAIN`によるグループ集計
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}       
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 1. サンプルデータ作成 */
 data ADVS_SORTED;
   input USUBJID $ AVAL;
@@ -405,7 +405,7 @@ title;
 
 #### 応用例4：`VNAME`による汎用的なデータ品質チェック（QC）
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}       
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* 1. サンプルデータ作成 (意図的に負の値を含む) */
 data ADVS_QC;
   input USUBJID $ AVAL BASE CHG;
