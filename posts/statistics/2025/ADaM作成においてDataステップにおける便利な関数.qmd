@@ -1,5 +1,5 @@
 ---
-title: "加工プログラム例―少数ステップでの処理―"
+title: "ADaM作成においてDataステップにおける便利な関数"
 author: "坂本航太"
 categories: [SAS,解析プログラミング]
 abstract-title: Abstract

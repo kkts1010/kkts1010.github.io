@@ -1,0 +1,161 @@
+---
+title: "SASによる便利関数1"
+author: "坂本航太"
+categories: [SAS,解析プログラミング]
+date-modified: "2025-07-02"
+abstract-title: Abstract
+abstract: ""
+date: "2025-07-02"
+---
+
+# SAS備忘録さんのFavorite関数まとめ
+
+1.  CATS関数
+2.  CATX関数
+3.  WHICHN・WHICHC関数
+4.  CHOOSEN・CHOOSEC関数
+5.  COALESCE・COALESCEC関数
+6.  VVALUE・VVALUEX関数
+7.  CMISS関数
+8.  IFN・IFC関数
+9.  CALL MISSING
+10. CALL SYMPUTX
+
+SASプログラミングで頻繁に使用される便利な関数を、実用的なプログラム例とともに解説します。
+
+## CATS関数
+
+**機能：** 複数の文字列を連結し、各引数の前後の空白を自動削除
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+data example1;     name = "田中";     id = "001";     dept = "営業部";          /* 従来の方法 */     result1 = trim(name) || trim(id) || trim(dept);          /* CATS関数を使用 */     result2 = cats(name, id, dept);          put result1= result2=; run;
+```
+
+**出力：** result1=田中001営業部 result2=田中001営業部
+
+CATS関数は自動的に前後の空白を削除するため、TRIMやLEFT関数が不要になり、コードがシンプルになります。
+
+## CATX関数
+
+**機能：** 指定した区切り文字で複数の文字列を連結
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+data example2;     year = 2025;     month = 6;     day = 16;          /* 日付文字列の作成 */     date_slash = catx("/", year, month, day);     date_hyphen = catx("-", year, month, day);          /* CSVフォーマットの作成 */     csv_line = catx(",", "田中太郎", 30, "東京都");          put date_slash= date_hyphen= csv_line=; run;
+```
+
+**出力：** date_slash=2025/6/16 date_hyphen=2025-6-16 csv_line=田中太郎,30,東京都
+
+## WHICHN・WHICHC関数
+
+**機能：** 指定した値がリストの何番目にあるかを返す
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+data ae_severity;     input pt $ severity $;          /* 重篤度レベルをコード化 */     severity_code = whichc(severity, "軽度", "中等度", "重度", "重篤");          /* グレード分類への変換 */     ctcae_grade = whichc(severity, "Grade1", "Grade2", "Grade3", "Grade4", "Grade5");      datalines; 頭痛 軽度 発熱 中等度 呼吸困難 重度 ; run;
+```
+
+pt=頭痛 severity=軽度 severity_code=1 ctcae_grade=0
+
+pt=発熱 severity=中等度 severity_code=2 ctcae_grade=0\
+pt=呼吸困難 severity=重度 severity_code=3 ctcae_grade=0
+
+-   `severity_code`：指定したリスト内での位置を返す
+
+    -   "軽度" → 1番目 → 1
+
+    -   "中等度" → 2番目 → 2
+
+    -   "重度" → 3番目 → 3
+
+<!-- -->
+
+-   `ctcae_grade`：CTCAEグレード用のリストにマッチしないため全て0
+
+    -   データの"軽度"、"中等度"、"重度"は"Grade1"、"Grade2"等とマッチしない
+
+    -   マッチしない場合はWHICHC関数は0を返す
+
+## CHOOSEN・CHOOSEC関数
+
+**機能：** インデックス番号に基づいてリストから値を選択
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+data example4;     do i = 1 to 4;         /* 数値版：CHOOSEN */         threshold = choosen(i, 60, 70, 80, 90);                  /* 文字版：CHOOSEC */         grade = choosec(i, "D", "C", "B", "A");                  put i= threshold= grade=;     end; run;
+```
+
+**出力：** i=1 threshold=60 grade=D i=2 threshold=70 grade=C i=3 threshold=80 grade=B i=4 threshold=90 grade=A
+
+・Y番目のXの値を返す。\
+・第2引数以降に数値型の変数または値を指定する場合はCHOOSEN関数を用いる。\
+・第2引数以降に文字型の変数または値を指定する場合はCHOOSEC関数を用いる。
+
+## COALESCE・COALESCEC関数
+
+**機能：** 最初の非欠損値を返す
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+/* サンプルデータの作成 */ data sample_data;     input ID X1 $ X2 $ X3 $;     datalines; 1 AA    BB 2    CC DD 3       EE 4 FF     5           6 GG HH II ; run;  /* 方法1: IF-ELSE文を使用 */ data result1;     set sample_data;     length Y $2.;     if X1^="" then Y=X1;     else if X2^="" then Y=X2;     else if X3^="" then Y=X3; run;  /* 方法2: COALESCEC関数を使用 */ data result2;     set sample_data;     length Y $2.;     Y = coalescec(X1, X2, X3); run;
+```
+
+**ポイント：**
+
+-   この関数は「引数のうち最初に欠損値以外で登場する値を返す」という機能を持っています。
+
+-   **COALESCE：** 数値の場合、欠損値（.）をスキップして最初の有効な値（85）を返す
+
+-   **COALESCEC：** 文字の場合、空白をスキップして最初の有効な文字列を返す
+
+## VVALUE・VVALUEX関数
+
+**機能：** フォーマットが適用された値を文字列として取得
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+data DT1;   format X yymmdd10.;   X = '13jun2017'd; run;   data DT2;   set DT1;   length Y $20.;   Y = put( X, yymmdd10.); run;   data DT2;   set DT1;   length Y1 Y2 $20.;    /* vvalue関数を使った例 */   Y1 = vvalue( X );    /* vvaluex関数を使った例 */   Y2 = vvaluex( "X" );  run;
+```
+
+-   **Y1 = vvalue( X )：**「 vvalue( X ) 」で変数Xに割り当てられているFORMAT「YYMMDD10.」を使って文字変換した値「2017-06-13」を返しています。
+-   **Y2 = vvaluex( "X" );**vvaluex も vvalue と同じ機能を持っているのですが、違いは以下の通り。
+-   vvalue( X )      … 変数名を指定
+-   vvaluex( "X" )  … 変数名を表す文字値を指定
+-   つまり、「 vvaluex( "X" ) 」で変数Xに割り当てられているFORMAT「YYMMDD10.」を使って文字変換した値「2017-06-13」を返しています。
+
+## CMISS関数
+
+**機能：** 欠損値の個数をカウント
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+data example7;     input name $ age height weight;          missing_count = cmiss(age, height, weight);     complete_data = (missing_count = 0);          put name= missing_count= complete_data=;      datalines; 田中 25 170 65 佐藤 . 165 . 山田 30 . 70 ; run;
+```
+
+**出力：** name=田中 missing_count=0 complete_data=1 name=佐藤 missing_count=2 complete_data=0 name=山田 missing_count=1 complete_data=0
+
+## IFN・IFC関数
+
+**機能：** 条件に基づいて値を返す三項演算子
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+data DT1;    length X1 $10.;    X1="YES"; output;    X1="NO"; output; run;  #Before data DT2;    set DT1;    if X1 = "YES" then X2=1;    else  X2=0; run;  #After data DT2;    set DT1;    X2 = ifn(X1="YES",1,0); run;
+```
+
+Rのifelse関数みたいな気持ち。
+
+## CALL MISSING
+
+**機能：** 複数の変数を一度に欠損値に設定
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+data example9;     name = "田中";     age = 25;     score = 85;          /* 条件に応じて全データを欠損値に */     if age < 20 then call missing(of name age score);          put name= age= score=; run;
+```
+
+このSASコードは`CALL MISSING`ルーチンを使って、条件に応じて複数の変数を一度に欠損値に設定する例です。
+
+## CALL SYMPUTX
+
+**機能：** データステップ内でマクロ変数を作成・更新
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+data example10;     input dept $ sales;          /* 部門別に動的にマクロ変数を作成 */     call symputx(cats("sales_", dept), sales);          /* 最大売上をマクロ変数に格納 */     retain max_sales;     if _n_ = 1 then max_sales = sales;     else max_sales = max(max_sales, sales);     if  _EOF then call symputx("OBS", _N_);      datalines; 営業 1200 技術 800 総務 300 ; run;  /* データステップ終了後に最大値を取得 */ data _null_;     set example10 end=last;     retain max_sales;     if _n_ = 1 then max_sales = sales;     else max_sales = max(max_sales, sales);     if last then call symputx("max_sales_total", max_sales); run;  %put &sales_営業 &sales_技術 &sales_総務; %put &max_sales_total;
+```
+
+**出力：** 1200 800 300 1200
+
+これらの関数を使いこなすことで、SASプログラミングの効率と可読性が大幅に向上します。特にデータクリーニングや条件分岐処理において威力を発揮する関数群です。

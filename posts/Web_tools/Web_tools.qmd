@@ -9,6 +9,19 @@ title: "Web Tools"
 -   [計量生物学会](https://www.biometrics.gr.jp/)
 -   [統計家の行動基準](https://www.biometrics.gr.jp/news/all/standard_20150310.pdf)
 
+## 論文雑誌
+
+-   [計量生物学](https://www.jstage.jst.go.jp/browse/jjb/list/-char/ja)
+-   [薬剤疫学](https://www.jstage.jst.go.jp/browse/jjpe/-char/ja)
+-   [Journal of Epideimology](https://jeaweb.jp/journal/issues/jstage/index.html)
+-   [Statistics in Medicine](https://onlinelibrary.wiley.com/loi/10970258)
+-   [Pharmaceutical Statistics](https://onlinelibrary.wiley.com/toc/15391612/current)
+-   [Biostatistics](https://academic.oup.com/biostatistics)
+-   [Pharmacoepidemiology ＆ Drug Safety](https://onlinelibrary.wiley.com/journal/10991557)
+-   [すうがくぶんか株式会社](https://sugakubunka.com/)
+-   [Quarto](https://quarto.org/)
+-   [Git公式書籍（日本語](https://git-scm.com/book/ja/v2)
+
 ## 医薬品開発
 
 -   [PMDA 審査関連業務の概要について](https://www.pmda.go.jp/review-services/outline/0001.html)
@@ -102,17 +115,6 @@ title: "Web Tools"
 -   [司馬先生のブログ](https://162348.github.io/)
 -   [Yanagimoto先生のブログ](https://zenn.dev/nicetak)
 -   [すきとほるさんのブログ](https://nothing-without-poison.com/)
-
-## 論文雑誌
-
--   [計量生物学](https://www.jstage.jst.go.jp/browse/jjb/list/-char/ja)
--   [薬剤疫学](https://www.jstage.jst.go.jp/browse/jjpe/-char/ja)
--   [Journal of Epideimology](https://jeaweb.jp/journal/issues/jstage/index.html)
--   [Statistics in Medicine](https://onlinelibrary.wiley.com/loi/10970258)
--   [Pharmaceutical Statistics](https://onlinelibrary.wiley.com/toc/15391612/current)
--   [すうがくぶんか株式会社](https://sugakubunka.com/)
--   [Quarto](https://quarto.org/)
--   [Git公式書籍（日本語](https://git-scm.com/book/ja/v2)
 
 ## Quartoブログ
 

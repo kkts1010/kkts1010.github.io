@@ -1,0 +1,190 @@
+---
+title: "DDEによるExcelデータの読み込み"
+author: "坂本航太"
+categories: [SAS,解析プログラミング]
+abstract-title: Abstract
+abstract: ""
+date: "2025-06-29"
+---
+
+## SASでExcelデータを自在に操る：DDEを活用したデータ読み込み術
+
+SASを使ってExcelファイルからデータを読み込む方法はいくつかありますが、今回は\*\*DDE（Dynamic Data Exchange）\*\*という少しレガシーながらも強力な手法をご紹介します。DDEを使えば、ExcelアプリケーションをSASから制御し、必要な範囲のデータを柔軟に読み込むことができます。これは、特に「Excelファイルを開いて特定のシートの特定のセル範囲だけを読みたい」といった場合に非常に便利です。
+
+### DDEとは？
+
+DDEは、Microsoft Windowsアプリケーション間でデータを共有・交換するためのプロトコルです。SASからDDEを利用することで、Excelアプリケーションを直接操作し、ファイルを開く、特定のセル範囲を選択する、データを読み込む、ファイルを閉じる、といった一連の動作を自動化できます。
+
+### 1. 前準備：DDEでExcelを操作するためのパスとファイル名の確認
+
+DDEでExcelファイルを操作する前に、読み込みたいExcelファイルのパスとファイル名をマクロ変数で定義しておくと便利です。これは、プログラムの可読性を高め、パスの変更があった際に対応を容易にするためです。
+
+SAS
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+%put &SettingsPath.;
+%put &&SettingsFile.;
+```
+
+ここでは、すでに定義されている`&SettingsPath.`（Excelファイルが格納されているディレクトリ）と`&SettingsFile.`（Excelファイル名）というマクロ変数の内容をログに出力しています。これはデバッグ時に、意図したパスとファイル名が設定されているかを確認するのに役立ちます。
+
+### 2. Excelファイルの起動と待機：`%sysexec`と`sleep`の活用
+
+ExcelファイルをDDEで操作するには、まずそのExcelアプリケーションを起動しておく必要があります。
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+/*---------------------------*/
+/* 設定ファイルの読込         */
+/*---------------------------*/
+*--- Excel起動 ---*;
+%sysexec  "&SettingsPath.\&SettingsFile.";
+
+data _null_;
+  rc = sleep(5);
+run;
+```
+
+-   **`%sysexec "&SettingsPath.\&SettingsFile.";`**: `%SYSEXEC`マクロステートメントは、SASセッションから外部のコマンドを実行するために使用します。ここでは、指定されたパスにあるExcelファイルを直接実行しています。これにより、Excelアプリケーションが起動し、指定されたファイルが開かれます。
+
+-   **`data _null_; rc = sleep(5); run;`**: Excelが完全に起動してファイルを開くには少し時間がかかる場合があります。`SLEEP`関数は、指定された秒数（この例では5秒）だけプログラムの実行を一時停止させます。これにより、SASがExcelにDDE接続する前に、Excelが準備を完了するのを待つことができます。
+
+### 3. Excelデータの読み込み：`FILENAME DDE`ステートメント
+
+Excelが起動したら、`FILENAME DDE`ステートメントを使ってDDE接続を確立し、データを読み込みます。
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+*--- Excelデータの読込 ---*;
+filename EXC dde "Excel|[&SettingsFile.]&SettingsSheet.!C1:C4";
+
+data work._SettingList;
+    length Title $100. Path $1000. FileName $500. SheetName $50.;
+    infile EXC notab dlm="09"x dsd missover lrecl=1000 firstobs=2;
+    input Title Path FileName SheetName;
+
+    if Title ne "";
+run;
+```
+
+-   **`filename EXC dde "Excel|[&SettingsFile.]&SettingsSheet.!C1:C4";`**: これがDDE接続の核心です。
+
+    -   `filename EXC`: `EXC`という\*\*fileref（ファイル参照名）\*\*を定義します。
+
+    -   `dde`: DDEプロトコルを使用することをSASに伝えます。
+
+    -   `"Excel|[&SettingsFile.]&SettingsSheet.!C1:C4"`: DDEの\*\*会話文字列（conversation string）\*\*です。
+
+        -   `Excel`: サービス名（アプリケーション名）です。
+
+        -   `|`: サービス名とトピック名を区切ります。
+
+        -   `[&SettingsFile.]`: トピック名（アプリケーションが提供するデータセット）です。ここでは開いているExcelファイル名を指定します。`[]`で囲むのがExcel DDEの慣習です。
+
+        -   `&SettingsSheet.!C1:C4`: アイテム名（特定のデータ項目）です。`&SettingsSheet.`で指定されたシートの`C1`から`C4`までのセル範囲をDDE経由で読み込むことを指示しています。
+
+-   **`data work._SettingList; ... run;`**: 通常の`DATA`ステップと`INFILE`ステートメントを使って、DDEで接続したExcelのデータ範囲からデータを読み込みます。
+
+    -   `infile EXC`: 上で定義したDDE接続のfileref `EXC`を指定します。
+
+    -   `notab`: タブ文字をデータの一部として扱わないようにします。
+
+    -   `dlm="09"x`: \*\*デリミタ（区切り文字）\*\*としてタブ文字（`09`xはタブの16進数表現）を指定します。Excelのセルデータは通常タブで区切られて転送されます。
+
+    -   `dsd`: Delimited Standard Data。連続するデリミタを欠損値として扱い、引用符で囲まれた値の中のデリミタをデータの一部として扱います。
+
+    -   `missover`: 行の終わりに変数のデータが不足している場合、残りの変数を欠損値にします。
+
+    -   `lrecl=1000`: 論理レコード長を1000バイトに設定します。行が長い場合に必要です。
+
+    -   `firstobs=2`: 読み込みを開始する行を指定します。この例ではExcelの1行目がヘッダーであるため、2行目から読み込みを開始しています。
+
+    -   `input Title Path FileName SheetName;`: 読み込む変数を定義します。`length`ステートメントで適切な長さを設定しておくことが重要です。
+
+    -   `if Title ne "";`: `Title`が空でない行のみを読み込むことで、データの終端や不要な行をスキップできます。
+
+### 4. ExcelファイルのクローズとDDE接続の解放
+
+データ読み込みが終わったら、開いたExcelファイルを閉じ、DDE接続を解放します。
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+*--- Excelクローズ ---*;
+filename SYS dde 'Excel|system';
+
+data _null_;
+file SYS;
+put "[quit()]";
+run;
+
+data _null_;
+    rc = sleep(3);
+run;
+
+*--- ファイル参照を解放 ---*;
+filename EXC clear;
+filename SYS clear;
+```
+
+-   **`filename SYS dde 'Excel|system';`**: Excelアプリケーション全体を制御するためのDDE接続を確立します。サービス名が`Excel`、トピック名が`system`です。この`system`トピックを通じて、Excelにコマンドを送信できます。
+
+-   **`data _null_; file SYS; put "[quit()]"; run;`**: `FILE SYS`でこのDDE接続に出力することで、Excelアプリケーションに対して`[quit()]`というコマンドを送信しています。これはExcelに終了を指示するDDEコマンドです。
+
+-   **`data _null_; rc = sleep(3); run;`**: Excelが終了するのを待つために、再び`SLEEP`関数を使用します。これにより、Excelが完全に閉じられる前に次の処理が実行されるのを防ぎます。
+
+-   **`filename EXC clear; filename SYS clear;`**: 最後に、定義したすべてのfilerefをクリアし、DDE接続を完全に解放します。これにより、リソースのリークを防ぎ、次の処理に影響を与えないようにします。
+
+### DDEを使う上での注意点
+
+-   **GUI環境でのみ動作**: DDEは、SASが稼働しているマシンにExcelがインストールされており、かつGUIモード（インタラクティブなSASセッション）で実行されている場合にのみ機能します。バッチモードやSAS Gridなどのサーバー環境では直接使用できません。
+
+-   **ファイルが開かれた状態**: DDEで操作するExcelファイルは、SASプログラムが実行される時点で開かれていない必要があります。もし開いている場合、排他ロックによりエラーになる可能性があります。
+
+-   **エラーハンドリング**: DDE接続やExcel操作中にエラーが発生した場合のハンドリングが複雑になることがあります。`SYSEXEC`やDDEの構文エラーはSASログに表示されますが、Excel内部のエラーを詳細に捕捉するのは難しい場合があります。
+
+-   **代替手段**: 現在では、より堅牢でクロスプラットフォームなデータ読み込み方法として、`PROC IMPORT`（特に`DBMS=XLSX`オプション）、SAS/ACCESS to PC Files、またはSAS ViyaのCASエンジン経由でのデータ読み込みが推奨されます。DDEは特定のユースケース（例：Excelのマクロ実行後データの取得）を除いて、第一選択肢とはならないかもしれません。
+
+### まとめ
+
+DDEを使ったExcelデータの読み込みは、SASからExcelを直接制御できる強力な方法です。特に、動的に特定の範囲のデータを取得したい場合や、Excelの特定の機能を利用する必要がある場合にその真価を発揮します。ただし、その特性と注意点を理解した上で、適切に活用することが重要です。
+
+### Appendix: 全コード
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+%put &SettingsPath.;
+%put &&SettingsFile.;
+
+/*---------------------------*/
+/* 設定ファイルの読込       */
+/*---------------------------*/
+*--- Excel起動 ---*;
+%sysexec  "&SettingsPath.\&SettingsFile.";
+
+data _null_;
+  rc = sleep(5);
+run;
+
+*--- Excelデータの読込 ---*;
+filename EXC dde "Excel|[&SettingsFile.]&SettingsSheet.!C1:C4";
+
+data work._SettingList;
+    length Title $100. Path $1000. FileName $500. SheetName $50.;
+    infile EXC notab dlm="09"x dsd missover lrecl=1000 firstobs=2;
+    input Title Path FileName SheetName;
+
+    if Title ne "";
+run;
+
+*--- Excelクローズ ---*;
+filename SYS dde 'Excel|system';
+
+data _null_;
+file SYS;
+put "[quit()]";
+run;
+
+data _null_;
+    rc = sleep(3);
+run;
+
+*--- ファイル参照を解放 ---*;
+filename EXC clear;
+filename SYS clear;
+```

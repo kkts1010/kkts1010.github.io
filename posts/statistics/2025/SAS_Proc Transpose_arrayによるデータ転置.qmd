@@ -51,7 +51,7 @@ P01     | 2      | HDL       | 1       | 50
 
 #### ステップ1：まず転置してみる
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}   
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 proc transpose data=source_data out=transposed_data(rename=(COL1=AVAL _NAME_=VARNAME));
   by USUBJID;
   var TC_1--TC_3 HDL_1--HDL_3;
@@ -74,7 +74,7 @@ run;
 
 次に、この中間データをデータステップで加工し、`VARNAME`から`PARAM`と`AVISITN`を作り出します。
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}      
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 data final_data_transpose;
   set transposed_data;
   
@@ -94,7 +94,7 @@ run;
 
 `ARRAY`は\*\*「複数の変数を一時的にグループ化して、番号で扱えるようにする」\*\*機能です。 これを使いこなすと、非常に効率的なプログラミングが可能になります。
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}    
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 data final_data_array;
   set source_data;
   
@@ -133,7 +133,7 @@ run;
 
 最後は、地道な`DATA`ステップの繰り返しを自動化するマクロを使った方法です。
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}    
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 %macro reshape(param_nm, param_num);
   %do visit = 1 %to 3;
     data temp_&param_nm._&visit.;
@@ -185,7 +185,7 @@ run;
 
 以下に、本稿で紹介した3つのアプローチについて、横持ちの疑似データ作成から縦持ちデータへ変換するまでの一連のSASプログラムを掲載します。
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}     
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 /* ============================================== */
 /* 1. 変換元となる横持ちデータを作成              */
 /* ============================================== */

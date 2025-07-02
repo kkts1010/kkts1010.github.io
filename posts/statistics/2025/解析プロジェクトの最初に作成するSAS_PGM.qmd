@@ -1,0 +1,416 @@
+---
+title: "解析プロジェクトの最初に作成するSASプログラム"
+author: "坂本航太"
+categories: [SAS,解析プログラミング]
+abstract-title: Abstract
+abstract: ""
+date: "2025-07-02"
+---
+
+## SAS解析プロジェクトを始める前に：プログラム初期設定のベストプラクティス
+
+SASを使った解析プロジェクトを始める際、毎回同じような初期設定のコードを書いている方も多いのではないでしょうか。この技術メモでは、解析プロジェクトの最初に作成する\*\*`Run_ADAM-Prg.sas`\*\*というメインプログラムについて、その構成と各セクションの意図を詳しく解説します。この初期設定をしっかり行うことで、プロジェクト全体の効率性と再現性が大幅に向上します。
+
+### 1. 初期化コマンド：SASセッションのクリーンアップとプログラムヘッダ
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+proc datasets kill nolist ; run ; quit ;
+dm 'out ; clear ; log ; clear ;' ;
+
+/***********************************************************************
+* Project         : 臨床研究の統計解析プログラミング
+* Program name    : Run_ADAM-Prg.sas
+* Author          : Kota Sakamoto
+* Date created    : 2025/07/02
+* Purpose         : ADaM作成プログラム
+* Revision History :
+***********************************************************************/
+```
+
+プログラムの冒頭にこれらを記述することで、SASセッションを完全にクリーンな状態から始めることができます。
+
+-   **`proc datasets kill nolist ; run ; quit ;`**: 現在のSASセッションに存在するすべてのライブラリ（特に`WORK`ライブラリ）内のデータセットとカタログを削除します。これにより、以前の実行で残った一時ファイルによる予期せぬエラーを防ぎます。
+
+-   **`dm 'out ; clear ; log ; clear ;' ;`**: SASログウィンドウと出力ウィンドウの内容をクリアします。これにより、現在の実行に関するログのみが表示され、デバッグがしやすくなります。
+
+その下には、ご指定のプログラムヘッダを記述します。プロジェクト名、ファイル名、作成者、作成日、目的、変更履歴などの情報を含めることで、プログラムの目的が明確になり、後から見返したり他の人と共有したりする際に非常に役立ちます。特に**変更履歴**は、問題発生時の原因特定や、新しいメンバーへの引き継ぎにおいて不可欠です。
+
+### 2. オプション設定：SAS環境を最適化
+
+SAS
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+*--- オプション設定 ---*;
+options noxwait;    * XコマンドでSASシステムから制御した後、自動的に再度SASシステムに戻る ;
+options noxsync;  * Xコマンドで開始した処理の終了を待たずにSASシステムに戻る ;
+options noquotelenmax;  * 引用符で囲んだ文字が長すぎる場合のNOTEを出さないようにする ;
+options source2;    * 2次ソースステートメントをSASログに書き込む ;
+```
+
+SASの\*\*`OPTIONS`ステートメント\*\*は、SASセッションの動作を制御するためのものです。プロジェクトの性質や個人の好みに応じて設定しますが、特に重要なものをいくつかご紹介します。
+
+-   **`noxwait` / `noxsync`**: 外部コマンド（`X`コマンドなど）の実行に関するオプションです。これらを指定することで、外部プロセスの完了を待たずにSASに戻る、または外部プロセスの実行中にSASがブロックされないようにすることができます。これは、外部スクリプトの呼び出しや、大量のファイル操作を行う際に役立ちます。
+
+-   **`noquotelenmax`**: 長い文字列を引用符で囲んだ際に表示される`NOTE`メッセージを抑制します。ログをきれいに保ちたい場合に便利です。
+
+-   **`source2`**: `INCLUDE`ステートメントなどで読み込まれた二次ソースコードもSASログに出力するようになります。デバッグ時にどのコードが実行されているかを確認するのに非常に役立ちます。
+
+-   **追加の推奨オプション**:
+
+    -   **`ls=MAX` / `ps=MAX`**: ログの行長とページ長を最大に設定し、ログが見やすくなります。
+
+    -   **`fmterr`**: フォーマットが見つからない場合にエラーを発生させます。予期せぬフォーマットエラーを防ぐために重要です。
+
+    -   **`errors=0`**: SASセッション中のエラー表示数を無制限にします。これにより、すべてのエラーを確認できます。
+
+### 3. マクロ変数のクリア：環境のクリーンアップ
+
+SAS
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+*--- マクロ変数のクリア ---*;
+%put _user_;
+data vars;
+    set sashelp.vmacro;
+run;
+
+data symdel;
+  set sashelp.vmacro;
+  where scope = 'GLOBAL' and NAME not in ('SYS_SQL_IP_ALL', 'SYS_SQL_IP_STMT');
+run;
+
+data _null_;
+  set symdel;
+  call symdel(name);
+run; 
+```
+
+前のセッションやテスト実行で残った**グローバルマクロ変数**が、現在の実行に影響を与えることを防ぐために、不要なマクロ変数をクリアします。`sashelp.vmacro`は現在定義されているマクロ変数の情報を持ち、`CALL SYMDEL`関数を使って特定の変数を削除できます。これにより、常にクリーンな状態でプログラムを実行できます。
+
+### 4. データセットの一括クリア：ワークライブラリの整理
+
+SAS
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+*--- データセットの一括クリア ---*;
+proc delete data=work._all_;
+run;
+```
+
+SASの\*\*`WORK`ライブラリ\*\*は一時的なデータセットが格納される場所です。過去の実行で作成されたデータセットが残っていると、意図しない結果を招いたり、ディスク容量を圧迫したりする可能性があります。`PROC DELETE DATA=WORK._ALL_`を使用することで、`WORK`ライブラリ内のすべてのデータセットを効率的に削除し、常にゼロベースで解析を開始できます。
+
+### 5. ディレクトリの設定：パスの動的な管理
+
+SAS
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+*--- ディレクトリの設定 ---*;
+* フルパスの取得 ;
+%let path = %sysget(SAS_EXECFILEPATH);
+%put &path.;
+
+* ファイル名の取得 ;
+%let filename = %SCAN(&path., -1, "\");
+%put &filename.;
+
+* ディレクトリの取得 ;
+%let drct = %substr(&path., 1, %length(&path.)-%length(%SCAN(&path.,-1,"\"))-1);
+%put &drct.;
+
+* ディレクトリ設定 ;
+data _null_;
+    call system("cd &drct.");
+run;
+```
+
+プロジェクトのパスを**動的に設定**することは非常に重要です。これにより、プログラムを異なる環境やPCに移動しても、パスを手動で変更する必要がなくなります。
+
+-   **`%sysget(SAS_EXECFILEPATH)`**: 現在実行しているSASプログラムのフルパスを取得します。
+
+-   **`%SCAN` / `%SUBSTR` / `%LENGTH`**: マクロ関数を組み合わせて、フルパスからファイル名やディレクトリパスを抽出します。
+
+-   **`CALL SYSTEM("cd &drct.")`**: SASセッションのカレントディレクトリを実行プログラムのディレクトリに設定します。これにより、相対パスでのファイル指定が容易になります。
+
+### 6. マクロ変数の定義：プロジェクト固有のパス設定
+
+SAS
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+*--- マクロ変数の定義 ---*;
+%let InputPath = &drct.\Input;
+%let OutputPath = &drct.\Output;
+%let LogPath = &drct.\Log;
+%let PrgPath = &drct.\Prg;
+%let SettingsPath = &drct.\Settings;
+%let SpecPath = &drct.\Spec;
+
+%let SettingsFile = ADAM設定ファイル.xlsx;
+%let SettingsSheet = 設定;
+
+%put _user_;
+```
+
+プロジェクト内で頻繁に使用するパスやファイル名を**マクロ変数**として定義します。これにより、コードの可読性が向上し、将来的にパスが変更になった場合でも、このセクションを修正するだけで済みます。
+
+-   `InputPath`: 生データや外部ファイルなど、入力データが置かれるディレクトリ
+
+-   `OutputPath`: 出力される解析結果やレポートが保存されるディレクトリ
+
+-   `LogPath`: SASログファイルが保存されるディレクトリ（ログの自動保存を設定する場合）
+
+-   `PrgPath`: サブプログラムが置かれるディレクトリ
+
+-   `SettingsPath`: 設定ファイルが置かれるディレクトリ
+
+-   `SpecPath`: 仕様書が置かれるディレクトリ
+
+また、設定ファイル名やシート名などもマクロ変数として定義しておくと、変更があった際に対応が容易になります。
+
+### 7. 実行Prgのパス設定：サブプログラムのインクルード準備
+
+SAS
+
+```         
+*--- 実行Prgのパス設定 ---*;
+filename saspgm "&PrgPath.";
+```
+
+`FILENAME`ステートメントを使用して、サブプログラムが格納されているディレクトリに\*\*fileref（ファイル参照名）\*\*を割り当てます。これにより、後続の`%INCLUDE`ステートメントで、相対パスでサブプログラムを指定できるようになります。
+
+### 8. メイン処理のモジュール化
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+/*--- 基本設定の読み込み ---*/
+%include saspgm( "01_LoadBaseSettings.sas" );
+
+
+/*--- プロジェクト設定の読み込み ---*/
+%include saspgm( "02_ImportProjectConfig.sas" );
+
+
+/*--- データソース定義のロード ---*/
+%include saspgm( "03_DefineDataSources.sas" );
+
+
+/*--- 外部ライブラリ接続 ---*/
+%include saspgm( "04_LinkExternalLibs.sas" );
+
+
+/*--- フォーマット定義の生成 ---*/
+%include saspgm( "05_GenerateFormatDefs.sas" );
+
+
+/*--- 全体設定の統合 ---*/
+%include saspgm( "06_IntegrateGlobalSettings.sas");
+
+
+/*--- 共通マクロのロード ---*/
+%include saspgm( "11_McrBuildMasterDataset.sas" );
+%include saspgm( "12_McrStandardizeDates.sas" );
+%include saspgm( "13_McrCreateCoreADaMs.sas" );
+%include saspgm( "14_McrAppendSuppData.sas" );
+%include saspgm( "15_McrRecodeVariables_V2.sas" );
+
+
+/*--- ADaMデータセットの作成 ---*/
+%include saspgm( "21_DeriveADSL.sas" );
+%include saspgm( "22_DeriveADLB.sas" );
+%include saspgm( "23_DeriveADVS.sas" );
+%include saspgm( "24_DeriveADRS.sas" );
+%include saspgm( "25_DeriveADAE.sas" );
+
+
+/*--- 後処理とクリーンアップ ---*/
+%include saspgm( "99_PostProcessingAndCleanup.sas" );
+```
+
+メインプログラムの役割は、各機能ごとのサブプログラムを\*\*`%INCLUDE`ステートメント\*\*で呼び出すことです。これにより、プログラム全体がモジュール化され、以下の利点が得られます。
+
+-   **可読性の向上**: 各ファイルが特定の機能に集中するため、コードが読みやすくなります。
+
+-   **保守性の向上**: 特定の機能を変更したい場合、該当するサブプログラムのみを修正すればよいため、影響範囲が限定されます。
+
+-   **再利用性の向上**: 各サブプログラムは独立した機能を持つため、他のプロジェクトでも再利用しやすくなります。
+
+-   **デバッグの容易性**: エラーが発生した場合、どのモジュールで問題が起きているかを特定しやすくなります。
+
+特に、以下のような処理をモジュール化すると良いでしょう。
+
+-   **基本設定の読み込み（`01_LoadBaseSettings.sas`）**: 環境変数や基本的なオプション設定の読み込み。
+
+-   **プロジェクト設定の読み込み（`02_ImportProjectConfig.sas`）**: 解析に必要な各種設定を外部ファイルから読み込む処理。
+
+-   **データソース定義のロード（`03_DefineDataSources.sas`）**: 使用するデータのソースや構造を定義する処理。
+
+-   **外部ライブラリ接続（`04_LinkExternalLibs.sas`）**: データベースや他のSASライブラリへの接続設定。
+
+-   **フォーマット定義の生成（`05_GenerateFormatDefs.sas`）**: 値のラベル付けなど、解析に必要なSASフォーマットの作成。
+
+-   **全体設定の統合（`06_IntegrateGlobalSettings.sas`）**: 読み込んだ設定や定義を統合する処理。
+
+-   **共通マクロのロード（`11_McrBuildMasterDataset.sas`など）**: プロジェクト全体で利用する汎用的なSASマクロの定義。
+
+-   **ADaMデータセットの作成（`21_DeriveADSL.sas`など）**: 各ADaMデータセットの具体的な作成ロジック。
+
+-   **後処理とクリーンアップ（`99_PostProcessingAndCleanup.sas`）**: ログファイルの保存、一時的なリソースの解放など、プログラム終了時に行うべき処理。
+
+以下のプログラムも便利です。
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+*-----------------------------------------------------------------------------*;
+* Initial ;
+*-----------------------------------------------------------------------------*;
+%let execpath = "" ;
+
+/* 現在実行しているプログラムのパスを取得 (ファイル名を含む) */
+%macro setexecpath ;
+  %let execpath = %sysfunc(getoption(sysin)) ;
+  %if %length(&execpath.) = 0 %then %let execpath = %sysget(sas_execfilepath) ;
+%mend setexecpath ;
+%setexecpath ;
+
+/* ファイル名からドメイン名の切出し */
+%let DOMAIN = %scan(%scan(&execpath, -1, "\"), 1, ".") ;
+/* パスのみの切り出し (プログラムパスからファイル名を削除) */
+%let CURRENT = %qsubstr("&execpath.", 2, %eval(%index("&execpath.", %scan(&execpath, -1, "\")))-2) ;
+
+%put &DOMAIN. &CURRENT. ;
+
+/* 接続先をカレントパスに変更 */
+X "cd &CURRENT." ;
+
+/* init.sas を実行 */
+%inc "../../05_Macro\init.sas" ;
+
+/* 定数の定義 */
+%let FNAME = %upcase(&DOMAIN.) ;
+%let LABEL = Laboratory Tests Analysis Dataset ;
+%let key = STUDYID USUBJID APERIOD PARAMN VISITNUM ;
+```
+
+### まとめ
+
+この`Run_ADAM-Prg.sas`のような初期設定プログラムは、SAS解析プロジェクトの基盤となります。プログラムの冒頭で環境を整え、パスを動的に管理し、処理をモジュール化することで、**コードの品質、保守性、そして何よりも解析の信頼性**を向上させることができます。ぜひ、あなたの解析プロジェクトでもこのベストプラクティスを取り入れてみてください。
+
+### Appendix: 全コード
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+*--- データセットとログの一括クリア ---*;
+proc datasets kill nolist ; run ; quit ;
+dm 'out ; clear ; log ; clear ;' ;
+
+/***********************************************************************
+* Project         : 臨床研究の統計解析プログラミング
+* Program name    : Run_ADAM-Prg.sas
+* Author          : Kota Sakamoto
+* Date created    : 2025/07/02
+* Purpose         : ADaM作成プログラム
+* Revision History :
+***********************************************************************/
+
+*--- オプション設定 ---*;
+options noxwait;    * XコマンドでSASシステムから制御した後、自動的に再度SASシステムに戻る ;
+options noxsync;  * Xコマンドで開始した処理の終了を待たずにSASシステムに戻る ;
+options noquotelenmax;  * 引用符で囲んだ文字が長すぎる場合のNOTEを出さないようにする ;
+options source2;    * 2次ソースステートメントをSASログに書き込む ;
+
+*--- マクロ変数のクリア ---*;
+%put _user_;
+data vars;
+    set sashelp.vmacro;
+run;
+
+data symdel;
+  set sashelp.vmacro;
+  where scope = 'GLOBAL' and NAME not in ('SYS_SQL_IP_ALL', 'SYS_SQL_IP_STMT');
+run;
+
+data _null_;
+  set symdel;
+  call symdel(name);
+run;
+
+*--- ディレクトリの設定 ---*;
+* フルパスの取得 ;
+%let path = %sysget(SAS_EXECFILEPATH);
+%put &path.;
+
+* ファイル名の取得 ;
+%let filename = %SCAN(&path., -1, "\");
+%put &filename.;
+
+* ディレクトリの取得 ;
+%let drct = %substr(&path., 1, %length(&path.)-%length(%SCAN(&path.,-1,"\"))-1);
+%put &drct.;
+
+* ディレクトリ設定 ;
+data _null_;
+    call system("cd &drct.");
+run;
+
+
+*--- マクロ変数の定義 ---*;
+%let InputPath = &drct.\Input;
+%let OutputPath = &drct.\Output;
+%let LogPath = &drct.\Log;
+%let PrgPath = &drct.\Prg;
+%let SettingsPath = &drct.\Settings;
+%let SpecPath = &drct.\Spec;
+
+%let SettingsFile = ADAM設定ファイル.xlsx;
+%let SettingsSheet = 設定;
+
+%put _user_;
+
+
+*--- 実行Prgのパス設定 ---*;
+filename saspgm "&PrgPath.";
+
+
+/*--- 基本設定の読み込み ---*/
+%include saspgm( "01_LoadBaseSettings.sas" );
+
+
+/*--- プロジェクト設定の読み込み ---*/
+%include saspgm( "02_ImportProjectConfig.sas" );
+
+
+/*--- データソース定義のロード ---*/
+%include saspgm( "03_DefineDataSources.sas" );
+
+
+/*--- 外部ライブラリ接続 ---*/
+%include saspgm( "04_LinkExternalLibs.sas" );
+
+
+/*--- フォーマット定義の生成 ---*/
+%include saspgm( "05_GenerateFormatDefs.sas" );
+
+
+/*--- 全体設定の統合 ---*/
+%include saspgm( "06_IntegrateGlobalSettings.sas");
+
+
+/*--- 共通マクロのロード ---*/
+%include saspgm( "11_McrBuildMasterDataset.sas" );
+%include saspgm( "12_McrStandardizeDates.sas" );
+%include saspgm( "13_McrCreateCoreADaMs.sas" );
+%include saspgm( "14_McrAppendSuppData.sas" );
+%include saspgm( "15_McrRecodeVariables_V2.sas" );
+
+
+/*--- ADaMデータセットの作成 ---*/
+%include saspgm( "21_DeriveADSL.sas" );
+%include saspgm( "22_DeriveADLB.sas" );
+%include saspgm( "23_DeriveADVS.sas" );
+%include saspgm( "24_DeriveADRS.sas" );
+%include saspgm( "25_DeriveADAE.sas" );
+
+
+/*--- 後処理とクリーンアップ ---*/
+%include saspgm( "99_PostProcessingAndCleanup.sas" );
+
+
+
+*---------------------- EOF （Run_ADAM-Prg.sas） ------------------------------- ;
+```

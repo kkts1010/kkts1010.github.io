@@ -161,7 +161,7 @@ run;
 
 ## 1. 桁数自動取得の工夫
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}      
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 data SUMMARY_KETA1;
     set &DS.;
     if &VAR. ^= . then KETA = length(cats(&VAR. - int(&VAR.)));
@@ -176,7 +176,7 @@ run;
 
 -   **例**: 62.75の場合 → 62.75 - 62 = 0.75 → "0.75" → length = 4文字 → 小数点第2位
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}       
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 data SUMMARY_KETA3;
     set SUMMARY_KETA2;
     if MAXKETA = 1 then KETA = 0;  /* 小数点第0桁=整数値 */
@@ -198,7 +198,7 @@ run;
 
 ### 数値変数（年齢）の場合:
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}      
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 data SUMMARY_CLASS;
     if _N_ = 0 then set &DS.(keep=&CVAR.);
     do &CVAR. = &CSTR. to &CEND.;
@@ -218,7 +218,7 @@ run;
 
 ### 文字変数（治療群）の場合:
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}    
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 data SUMMARY_CLASS;
     length &CVAR. $8.;
     &CVAR. = "A群"; output;
@@ -234,7 +234,7 @@ run;
 
 ## 3. 統計量計算での工夫
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}    
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 proc summary data=&DS. classdata=SUMMARY_CLASS exclusive nway;
     class &CVAR.;
     var &VAR.;
@@ -254,7 +254,7 @@ run;
 
 ## 4. 数値フォーマットの工夫
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}       
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 if &VAR._MEAN ^= . then 
     PREOUT2 = cats(put(round(&VAR._MEAN, 0.1), 8.1));
 else 
@@ -277,7 +277,7 @@ else
 
 ## 5. データ構造変換の工夫
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}       
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 proc transpose data=SUMMARY_2 out=SUMMARY_3 (drop=_NAME_)
     prefix=OUT;
     var PREOUT1-PREOUT9;
@@ -295,7 +295,7 @@ run;
 
 ## 6. 最終出力での工夫
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}       
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 data SUMMARY_FINAL;
     length STAT_ITEM $12.;
     set SUMMARY_3;
@@ -317,7 +317,7 @@ run;
 
 ## 7. マクロ設計の工夫
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}       
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 %let DS = AAA;
 %let VAR = HEIGHT;
 %let CVAR = AGE;  /* または Treatment *

@@ -8,7 +8,7 @@
 
 <meta name="author" content="坂本航太">
 
-<title>SASプログラミングTips1 – Kota Sakamoto</title>
+<title>SASによる解析業務開始時のフォルダ整理・作成 – Kota Sakamoto</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -153,7 +153,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-page-left">
-      <h1 class="title">SASプログラミングTips1</h1>
+      <h1 class="title">SASによる解析業務開始時のフォルダ整理・作成</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">SAS</div>
                 <div class="quarto-category">解析プログラミング</div>
@@ -223,19 +223,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#プログラミングの動的生成" id="toc-プログラミングの動的生成" class="nav-link" data-scroll-target="#プログラミングの動的生成"><span class="header-section-number">7</span> プログラミングの動的生成</a>
   <ul class="collapse">
   <li><a href="#プログラム解説-5" id="toc-プログラム解説-5" class="nav-link" data-scroll-target="#プログラム解説-5"><span class="header-section-number">7.1</span> プログラム解説</a></li>
-  </ul></li>
-  <li><a href="#sas備忘録さんのfavorite関数の解説" id="toc-sas備忘録さんのfavorite関数の解説" class="nav-link" data-scroll-target="#sas備忘録さんのfavorite関数の解説"><span class="header-section-number">8</span> SAS備忘録さんのFavorite関数の解説</a>
-  <ul class="collapse">
-  <li><a href="#cats関数" id="toc-cats関数" class="nav-link" data-scroll-target="#cats関数"><span class="header-section-number">8.1</span> CATS関数</a></li>
-  <li><a href="#catx関数" id="toc-catx関数" class="nav-link" data-scroll-target="#catx関数"><span class="header-section-number">8.2</span> CATX関数</a></li>
-  <li><a href="#whichnwhichc関数" id="toc-whichnwhichc関数" class="nav-link" data-scroll-target="#whichnwhichc関数"><span class="header-section-number">8.3</span> WHICHN・WHICHC関数</a></li>
-  <li><a href="#choosenchoosec関数" id="toc-choosenchoosec関数" class="nav-link" data-scroll-target="#choosenchoosec関数"><span class="header-section-number">8.4</span> CHOOSEN・CHOOSEC関数</a></li>
-  <li><a href="#coalescecoalescec関数" id="toc-coalescecoalescec関数" class="nav-link" data-scroll-target="#coalescecoalescec関数"><span class="header-section-number">8.5</span> COALESCE・COALESCEC関数</a></li>
-  <li><a href="#vvaluevvaluex関数" id="toc-vvaluevvaluex関数" class="nav-link" data-scroll-target="#vvaluevvaluex関数"><span class="header-section-number">8.6</span> VVALUE・VVALUEX関数</a></li>
-  <li><a href="#cmiss関数" id="toc-cmiss関数" class="nav-link" data-scroll-target="#cmiss関数"><span class="header-section-number">8.7</span> CMISS関数</a></li>
-  <li><a href="#ifnifc関数" id="toc-ifnifc関数" class="nav-link" data-scroll-target="#ifnifc関数"><span class="header-section-number">8.8</span> IFN・IFC関数</a></li>
-  <li><a href="#call-missing" id="toc-call-missing" class="nav-link" data-scroll-target="#call-missing"><span class="header-section-number">8.9</span> CALL MISSING</a></li>
-  <li><a href="#call-symputx" id="toc-call-symputx" class="nav-link" data-scroll-target="#call-symputx"><span class="header-section-number">8.10</span> CALL SYMPUTX</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -588,287 +575,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="自動化の利点とメリット" class="level3" data-number="7.1.4">
 <h3 data-number="7.1.4" class="anchored" data-anchor-id="自動化の利点とメリット"><span class="header-section-number">7.1.4</span> 自動化の利点とメリット</h3>
 <p>この手法により、数十から数百の解析プログラムを一度に生成できるため、大規模プロジェクトでの開発効率が大幅に向上します。メタデータの変更時も該当部分のみを修正して再実行すれば、全プログラムに変更が反映されるため、保守性も高くなります。また、ヒューマンエラーの削減と品質の均一化も実現できます。</p>
-</section>
-</section>
-</section>
-<section id="sas備忘録さんのfavorite関数の解説" class="level1" data-number="8">
-<h1 data-number="8"><span class="header-section-number">8</span> SAS備忘録さんのFavorite関数の解説</h1>
-<ol type="1">
-<li>CATS関数</li>
-<li>CATX関数</li>
-<li>WHICHN・WHICHC関数</li>
-<li>CHOOSEN・CHOOSEC関数</li>
-<li>COALESCE・COALESCEC関数</li>
-<li>VVALUE・VVALUEX関数</li>
-<li>CMISS関数</li>
-<li>IFN・IFC関数</li>
-<li>CALL MISSING</li>
-<li>CALL SYMPUTX</li>
-</ol>
-<p>SASプログラミングで頻繁に使用される便利な関数を、実用的なプログラム例とともに解説します。</p>
-<section id="cats関数" class="level2" data-number="8.1">
-<h2 data-number="8.1" class="anchored" data-anchor-id="cats関数"><span class="header-section-number">8.1</span> CATS関数</h2>
-<p><strong>機能：</strong> 複数の文字列を連結し、各引数の前後の空白を自動削除</p>
-<div class="sourceCode" id="cb7" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource sas number-lines code-with-copy"><code class="sourceCode"><span id="cb7-1"><a href="#cb7-1"></a>data example1;</span>
-<span id="cb7-2"><a href="#cb7-2"></a>    name = "田中";</span>
-<span id="cb7-3"><a href="#cb7-3"></a>    id = "001";</span>
-<span id="cb7-4"><a href="#cb7-4"></a>    dept = "営業部";</span>
-<span id="cb7-5"><a href="#cb7-5"></a>    </span>
-<span id="cb7-6"><a href="#cb7-6"></a>    /* 従来の方法 */</span>
-<span id="cb7-7"><a href="#cb7-7"></a>    result1 = trim(name) || trim(id) || trim(dept);</span>
-<span id="cb7-8"><a href="#cb7-8"></a>    </span>
-<span id="cb7-9"><a href="#cb7-9"></a>    /* CATS関数を使用 */</span>
-<span id="cb7-10"><a href="#cb7-10"></a>    result2 = cats(name, id, dept);</span>
-<span id="cb7-11"><a href="#cb7-11"></a>    </span>
-<span id="cb7-12"><a href="#cb7-12"></a>    put result1= result2=;</span>
-<span id="cb7-13"><a href="#cb7-13"></a>run;</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><strong>出力：</strong> result1=田中001営業部 result2=田中001営業部</p>
-<p>CATS関数は自動的に前後の空白を削除するため、TRIMやLEFT関数が不要になり、コードがシンプルになります。</p>
-</section>
-<section id="catx関数" class="level2" data-number="8.2">
-<h2 data-number="8.2" class="anchored" data-anchor-id="catx関数"><span class="header-section-number">8.2</span> CATX関数</h2>
-<p><strong>機能：</strong> 指定した区切り文字で複数の文字列を連結</p>
-<div class="sourceCode" id="cb8" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource sas number-lines code-with-copy"><code class="sourceCode"><span id="cb8-1"><a href="#cb8-1"></a>data example2;</span>
-<span id="cb8-2"><a href="#cb8-2"></a>    year = 2025;</span>
-<span id="cb8-3"><a href="#cb8-3"></a>    month = 6;</span>
-<span id="cb8-4"><a href="#cb8-4"></a>    day = 16;</span>
-<span id="cb8-5"><a href="#cb8-5"></a>    </span>
-<span id="cb8-6"><a href="#cb8-6"></a>    /* 日付文字列の作成 */</span>
-<span id="cb8-7"><a href="#cb8-7"></a>    date_slash = catx("/", year, month, day);</span>
-<span id="cb8-8"><a href="#cb8-8"></a>    date_hyphen = catx("-", year, month, day);</span>
-<span id="cb8-9"><a href="#cb8-9"></a>    </span>
-<span id="cb8-10"><a href="#cb8-10"></a>    /* CSVフォーマットの作成 */</span>
-<span id="cb8-11"><a href="#cb8-11"></a>    csv_line = catx(",", "田中太郎", 30, "東京都");</span>
-<span id="cb8-12"><a href="#cb8-12"></a>    </span>
-<span id="cb8-13"><a href="#cb8-13"></a>    put date_slash= date_hyphen= csv_line=;</span>
-<span id="cb8-14"><a href="#cb8-14"></a>run;</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><strong>出力：</strong> date_slash=2025/6/16 date_hyphen=2025-6-16 csv_line=田中太郎,30,東京都</p>
-</section>
-<section id="whichnwhichc関数" class="level2" data-number="8.3">
-<h2 data-number="8.3" class="anchored" data-anchor-id="whichnwhichc関数"><span class="header-section-number">8.3</span> WHICHN・WHICHC関数</h2>
-<p><strong>機能：</strong> 指定した値がリストの何番目にあるかを返す</p>
-<div class="sourceCode" id="cb9" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource sas number-lines code-with-copy"><code class="sourceCode"><span id="cb9-1"><a href="#cb9-1"></a>data ae_severity;</span>
-<span id="cb9-2"><a href="#cb9-2"></a>    input pt $ severity $;</span>
-<span id="cb9-3"><a href="#cb9-3"></a>    </span>
-<span id="cb9-4"><a href="#cb9-4"></a>    /* 重篤度レベルをコード化 */</span>
-<span id="cb9-5"><a href="#cb9-5"></a>    severity_code = whichc(severity, "軽度", "中等度", "重度", "重篤");</span>
-<span id="cb9-6"><a href="#cb9-6"></a>    </span>
-<span id="cb9-7"><a href="#cb9-7"></a>    /* グレード分類への変換 */</span>
-<span id="cb9-8"><a href="#cb9-8"></a>    ctcae_grade = whichc(severity, "Grade1", "Grade2", "Grade3", "Grade4", "Grade5");</span>
-<span id="cb9-9"><a href="#cb9-9"></a>    </span>
-<span id="cb9-10"><a href="#cb9-10"></a>datalines;</span>
-<span id="cb9-11"><a href="#cb9-11"></a>頭痛 軽度</span>
-<span id="cb9-12"><a href="#cb9-12"></a>発熱 中等度</span>
-<span id="cb9-13"><a href="#cb9-13"></a>呼吸困難 重度</span>
-<span id="cb9-14"><a href="#cb9-14"></a>;</span>
-<span id="cb9-15"><a href="#cb9-15"></a>run;</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>pt=頭痛 severity=軽度 severity_code=1 ctcae_grade=0</p>
-<p>pt=発熱 severity=中等度 severity_code=2 ctcae_grade=0<br>
-pt=呼吸困難 severity=重度 severity_code=3 ctcae_grade=0</p>
-<ul>
-<li><p><code>severity_code</code>：指定したリスト内での位置を返す</p>
-<ul>
-<li><p>“軽度” → 1番目 → 1</p></li>
-<li><p>“中等度” → 2番目 → 2</p></li>
-<li><p>“重度” → 3番目 → 3</p></li>
-</ul></li>
-</ul>
-<!-- -->
-<ul>
-<li><p><code>ctcae_grade</code>：CTCAEグレード用のリストにマッチしないため全て0</p>
-<ul>
-<li><p>データの”軽度”、“中等度”、“重度”は”Grade1”、“Grade2”等とマッチしない</p></li>
-<li><p>マッチしない場合はWHICHC関数は0を返す</p></li>
-</ul></li>
-</ul>
-</section>
-<section id="choosenchoosec関数" class="level2" data-number="8.4">
-<h2 data-number="8.4" class="anchored" data-anchor-id="choosenchoosec関数"><span class="header-section-number">8.4</span> CHOOSEN・CHOOSEC関数</h2>
-<p><strong>機能：</strong> インデックス番号に基づいてリストから値を選択</p>
-<div class="sourceCode" id="cb10" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource sas number-lines code-with-copy"><code class="sourceCode"><span id="cb10-1"><a href="#cb10-1"></a>data example4;</span>
-<span id="cb10-2"><a href="#cb10-2"></a>    do i = 1 to 4;</span>
-<span id="cb10-3"><a href="#cb10-3"></a>        /* 数値版：CHOOSEN */</span>
-<span id="cb10-4"><a href="#cb10-4"></a>        threshold = choosen(i, 60, 70, 80, 90);</span>
-<span id="cb10-5"><a href="#cb10-5"></a>        </span>
-<span id="cb10-6"><a href="#cb10-6"></a>        /* 文字版：CHOOSEC */</span>
-<span id="cb10-7"><a href="#cb10-7"></a>        grade = choosec(i, "D", "C", "B", "A");</span>
-<span id="cb10-8"><a href="#cb10-8"></a>        </span>
-<span id="cb10-9"><a href="#cb10-9"></a>        put i= threshold= grade=;</span>
-<span id="cb10-10"><a href="#cb10-10"></a>    end;</span>
-<span id="cb10-11"><a href="#cb10-11"></a>run;</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><strong>出力：</strong> i=1 threshold=60 grade=D i=2 threshold=70 grade=C i=3 threshold=80 grade=B i=4 threshold=90 grade=A</p>
-<p>・Y番目のXの値を返す。<br>
-・第2引数以降に数値型の変数または値を指定する場合はCHOOSEN関数を用いる。<br>
-・第2引数以降に文字型の変数または値を指定する場合はCHOOSEC関数を用いる。</p>
-</section>
-<section id="coalescecoalescec関数" class="level2" data-number="8.5">
-<h2 data-number="8.5" class="anchored" data-anchor-id="coalescecoalescec関数"><span class="header-section-number">8.5</span> COALESCE・COALESCEC関数</h2>
-<p><strong>機能：</strong> 最初の非欠損値を返す</p>
-<div class="sourceCode" id="cb11" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource sas number-lines code-with-copy"><code class="sourceCode"><span id="cb11-1"><a href="#cb11-1"></a>/* サンプルデータの作成 */</span>
-<span id="cb11-2"><a href="#cb11-2"></a>data sample_data;</span>
-<span id="cb11-3"><a href="#cb11-3"></a>    input ID X1 $ X2 $ X3 $;</span>
-<span id="cb11-4"><a href="#cb11-4"></a>    datalines;</span>
-<span id="cb11-5"><a href="#cb11-5"></a>1 AA    BB</span>
-<span id="cb11-6"><a href="#cb11-6"></a>2    CC DD</span>
-<span id="cb11-7"><a href="#cb11-7"></a>3       EE</span>
-<span id="cb11-8"><a href="#cb11-8"></a>4 FF    </span>
-<span id="cb11-9"><a href="#cb11-9"></a>5          </span>
-<span id="cb11-10"><a href="#cb11-10"></a>6 GG HH II</span>
-<span id="cb11-11"><a href="#cb11-11"></a>;</span>
-<span id="cb11-12"><a href="#cb11-12"></a>run;</span>
-<span id="cb11-13"><a href="#cb11-13"></a></span>
-<span id="cb11-14"><a href="#cb11-14"></a>/* 方法1: IF-ELSE文を使用 */</span>
-<span id="cb11-15"><a href="#cb11-15"></a>data result1;</span>
-<span id="cb11-16"><a href="#cb11-16"></a>    set sample_data;</span>
-<span id="cb11-17"><a href="#cb11-17"></a>    length Y $2.;</span>
-<span id="cb11-18"><a href="#cb11-18"></a>    if X1^="" then Y=X1;</span>
-<span id="cb11-19"><a href="#cb11-19"></a>    else if X2^="" then Y=X2;</span>
-<span id="cb11-20"><a href="#cb11-20"></a>    else if X3^="" then Y=X3;</span>
-<span id="cb11-21"><a href="#cb11-21"></a>run;</span>
-<span id="cb11-22"><a href="#cb11-22"></a></span>
-<span id="cb11-23"><a href="#cb11-23"></a>/* 方法2: COALESCEC関数を使用 */</span>
-<span id="cb11-24"><a href="#cb11-24"></a>data result2;</span>
-<span id="cb11-25"><a href="#cb11-25"></a>    set sample_data;</span>
-<span id="cb11-26"><a href="#cb11-26"></a>    length Y $2.;</span>
-<span id="cb11-27"><a href="#cb11-27"></a>    Y = coalescec(X1, X2, X3);</span>
-<span id="cb11-28"><a href="#cb11-28"></a>run;</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><strong>ポイント：</strong></p>
-<ul>
-<li><p>この関数は「引数のうち最初に欠損値以外で登場する値を返す」という機能を持っています。</p></li>
-<li><p><strong>COALESCE：</strong> 数値の場合、欠損値（.）をスキップして最初の有効な値（85）を返す</p></li>
-<li><p><strong>COALESCEC：</strong> 文字の場合、空白をスキップして最初の有効な文字列を返す</p></li>
-</ul>
-</section>
-<section id="vvaluevvaluex関数" class="level2" data-number="8.6">
-<h2 data-number="8.6" class="anchored" data-anchor-id="vvaluevvaluex関数"><span class="header-section-number">8.6</span> VVALUE・VVALUEX関数</h2>
-<p><strong>機能：</strong> フォーマットが適用された値を文字列として取得</p>
-<div class="sourceCode" id="cb12" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource sas number-lines code-with-copy"><code class="sourceCode"><span id="cb12-1"><a href="#cb12-1"></a>data DT1;</span>
-<span id="cb12-2"><a href="#cb12-2"></a>  format X yymmdd10.;</span>
-<span id="cb12-3"><a href="#cb12-3"></a>  X = '13jun2017'd;</span>
-<span id="cb12-4"><a href="#cb12-4"></a>run;</span>
-<span id="cb12-5"><a href="#cb12-5"></a></span>
-<span id="cb12-6"><a href="#cb12-6"></a></span>
-<span id="cb12-7"><a href="#cb12-7"></a>data DT2;</span>
-<span id="cb12-8"><a href="#cb12-8"></a>  set DT1;</span>
-<span id="cb12-9"><a href="#cb12-9"></a>  length Y $20.;</span>
-<span id="cb12-10"><a href="#cb12-10"></a>  Y = put( X, yymmdd10.);</span>
-<span id="cb12-11"><a href="#cb12-11"></a>run;</span>
-<span id="cb12-12"><a href="#cb12-12"></a></span>
-<span id="cb12-13"><a href="#cb12-13"></a></span>
-<span id="cb12-14"><a href="#cb12-14"></a>data DT2;</span>
-<span id="cb12-15"><a href="#cb12-15"></a>  set DT1;</span>
-<span id="cb12-16"><a href="#cb12-16"></a>  length Y1 Y2 $20.;</span>
-<span id="cb12-17"><a href="#cb12-17"></a></span>
-<span id="cb12-18"><a href="#cb12-18"></a>  /* vvalue関数を使った例 */</span>
-<span id="cb12-19"><a href="#cb12-19"></a>  Y1 = vvalue( X );</span>
-<span id="cb12-20"><a href="#cb12-20"></a></span>
-<span id="cb12-21"><a href="#cb12-21"></a>  /* vvaluex関数を使った例 */</span>
-<span id="cb12-22"><a href="#cb12-22"></a>  Y2 = vvaluex( "X" );</span>
-<span id="cb12-23"><a href="#cb12-23"></a></span>
-<span id="cb12-24"><a href="#cb12-24"></a>run;</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<ul>
-<li><strong>Y1 = vvalue( X )：</strong>「 vvalue( X ) 」で変数Xに割り当てられているFORMAT「YYMMDD10.」を使って文字変換した値「2017-06-13」を返しています。</li>
-<li><strong>Y2 = vvaluex( “X” );</strong>vvaluex&nbsp;も vvalue と同じ機能を持っているのですが、違いは以下の通り。</li>
-<li>vvalue( X ) &nbsp; &nbsp; &nbsp;… 変数名を指定</li>
-<li>vvaluex( “X” ) &nbsp;… 変数名を表す文字値を指定</li>
-<li>つまり、「 vvaluex( “X” ) 」で変数Xに割り当てられているFORMAT「YYMMDD10.」を使って文字変換した値「2017-06-13」を返しています。</li>
-</ul>
-</section>
-<section id="cmiss関数" class="level2" data-number="8.7">
-<h2 data-number="8.7" class="anchored" data-anchor-id="cmiss関数"><span class="header-section-number">8.7</span> CMISS関数</h2>
-<p><strong>機能：</strong> 欠損値の個数をカウント</p>
-<div class="sourceCode" id="cb13" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource sas number-lines code-with-copy"><code class="sourceCode"><span id="cb13-1"><a href="#cb13-1"></a>data example7;</span>
-<span id="cb13-2"><a href="#cb13-2"></a>    input name $ age height weight;</span>
-<span id="cb13-3"><a href="#cb13-3"></a>    </span>
-<span id="cb13-4"><a href="#cb13-4"></a>    missing_count = cmiss(age, height, weight);</span>
-<span id="cb13-5"><a href="#cb13-5"></a>    complete_data = (missing_count = 0);</span>
-<span id="cb13-6"><a href="#cb13-6"></a>    </span>
-<span id="cb13-7"><a href="#cb13-7"></a>    put name= missing_count= complete_data=;</span>
-<span id="cb13-8"><a href="#cb13-8"></a>    </span>
-<span id="cb13-9"><a href="#cb13-9"></a>datalines;</span>
-<span id="cb13-10"><a href="#cb13-10"></a>田中 25 170 65</span>
-<span id="cb13-11"><a href="#cb13-11"></a>佐藤 . 165 .</span>
-<span id="cb13-12"><a href="#cb13-12"></a>山田 30 . 70</span>
-<span id="cb13-13"><a href="#cb13-13"></a>;</span>
-<span id="cb13-14"><a href="#cb13-14"></a>run;</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><strong>出力：</strong> name=田中 missing_count=0 complete_data=1 name=佐藤 missing_count=2 complete_data=0 name=山田 missing_count=1 complete_data=0</p>
-</section>
-<section id="ifnifc関数" class="level2" data-number="8.8">
-<h2 data-number="8.8" class="anchored" data-anchor-id="ifnifc関数"><span class="header-section-number">8.8</span> IFN・IFC関数</h2>
-<p><strong>機能：</strong> 条件に基づいて値を返す三項演算子</p>
-<div class="sourceCode" id="cb14" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource sas number-lines code-with-copy"><code class="sourceCode"><span id="cb14-1"><a href="#cb14-1"></a>data DT1;</span>
-<span id="cb14-2"><a href="#cb14-2"></a>   length X1 $10.;</span>
-<span id="cb14-3"><a href="#cb14-3"></a>   X1="YES"; output;</span>
-<span id="cb14-4"><a href="#cb14-4"></a>   X1="NO"; output;</span>
-<span id="cb14-5"><a href="#cb14-5"></a>run;</span>
-<span id="cb14-6"><a href="#cb14-6"></a></span>
-<span id="cb14-7"><a href="#cb14-7"></a>#Before</span>
-<span id="cb14-8"><a href="#cb14-8"></a>data DT2;</span>
-<span id="cb14-9"><a href="#cb14-9"></a>   set DT1;</span>
-<span id="cb14-10"><a href="#cb14-10"></a>   if X1 = "YES" then X2=1;</span>
-<span id="cb14-11"><a href="#cb14-11"></a>   else  X2=0;</span>
-<span id="cb14-12"><a href="#cb14-12"></a>run;</span>
-<span id="cb14-13"><a href="#cb14-13"></a></span>
-<span id="cb14-14"><a href="#cb14-14"></a>#After</span>
-<span id="cb14-15"><a href="#cb14-15"></a>data DT2;</span>
-<span id="cb14-16"><a href="#cb14-16"></a>   set DT1;</span>
-<span id="cb14-17"><a href="#cb14-17"></a>   X2 = ifn(X1="YES",1,0);</span>
-<span id="cb14-18"><a href="#cb14-18"></a>run;</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Rのifelse関数みたいな気持ち。</p>
-</section>
-<section id="call-missing" class="level2" data-number="8.9">
-<h2 data-number="8.9" class="anchored" data-anchor-id="call-missing"><span class="header-section-number">8.9</span> CALL MISSING</h2>
-<p><strong>機能：</strong> 複数の変数を一度に欠損値に設定</p>
-<div class="sourceCode" id="cb15" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource sas number-lines code-with-copy"><code class="sourceCode"><span id="cb15-1"><a href="#cb15-1"></a>data example9;</span>
-<span id="cb15-2"><a href="#cb15-2"></a>    name = "田中";</span>
-<span id="cb15-3"><a href="#cb15-3"></a>    age = 25;</span>
-<span id="cb15-4"><a href="#cb15-4"></a>    score = 85;</span>
-<span id="cb15-5"><a href="#cb15-5"></a>    </span>
-<span id="cb15-6"><a href="#cb15-6"></a>    /* 条件に応じて全データを欠損値に */</span>
-<span id="cb15-7"><a href="#cb15-7"></a>    if age &lt; 20 then call missing(of name age score);</span>
-<span id="cb15-8"><a href="#cb15-8"></a>    </span>
-<span id="cb15-9"><a href="#cb15-9"></a>    put name= age= score=;</span>
-<span id="cb15-10"><a href="#cb15-10"></a>run;</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>このSASコードは<code>CALL MISSING</code>ルーチンを使って、条件に応じて複数の変数を一度に欠損値に設定する例です。</p>
-</section>
-<section id="call-symputx" class="level2" data-number="8.10">
-<h2 data-number="8.10" class="anchored" data-anchor-id="call-symputx"><span class="header-section-number">8.10</span> CALL SYMPUTX</h2>
-<p><strong>機能：</strong> データステップ内でマクロ変数を作成・更新</p>
-<div class="sourceCode" id="cb16" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource sas number-lines code-with-copy"><code class="sourceCode"><span id="cb16-1"><a href="#cb16-1"></a>data example10;</span>
-<span id="cb16-2"><a href="#cb16-2"></a>    input dept $ sales;</span>
-<span id="cb16-3"><a href="#cb16-3"></a>    </span>
-<span id="cb16-4"><a href="#cb16-4"></a>    /* 部門別に動的にマクロ変数を作成 */</span>
-<span id="cb16-5"><a href="#cb16-5"></a>    call symputx(cats("sales_", dept), sales);</span>
-<span id="cb16-6"><a href="#cb16-6"></a>    </span>
-<span id="cb16-7"><a href="#cb16-7"></a>    /* 最大売上をマクロ変数に格納 */</span>
-<span id="cb16-8"><a href="#cb16-8"></a>    retain max_sales;</span>
-<span id="cb16-9"><a href="#cb16-9"></a>    if _n_ = 1 then max_sales = sales;</span>
-<span id="cb16-10"><a href="#cb16-10"></a>    else max_sales = max(max_sales, sales);</span>
-<span id="cb16-11"><a href="#cb16-11"></a></span>
-<span id="cb16-12"><a href="#cb16-12"></a>   if  _EOF then call symputx("OBS", _N_);</span>
-<span id="cb16-13"><a href="#cb16-13"></a>    </span>
-<span id="cb16-14"><a href="#cb16-14"></a>datalines;</span>
-<span id="cb16-15"><a href="#cb16-15"></a>営業 1200</span>
-<span id="cb16-16"><a href="#cb16-16"></a>技術 800</span>
-<span id="cb16-17"><a href="#cb16-17"></a>総務 300</span>
-<span id="cb16-18"><a href="#cb16-18"></a>;</span>
-<span id="cb16-19"><a href="#cb16-19"></a>run;</span>
-<span id="cb16-20"><a href="#cb16-20"></a></span>
-<span id="cb16-21"><a href="#cb16-21"></a>/* データステップ終了後に最大値を取得 */</span>
-<span id="cb16-22"><a href="#cb16-22"></a>data _null_;</span>
-<span id="cb16-23"><a href="#cb16-23"></a>    set example10 end=last;</span>
-<span id="cb16-24"><a href="#cb16-24"></a>    retain max_sales;</span>
-<span id="cb16-25"><a href="#cb16-25"></a>    if _n_ = 1 then max_sales = sales;</span>
-<span id="cb16-26"><a href="#cb16-26"></a>    else max_sales = max(max_sales, sales);</span>
-<span id="cb16-27"><a href="#cb16-27"></a>    if last then call symputx("max_sales_total", max_sales);</span>
-<span id="cb16-28"><a href="#cb16-28"></a>run;</span>
-<span id="cb16-29"><a href="#cb16-29"></a></span>
-<span id="cb16-30"><a href="#cb16-30"></a>%put &amp;sales_営業 &amp;sales_技術 &amp;sales_総務;</span>
-<span id="cb16-31"><a href="#cb16-31"></a>%put &amp;max_sales_total;</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><strong>出力：</strong> 1200 800 300 1200</p>
-<p>これらの関数を使いこなすことで、SASプログラミングの効率と可読性が大幅に向上します。特にデータクリーニングや条件分岐処理において威力を発揮する関数群です。</p>
 
 
+</section>
 </section>
 </section>
 

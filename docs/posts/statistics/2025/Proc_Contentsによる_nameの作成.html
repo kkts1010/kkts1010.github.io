@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.30">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="坂本航太">
+
+<title>Proc Contentsを利用したRawデータの変数を_varにするマクロ – Kota Sakamoto</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-9849038e97c5862c14c4eb81893d019b.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-945f87a38397f0f3b8ef34e2f394b6bc.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "一致なし",
+    "search-matching-documents-text": "一致した文書",
+    "search-copy-link-title": "検索へのリンクをコピー",
+    "search-hide-matches-text": "追加の検索結果を非表示",
+    "search-more-match-text": "追加の検索結果",
+    "search-more-matches-text": "追加の検索結果",
+    "search-clear-button-title": "消去",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "取消",
+    "search-submit-button-title": "検索",
+    "search-label": "サーチ"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Kota Sakamoto</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="サーチ"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="ナビゲーションを切り替える" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../posts/statistics/index.html"> 
+<span class="menu-text">Notes</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../posts/Web_tools/Web_tools.html"> 
+<span class="menu-text">Web Tools</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+    <a href="https://github.com/kkts1010/kkts1010.github.io/" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-github"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-page-left">
+      <h1 class="title">Proc Contentsを利用したRawデータの変数を_varにするマクロ</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">SAS</div>
+                <div class="quarto-category">解析プログラミング</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta column-page-left">
+
+      <div>
+      <div class="quarto-title-meta-heading">作者</div>
+      <div class="quarto-title-meta-contents">
+               <p>坂本航太 </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">公開</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">2025年6月29日</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">目次</h2>
+   
+  <ul class="collapse">
+  <li><a href="#sasマクロで生データをスマートに整形変数名変換の自動化テクニック" id="toc-sasマクロで生データをスマートに整形変数名変換の自動化テクニック" class="nav-link active" data-scroll-target="#sasマクロで生データをスマートに整形変数名変換の自動化テクニック"><span class="header-section-number">1</span> SASマクロで生データをスマートに整形：変数名変換の自動化テクニック</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+
+
+
+
+
+<section id="sasマクロで生データをスマートに整形変数名変換の自動化テクニック" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="sasマクロで生データをスマートに整形変数名変換の自動化テクニック"><span class="header-section-number">1</span> SASマクロで生データをスマートに整形：変数名変換の自動化テクニック</h2>
+<p>SASで解析プロジェクトを進める際、最初に行う作業の一つが生データの加工です。特に、生データの変数名がSASの命名規則に厳密に準拠していなかったり、特定のプレフィックスやサフィックスを追加・削除したい場合が多くあります。</p>
+<p>今回ご紹介するSASマクロ<code>%rawdata</code>は、この「生データの変数名を自動で一括変換する」という、非常に実用的な処理を実現します。このテクニックをマスターすれば、手作業での変数名変更の手間を大幅に削減し、より効率的なデータ準備が可能になります。</p>
+<section id="マクロの全体像と目的" class="level3" data-number="1.1">
+<h3 data-number="1.1" class="anchored" data-anchor-id="マクロの全体像と目的"><span class="header-section-number">1.1</span> マクロの全体像と目的</h3>
+<p>このマクロの主な目的は、入力データセットの全変数に対して、以下のような処理を自動で適用することです。</p>
+<ol type="1">
+<li><p><strong>データセットの変数情報（定義情報）を取得する</strong></p></li>
+<li><p><strong>変数情報を基に、各変数の古い名前と新しい名前のペアを作成する</strong></p></li>
+<li><p><strong>そのペアを使って、データセットの全変数名を一括で変更する</strong></p></li>
+</ol>
+<p>特に注目すべきは、変数名の変更ロジックが<code>_subjid</code>のように、元の変数名にアンダースコア（<code>_</code>）をプレフィックスとして追加している点です。これは、特定の命名規則を強制したい場合に非常に有効です。</p>
+<p>それでは、各セクションを詳しく見ていきましょう。</p>
+</section>
+<section id="マクロの定義と入力データセットの準備" class="level3" data-number="1.2">
+<h3 data-number="1.2" class="anchored" data-anchor-id="マクロの定義と入力データセットの準備"><span class="header-section-number">1.2</span> 1. マクロの定義と入力データセットの準備</h3>
+<div class="sourceCode" id="cb1" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource sas number-lines code-with-copy"><code class="sourceCode"><span id="cb1-1"><a href="#cb1-1"></a>%macro rawdata(raw=, sort=, out=&amp;raw);</span>
+<span id="cb1-2"><a href="#cb1-2"></a></span>
+<span id="cb1-3"><a href="#cb1-3"></a>/* データセット定義情報の DS を作成 */</span>
+<span id="cb1-4"><a href="#cb1-4"></a>proc contents data=work.&amp;raw. out = work.VAR noprints;</span>
+<span id="cb1-5"><a href="#cb1-5"></a>run;</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li><p><strong><code>%macro rawdata(raw=, sort=, out=&amp;raw);</code></strong>: <code>%rawdata</code>という名前のマクロを定義しています。引数は以下の3つです。</p>
+<ul>
+<li><p><code>raw=</code>: 処理対象となる生データセット名を指定します。</p></li>
+<li><p><code>sort=</code>: （このコードでは直接使用されていませんが、将来的な拡張性を示唆しています。）</p></li>
+<li><p><code>out=&amp;raw</code>: 処理結果の出力データセット名を指定します。デフォルトでは入力と同じ<code>&amp;raw</code>になります。</p></li>
+</ul></li>
+<li><p><strong><code>proc contents data=work.&amp;raw. out = work.VAR noprints; run;</code></strong>: <code>PROC CONTENTS</code>プロシジャは、指定されたデータセット（<code>work.&amp;raw</code>）の構造や変数に関する情報を取得し、その結果を新しいデータセット（<code>work.VAR</code>）に出力します。</p>
+<ul>
+<li><code>noprints</code>: 通常、<code>PROC CONTENTS</code>は結果をSAS出力ウィンドウに出力しますが、<code>noprints</code>オプションを指定することで、この出力を抑制し、データセットへの出力のみを行います。 <code>work.VAR</code>データセットには、<code>VARNUM</code>（変数番号）、<code>NAME</code>（変数名）、<code>LENGTH</code>（変数長）、<code>TYPE</code>（変数型）などの情報が格納されます。このうち、今回は特に<code>VARNUM</code>と<code>NAME</code>が重要になります。</li>
+</ul></li>
+</ul>
+</section>
+<section id="変数番号によるソート処理順序の確保" class="level3" data-number="1.3">
+<h3 data-number="1.3" class="anchored" data-anchor-id="変数番号によるソート処理順序の確保"><span class="header-section-number">1.3</span> 2. 変数番号によるソート：処理順序の確保</h3>
+<div class="sourceCode" id="cb2" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource sas number-lines code-with-copy"><code class="sourceCode"><span id="cb2-1"><a href="#cb2-1"></a>/* 変数番号でソート */</span>
+<span id="cb2-2"><a href="#cb2-2"></a>proc sort data=work.VAR ;</span>
+<span id="cb2-3"><a href="#cb2-3"></a>by VARNUM ;</span>
+<span id="cb2-4"><a href="#cb2-4"></a>run;</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>PROC SORT</code>プロシジャを使って、先ほど作成した<code>work.VAR</code>データセットを<code>VARNUM</code>（変数番号）の昇順でソートします。これにより、後続の処理で変数を順番に扱うことが容易になります。SASは内部的に変数に番号を割り当てており、この番号順で処理することで、元のデータセットにおける変数の並び順を反映できます。</p>
+</section>
+<section id="マクロ変数の動的な生成変数名と変数数の取得" class="level3" data-number="1.4">
+<h3 data-number="1.4" class="anchored" data-anchor-id="マクロ変数の動的な生成変数名と変数数の取得"><span class="header-section-number">1.4</span> 3. マクロ変数の動的な生成：変数名と変数数の取得</h3>
+<div class="sourceCode" id="cb3" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource sas number-lines code-with-copy"><code class="sourceCode"><span id="cb3-1"><a href="#cb3-1"></a>/* マクロ変数(VARn_)に変数を格納 */</span>
+<span id="cb3-2"><a href="#cb3-2"></a>data _null_;</span>
+<span id="cb3-3"><a href="#cb3-3"></a>  set work.VAR end = eof;</span>
+<span id="cb3-4"><a href="#cb3-4"></a>  call symputx("VAR"||strip(put(VARNUM, 8.))||"_", NAME, 'G');</span>
+<span id="cb3-5"><a href="#cb3-5"></a>  /* マクロ変数(MAXV)にオブザベーション数（変数の数）を格納 */</span>
+<span id="cb3-6"><a href="#cb3-6"></a>  if eof then call symputx('MAXV',_N_);</span>
+<span id="cb3-7"><a href="#cb3-7"></a>run;</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>この<code>DATA _NULL_</code>ステップは、このマクロの肝となる部分の一つです。<code>work.VAR</code>データセットの各行（つまり各変数）を読み込み、それに対応するマクロ変数を動的に生成します。</p>
+<ul>
+<li><p><strong><code>set work.VAR end = eof;</code></strong>: <code>work.VAR</code>データセットを読み込みます。<code>end=eof</code>オプションは、データセットの最後のオブザベーションを読み込んだときに、<code>eof</code>という一時的な変数を<code>1</code>に設定します。</p></li>
+<li><p><strong><code>call symputx("VAR"||strip(put(VARNUM, 8.))||"_", NAME, 'G');</code></strong>: <code>CALL SYMPUTX</code>ルーチンは、データステップ内でSASマクロ変数を定義するために使用します。</p>
+<ul>
+<li><p><code>"VAR"||strip(put(VARNUM, 8.))||"_"</code>: ここでマクロ変数名が生成されます。</p>
+<ul>
+<li><p><code>VAR</code>: プレフィックス</p></li>
+<li><p><code>strip(put(VARNUM, 8.))</code>: <code>VARNUM</code>（変数番号）を文字列に変換し、前後の空白を除去します。例えば<code>VARNUM</code>が<code>1</code>なら<code>"1"</code>になります。</p></li>
+<li><p><code>_</code>: サフィックス 結果として、<code>VAR1_</code>, <code>VAR2_</code>, …, <code>VARn_</code>のようなマクロ変数が作成されます。</p></li>
+</ul></li>
+<li><p><code>NAME</code>: これがマクロ変数に割り当てられる値、つまり元の変数名です。例えば、<code>VAR1_</code>には最初の変数名、<code>VAR2_</code>には2番目の変数名が格納されます。</p></li>
+<li><p><code>'G'</code>: スコープを指定します。<code>'G'</code>はグローバルマクロ変数として定義することを意味します。</p></li>
+</ul></li>
+<li><p><strong><code>if eof then call symputx('MAXV',_N_);</code></strong>: データセットの最後のオブザベーションに到達したとき（<code>eof</code>が<code>1</code>のとき）に、<code>MAXV</code>というマクロ変数に<code>_N_</code>（データステップの現在のオブザベーション番号、ここでは変数番号の最大値）を格納します。これにより、データセット内の変数総数を取得できます。</p></li>
+</ul>
+<p>このステップが完了すると、例えば元のデータセットに<code>SUBJID</code>, <code>AGE</code>, <code>SEX</code>という変数があった場合、以下のようなマクロ変数が生成されます。</p>
+<ul>
+<li><p><code>&amp;VAR1_</code> = <code>SUBJID</code></p></li>
+<li><p><code>&amp;VAR2_</code> = <code>AGE</code></p></li>
+<li><p><code>&amp;VAR3_</code> = <code>SEX</code></p></li>
+<li><p><code>&amp;MAXV</code> = <code>3</code></p></li>
+</ul>
+</section>
+<section id="全変数名の変更renameステートメントの動的生成" class="level3" data-number="1.5">
+<h3 data-number="1.5" class="anchored" data-anchor-id="全変数名の変更renameステートメントの動的生成"><span class="header-section-number">1.5</span> 4. 全変数名の変更：<code>RENAME</code>ステートメントの動的生成</h3>
+<div class="sourceCode" id="cb4" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource sas number-lines code-with-copy"><code class="sourceCode"><span id="cb4-1"><a href="#cb4-1"></a>/* 全変数の変数名を変更 (ex: subjid ⇒ _subjid) */</span>
+<span id="cb4-2"><a href="#cb4-2"></a>data work.&amp;out. ;</span>
+<span id="cb4-3"><a href="#cb4-3"></a>  set work.&amp;raw. ;</span>
+<span id="cb4-4"><a href="#cb4-4"></a>  rename %do i = 1 %to &amp;MAXV.;</span>
+<span id="cb4-5"><a href="#cb4-5"></a>  &amp;&amp;VAR&amp;i._ = _&amp;&amp;VAR&amp;i._</span>
+<span id="cb4-6"><a href="#cb4-6"></a>  %end;</span>
+<span id="cb4-7"><a href="#cb4-7"></a>  ;</span>
+<span id="cb4-8"><a href="#cb4-8"></a>run;</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>いよいよ変数名の変更を行うコア部分です。<code>DATA</code>ステップの<code>RENAME</code>ステートメントを、動的に生成されたマクロ変数を使って構築します。</p>
+<ul>
+<li><p><strong><code>data work.&amp;out. ; set work.&amp;raw. ;</code></strong>: 入力データセット<code>work.&amp;raw</code>を読み込み、<code>work.&amp;out</code>として新しいデータセットを作成します。</p></li>
+<li><p><strong><code>rename %do i = 1 %to &amp;MAXV.; ... %end;</code></strong>: この部分が、<code>RENAME</code>ステートメントをループ処理で動的に生成する肝です。</p>
+<ul>
+<li><p><code>%do i = 1 %to &amp;MAXV.; ... %end;</code>: <code>i</code>を<code>1</code>から<code>&amp;MAXV</code>（変数総数）までループさせます。</p></li>
+<li><p><code>&amp;&amp;VAR&amp;i._ = _&amp;&amp;VAR&amp;i._</code>:</p>
+<ul>
+<li><p><code>&amp;&amp;VAR&amp;i._</code>: これは<strong>二重間接参照</strong>です。</p>
+<ol type="1">
+<li><p>まず<code>&amp;i</code>が評価され、例えば<code>1</code>になります。</p></li>
+<li><p>次に<code>&amp;VAR1_</code>が評価され、その値（例：<code>SUBJID</code>）が取得されます。 結果として、元の変数名（例：<code>SUBJID</code>）を指します。</p></li>
+</ol></li>
+<li><p><code>_&amp;&amp;VAR&amp;i._</code>: これが新しい変数名です。元の変数名の前にアンダースコア<code>_</code>を付けています。 結果として、<code>SUBJID = _SUBJID</code>、<code>AGE = _AGE</code>、<code>SEX = _SEX</code>といった<code>RENAME</code>ステートメントのリストがループによって生成されます。</p></li>
+<li><p><code>rename SUBJID = _SUBJID AGE = _AGE SEX = _SEX;</code> のように展開されます。</p></li>
+</ul></li>
+</ul></li>
+</ul>
+<p>この処理により、元のデータセットのすべての変数名が、定義されたルール（この場合は先頭に<code>_</code>を追加）に従って一括で変更されます。</p>
+</section>
+<section id="まとめこのマクロがもたらすメリット" class="level3" data-number="1.6">
+<h3 data-number="1.6" class="anchored" data-anchor-id="まとめこのマクロがもたらすメリット"><span class="header-section-number">1.6</span> まとめ：このマクロがもたらすメリット</h3>
+<p>この<code>%rawdata</code>マクロは、以下の点でSASプログラミングの効率と堅牢性を高めます。</p>
+<ul>
+<li><p><strong>自動化と効率化</strong>: 手動で大量の変数名を変更する手間を省き、エラーのリスクを減らします。</p></li>
+<li><p><strong>再利用性</strong>: どのようなデータセットに対しても、同じロジックで変数名を変換できます。</p></li>
+<li><p><strong>命名規則の統一</strong>: プロジェクト全体で一貫した変数命名規則を強制するのに役立ちます。</p></li>
+<li><p><strong>柔軟な対応</strong>: <code>&amp;&amp;VAR&amp;i._ = _&amp;&amp;VAR&amp;i._</code> の部分を変更することで、<code>NEWNAME = OLDNAME</code>、<code>OLDNAME = NEWNAME</code>など、様々な変数名変換ロジックを適用できます。例えば、特定のサフィックスを追加したり、特定の文字列を置換したりすることも可能です。</p></li>
+</ul>
+<p>生データの前処理は解析の基盤です。このような自動化ツールを積極的に活用し、より質の高いデータ準備を目指しましょう。</p>
+</section>
+<section id="appendix-全コード" class="level3" data-number="1.7">
+<h3 data-number="1.7" class="anchored" data-anchor-id="appendix-全コード"><span class="header-section-number">1.7</span> Appendix: 全コード</h3>
+<div class="sourceCode" id="cb5" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource sas number-lines code-with-copy"><code class="sourceCode"><span id="cb5-1"><a href="#cb5-1"></a>%macro rawdata(raw=, sort=, out=&amp;raw);</span>
+<span id="cb5-2"><a href="#cb5-2"></a></span>
+<span id="cb5-3"><a href="#cb5-3"></a>/* データセット定義情報の DS を作成 */</span>
+<span id="cb5-4"><a href="#cb5-4"></a>proc contents data=work.&amp;raw. out = work.VAR noprints;</span>
+<span id="cb5-5"><a href="#cb5-5"></a>run;</span>
+<span id="cb5-6"><a href="#cb5-6"></a></span>
+<span id="cb5-7"><a href="#cb5-7"></a>/* 変数番号でソート */</span>
+<span id="cb5-8"><a href="#cb5-8"></a>proc sort data=work.VAR ;</span>
+<span id="cb5-9"><a href="#cb5-9"></a>by VARNUM ;</span>
+<span id="cb5-10"><a href="#cb5-10"></a>run;</span>
+<span id="cb5-11"><a href="#cb5-11"></a></span>
+<span id="cb5-12"><a href="#cb5-12"></a>/* マクロ変数(VARn_)に変数を格納 */</span>
+<span id="cb5-13"><a href="#cb5-13"></a>data _null_;</span>
+<span id="cb5-14"><a href="#cb5-14"></a>  set work.VAR end = eof;</span>
+<span id="cb5-15"><a href="#cb5-15"></a>  call symputx("VAR"||strip(put(VARNUM, 8.))||"_", NAME, 'G');</span>
+<span id="cb5-16"><a href="#cb5-16"></a>  /* マクロ変数(MAXV)にオブザベーション数（変数の数）を格納 */</span>
+<span id="cb5-17"><a href="#cb5-17"></a>  if eof then call symputx('MAXV',_N_);</span>
+<span id="cb5-18"><a href="#cb5-18"></a>run;</span>
+<span id="cb5-19"><a href="#cb5-19"></a></span>
+<span id="cb5-20"><a href="#cb5-20"></a>/* 全変数の変数名を変更 (ex: subjid ⇒ _subjid) */</span>
+<span id="cb5-21"><a href="#cb5-21"></a>data work.&amp;out. ;</span>
+<span id="cb5-22"><a href="#cb5-22"></a>  set work.&amp;raw. ;</span>
+<span id="cb5-23"><a href="#cb5-23"></a>  rename %do i = 1 %to &amp;MAXV.;</span>
+<span id="cb5-24"><a href="#cb5-24"></a>  &amp;&amp;VAR&amp;i._ = _&amp;&amp;VAR&amp;i._</span>
+<span id="cb5-25"><a href="#cb5-25"></a>  %end;</span>
+<span id="cb5-26"><a href="#cb5-26"></a>  ;</span>
+<span id="cb5-27"><a href="#cb5-27"></a>run;</span>
+<span id="cb5-28"><a href="#cb5-28"></a></span>
+<span id="cb5-29"><a href="#cb5-29"></a>%mend rawdata;</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "コピーしました");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "コピーしました");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
+        for (let i=0; i<annoteTargets.length; i++) {
+          const annoteTarget = annoteTargets[i];
+          const targetCell = annoteTarget.getAttribute("data-target-cell");
+          const targetAnnotation = annoteTarget.getAttribute("data-target-annotation");
+          const contentFn = () => {
+            const content = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+            if (content) {
+              const tipContent = content.cloneNode(true);
+              tipContent.classList.add("code-annotation-tip-content");
+              return tipContent.outerHTML;
+            }
+          }
+          const config = {
+            allowHTML: true,
+            content: contentFn,
+            onShow: (instance) => {
+              selectCodeLines(instance.reference);
+              instance.reference.classList.add('code-annotation-active');
+              window.tippy.hideAll();
+            },
+            onHide: (instance) => {
+              unselectCodeLines();
+              instance.reference.classList.remove('code-annotation-active');
+            },
+            maxWidth: 300,
+            delay: [50, 0],
+            duration: [200, 0],
+            offset: [5, 10],
+            arrow: true,
+            trigger: 'click',
+            appendTo: function(el) {
+              return el.parentElement.parentElement.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'quarto',
+            placement: 'right',
+            positionFixed: true,
+            popperOptions: {
+              modifiers: [
+              {
+                name: 'flip',
+                options: {
+                  flipVariations: false, // true by default
+                  allowedAutoPlacements: ['right'],
+                  fallbackPlacements: ['right', 'top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left'],
+                },
+              },
+              {
+                name: 'preventOverflow',
+                options: {
+                  mainAxis: false,
+                  altAxis: false
+                }
+              }
+              ]        
+            }      
+          };
+          window.tippy(annoteTarget, config); 
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="https://github.com/kkts1010/kkts1010.github.io/">
+<p>Kota Sakamoto</p>
+</a>
+  </li>  
+</ul>
+    </div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/kkts1010/kkts1010.github.io/">
+<p>Kota Sakamoto</p>
+</a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/kkt_1010">
+      <i class="bi bi-twitter" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

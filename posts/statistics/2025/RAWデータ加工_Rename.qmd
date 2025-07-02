@@ -115,7 +115,7 @@ run ;
 
 このコードでは、まさにその変換を行っています。
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}      
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 if _Gender = "1" then Gender = "M" ;
   else if _Gender = "2" then Gender = "F" ;
 ```
@@ -138,7 +138,7 @@ if _Gender = "1" then Gender = "M" ;
 
 この`work.RawData`データセットを、`set`ステートメントで読み込む際に、次のように指定しています。
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}       
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 set work.RawData ( rename = (Gender = _Gender Age = _Age ) ) ;
 ```
 
@@ -166,17 +166,17 @@ set work.RawData ( rename = (Gender = _Gender Age = _Age ) ) ;
 
 -   **`YYYYMMDD10.`**: `YYYY-MM-DD`形式の文字列（例: "2023-01-01"）をSAS日付値に変換します。
 
-   ``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}       
-    FPAYDT = input( substr(FPAYDTC, 1, 10), yymmdd10. );
-    /* FPAYDTCが "2023-01-01 10" の場合、"2023-01-01" の部分だけを抽出して変換 */
-    ```
+```` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+ FPAYDT = input( substr(FPAYDTC, 1, 10), yymmdd10. );
+ /* FPAYDTCが "2023-01-01 10" の場合、"2023-01-01" の部分だけを抽出して変換 */
+ ```
 
 -   **`E8601DT19.`**: `YYYY-MM-DDTHH:MM:SS`または`YYYY-MM-DD HH:MM:SS`形式のISO 8601日時文字列（例: "2023-01-01 10:00:00"）をSAS日時値に変換します。SAS日時値は、1960年1月1日0時0分0秒からの秒数を表す数値です。
 
-  ``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}     
-    ELATIME = round( ( input( _FPAYDTC, e8601dt19. ) - input( _PAYDTC1, e8601dt19. ) ) / ( 60*60 ) , 1e-10 );
-    /* _FPAYDTCと_PAYDTC1（いずれも"YYYY-MM-DD HH:MM"形式）を日時値に変換し、その差を時間単位で計算 */ 
-    ```
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}     
+ ELATIME = round( ( input( _FPAYDTC, e8601dt19. ) - input( _PAYDTC1, e8601dt19. ) ) / ( 60*60 ) , 1e-10 );
+ /* _FPAYDTCと_PAYDTC1（いずれも"YYYY-MM-DD HH:MM"形式）を日時値に変換し、その差を時間単位で計算 */ 
+ ```
 
 #### 2. `SUBSTR`関数
 
@@ -185,7 +185,7 @@ set work.RawData ( rename = (Gender = _Gender Age = _Age ) ) ;
 ``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}        
 FPAYDT = input( substr(FPAYDTC, 1, 10), yymmdd10. );
 /* FPAYDTC（例: "2023-01-01 10"）の1文字目から10文字目（つまり"2023-01-01"）を抽出 */
-```
+````
 
 この例では、日付と時間の情報が混ざった文字列から、日付の部分だけを取り出して`INPUT`関数に渡しています。
 
@@ -193,7 +193,7 @@ FPAYDT = input( substr(FPAYDTC, 1, 10), yymmdd10. );
 
 `STRIP`関数は、**文字列の先頭や末尾にある余分な半角スペースを取り除く**ために使われます。特にファイルから読み込んだデータは、固定長形式などで不要なスペースが含まれていることがあるため、後の処理で問題を起こさないように`STRIP`で整形することが推奨されます。
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}      
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 _FPAYDTC = strip( FPAYDTC ) || ":00" ;
 /* FPAYDTCの末尾のスペースを取り除き、"2023-01-01 10" を "2023-01-01 10:00" のように変換 */
 ```
@@ -204,7 +204,7 @@ _FPAYDTC = strip( FPAYDTC ) || ":00" ;
 
 `TRANWRD`関数は、**文字列中の特定の文字列を別の文字列に置き換える**ために使われます。
 
-``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}       
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 _CMSTDTC = tranwrd ( CMSTDTC , "/", "-" ) ;
 /* CMSTDTC（例: "2023/01/01"）の "/" を "-" に置き換え、"2023-01-01" に変換 */
 ```

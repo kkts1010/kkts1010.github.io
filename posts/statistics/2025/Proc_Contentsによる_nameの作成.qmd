@@ -1,0 +1,186 @@
+---
+title: "Proc Contentsを利用したRawデータの変数を_varにするマクロ"
+author: "坂本航太"
+categories: [SAS,解析プログラミング]
+abstract-title: Abstract
+abstract: ""
+date: "2025-06-29"
+---
+
+## SASマクロで生データをスマートに整形：変数名変換の自動化テクニック
+
+SASで解析プロジェクトを進める際、最初に行う作業の一つが生データの加工です。特に、生データの変数名がSASの命名規則に厳密に準拠していなかったり、特定のプレフィックスやサフィックスを追加・削除したい場合が多くあります。
+
+今回ご紹介するSASマクロ`%rawdata`は、この「生データの変数名を自動で一括変換する」という、非常に実用的な処理を実現します。このテクニックをマスターすれば、手作業での変数名変更の手間を大幅に削減し、より効率的なデータ準備が可能になります。
+
+### マクロの全体像と目的
+
+このマクロの主な目的は、入力データセットの全変数に対して、以下のような処理を自動で適用することです。
+
+1.  **データセットの変数情報（定義情報）を取得する**
+
+2.  **変数情報を基に、各変数の古い名前と新しい名前のペアを作成する**
+
+3.  **そのペアを使って、データセットの全変数名を一括で変更する**
+
+特に注目すべきは、変数名の変更ロジックが`_subjid`のように、元の変数名にアンダースコア（`_`）をプレフィックスとして追加している点です。これは、特定の命名規則を強制したい場合に非常に有効です。
+
+それでは、各セクションを詳しく見ていきましょう。
+
+### 1. マクロの定義と入力データセットの準備
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+%macro rawdata(raw=, sort=, out=&raw);
+
+/* データセット定義情報の DS を作成 */
+proc contents data=work.&raw. out = work.VAR noprints;
+run;
+```
+
+-   **`%macro rawdata(raw=, sort=, out=&raw);`**: `%rawdata`という名前のマクロを定義しています。引数は以下の3つです。
+
+    -   `raw=`: 処理対象となる生データセット名を指定します。
+
+    -   `sort=`: （このコードでは直接使用されていませんが、将来的な拡張性を示唆しています。）
+
+    -   `out=&raw`: 処理結果の出力データセット名を指定します。デフォルトでは入力と同じ`&raw`になります。
+
+-   **`proc contents data=work.&raw. out = work.VAR noprints; run;`**: `PROC CONTENTS`プロシジャは、指定されたデータセット（`work.&raw`）の構造や変数に関する情報を取得し、その結果を新しいデータセット（`work.VAR`）に出力します。
+
+    -   `noprints`: 通常、`PROC CONTENTS`は結果をSAS出力ウィンドウに出力しますが、`noprints`オプションを指定することで、この出力を抑制し、データセットへの出力のみを行います。 `work.VAR`データセットには、`VARNUM`（変数番号）、`NAME`（変数名）、`LENGTH`（変数長）、`TYPE`（変数型）などの情報が格納されます。このうち、今回は特に`VARNUM`と`NAME`が重要になります。
+
+### 2. 変数番号によるソート：処理順序の確保
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+/* 変数番号でソート */
+proc sort data=work.VAR ;
+by VARNUM ;
+run;
+```
+
+`PROC SORT`プロシジャを使って、先ほど作成した`work.VAR`データセットを`VARNUM`（変数番号）の昇順でソートします。これにより、後続の処理で変数を順番に扱うことが容易になります。SASは内部的に変数に番号を割り当てており、この番号順で処理することで、元のデータセットにおける変数の並び順を反映できます。
+
+### 3. マクロ変数の動的な生成：変数名と変数数の取得
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+/* マクロ変数(VARn_)に変数を格納 */
+data _null_;
+  set work.VAR end = eof;
+  call symputx("VAR"||strip(put(VARNUM, 8.))||"_", NAME, 'G');
+  /* マクロ変数(MAXV)にオブザベーション数（変数の数）を格納 */
+  if eof then call symputx('MAXV',_N_);
+run;
+```
+
+この`DATA _NULL_`ステップは、このマクロの肝となる部分の一つです。`work.VAR`データセットの各行（つまり各変数）を読み込み、それに対応するマクロ変数を動的に生成します。
+
+-   **`set work.VAR end = eof;`**: `work.VAR`データセットを読み込みます。`end=eof`オプションは、データセットの最後のオブザベーションを読み込んだときに、`eof`という一時的な変数を`1`に設定します。
+
+-   **`call symputx("VAR"||strip(put(VARNUM, 8.))||"_", NAME, 'G');`**: `CALL SYMPUTX`ルーチンは、データステップ内でSASマクロ変数を定義するために使用します。
+
+    -   `"VAR"||strip(put(VARNUM, 8.))||"_"`: ここでマクロ変数名が生成されます。
+
+        -   `VAR`: プレフィックス
+
+        -   `strip(put(VARNUM, 8.))`: `VARNUM`（変数番号）を文字列に変換し、前後の空白を除去します。例えば`VARNUM`が`1`なら`"1"`になります。
+
+        -   `_`: サフィックス 結果として、`VAR1_`, `VAR2_`, ..., `VARn_`のようなマクロ変数が作成されます。
+
+    -   `NAME`: これがマクロ変数に割り当てられる値、つまり元の変数名です。例えば、`VAR1_`には最初の変数名、`VAR2_`には2番目の変数名が格納されます。
+
+    -   `'G'`: スコープを指定します。`'G'`はグローバルマクロ変数として定義することを意味します。
+
+-   **`if eof then call symputx('MAXV',_N_);`**: データセットの最後のオブザベーションに到達したとき（`eof`が`1`のとき）に、`MAXV`というマクロ変数に`_N_`（データステップの現在のオブザベーション番号、ここでは変数番号の最大値）を格納します。これにより、データセット内の変数総数を取得できます。
+
+このステップが完了すると、例えば元のデータセットに`SUBJID`, `AGE`, `SEX`という変数があった場合、以下のようなマクロ変数が生成されます。
+
+-   `&VAR1_` = `SUBJID`
+
+-   `&VAR2_` = `AGE`
+
+-   `&VAR3_` = `SEX`
+
+-   `&MAXV` = `3`
+
+### 4. 全変数名の変更：`RENAME`ステートメントの動的生成
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}   
+/* 全変数の変数名を変更 (ex: subjid ⇒ _subjid) */
+data work.&out. ;
+  set work.&raw. ;
+  rename %do i = 1 %to &MAXV.;
+  &&VAR&i._ = _&&VAR&i._
+  %end;
+  ;
+run;
+```
+
+いよいよ変数名の変更を行うコア部分です。`DATA`ステップの`RENAME`ステートメントを、動的に生成されたマクロ変数を使って構築します。
+
+-   **`data work.&out. ; set work.&raw. ;`**: 入力データセット`work.&raw`を読み込み、`work.&out`として新しいデータセットを作成します。
+
+-   **`rename %do i = 1 %to &MAXV.; ... %end;`**: この部分が、`RENAME`ステートメントをループ処理で動的に生成する肝です。
+
+    -   `%do i = 1 %to &MAXV.; ... %end;`: `i`を`1`から`&MAXV`（変数総数）までループさせます。
+
+    -   `&&VAR&i._ = _&&VAR&i._`:
+
+        -   `&&VAR&i._`: これは**二重間接参照**です。
+
+            1.  まず`&i`が評価され、例えば`1`になります。
+
+            2.  次に`&VAR1_`が評価され、その値（例：`SUBJID`）が取得されます。 結果として、元の変数名（例：`SUBJID`）を指します。
+
+        -   `_&&VAR&i._`: これが新しい変数名です。元の変数名の前にアンダースコア`_`を付けています。 結果として、`SUBJID = _SUBJID`、`AGE = _AGE`、`SEX = _SEX`といった`RENAME`ステートメントのリストがループによって生成されます。
+
+        -   `rename SUBJID = _SUBJID AGE = _AGE SEX = _SEX;` のように展開されます。
+
+この処理により、元のデータセットのすべての変数名が、定義されたルール（この場合は先頭に`_`を追加）に従って一括で変更されます。
+
+### まとめ：このマクロがもたらすメリット
+
+この`%rawdata`マクロは、以下の点でSASプログラミングの効率と堅牢性を高めます。
+
+-   **自動化と効率化**: 手動で大量の変数名を変更する手間を省き、エラーのリスクを減らします。
+
+-   **再利用性**: どのようなデータセットに対しても、同じロジックで変数名を変換できます。
+
+-   **命名規則の統一**: プロジェクト全体で一貫した変数命名規則を強制するのに役立ちます。
+
+-   **柔軟な対応**: `&&VAR&i._ = _&&VAR&i._` の部分を変更することで、`NEWNAME = OLDNAME`、`OLDNAME = NEWNAME`など、様々な変数名変換ロジックを適用できます。例えば、特定のサフィックスを追加したり、特定の文字列を置換したりすることも可能です。
+
+生データの前処理は解析の基盤です。このような自動化ツールを積極的に活用し、より質の高いデータ準備を目指しましょう。
+
+### Appendix: 全コード
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+%macro rawdata(raw=, sort=, out=&raw);
+
+/* データセット定義情報の DS を作成 */
+proc contents data=work.&raw. out = work.VAR noprints;
+run;
+
+/* 変数番号でソート */
+proc sort data=work.VAR ;
+by VARNUM ;
+run;
+
+/* マクロ変数(VARn_)に変数を格納 */
+data _null_;
+  set work.VAR end = eof;
+  call symputx("VAR"||strip(put(VARNUM, 8.))||"_", NAME, 'G');
+  /* マクロ変数(MAXV)にオブザベーション数（変数の数）を格納 */
+  if eof then call symputx('MAXV',_N_);
+run;
+
+/* 全変数の変数名を変更 (ex: subjid ⇒ _subjid) */
+data work.&out. ;
+  set work.&raw. ;
+  rename %do i = 1 %to &MAXV.;
+  &&VAR&i._ = _&&VAR&i._
+  %end;
+  ;
+run;
+
+%mend rawdata;
+```

@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="坂本航太">
 
-<title>Web Tools – Kota Sakamoto</title>
+<title>SASによる便利関数1 – Kota Sakamoto</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,26 +21,61 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../../">
-<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../../site_libs/quarto-html/popper.min.js"></script>
-<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-9849038e97c5862c14c4eb81893d019b.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-945f87a38397f0f3b8ef34e2f394b6bc.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-9849038e97c5862c14c4eb81893d019b.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-945f87a38397f0f3b8ef34e2f394b6bc.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -69,17 +105,17 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
-<link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="../../../styles.css">
 </head>
 
 <body class="nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="../../index.html">
+    <a class="navbar-brand" href="../../../index.html">
     <span class="navbar-title">Kota Sakamoto</span>
     </a>
   </div>
@@ -90,19 +126,19 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../index.html"> 
+    <a class="nav-link" href="../../../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html"> 
+    <a class="nav-link" href="../../../about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../posts/statistics/index.html"> 
+    <a class="nav-link" href="../../../posts/statistics/index.html"> 
 <span class="menu-text">Notes</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="../../posts/Web_tools/Web_tools.html" aria-current="page"> 
+    <a class="nav-link" href="../../../posts/Web_tools/Web_tools.html"> 
 <span class="menu-text">Web Tools</span></a>
   </li>  
 </ul>
@@ -114,7 +150,45 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-page-left">
+      <h1 class="title">SASによる便利関数1</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">SAS</div>
+                <div class="quarto-category">解析プログラミング</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta column-page-left">
+
+      <div>
+      <div class="quarto-title-meta-heading">作者</div>
+      <div class="quarto-title-meta-contents">
+               <p>坂本航太 </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">公開</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">2025年7月2日</p>
+      </div>
+    </div>
+    
+      <div>
+      <div class="quarto-title-meta-heading">更新日</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date-modified">2025年7月2日</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
@@ -122,198 +196,140 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">目次</h2>
    
   <ul class="collapse">
-  <li><a href="#計量生物学会" id="toc-計量生物学会" class="nav-link active" data-scroll-target="#計量生物学会"><span class="header-section-number">1</span> 計量生物学会</a></li>
-  <li><a href="#論文雑誌" id="toc-論文雑誌" class="nav-link" data-scroll-target="#論文雑誌"><span class="header-section-number">2</span> 論文雑誌</a></li>
-  <li><a href="#医薬品開発" id="toc-医薬品開発" class="nav-link" data-scroll-target="#医薬品開発"><span class="header-section-number">3</span> 医薬品開発</a></li>
-  <li><a href="#統計" id="toc-統計" class="nav-link" data-scroll-target="#統計"><span class="header-section-number">4</span> 統計</a></li>
-  <li><a href="#sasプログラミング" id="toc-sasプログラミング" class="nav-link" data-scroll-target="#sasプログラミング"><span class="header-section-number">5</span> SASプログラミング</a></li>
-  <li><a href="#rプログラミング書籍" id="toc-rプログラミング書籍" class="nav-link" data-scroll-target="#rプログラミング書籍"><span class="header-section-number">6</span> Rプログラミング（書籍）</a></li>
-  <li><a href="#rプログラミング海外サイト" id="toc-rプログラミング海外サイト" class="nav-link" data-scroll-target="#rプログラミング海外サイト"><span class="header-section-number">7</span> Rプログラミング（海外サイト）</a></li>
-  <li><a href="#rプログラミング日本語" id="toc-rプログラミング日本語" class="nav-link" data-scroll-target="#rプログラミング日本語"><span class="header-section-number">8</span> Rプログラミング（日本語）</a></li>
-  <li><a href="#研究関連" id="toc-研究関連" class="nav-link" data-scroll-target="#研究関連"><span class="header-section-number">9</span> 研究関連</a></li>
-  <li><a href="#論文" id="toc-論文" class="nav-link" data-scroll-target="#論文"><span class="header-section-number">10</span> 論文</a></li>
-  <li><a href="#ブログ関係" id="toc-ブログ関係" class="nav-link" data-scroll-target="#ブログ関係"><span class="header-section-number">11</span> ブログ関係</a></li>
-  <li><a href="#quartoブログ" id="toc-quartoブログ" class="nav-link" data-scroll-target="#quartoブログ"><span class="header-section-number">12</span> Quartoブログ</a></li>
-  <li><a href="#tips" id="toc-tips" class="nav-link" data-scroll-target="#tips"><span class="header-section-number">13</span> Tips</a></li>
+  <li><a href="#sas備忘録さんのfavorite関数まとめ" id="toc-sas備忘録さんのfavorite関数まとめ" class="nav-link active" data-scroll-target="#sas備忘録さんのfavorite関数まとめ"><span class="header-section-number">1</span> SAS備忘録さんのFavorite関数まとめ</a>
+  <ul class="collapse">
+  <li><a href="#cats関数" id="toc-cats関数" class="nav-link" data-scroll-target="#cats関数"><span class="header-section-number">1.1</span> CATS関数</a></li>
+  <li><a href="#catx関数" id="toc-catx関数" class="nav-link" data-scroll-target="#catx関数"><span class="header-section-number">1.2</span> CATX関数</a></li>
+  <li><a href="#whichnwhichc関数" id="toc-whichnwhichc関数" class="nav-link" data-scroll-target="#whichnwhichc関数"><span class="header-section-number">1.3</span> WHICHN・WHICHC関数</a></li>
+  <li><a href="#choosenchoosec関数" id="toc-choosenchoosec関数" class="nav-link" data-scroll-target="#choosenchoosec関数"><span class="header-section-number">1.4</span> CHOOSEN・CHOOSEC関数</a></li>
+  <li><a href="#coalescecoalescec関数" id="toc-coalescecoalescec関数" class="nav-link" data-scroll-target="#coalescecoalescec関数"><span class="header-section-number">1.5</span> COALESCE・COALESCEC関数</a></li>
+  <li><a href="#vvaluevvaluex関数" id="toc-vvaluevvaluex関数" class="nav-link" data-scroll-target="#vvaluevvaluex関数"><span class="header-section-number">1.6</span> VVALUE・VVALUEX関数</a></li>
+  <li><a href="#cmiss関数" id="toc-cmiss関数" class="nav-link" data-scroll-target="#cmiss関数"><span class="header-section-number">1.7</span> CMISS関数</a></li>
+  <li><a href="#ifnifc関数" id="toc-ifnifc関数" class="nav-link" data-scroll-target="#ifnifc関数"><span class="header-section-number">1.8</span> IFN・IFC関数</a></li>
+  <li><a href="#call-missing" id="toc-call-missing" class="nav-link" data-scroll-target="#call-missing"><span class="header-section-number">1.9</span> CALL MISSING</a></li>
+  <li><a href="#call-symputx" id="toc-call-symputx" class="nav-link" data-scroll-target="#call-symputx"><span class="header-section-number">1.10</span> CALL SYMPUTX</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content column-page-left" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Web Tools</h1>
-</div>
+<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
 
 
 
-<div class="quarto-title-meta column-page-left">
-
-    
-  
-    
-  </div>
-  
 
 
-</header>
+<section id="sas備忘録さんのfavorite関数まとめ" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> SAS備忘録さんのFavorite関数まとめ</h1>
+<ol type="1">
+<li>CATS関数</li>
+<li>CATX関数</li>
+<li>WHICHN・WHICHC関数</li>
+<li>CHOOSEN・CHOOSEC関数</li>
+<li>COALESCE・COALESCEC関数</li>
+<li>VVALUE・VVALUEX関数</li>
+<li>CMISS関数</li>
+<li>IFN・IFC関数</li>
+<li>CALL MISSING</li>
+<li>CALL SYMPUTX</li>
+</ol>
+<p>SASプログラミングで頻繁に使用される便利な関数を、実用的なプログラム例とともに解説します。</p>
+<section id="cats関数" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="cats関数"><span class="header-section-number">1.1</span> CATS関数</h2>
+<p><strong>機能：</strong> 複数の文字列を連結し、各引数の前後の空白を自動削除</p>
+<div class="sourceCode" id="cb1" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource sas number-lines code-with-copy"><code class="sourceCode"><span id="cb1-1"><a href="#cb1-1"></a>data example1;     name = "田中";     id = "001";     dept = "営業部";          /* 従来の方法 */     result1 = trim(name) || trim(id) || trim(dept);          /* CATS関数を使用 */     result2 = cats(name, id, dept);          put result1= result2=; run;</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>出力：</strong> result1=田中001営業部 result2=田中001営業部</p>
+<p>CATS関数は自動的に前後の空白を削除するため、TRIMやLEFT関数が不要になり、コードがシンプルになります。</p>
+</section>
+<section id="catx関数" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="catx関数"><span class="header-section-number">1.2</span> CATX関数</h2>
+<p><strong>機能：</strong> 指定した区切り文字で複数の文字列を連結</p>
+<div class="sourceCode" id="cb2" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource sas number-lines code-with-copy"><code class="sourceCode"><span id="cb2-1"><a href="#cb2-1"></a>data example2;     year = 2025;     month = 6;     day = 16;          /* 日付文字列の作成 */     date_slash = catx("/", year, month, day);     date_hyphen = catx("-", year, month, day);          /* CSVフォーマットの作成 */     csv_line = catx(",", "田中太郎", 30, "東京都");          put date_slash= date_hyphen= csv_line=; run;</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>出力：</strong> date_slash=2025/6/16 date_hyphen=2025-6-16 csv_line=田中太郎,30,東京都</p>
+</section>
+<section id="whichnwhichc関数" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="whichnwhichc関数"><span class="header-section-number">1.3</span> WHICHN・WHICHC関数</h2>
+<p><strong>機能：</strong> 指定した値がリストの何番目にあるかを返す</p>
+<div class="sourceCode" id="cb3" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource sas number-lines code-with-copy"><code class="sourceCode"><span id="cb3-1"><a href="#cb3-1"></a>data ae_severity;     input pt $ severity $;          /* 重篤度レベルをコード化 */     severity_code = whichc(severity, "軽度", "中等度", "重度", "重篤");          /* グレード分類への変換 */     ctcae_grade = whichc(severity, "Grade1", "Grade2", "Grade3", "Grade4", "Grade5");      datalines; 頭痛 軽度 発熱 中等度 呼吸困難 重度 ; run;</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>pt=頭痛 severity=軽度 severity_code=1 ctcae_grade=0</p>
+<p>pt=発熱 severity=中等度 severity_code=2 ctcae_grade=0<br>
+pt=呼吸困難 severity=重度 severity_code=3 ctcae_grade=0</p>
+<ul>
+<li><p><code>severity_code</code>：指定したリスト内での位置を返す</p>
+<ul>
+<li><p>“軽度” → 1番目 → 1</p></li>
+<li><p>“中等度” → 2番目 → 2</p></li>
+<li><p>“重度” → 3番目 → 3</p></li>
+</ul></li>
+</ul>
+<!-- -->
+<ul>
+<li><p><code>ctcae_grade</code>：CTCAEグレード用のリストにマッチしないため全て0</p>
+<ul>
+<li><p>データの”軽度”、“中等度”、“重度”は”Grade1”、“Grade2”等とマッチしない</p></li>
+<li><p>マッチしない場合はWHICHC関数は0を返す</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="choosenchoosec関数" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="choosenchoosec関数"><span class="header-section-number">1.4</span> CHOOSEN・CHOOSEC関数</h2>
+<p><strong>機能：</strong> インデックス番号に基づいてリストから値を選択</p>
+<div class="sourceCode" id="cb4" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource sas number-lines code-with-copy"><code class="sourceCode"><span id="cb4-1"><a href="#cb4-1"></a>data example4;     do i = 1 to 4;         /* 数値版：CHOOSEN */         threshold = choosen(i, 60, 70, 80, 90);                  /* 文字版：CHOOSEC */         grade = choosec(i, "D", "C", "B", "A");                  put i= threshold= grade=;     end; run;</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>出力：</strong> i=1 threshold=60 grade=D i=2 threshold=70 grade=C i=3 threshold=80 grade=B i=4 threshold=90 grade=A</p>
+<p>・Y番目のXの値を返す。<br>
+・第2引数以降に数値型の変数または値を指定する場合はCHOOSEN関数を用いる。<br>
+・第2引数以降に文字型の変数または値を指定する場合はCHOOSEC関数を用いる。</p>
+</section>
+<section id="coalescecoalescec関数" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="coalescecoalescec関数"><span class="header-section-number">1.5</span> COALESCE・COALESCEC関数</h2>
+<p><strong>機能：</strong> 最初の非欠損値を返す</p>
+<div class="sourceCode" id="cb5" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource sas number-lines code-with-copy"><code class="sourceCode"><span id="cb5-1"><a href="#cb5-1"></a>/* サンプルデータの作成 */ data sample_data;     input ID X1 $ X2 $ X3 $;     datalines; 1 AA    BB 2    CC DD 3       EE 4 FF     5           6 GG HH II ; run;  /* 方法1: IF-ELSE文を使用 */ data result1;     set sample_data;     length Y $2.;     if X1^="" then Y=X1;     else if X2^="" then Y=X2;     else if X3^="" then Y=X3; run;  /* 方法2: COALESCEC関数を使用 */ data result2;     set sample_data;     length Y $2.;     Y = coalescec(X1, X2, X3); run;</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>ポイント：</strong></p>
+<ul>
+<li><p>この関数は「引数のうち最初に欠損値以外で登場する値を返す」という機能を持っています。</p></li>
+<li><p><strong>COALESCE：</strong> 数値の場合、欠損値（.）をスキップして最初の有効な値（85）を返す</p></li>
+<li><p><strong>COALESCEC：</strong> 文字の場合、空白をスキップして最初の有効な文字列を返す</p></li>
+</ul>
+</section>
+<section id="vvaluevvaluex関数" class="level2" data-number="1.6">
+<h2 data-number="1.6" class="anchored" data-anchor-id="vvaluevvaluex関数"><span class="header-section-number">1.6</span> VVALUE・VVALUEX関数</h2>
+<p><strong>機能：</strong> フォーマットが適用された値を文字列として取得</p>
+<div class="sourceCode" id="cb6" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource sas number-lines code-with-copy"><code class="sourceCode"><span id="cb6-1"><a href="#cb6-1"></a>data DT1;   format X yymmdd10.;   X = '13jun2017'd; run;   data DT2;   set DT1;   length Y $20.;   Y = put( X, yymmdd10.); run;   data DT2;   set DT1;   length Y1 Y2 $20.;    /* vvalue関数を使った例 */   Y1 = vvalue( X );    /* vvaluex関数を使った例 */   Y2 = vvaluex( "X" );  run;</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li><strong>Y1 = vvalue( X )：</strong>「 vvalue( X ) 」で変数Xに割り当てられているFORMAT「YYMMDD10.」を使って文字変換した値「2017-06-13」を返しています。</li>
+<li><strong>Y2 = vvaluex( “X” );</strong>vvaluex&nbsp;も vvalue と同じ機能を持っているのですが、違いは以下の通り。</li>
+<li>vvalue( X ) &nbsp; &nbsp; &nbsp;… 変数名を指定</li>
+<li>vvaluex( “X” ) &nbsp;… 変数名を表す文字値を指定</li>
+<li>つまり、「 vvaluex( “X” ) 」で変数Xに割り当てられているFORMAT「YYMMDD10.」を使って文字変換した値「2017-06-13」を返しています。</li>
+</ul>
+</section>
+<section id="cmiss関数" class="level2" data-number="1.7">
+<h2 data-number="1.7" class="anchored" data-anchor-id="cmiss関数"><span class="header-section-number">1.7</span> CMISS関数</h2>
+<p><strong>機能：</strong> 欠損値の個数をカウント</p>
+<div class="sourceCode" id="cb7" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource sas number-lines code-with-copy"><code class="sourceCode"><span id="cb7-1"><a href="#cb7-1"></a>data example7;     input name $ age height weight;          missing_count = cmiss(age, height, weight);     complete_data = (missing_count = 0);          put name= missing_count= complete_data=;      datalines; 田中 25 170 65 佐藤 . 165 . 山田 30 . 70 ; run;</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>出力：</strong> name=田中 missing_count=0 complete_data=1 name=佐藤 missing_count=2 complete_data=0 name=山田 missing_count=1 complete_data=0</p>
+</section>
+<section id="ifnifc関数" class="level2" data-number="1.8">
+<h2 data-number="1.8" class="anchored" data-anchor-id="ifnifc関数"><span class="header-section-number">1.8</span> IFN・IFC関数</h2>
+<p><strong>機能：</strong> 条件に基づいて値を返す三項演算子</p>
+<div class="sourceCode" id="cb8" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource sas number-lines code-with-copy"><code class="sourceCode"><span id="cb8-1"><a href="#cb8-1"></a>data DT1;    length X1 $10.;    X1="YES"; output;    X1="NO"; output; run;  #Before data DT2;    set DT1;    if X1 = "YES" then X2=1;    else  X2=0; run;  #After data DT2;    set DT1;    X2 = ifn(X1="YES",1,0); run;</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Rのifelse関数みたいな気持ち。</p>
+</section>
+<section id="call-missing" class="level2" data-number="1.9">
+<h2 data-number="1.9" class="anchored" data-anchor-id="call-missing"><span class="header-section-number">1.9</span> CALL MISSING</h2>
+<p><strong>機能：</strong> 複数の変数を一度に欠損値に設定</p>
+<div class="sourceCode" id="cb9" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource sas number-lines code-with-copy"><code class="sourceCode"><span id="cb9-1"><a href="#cb9-1"></a>data example9;     name = "田中";     age = 25;     score = 85;          /* 条件に応じて全データを欠損値に */     if age &lt; 20 then call missing(of name age score);          put name= age= score=; run;</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>このSASコードは<code>CALL MISSING</code>ルーチンを使って、条件に応じて複数の変数を一度に欠損値に設定する例です。</p>
+</section>
+<section id="call-symputx" class="level2" data-number="1.10">
+<h2 data-number="1.10" class="anchored" data-anchor-id="call-symputx"><span class="header-section-number">1.10</span> CALL SYMPUTX</h2>
+<p><strong>機能：</strong> データステップ内でマクロ変数を作成・更新</p>
+<div class="sourceCode" id="cb10" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource sas number-lines code-with-copy"><code class="sourceCode"><span id="cb10-1"><a href="#cb10-1"></a>data example10;     input dept $ sales;          /* 部門別に動的にマクロ変数を作成 */     call symputx(cats("sales_", dept), sales);          /* 最大売上をマクロ変数に格納 */     retain max_sales;     if _n_ = 1 then max_sales = sales;     else max_sales = max(max_sales, sales);     if  _EOF then call symputx("OBS", _N_);      datalines; 営業 1200 技術 800 総務 300 ; run;  /* データステップ終了後に最大値を取得 */ data _null_;     set example10 end=last;     retain max_sales;     if _n_ = 1 then max_sales = sales;     else max_sales = max(max_sales, sales);     if last then call symputx("max_sales_total", max_sales); run;  %put &amp;sales_営業 &amp;sales_技術 &amp;sales_総務; %put &amp;max_sales_total;</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>出力：</strong> 1200 800 300 1200</p>
+<p>これらの関数を使いこなすことで、SASプログラミングの効率と可読性が大幅に向上します。特にデータクリーニングや条件分岐処理において威力を発揮する関数群です。</p>
 
 
-<p>ここでは、参考にさせていただいてるWeb URLを備忘録として保存する。</p>
-<section id="計量生物学会" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="計量生物学会"><span class="header-section-number">1</span> 計量生物学会</h2>
-<ul>
-<li><a href="https://www.biometrics.gr.jp/">計量生物学会</a></li>
-<li><a href="https://www.biometrics.gr.jp/news/all/standard_20150310.pdf">統計家の行動基準</a></li>
-</ul>
 </section>
-<section id="論文雑誌" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="論文雑誌"><span class="header-section-number">2</span> 論文雑誌</h2>
-<ul>
-<li><a href="https://www.jstage.jst.go.jp/browse/jjb/list/-char/ja">計量生物学</a></li>
-<li><a href="https://www.jstage.jst.go.jp/browse/jjpe/-char/ja">薬剤疫学</a></li>
-<li><a href="https://jeaweb.jp/journal/issues/jstage/index.html">Journal of Epideimology</a></li>
-<li><a href="https://onlinelibrary.wiley.com/loi/10970258">Statistics in Medicine</a></li>
-<li><a href="https://onlinelibrary.wiley.com/toc/15391612/current">Pharmaceutical Statistics</a></li>
-<li><a href="https://academic.oup.com/biostatistics">Biostatistics</a></li>
-<li><a href="https://onlinelibrary.wiley.com/journal/10991557">Pharmacoepidemiology ＆ Drug Safety</a></li>
-<li><a href="https://sugakubunka.com/">すうがくぶんか株式会社</a></li>
-<li><a href="https://quarto.org/">Quarto</a></li>
-<li><a href="https://git-scm.com/book/ja/v2">Git公式書籍（日本語</a></li>
-</ul>
-</section>
-<section id="医薬品開発" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="医薬品開発"><span class="header-section-number">3</span> 医薬品開発</h2>
-<ul>
-<li><a href="https://www.pmda.go.jp/review-services/outline/0001.html">PMDA 審査関連業務の概要について</a></li>
-<li><a href="https://www.pmda.go.jp/int-activities/int-harmony/ich/0011.html">ICH Efficacyガイドライン</a></li>
-<li><a href="https://www.jpma.or.jp/information/evaluation/results/allotment/results01.html#%E3%83%87%E3%83%BC%E3%82%BF%E3%82%B5%E3%82%A4%E3%82%A8%E3%83%B3%E3%82%B9">製薬協データサイエンス部会 成果物</a></li>
-<li><a href="https://www.jpma.or.jp/information/evaluation/symposium/index.html">製薬協 医薬品評価委員会シンポジウム</a></li>
-<li><a href="https://www.fda.gov/science-research/clinical-trials-and-human-subject-protection/clinical-trials-guidance-documents">FDA Clinical Trials Guidance Documents</a></li>
-<li><a href="https://www.fda.gov/science-research/science-and-research-special-topics/real-world-evidence">FDA Real-World Evidence Documents</a></li>
-<li><a href="https://www.ema.europa.eu/en/human-regulatory-overview/research-and-development/scientific-guidelines/clinical-efficacy-safety-guidelines/biostatistics#topics">EMA Biostatistics guidelines</a></li>
-<li><a href="https://www.ema.europa.eu/en/human-regulatory-overview/research-development/scientific-guidelines/clinical-efficacy-safety-guidelines/real-world-evidence">EMA Real-world evidence guidelines</a></li>
-<li><a href="https://www.cdisc.org/standards/foundational/adam">CDISC ADaM</a></li>
-<li><a href="https://clinicaltrialsalliance.org.au/resource/statistical-analysis-plan/">Statistical Analysi Plan(Australian Clinical Trials)</a></li>
-</ul>
-</section>
-<section id="統計" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="統計"><span class="header-section-number">4</span> 統計</h2>
-<ul>
-<li><a href="https://personal.utdallas.edu/~pankaj/">Pankaj Kumar Choudhary先生</a></li>
-<li><a href="https://www.fharrell.com/about">Frank Harrell先生</a></li>
-<li><a href="https://avehtari.github.io/BDA_course_Aalto/index.html">Bayesian Data Analysis Course</a></li>
-<li><a href="https://noboru-murata.github.io/lectures/">早稲田大学 村田先生 講義資料等</a></li>
-<li><a href="https://www.camdenlopez.com/about/">Camden Lopez（海外の生物統計家ブログ）</a></li>
-<li><a href="https://hbiostat.org/bbrc/">Biostatistics for Biomedical Research</a></li>
-<li><a href="https://sites.google.com/site/ktatsuya77/xian-dai">久保川達也先生 書籍関連</a></li>
-</ul>
-</section>
-<section id="sasプログラミング" class="level2" data-number="5">
-<h2 data-number="5" class="anchored" data-anchor-id="sasプログラミング"><span class="header-section-number">5</span> SASプログラミング</h2>
-<ul>
-<li><a href="https://sas-boubi.blogspot.com/2016/01/ifn-ifc4.html">SAS備忘録</a></li>
-<li><a href="https://www.lexjansen.com/cgi-bin/xsl_transform.php?x=pharmasug2025">Pharmaceutical Software Users Group</a></li>
-<li><a href="https://www.lexjansen.com/">Conference Proceedings (1976 - present) … and more</a></li>
-<li><a href="https://www.sas.com/ja_jp/usergroups.html">SASユーザー会</a></li>
-<li><a href="https://sites.google.com/view/sas-japan-user-group-archive/%E3%83%9B%E3%83%BC%E3%83%A0">SASユーザー総会 論文集アーカイブ</a></li>
-<li><a href="https://www.sas.com/offices/asiapacific/japan/usergroups/technical06/appendix.html">SAS Forumユーザー会 2006</a></li>
-<li><a href="https://sites.google.com/view/osakasasbenkyokai/%E3%83%9B%E3%83%BC%E3%83%A0">大阪SAS勉強会</a></li>
-<li><a href="https://sas-tumesas.blogspot.com/">データステップ100万回　SAS新手一生</a></li>
-<li><a href="https://dengonmemo.blogspot.com/p/blog-page.html">晴れ時々SAS</a></li>
-<li><a href="https://sasonediver.blog.fc2.com/">SAS One Dash</a></li>
-<li><a href="https://japelin.hatenablog.com/entry/2025/05/03/210416">我輩はブロガーではない。ネタもまだない</a></li>
-<li><a href="http://sasboku.blog.fc2.com/blog-date-201402.html">僕の頁 <sasと臨床試験と雑談と></sasと臨床試験と雑談と></a></li>
-<li><a href="https://github.com/Nikkei-R-DataScience/sas-100knocks-preprocess/blob/main/answer/sas100knocks.ipynb">データサイエンス100本ノック（構造化データ加工編）のSAS版</a></li>
-<li><a href="https://sasonediver.blog.fc2.com/blog-entry-342.html">RTFファイルをPDF化するDDEプログラム</a></li>
-</ul>
-</section>
-<section id="rプログラミング書籍" class="level2" data-number="6">
-<h2 data-number="6" class="anchored" data-anchor-id="rプログラミング書籍"><span class="header-section-number">6</span> Rプログラミング（書籍）</h2>
-<ul>
-<li><a href="https://r4ds.hadley.nz/">R for Data Science (2nd Edtion)</a></li>
-<li><a href="https://adv-r.hadley.nz/">Advanced R (2nd Edition)</a></li>
-<li><a href="https://rc2e.com/">R Cookbook, 2nd Edition</a></li>
-<li><a href="https://quarto.org/docs/guide/">Quarto 公式guide</a></li>
-</ul>
-</section>
-<section id="rプログラミング海外サイト" class="level2" data-number="7">
-<h2 data-number="7" class="anchored" data-anchor-id="rプログラミング海外サイト"><span class="header-section-number">7</span> Rプログラミング（海外サイト）</h2>
-<ul>
-<li><a href="https://style.tidyverse.org/index.html">Tidyverse style guide</a></li>
-<li><a href="https://hbiostat.org/rflow/">R Workflow for Reproducible Data Analysis and Reporting</a></li>
-<li><a href="https://raps-with-r.dev/">Building reproducible analytical pipelines with R</a></li>
-<li><a href="https://rinpharma.com/">R Rpharma</a></li>
-<li><a href="https://www.fharrell.com/post/rflow/">R Workflow（Frank Harrell先生</a></li>
-<li><a href="https://rmrwr.netlify.app/">Reproducible Medical Research with R</a></li>
-<li><a href="https://r4csr.org/">R for Clinical Study Reports and Submission</a></li>
-<li><a href="https://smac-group.github.io/ds/">An Introduction to Statistical Programming Methods with R</a></li>
-<li><a href="https://rconsortium.github.io/rtrs-wg/">Tables in Clinical Trials with R</a></li>
-<li><a href="https://cran.r-project.org/web/packages/tern/vignettes/tern.html">Introduction to tern</a></li>
-<li><a href="https://github.com/rstudio-conf-2022">Workshops at rstudio::conf 2022</a></li>
-<li><a href="https://insightsengineering.github.io/tlg-catalog/stable/">TLG Catalog</a></li>
-<li><a href="https://insightsengineering.github.io/rtables/v0.6.10/articles/rtables.html">Introduction to {rtables}</a></li>
-<li><a href="https://solutions.posit.co/envs-pkgs/environments/">Reproducible Environments(Posit社)</a></li>
-</ul>
-</section>
-<section id="rプログラミング日本語" class="level2" data-number="8">
-<h2 data-number="8" class="anchored" data-anchor-id="rプログラミング日本語"><span class="header-section-number">8</span> Rプログラミング（日本語）</h2>
-<ul>
-<li><a href="https://zenn.dev/masayukeeeee/articles/a7fbdb6f2f38b9">データサイエンス100本ノック（構造化データ加工編）をRで解く</a></li>
-<li><a href="https://uribo.github.io/rrr/">Rによる再現可能なデータ分析（瓜生真也先生）</a></li>
-<li><a href="https://uribo.github.io/dmr/">Rによるデータ解析のための前処理（瓜生真也先生）</a></li>
-<li><a href="https://uribo.github.io/230827ism_ws/">次の一歩を踏み出すためのtidyverse入門（瓜生真也先生）</a></li>
-<li><a href="https://ykunisato.github.io/jpa2020-tws-002/">今日からできる再現可能な論文執筆（国里愛彦先生・竹林由武先生）</a></li>
-<li><a href="https://kosugitti.github.io/slides/TokyoR117/RforBeginner.html#r%E3%82%92%E3%81%95%E3%82%8F%E3%81%A3%E3%81%A6%E3%81%BF%E3%81%BE%E3%81%97%E3%82%87%E3%81%86">はじめよう！R（小杉考司先生）</a></li>
-<li><a href="https://shohei-doi.github.io/academic-website/get-started.html">気軽にRでWebサイト</a></li>
-<li><a href="https://book.mynavi.jp/manatee/series/detail/id=54225">Rではじめようモダンなデータ分析</a></li>
-<li><a href="https://www.jaysong.net/RBook/">私たちのR</a></li>
-<li><a href="https://t-arae.blog/">Rプログラムの個人ブログ</a></li>
-</ul>
-</section>
-<section id="研究関連" class="level2" data-number="9">
-<h2 data-number="9" class="anchored" data-anchor-id="研究関連"><span class="header-section-number">9</span> 研究関連</h2>
-<ul>
-<li><a href="https://www.jclinepi.com/content/jce-Writing-Tips-Series">Writing-Tips Series(Journal of Clinical Epidemiology)</a></li>
-</ul>
-</section>
-<section id="論文" class="level2" data-number="10">
-<h2 data-number="10" class="anchored" data-anchor-id="論文"><span class="header-section-number">10</span> 論文</h2>
-<ul>
-<li><a href="https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1003285">Ten Simple Rules for Reproducible Computational Research</a></li>
-<li><a href="https://mathlandscape.com/latex-bib/">山本先生_LatexによるBibTeXにおけるbibファイルの書き方</a></li>
-</ul>
-</section>
-<section id="ブログ関係" class="level2" data-number="11">
-<h2 data-number="11" class="anchored" data-anchor-id="ブログ関係"><span class="header-section-number">11</span> ブログ関係</h2>
-<ul>
-<li><a href="https://nshi.jp/">長島健悟先生のブログ</a></li>
-<li><a href="https://www.krsk-phs.com/">KRSK先生のブログ</a></li>
-<li><a href="https://162348.github.io/">司馬先生のブログ</a></li>
-<li><a href="https://zenn.dev/nicetak">Yanagimoto先生のブログ</a></li>
-<li><a href="https://nothing-without-poison.com/">すきとほるさんのブログ</a></li>
-</ul>
-</section>
-<section id="quartoブログ" class="level2" data-number="12">
-<h2 data-number="12" class="anchored" data-anchor-id="quartoブログ"><span class="header-section-number">12</span> Quartoブログ</h2>
-<ul>
-<li><a href="https://ivelasq.quarto.pub/building-a-blog-with-quarto/intro.html">tutorial</a></li>
-<li><a href="https://qiita.com/Qiita/items/c686397e4a0f4f11683d">Building a blog with Quarto</a></li>
-<li><a href="https://qiita.com/Qiita/items/c686397e4a0f4f11683d">Markdown記法チート</a></li>
-</ul>
-</section>
-<section id="tips" class="level2" data-number="13">
-<h2 data-number="13" class="anchored" data-anchor-id="tips"><span class="header-section-number">13</span> Tips</h2>
-<ul>
-<li><a href="https://note.com/office_haru/n/n35ab7211eece">Excelシートの一括変換 note</a></li>
-<li><a href="https://zenn.dev/takaha4k/articles/a0980bea89b883">ExcelファイルをまとめてPDFファイルに変換したい</a></li>
-<li><a href="https://kouritsukafiles.com/convert-excelfiles-to-pdf/">複数のExcelファイルを一括でPDFファイルに変換する方法</a></li>
-<li><a href="https://skainoblog.com/pdftoexcel/">メモ帳だけで作成！複数のExcelファイルをPDFに一括変換</a></li>
-<li><a href="https://winmergejp.bitbucket.io/">WinMerge日本語版</a></li>
-</ul>
-
-
 </section>
 
 </main> <!-- /main -->
