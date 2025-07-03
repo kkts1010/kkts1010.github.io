@@ -1,0 +1,16 @@
+---
+title: "研究メモ"
+author: "坂本航太"
+categories: [メモ]
+abstract-title: Abstract
+abstract: ""
+date: "2025-07-02"
+---
+
+## Measurement Agreement
+
+Measurement Agreement Models, Methods, and Applicationsの書籍について、自己学習用にまとめる。
+
+書籍は以下の通り
+
+-

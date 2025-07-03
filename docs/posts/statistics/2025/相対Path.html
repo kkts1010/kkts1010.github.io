@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.30">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="坂本航太">
+
+<title>SAS・Rでの相対パス ../../ の使い方完全ガイド – Kota Sakamoto</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-9849038e97c5862c14c4eb81893d019b.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-945f87a38397f0f3b8ef34e2f394b6bc.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "一致なし",
+    "search-matching-documents-text": "一致した文書",
+    "search-copy-link-title": "検索へのリンクをコピー",
+    "search-hide-matches-text": "追加の検索結果を非表示",
+    "search-more-match-text": "追加の検索結果",
+    "search-more-matches-text": "追加の検索結果",
+    "search-clear-button-title": "消去",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "取消",
+    "search-submit-button-title": "検索",
+    "search-label": "サーチ"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Kota Sakamoto</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="サーチ"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="ナビゲーションを切り替える" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../posts/statistics/index.html"> 
+<span class="menu-text">Notes</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../posts/Web_tools/Web_tools.html"> 
+<span class="menu-text">Web Tools</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+    <a href="https://github.com/kkts1010/kkts1010.github.io/" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-github"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-page-left">
+      <h1 class="title">SAS・Rでの相対パス ../../ の使い方完全ガイド</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">SAS</div>
+                <div class="quarto-category">解析プログラミング</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta column-page-left">
+
+      <div>
+      <div class="quarto-title-meta-heading">作者</div>
+      <div class="quarto-title-meta-contents">
+               <p>坂本航太 </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">公開</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">2025年7月3日</p>
+      </div>
+    </div>
+    
+      <div>
+      <div class="quarto-title-meta-heading">更新日</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date-modified">2025年7月3日</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">目次</h2>
+   
+  <ul class="collapse">
+  <li><a href="#sasrでの相対パス-....-の使い方完全ガイド" id="toc-sasrでの相対パス-....-の使い方完全ガイド" class="nav-link active" data-scroll-target="#sasrでの相対パス-....-の使い方完全ガイド"><span class="header-section-number">1</span> SAS・Rでの相対パス <code>../../</code> の使い方完全ガイド</a>
+  <ul class="collapse">
+  <li><a href="#相対パスとは" id="toc-相対パスとは" class="nav-link" data-scroll-target="#相対パスとは"><span class="header-section-number">1.1</span> 相対パスとは？</a></li>
+  <li><a href="#フォルダ構造の例" id="toc-フォルダ構造の例" class="nav-link" data-scroll-target="#フォルダ構造の例"><span class="header-section-number">1.2</span> フォルダ構造の例</a></li>
+  <li><a href="#現在のディレクトリ情報を取得するsasコード" id="toc-現在のディレクトリ情報を取得するsasコード" class="nav-link" data-scroll-target="#現在のディレクトリ情報を取得するsasコード"><span class="header-section-number">1.3</span> 現在のディレクトリ情報を取得するSASコード</a></li>
+  <li><a href="#x-commandでディレクトリ移動" id="toc-x-commandでディレクトリ移動" class="nav-link" data-scroll-target="#x-commandでディレクトリ移動"><span class="header-section-number">1.4</span> X commandでディレクトリ移動</a></li>
+  <li><a href="#r版での同等処理" id="toc-r版での同等処理" class="nav-link" data-scroll-target="#r版での同等処理"><span class="header-section-number">1.5</span> R版での同等処理</a></li>
+  <li><a href="#相対パスの読み方" id="toc-相対パスの読み方" class="nav-link" data-scroll-target="#相対パスの読み方"><span class="header-section-number">1.6</span> 相対パスの読み方</a></li>
+  <li><a href="#実践的な使用パターン" id="toc-実践的な使用パターン" class="nav-link" data-scroll-target="#実践的な使用パターン"><span class="header-section-number">1.7</span> 実践的な使用パターン</a></li>
+  <li><a href="#よくある失敗パターン" id="toc-よくある失敗パターン" class="nav-link" data-scroll-target="#よくある失敗パターン"><span class="header-section-number">1.8</span> よくある失敗パターン</a></li>
+  <li><a href="#実践的なコツ" id="toc-実践的なコツ" class="nav-link" data-scroll-target="#実践的なコツ"><span class="header-section-number">1.9</span> 実践的なコツ</a></li>
+  <li><a href="#まとめ" id="toc-まとめ" class="nav-link" data-scroll-target="#まとめ"><span class="header-section-number">1.10</span> まとめ</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+
+
+
+
+
+<section id="sasrでの相対パス-....-の使い方完全ガイド" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> SAS・Rでの相対パス <code>../../</code> の使い方完全ガイド</h1>
+<section id="相対パスとは" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="相対パスとは"><span class="header-section-number">1.1</span> 相対パスとは？</h2>
+<p>相対パスは、現在いる場所を基準にしたファイルやフォルダの位置を表す方法です。</p>
+<section id="基本記号" class="level3" data-number="1.1.1">
+<h3 data-number="1.1.1" class="anchored" data-anchor-id="基本記号"><span class="header-section-number">1.1.1</span> 基本記号</h3>
+<ul>
+<li><p><code>.</code> = 現在のディレクトリ</p></li>
+<li><p><code>..</code> = 1つ上のディレクトリ</p></li>
+<li><p><code>../../</code> = 2つ上のディレクトリ</p></li>
+<li><p><code>../../../</code> = 3つ上のディレクトリ</p></li>
+</ul>
+</section>
+</section>
+<section id="フォルダ構造の例" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="フォルダ構造の例"><span class="header-section-number">1.2</span> フォルダ構造の例</h2>
+<pre><code>Project/                    ← プロジェクトルート
+├── 01_Data/
+│   ├── 00_RAW/
+│   │   └── EXT/
+│   └── 01_PROCESSED/
+├── 02_Programs/
+│   ├── ADaM/
+│   │   └── v2.0/           ← 現在ここにいる
+│   └── TLF/
+└── 03_Output/</code></pre>
+</section>
+<section id="現在のディレクトリ情報を取得するsasコード" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="現在のディレクトリ情報を取得するsasコード"><span class="header-section-number">1.3</span> 現在のディレクトリ情報を取得するSASコード</h2>
+<div class="sourceCode" id="cb2" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource sas number-lines code-with-copy"><code class="sourceCode"><span id="cb2-1"><a href="#cb2-1"></a>*------------------------------------------------------------------------------;</span>
+<span id="cb2-2"><a href="#cb2-2"></a>* Get Current Directory Path ;</span>
+<span id="cb2-3"><a href="#cb2-3"></a>*------------------------------------------------------------------------------;</span>
+<span id="cb2-4"><a href="#cb2-4"></a>filename *Dir* "." ;</span>
+<span id="cb2-5"><a href="#cb2-5"></a>%let PgmType = %scan ( %sysfunc ( pathname ( *DIR* ) ) , -1 , %str ( \ ) ) ;</span>
+<span id="cb2-6"><a href="#cb2-6"></a>%put  &amp;PgmType. ;</span>
+<span id="cb2-7"><a href="#cb2-7"></a>filename *Dir* "../" ;</span>
+<span id="cb2-8"><a href="#cb2-8"></a>%let PgmEnv  = %scan ( %sysfunc ( pathname ( *DIR* ) ) , -1 , %str ( \ ) ) ;</span>
+<span id="cb2-9"><a href="#cb2-9"></a>%put  &amp;PgmEnv. ;</span>
+<span id="cb2-10"><a href="#cb2-10"></a>filename *Dir* "../../" ;</span>
+<span id="cb2-11"><a href="#cb2-11"></a>%let Dir     = %sysfunc ( pathname ( *DIR* ) ) ;</span>
+<span id="cb2-12"><a href="#cb2-12"></a>%put  &amp;Dir. ;</span>
+<span id="cb2-13"><a href="#cb2-13"></a>filename *Dir* clear ;</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="このコードの解説" class="level3" data-number="1.3.1">
+<h3 data-number="1.3.1" class="anchored" data-anchor-id="このコードの解説"><span class="header-section-number">1.3.1</span> このコードの解説</h3>
+<p><strong>1行目</strong>: 現在のディレクトリ（“.”）にファイル参照を設定</p>
+<div class="sourceCode" id="cb3" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource sas number-lines code-with-copy"><code class="sourceCode"><span id="cb3-1"><a href="#cb3-1"></a>filename *Dir* "." ;</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>2行目</strong>: 現在のディレクトリ名を取得</p>
+<div class="sourceCode" id="cb4" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource sas number-lines code-with-copy"><code class="sourceCode"><span id="cb4-1"><a href="#cb4-1"></a>%let PgmType = %scan ( %sysfunc ( pathname ( *DIR* ) ) , -1 , %str ( \ ) ) ;</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li><p><code>%sysfunc(pathname(*DIR*))</code> → フルパスを取得</p></li>
+<li><p><code>%scan(..., -1, %str(\))</code> → パスを<code>\</code>で区切って最後の部分を取得</p></li>
+<li><p><strong>結果</strong>: <code>v2.0</code> （現在のフォルダ名）</p></li>
+</ul>
+<p><strong>4行目</strong>: 1つ上のディレクトリに参照を変更</p>
+<div class="sourceCode" id="cb5" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource sas number-lines code-with-copy"><code class="sourceCode"><span id="cb5-1"><a href="#cb5-1"></a>filename *Dir* "../" ;</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>5行目</strong>: 1つ上のディレクトリ名を取得</p>
+<div class="sourceCode" id="cb6" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource sas number-lines code-with-copy"><code class="sourceCode"><span id="cb6-1"><a href="#cb6-1"></a>%let PgmEnv  = %scan ( %sysfunc ( pathname ( *DIR* ) ) , -1 , %str ( \ ) ) ;</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li><strong>結果</strong>: <code>ADaM</code> （1つ上のフォルダ名）</li>
+</ul>
+<p><strong>7行目</strong>: 2つ上のディレクトリに参照を変更</p>
+<div class="sourceCode" id="cb7" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource sas number-lines code-with-copy"><code class="sourceCode"><span id="cb7-1"><a href="#cb7-1"></a>filename *Dir* "../../" ;</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>8行目</strong>: 2つ上のディレクトリのフルパスを取得</p>
+<div class="sourceCode" id="cb8" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource sas number-lines code-with-copy"><code class="sourceCode"><span id="cb8-1"><a href="#cb8-1"></a>%let Dir     = %sysfunc ( pathname ( *DIR* ) ) ;</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li><strong>結果</strong>: <code>C:\Project\02_Programs</code> （2つ上のフルパス）</li>
+</ul>
+<p><strong>10行目</strong>: ファイル参照をクリア</p>
+<div class="sourceCode" id="cb9" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource sas number-lines code-with-copy"><code class="sourceCode"><span id="cb9-1"><a href="#cb9-1"></a>filename *Dir* clear ;</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="実行結果例" class="level3" data-number="1.3.2">
+<h3 data-number="1.3.2" class="anchored" data-anchor-id="実行結果例"><span class="header-section-number">1.3.2</span> 実行結果例</h3>
+<div class="sourceCode" id="cb10" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource sas number-lines code-with-copy"><code class="sourceCode"><span id="cb10-1"><a href="#cb10-1"></a>PgmType: v2.0</span>
+<span id="cb10-2"><a href="#cb10-2"></a>PgmEnv: ADaM  </span>
+<span id="cb10-3"><a href="#cb10-3"></a>Dir: C:\Project\02_Programs</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="x-commandでディレクトリ移動" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="x-commandでディレクトリ移動"><span class="header-section-number">1.4</span> X commandでディレクトリ移動</h2>
+<section id="基本的なx-command" class="level3" data-number="1.4.1">
+<h3 data-number="1.4.1" class="anchored" data-anchor-id="基本的なx-command"><span class="header-section-number">1.4.1</span> 基本的なX command</h3>
+<div class="sourceCode" id="cb11" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource sas number-lines code-with-copy"><code class="sourceCode"><span id="cb11-1"><a href="#cb11-1"></a>/* 現在地: C:\Project\02_Programs\ADaM\v2.0\ */</span>
+<span id="cb11-2"><a href="#cb11-2"></a></span>
+<span id="cb11-3"><a href="#cb11-3"></a>/* プロジェクトルートに移動 */</span>
+<span id="cb11-4"><a href="#cb11-4"></a>X "cd ../../../" ;</span>
+<span id="cb11-5"><a href="#cb11-5"></a></span>
+<span id="cb11-6"><a href="#cb11-6"></a>/* または、絶対パスで移動 */</span>
+<span id="cb11-7"><a href="#cb11-7"></a>%let PROJECT_ROOT = C:\Project ;</span>
+<span id="cb11-8"><a href="#cb11-8"></a>X "cd &amp;PROJECT_ROOT." ;</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="実用的なx-command使用例" class="level3" data-number="1.4.2">
+<h3 data-number="1.4.2" class="anchored" data-anchor-id="実用的なx-command使用例"><span class="header-section-number">1.4.2</span> 実用的なX command使用例</h3>
+<div class="sourceCode" id="cb12" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource sas number-lines code-with-copy"><code class="sourceCode"><span id="cb12-1"><a href="#cb12-1"></a>/* 現在のプログラムパスを取得 */</span>
+<span id="cb12-2"><a href="#cb12-2"></a>%let execpath = %sysfunc(getoption(sysin)) ;</span>
+<span id="cb12-3"><a href="#cb12-3"></a>%let CURRENT = %qsubstr("&amp;execpath.", 2, %eval(%index("&amp;execpath.", %scan(&amp;execpath, -1, "\")))-2) ;</span>
+<span id="cb12-4"><a href="#cb12-4"></a></span>
+<span id="cb12-5"><a href="#cb12-5"></a>/* プロジェクトルートを算出 */</span>
+<span id="cb12-6"><a href="#cb12-6"></a>filename *Dir* "../../../" ;</span>
+<span id="cb12-7"><a href="#cb12-7"></a>%let PROJECT_ROOT = %sysfunc(pathname(*DIR*)) ;</span>
+<span id="cb12-8"><a href="#cb12-8"></a>filename *Dir* clear ;</span>
+<span id="cb12-9"><a href="#cb12-9"></a></span>
+<span id="cb12-10"><a href="#cb12-10"></a>/* プロジェクトルートに移動 */</span>
+<span id="cb12-11"><a href="#cb12-11"></a>X "cd &amp;PROJECT_ROOT." ;</span>
+<span id="cb12-12"><a href="#cb12-12"></a>%put 現在地をプロジェクトルートに変更: &amp;PROJECT_ROOT. ;</span>
+<span id="cb12-13"><a href="#cb12-13"></a></span>
+<span id="cb12-14"><a href="#cb12-14"></a>/* これで相対パスがシンプルになる */</span>
+<span id="cb12-15"><a href="#cb12-15"></a>%let RAW_DATA = 01_Data\00_RAW ;</span>
+<span id="cb12-16"><a href="#cb12-16"></a>%let PROCESSED_DATA = 01_Data\01_PROCESSED ;</span>
+<span id="cb12-17"><a href="#cb12-17"></a>%let OUTPUT_DIR = 03_Output ;</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="x-commandを使った場合の利点" class="level3" data-number="1.4.3">
+<h3 data-number="1.4.3" class="anchored" data-anchor-id="x-commandを使った場合の利点"><span class="header-section-number">1.4.3</span> X commandを使った場合の利点</h3>
+<div class="sourceCode" id="cb13" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource sas number-lines code-with-copy"><code class="sourceCode"><span id="cb13-1"><a href="#cb13-1"></a>/* X commandでプロジェクトルートに移動後 */</span>
+<span id="cb13-2"><a href="#cb13-2"></a>X "cd &amp;PROJECT_ROOT." ;</span>
+<span id="cb13-3"><a href="#cb13-3"></a></span>
+<span id="cb13-4"><a href="#cb13-4"></a>/* 相対パスがシンプルに！ */</span>
+<span id="cb13-5"><a href="#cb13-5"></a>%let external = 01_Data\00_RAW\EXT\external_data.xlsx ;</span>
+<span id="cb13-6"><a href="#cb13-6"></a>%include "00_Settings\init.sas" ;</span>
+<span id="cb13-7"><a href="#cb13-7"></a>ods pdf file="03_Output\ADSL_Summary.pdf" ;</span>
+<span id="cb13-8"><a href="#cb13-8"></a></span>
+<span id="cb13-9"><a href="#cb13-9"></a>/* 移動前だと... */</span>
+<span id="cb13-10"><a href="#cb13-10"></a>%let external = ..\..\..\01_Data\00_RAW\EXT\external_data.xlsx ;</span>
+<span id="cb13-11"><a href="#cb13-11"></a>%include "..\..\..\00_Settings\init.sas" ;</span>
+<span id="cb13-12"><a href="#cb13-12"></a>ods pdf file="..\..\..\03_Output\ADSL_Summary.pdf" ;</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="r版での同等処理" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="r版での同等処理"><span class="header-section-number">1.5</span> R版での同等処理</h2>
+<div class="sourceCode" id="cb14" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="co"># 現在のディレクトリ情報を取得</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a>get_directory_info <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb14-3"><a href="#cb14-3"></a>  current_path <span class="ot">&lt;-</span> <span class="fu">getwd</span>()</span>
+<span id="cb14-4"><a href="#cb14-4"></a>  </span>
+<span id="cb14-5"><a href="#cb14-5"></a>  <span class="co"># 現在のディレクトリ名</span></span>
+<span id="cb14-6"><a href="#cb14-6"></a>  PgmType <span class="ot">&lt;-</span> <span class="fu">basename</span>(current_path)</span>
+<span id="cb14-7"><a href="#cb14-7"></a>  </span>
+<span id="cb14-8"><a href="#cb14-8"></a>  <span class="co"># 1つ上のディレクトリ名</span></span>
+<span id="cb14-9"><a href="#cb14-9"></a>  parent_path <span class="ot">&lt;-</span> <span class="fu">dirname</span>(current_path)</span>
+<span id="cb14-10"><a href="#cb14-10"></a>  PgmEnv <span class="ot">&lt;-</span> <span class="fu">basename</span>(parent_path)</span>
+<span id="cb14-11"><a href="#cb14-11"></a>  </span>
+<span id="cb14-12"><a href="#cb14-12"></a>  <span class="co"># 2つ上のディレクトリのフルパス</span></span>
+<span id="cb14-13"><a href="#cb14-13"></a>  Dir <span class="ot">&lt;-</span> <span class="fu">dirname</span>(parent_path)</span>
+<span id="cb14-14"><a href="#cb14-14"></a>  </span>
+<span id="cb14-15"><a href="#cb14-15"></a>  <span class="co"># 結果を表示</span></span>
+<span id="cb14-16"><a href="#cb14-16"></a>  <span class="fu">cat</span>(<span class="st">"PgmType:"</span>, PgmType, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb14-17"><a href="#cb14-17"></a>  <span class="fu">cat</span>(<span class="st">"PgmEnv:"</span>, PgmEnv, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>) </span>
+<span id="cb14-18"><a href="#cb14-18"></a>  <span class="fu">cat</span>(<span class="st">"Dir:"</span>, Dir, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb14-19"><a href="#cb14-19"></a>  </span>
+<span id="cb14-20"><a href="#cb14-20"></a>  <span class="co"># リストで返す</span></span>
+<span id="cb14-21"><a href="#cb14-21"></a>  <span class="fu">list</span>(</span>
+<span id="cb14-22"><a href="#cb14-22"></a>    <span class="at">PgmType =</span> PgmType,</span>
+<span id="cb14-23"><a href="#cb14-23"></a>    <span class="at">PgmEnv =</span> PgmEnv,</span>
+<span id="cb14-24"><a href="#cb14-24"></a>    <span class="at">Dir =</span> Dir</span>
+<span id="cb14-25"><a href="#cb14-25"></a>  )</span>
+<span id="cb14-26"><a href="#cb14-26"></a>}</span>
+<span id="cb14-27"><a href="#cb14-27"></a></span>
+<span id="cb14-28"><a href="#cb14-28"></a><span class="co"># 実行</span></span>
+<span id="cb14-29"><a href="#cb14-29"></a>dir_info <span class="ot">&lt;-</span> <span class="fu">get_directory_info</span>()</span>
+<span id="cb14-30"><a href="#cb14-30"></a></span>
+<span id="cb14-31"><a href="#cb14-31"></a><span class="co"># プロジェクトルートに移動</span></span>
+<span id="cb14-32"><a href="#cb14-32"></a>PROJECT_ROOT <span class="ot">&lt;-</span> <span class="fu">dirname</span>(<span class="fu">dirname</span>(<span class="fu">dirname</span>(<span class="fu">getwd</span>())))</span>
+<span id="cb14-33"><a href="#cb14-33"></a><span class="fu">setwd</span>(PROJECT_ROOT)</span>
+<span id="cb14-34"><a href="#cb14-34"></a></span>
+<span id="cb14-35"><a href="#cb14-35"></a><span class="co"># 相対パスがシンプルに</span></span>
+<span id="cb14-36"><a href="#cb14-36"></a>external_file <span class="ot">&lt;-</span> <span class="st">"01_Data/00_RAW/EXT/external_data.xlsx"</span></span>
+<span id="cb14-37"><a href="#cb14-37"></a><span class="fu">source</span>(<span class="st">"00_Settings/init.R"</span>)</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="相対パスの読み方" class="level2" data-number="1.6">
+<h2 data-number="1.6" class="anchored" data-anchor-id="相対パスの読み方"><span class="header-section-number">1.6</span> 相対パスの読み方</h2>
+<p>現在地：<code>02_Programs/ADaM/v2.0/</code> にいる場合</p>
+<section id="data00_rawext-の解読" class="level3" data-number="1.6.1">
+<h3 data-number="1.6.1" class="anchored" data-anchor-id="data00_rawext-の解読"><span class="header-section-number">1.6.1</span> <code>../../01_Data/00_RAW/EXT/</code> の解読</h3>
+<ol type="1">
+<li><p><code>..</code> → <code>02_Programs/ADaM/</code> に移動</p></li>
+<li><p><code>../</code> → <code>02_Programs/</code> に移動</p></li>
+<li><p><code>01_Data/</code> → <code>01_Data/</code> フォルダに入る</p></li>
+<li><p><code>00_RAW/EXT/</code> → さらに奥のフォルダに入る</p></li>
+</ol>
+<p><strong>結果</strong>: <code>Project/01_Data/00_RAW/EXT/</code></p>
+</section>
+</section>
+<section id="実践的な使用パターン" class="level2" data-number="1.7">
+<h2 data-number="1.7" class="anchored" data-anchor-id="実践的な使用パターン"><span class="header-section-number">1.7</span> 実践的な使用パターン</h2>
+<section id="パターン1-プログラム開始時にルートに移動" class="level3" data-number="1.7.1">
+<h3 data-number="1.7.1" class="anchored" data-anchor-id="パターン1-プログラム開始時にルートに移動"><span class="header-section-number">1.7.1</span> パターン1: プログラム開始時にルートに移動</h3>
+<div class="sourceCode" id="cb15" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource sas number-lines code-with-copy"><code class="sourceCode"><span id="cb15-1"><a href="#cb15-1"></a>/* プログラム冒頭でプロジェクトルートに移動 */</span>
+<span id="cb15-2"><a href="#cb15-2"></a>filename *Dir* "../../../" ;</span>
+<span id="cb15-3"><a href="#cb15-3"></a>%let PROJECT_ROOT = %sysfunc(pathname(*DIR*)) ;</span>
+<span id="cb15-4"><a href="#cb15-4"></a>filename *Dir* clear ;</span>
+<span id="cb15-5"><a href="#cb15-5"></a>X "cd &amp;PROJECT_ROOT." ;</span>
+<span id="cb15-6"><a href="#cb15-6"></a></span>
+<span id="cb15-7"><a href="#cb15-7"></a>/* 以降はシンプルな相対パス */</span>
+<span id="cb15-8"><a href="#cb15-8"></a>%include "00_Settings\init.sas" ;</span>
+<span id="cb15-9"><a href="#cb15-9"></a>%let external = 01_Data\00_RAW\EXT\external_data.xlsx ;</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="パターン2-移動せずに長い相対パス" class="level3" data-number="1.7.2">
+<h3 data-number="1.7.2" class="anchored" data-anchor-id="パターン2-移動せずに長い相対パス"><span class="header-section-number">1.7.2</span> パターン2: 移動せずに長い相対パス</h3>
+<div class="sourceCode" id="cb16" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource sas number-lines code-with-copy"><code class="sourceCode"><span id="cb16-1"><a href="#cb16-1"></a>/* 現在地を変更せず、長い相対パスを使用 */</span>
+<span id="cb16-2"><a href="#cb16-2"></a>%include "..\..\..\00_Settings\init.sas" ;</span>
+<span id="cb16-3"><a href="#cb16-3"></a>%let external = ..\..\..\01_Data\00_RAW\EXT\external_data.xlsx ;</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="どちらを選ぶか" class="level3" data-number="1.7.3">
+<h3 data-number="1.7.3" class="anchored" data-anchor-id="どちらを選ぶか"><span class="header-section-number">1.7.3</span> どちらを選ぶか？</h3>
+<p><strong>プロジェクトルート移動（推奨）</strong></p>
+<ul>
+<li><p>✅ パスがシンプル</p></li>
+<li><p>✅ 可読性が良い</p></li>
+<li><p>✅ 他のプログラムでも同じパターン使用可能</p></li>
+<li><p>❌ 作業ディレクトリが変わる</p></li>
+</ul>
+<p><strong>長い相対パス</strong></p>
+<ul>
+<li><p>✅ 作業ディレクトリが変わらない</p></li>
+<li><p>❌ パスが長くて読みにくい</p></li>
+<li><p>❌ メンテナンスが大変</p></li>
+</ul>
+</section>
+</section>
+<section id="よくある失敗パターン" class="level2" data-number="1.8">
+<h2 data-number="1.8" class="anchored" data-anchor-id="よくある失敗パターン"><span class="header-section-number">1.8</span> よくある失敗パターン</h2>
+<section id="間違い例" class="level3" data-number="1.8.1">
+<h3 data-number="1.8.1" class="anchored" data-anchor-id="間違い例"><span class="header-section-number">1.8.1</span> ❌ 間違い例</h3>
+<div class="sourceCode" id="cb17" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource sas number-lines code-with-copy"><code class="sourceCode"><span id="cb17-1"><a href="#cb17-1"></a>/* 現在地を間違えている */</span>
+<span id="cb17-2"><a href="#cb17-2"></a>%let external = ../01_Data/00_RAW/EXT/file.xlsx ;  /* ..が足りない */</span>
+<span id="cb17-3"><a href="#cb17-3"></a></span>
+<span id="cb17-4"><a href="#cb17-4"></a>/* フォルダ名を間違えている */</span>
+<span id="cb17-5"><a href="#cb17-5"></a>%let external = ../../Data/RAW/EXT/file.xlsx ;     /* 01_が抜けている */</span>
+<span id="cb17-6"><a href="#cb17-6"></a></span>
+<span id="cb17-7"><a href="#cb17-7"></a>/* X command後にパスが混乱 */</span>
+<span id="cb17-8"><a href="#cb17-8"></a>X "cd &amp;PROJECT_ROOT." ;</span>
+<span id="cb17-9"><a href="#cb17-9"></a>%let external = ../../01_Data/00_RAW/EXT/file.xlsx ; /* もう..は不要 */</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="正しい例" class="level3" data-number="1.8.2">
+<h3 data-number="1.8.2" class="anchored" data-anchor-id="正しい例"><span class="header-section-number">1.8.2</span> ✅ 正しい例</h3>
+<div class="sourceCode" id="cb18" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource sas number-lines code-with-copy"><code class="sourceCode"><span id="cb18-1"><a href="#cb18-1"></a>/* 段階的に確認 */</span>
+<span id="cb18-2"><a href="#cb18-2"></a>filename test1 ".." ;</span>
+<span id="cb18-3"><a href="#cb18-3"></a>%put %sysfunc(pathname(test1)) ;  /* 1つ上を確認 */</span>
+<span id="cb18-4"><a href="#cb18-4"></a></span>
+<span id="cb18-5"><a href="#cb18-5"></a>filename test2 "../.." ;</span>
+<span id="cb18-6"><a href="#cb18-6"></a>%put %sysfunc(pathname(test2)) ;  /* 2つ上を確認 */</span>
+<span id="cb18-7"><a href="#cb18-7"></a></span>
+<span id="cb18-8"><a href="#cb18-8"></a>filename test3 "../../01_Data" ;</span>
+<span id="cb18-9"><a href="#cb18-9"></a>%put %sysfunc(pathname(test3)) ;  /* 目的フォルダを確認 */</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="実践的なコツ" class="level2" data-number="1.9">
+<h2 data-number="1.9" class="anchored" data-anchor-id="実践的なコツ"><span class="header-section-number">1.9</span> 実践的なコツ</h2>
+<section id="パスの動作確認" class="level3" data-number="1.9.1">
+<h3 data-number="1.9.1" class="anchored" data-anchor-id="パスの動作確認"><span class="header-section-number">1.9.1</span> 1. パスの動作確認</h3>
+<div class="sourceCode" id="cb19" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource sas number-lines code-with-copy"><code class="sourceCode"><span id="cb19-1"><a href="#cb19-1"></a>/* SAS */</span>
+<span id="cb19-2"><a href="#cb19-2"></a>filename chkpath "../../01_Data" ;</span>
+<span id="cb19-3"><a href="#cb19-3"></a>%put パス確認: %sysfunc(pathname(chkpath)) ;</span>
+<span id="cb19-4"><a href="#cb19-4"></a>filename chkpath clear ;</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb20" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="co"># R</span></span>
+<span id="cb20-2"><a href="#cb20-2"></a><span class="fu">file.exists</span>(<span class="st">"../../01_Data"</span>)  <span class="co"># TRUE/FALSEで確認</span></span>
+<span id="cb20-3"><a href="#cb20-3"></a><span class="fu">normalizePath</span>(<span class="st">"../../01_Data"</span>)  <span class="co"># 絶対パス表示</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="変数化して管理" class="level3" data-number="1.9.2">
+<h3 data-number="1.9.2" class="anchored" data-anchor-id="変数化して管理"><span class="header-section-number">1.9.2</span> 2. 変数化して管理</h3>
+<div class="sourceCode" id="cb21" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource sas number-lines code-with-copy"><code class="sourceCode"><span id="cb21-1"><a href="#cb21-1"></a>/* SAS - プロジェクトルート移動後 */</span>
+<span id="cb21-2"><a href="#cb21-2"></a>X "cd &amp;PROJECT_ROOT." ;</span>
+<span id="cb21-3"><a href="#cb21-3"></a>%let DATA_ROOT = 01_Data ;</span>
+<span id="cb21-4"><a href="#cb21-4"></a>%let RAW_DATA = &amp;DATA_ROOT.\00_RAW ;</span>
+<span id="cb21-5"><a href="#cb21-5"></a>%let EXT_DATA = &amp;RAW_DATA.\EXT ;</span>
+<span id="cb21-6"><a href="#cb21-6"></a>%let external = &amp;EXT_DATA.\target_file.xlsx ;</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb22" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="co"># R</span></span>
+<span id="cb22-2"><a href="#cb22-2"></a><span class="fu">setwd</span>(PROJECT_ROOT)</span>
+<span id="cb22-3"><a href="#cb22-3"></a>DATA_ROOT <span class="ot">&lt;-</span> <span class="st">"01_Data"</span></span>
+<span id="cb22-4"><a href="#cb22-4"></a>RAW_DATA <span class="ot">&lt;-</span> <span class="fu">file.path</span>(DATA_ROOT, <span class="st">"00_RAW"</span>)</span>
+<span id="cb22-5"><a href="#cb22-5"></a>EXT_DATA <span class="ot">&lt;-</span> <span class="fu">file.path</span>(RAW_DATA, <span class="st">"EXT"</span>)</span>
+<span id="cb22-6"><a href="#cb22-6"></a>external_file <span class="ot">&lt;-</span> <span class="fu">file.path</span>(EXT_DATA, <span class="st">"target_file.xlsx"</span>)</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="現在地の確認方法" class="level3" data-number="1.9.3">
+<h3 data-number="1.9.3" class="anchored" data-anchor-id="現在地の確認方法"><span class="header-section-number">1.9.3</span> 3. 現在地の確認方法</h3>
+<div class="sourceCode" id="cb23" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource sas number-lines code-with-copy"><code class="sourceCode"><span id="cb23-1"><a href="#cb23-1"></a>/* SAS */</span>
+<span id="cb23-2"><a href="#cb23-2"></a>%put 現在地: %sysfunc(getoption(work)) ;</span>
+<span id="cb23-3"><a href="#cb23-3"></a>filename pwd "." ;</span>
+<span id="cb23-4"><a href="#cb23-4"></a>%put 現在地: %sysfunc(pathname(pwd)) ;</span>
+<span id="cb23-5"><a href="#cb23-5"></a>filename pwd clear ;</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb24" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="co"># R</span></span>
+<span id="cb24-2"><a href="#cb24-2"></a><span class="fu">getwd</span>()  <span class="co"># 現在の作業ディレクトリ</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="まとめ" class="level2" data-number="1.10">
+<h2 data-number="1.10" class="anchored" data-anchor-id="まとめ"><span class="header-section-number">1.10</span> まとめ</h2>
+<ul>
+<li><p><code>..</code> の数 = 上に戻る階層数</p></li>
+<li><p><strong>X commandでプロジェクトルートに移動</strong>すると相対パスがシンプルになる</p></li>
+<li><p>フォルダ構造を把握してから相対パスを設計</p></li>
+<li><p>パス確認を習慣化する</p></li>
+<li><p>変数化で管理しやすくする</p></li>
+<li><p>SASの<code>filename</code>とRの<code>getwd()</code>系関数で現在地を把握</p></li>
+</ul>
+<p>相対パスとX commandをマスターすれば、プロジェクト全体の移動や共有が格段に楽になります！</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "コピーしました");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "コピーしました");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
+        for (let i=0; i<annoteTargets.length; i++) {
+          const annoteTarget = annoteTargets[i];
+          const targetCell = annoteTarget.getAttribute("data-target-cell");
+          const targetAnnotation = annoteTarget.getAttribute("data-target-annotation");
+          const contentFn = () => {
+            const content = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+            if (content) {
+              const tipContent = content.cloneNode(true);
+              tipContent.classList.add("code-annotation-tip-content");
+              return tipContent.outerHTML;
+            }
+          }
+          const config = {
+            allowHTML: true,
+            content: contentFn,
+            onShow: (instance) => {
+              selectCodeLines(instance.reference);
+              instance.reference.classList.add('code-annotation-active');
+              window.tippy.hideAll();
+            },
+            onHide: (instance) => {
+              unselectCodeLines();
+              instance.reference.classList.remove('code-annotation-active');
+            },
+            maxWidth: 300,
+            delay: [50, 0],
+            duration: [200, 0],
+            offset: [5, 10],
+            arrow: true,
+            trigger: 'click',
+            appendTo: function(el) {
+              return el.parentElement.parentElement.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'quarto',
+            placement: 'right',
+            positionFixed: true,
+            popperOptions: {
+              modifiers: [
+              {
+                name: 'flip',
+                options: {
+                  flipVariations: false, // true by default
+                  allowedAutoPlacements: ['right'],
+                  fallbackPlacements: ['right', 'top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left'],
+                },
+              },
+              {
+                name: 'preventOverflow',
+                options: {
+                  mainAxis: false,
+                  altAxis: false
+                }
+              }
+              ]        
+            }      
+          };
+          window.tippy(annoteTarget, config); 
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="https://github.com/kkts1010/kkts1010.github.io/">
+<p>Kota Sakamoto</p>
+</a>
+  </li>  
+</ul>
+    </div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/kkts1010/kkts1010.github.io/">
+<p>Kota Sakamoto</p>
+</a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/kkt_1010">
+      <i class="bi bi-twitter" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

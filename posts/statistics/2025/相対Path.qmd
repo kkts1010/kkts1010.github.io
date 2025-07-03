@@ -1,0 +1,374 @@
+---
+title: "SAS・Rでの相対パス ../../ の使い方完全ガイド"
+author: "坂本航太"
+categories: [SAS,解析プログラミング]
+date-modified: "2025-07-03"
+abstract-title: Abstract
+abstract: ""
+date: "2025-07-03"
+---
+
+# SAS・Rでの相対パス `../../` の使い方完全ガイド
+
+## 相対パスとは？
+
+相対パスは、現在いる場所を基準にしたファイルやフォルダの位置を表す方法です。
+
+### 基本記号
+
+-   `.` = 現在のディレクトリ
+
+-   `..` = 1つ上のディレクトリ
+
+-   `../../` = 2つ上のディレクトリ
+
+-   `../../../` = 3つ上のディレクトリ
+
+## フォルダ構造の例
+
+```         
+Project/                    ← プロジェクトルート
+├── 01_Data/
+│   ├── 00_RAW/
+│   │   └── EXT/
+│   └── 01_PROCESSED/
+├── 02_Programs/
+│   ├── ADaM/
+│   │   └── v2.0/           ← 現在ここにいる
+│   └── TLF/
+└── 03_Output/
+```
+
+## 現在のディレクトリ情報を取得するSASコード
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}    
+*------------------------------------------------------------------------------;
+* Get Current Directory Path ;
+*------------------------------------------------------------------------------;
+filename *Dir* "." ;
+%let PgmType = %scan ( %sysfunc ( pathname ( *DIR* ) ) , -1 , %str ( \ ) ) ;
+%put  &PgmType. ;
+filename *Dir* "../" ;
+%let PgmEnv  = %scan ( %sysfunc ( pathname ( *DIR* ) ) , -1 , %str ( \ ) ) ;
+%put  &PgmEnv. ;
+filename *Dir* "../../" ;
+%let Dir     = %sysfunc ( pathname ( *DIR* ) ) ;
+%put  &Dir. ;
+filename *Dir* clear ;
+```
+
+### このコードの解説
+
+**1行目**: 現在のディレクトリ（"."）にファイル参照を設定
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}    
+filename *Dir* "." ;
+```
+
+**2行目**: 現在のディレクトリ名を取得
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}     
+%let PgmType = %scan ( %sysfunc ( pathname ( *DIR* ) ) , -1 , %str ( \ ) ) ;
+```
+
+-   `%sysfunc(pathname(*DIR*))` → フルパスを取得
+
+-   `%scan(..., -1, %str(\))` → パスを`\`で区切って最後の部分を取得
+
+-   **結果**: `v2.0` （現在のフォルダ名）
+
+**4行目**: 1つ上のディレクトリに参照を変更
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}      
+filename *Dir* "../" ;
+```
+
+**5行目**: 1つ上のディレクトリ名を取得
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}     
+%let PgmEnv  = %scan ( %sysfunc ( pathname ( *DIR* ) ) , -1 , %str ( \ ) ) ;
+```
+
+-   **結果**: `ADaM` （1つ上のフォルダ名）
+
+**7行目**: 2つ上のディレクトリに参照を変更
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}     
+filename *Dir* "../../" ;
+```
+
+**8行目**: 2つ上のディレクトリのフルパスを取得
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}    
+%let Dir     = %sysfunc ( pathname ( *DIR* ) ) ;
+```
+
+-   **結果**: `C:\Project\02_Programs` （2つ上のフルパス）
+
+**10行目**: ファイル参照をクリア
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}  
+filename *Dir* clear ;
+```
+
+### 実行結果例
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}      
+PgmType: v2.0
+PgmEnv: ADaM  
+Dir: C:\Project\02_Programs
+```
+
+## X commandでディレクトリ移動
+
+### 基本的なX command
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}       
+/* 現在地: C:\Project\02_Programs\ADaM\v2.0\ */
+
+/* プロジェクトルートに移動 */
+X "cd ../../../" ;
+
+/* または、絶対パスで移動 */
+%let PROJECT_ROOT = C:\Project ;
+X "cd &PROJECT_ROOT." ;
+```
+
+### 実用的なX command使用例
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}      
+/* 現在のプログラムパスを取得 */
+%let execpath = %sysfunc(getoption(sysin)) ;
+%let CURRENT = %qsubstr("&execpath.", 2, %eval(%index("&execpath.", %scan(&execpath, -1, "\")))-2) ;
+
+/* プロジェクトルートを算出 */
+filename *Dir* "../../../" ;
+%let PROJECT_ROOT = %sysfunc(pathname(*DIR*)) ;
+filename *Dir* clear ;
+
+/* プロジェクトルートに移動 */
+X "cd &PROJECT_ROOT." ;
+%put 現在地をプロジェクトルートに変更: &PROJECT_ROOT. ;
+
+/* これで相対パスがシンプルになる */
+%let RAW_DATA = 01_Data\00_RAW ;
+%let PROCESSED_DATA = 01_Data\01_PROCESSED ;
+%let OUTPUT_DIR = 03_Output ;
+```
+
+### X commandを使った場合の利点
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}    
+/* X commandでプロジェクトルートに移動後 */
+X "cd &PROJECT_ROOT." ;
+
+/* 相対パスがシンプルに！ */
+%let external = 01_Data\00_RAW\EXT\external_data.xlsx ;
+%include "00_Settings\init.sas" ;
+ods pdf file="03_Output\ADSL_Summary.pdf" ;
+
+/* 移動前だと... */
+%let external = ..\..\..\01_Data\00_RAW\EXT\external_data.xlsx ;
+%include "..\..\..\00_Settings\init.sas" ;
+ods pdf file="..\..\..\03_Output\ADSL_Summary.pdf" ;
+```
+
+## R版での同等処理
+
+``` {.r eval="FALSE," code-line-numbers="true," code-overflow="wrap"}       
+# 現在のディレクトリ情報を取得
+get_directory_info <- function() {
+  current_path <- getwd()
+  
+  # 現在のディレクトリ名
+  PgmType <- basename(current_path)
+  
+  # 1つ上のディレクトリ名
+  parent_path <- dirname(current_path)
+  PgmEnv <- basename(parent_path)
+  
+  # 2つ上のディレクトリのフルパス
+  Dir <- dirname(parent_path)
+  
+  # 結果を表示
+  cat("PgmType:", PgmType, "\n")
+  cat("PgmEnv:", PgmEnv, "\n") 
+  cat("Dir:", Dir, "\n")
+  
+  # リストで返す
+  list(
+    PgmType = PgmType,
+    PgmEnv = PgmEnv,
+    Dir = Dir
+  )
+}
+
+# 実行
+dir_info <- get_directory_info()
+
+# プロジェクトルートに移動
+PROJECT_ROOT <- dirname(dirname(dirname(getwd())))
+setwd(PROJECT_ROOT)
+
+# 相対パスがシンプルに
+external_file <- "01_Data/00_RAW/EXT/external_data.xlsx"
+source("00_Settings/init.R")
+```
+
+## 相対パスの読み方
+
+現在地：`02_Programs/ADaM/v2.0/` にいる場合
+
+### `../../01_Data/00_RAW/EXT/` の解読
+
+1.  `..` → `02_Programs/ADaM/` に移動
+
+2.  `../` → `02_Programs/` に移動
+
+3.  `01_Data/` → `01_Data/` フォルダに入る
+
+4.  `00_RAW/EXT/` → さらに奥のフォルダに入る
+
+**結果**: `Project/01_Data/00_RAW/EXT/`
+
+## 実践的な使用パターン
+
+### パターン1: プログラム開始時にルートに移動
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+/* プログラム冒頭でプロジェクトルートに移動 */
+filename *Dir* "../../../" ;
+%let PROJECT_ROOT = %sysfunc(pathname(*DIR*)) ;
+filename *Dir* clear ;
+X "cd &PROJECT_ROOT." ;
+
+/* 以降はシンプルな相対パス */
+%include "00_Settings\init.sas" ;
+%let external = 01_Data\00_RAW\EXT\external_data.xlsx ;
+```
+
+### パターン2: 移動せずに長い相対パス
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}   
+/* 現在地を変更せず、長い相対パスを使用 */
+%include "..\..\..\00_Settings\init.sas" ;
+%let external = ..\..\..\01_Data\00_RAW\EXT\external_data.xlsx ;
+```
+
+### どちらを選ぶか？
+
+**プロジェクトルート移動（推奨）**
+
+-   ✅ パスがシンプル
+
+-   ✅ 可読性が良い
+
+-   ✅ 他のプログラムでも同じパターン使用可能
+
+-   ❌ 作業ディレクトリが変わる
+
+**長い相対パス**
+
+-   ✅ 作業ディレクトリが変わらない
+
+-   ❌ パスが長くて読みにくい
+
+-   ❌ メンテナンスが大変
+
+## よくある失敗パターン
+
+### ❌ 間違い例
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+/* 現在地を間違えている */
+%let external = ../01_Data/00_RAW/EXT/file.xlsx ;  /* ..が足りない */
+
+/* フォルダ名を間違えている */
+%let external = ../../Data/RAW/EXT/file.xlsx ;     /* 01_が抜けている */
+
+/* X command後にパスが混乱 */
+X "cd &PROJECT_ROOT." ;
+%let external = ../../01_Data/00_RAW/EXT/file.xlsx ; /* もう..は不要 */
+```
+
+### ✅ 正しい例
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}   
+/* 段階的に確認 */
+filename test1 ".." ;
+%put %sysfunc(pathname(test1)) ;  /* 1つ上を確認 */
+
+filename test2 "../.." ;
+%put %sysfunc(pathname(test2)) ;  /* 2つ上を確認 */
+
+filename test3 "../../01_Data" ;
+%put %sysfunc(pathname(test3)) ;  /* 目的フォルダを確認 */
+```
+
+## 実践的なコツ
+
+### 1. パスの動作確認
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}   
+/* SAS */
+filename chkpath "../../01_Data" ;
+%put パス確認: %sysfunc(pathname(chkpath)) ;
+filename chkpath clear ;
+```
+
+``` {.r eval="FALSE," code-line-numbers="true," code-overflow="wrap"}     
+# R
+file.exists("../../01_Data")  # TRUE/FALSEで確認
+normalizePath("../../01_Data")  # 絶対パス表示
+```
+
+### 2. 変数化して管理
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}    
+/* SAS - プロジェクトルート移動後 */
+X "cd &PROJECT_ROOT." ;
+%let DATA_ROOT = 01_Data ;
+%let RAW_DATA = &DATA_ROOT.\00_RAW ;
+%let EXT_DATA = &RAW_DATA.\EXT ;
+%let external = &EXT_DATA.\target_file.xlsx ;
+```
+
+``` {.r eval="FALSE," code-line-numbers="true," code-overflow="wrap"}     
+# R
+setwd(PROJECT_ROOT)
+DATA_ROOT <- "01_Data"
+RAW_DATA <- file.path(DATA_ROOT, "00_RAW")
+EXT_DATA <- file.path(RAW_DATA, "EXT")
+external_file <- file.path(EXT_DATA, "target_file.xlsx")
+```
+
+### 3. 現在地の確認方法
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}     
+/* SAS */
+%put 現在地: %sysfunc(getoption(work)) ;
+filename pwd "." ;
+%put 現在地: %sysfunc(pathname(pwd)) ;
+filename pwd clear ;
+```
+
+``` {.r eval="FALSE," code-line-numbers="true," code-overflow="wrap"}     
+# R
+getwd()  # 現在の作業ディレクトリ
+```
+
+## まとめ
+
+-   `..` の数 = 上に戻る階層数
+
+-   **X commandでプロジェクトルートに移動**すると相対パスがシンプルになる
+
+-   フォルダ構造を把握してから相対パスを設計
+
+-   パス確認を習慣化する
+
+-   変数化で管理しやすくする
+
+-   SASの`filename`とRの`getwd()`系関数で現在地を把握
+
+相対パスとX commandをマスターすれば、プロジェクト全体の移動や共有が格段に楽になります！
