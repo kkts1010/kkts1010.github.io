@@ -9,7 +9,10 @@
   {
     "listing": "/posts/statistics/index.html",
     "items": [
+      "/posts/statistics/2025/ESTIMAND_抗がん剤_ARO協議会.html",
+      "/posts/statistics/2025/Rによる可視化.html",
       "/posts/statistics/2025/R解説1_function.html",
+      "/posts/statistics/2025/統計方法論研究におけるフォルダ構成.html",
       "/posts/statistics/2025/相対Path.html",
       "/posts/statistics/2025/RWD研究におけるADS仕様書.html",
       "/posts/statistics/2025/SASによる便利関数1.html",
@@ -17,6 +20,7 @@
       "/posts/statistics/2025/Joint_interventionにおけるモデル構築.html",
       "/posts/statistics/2025/Proc_Lifereg.html",
       "/posts/statistics/2025/ADaM作成においてDataステップにおける便利な関数.html",
+      "/posts/statistics/2025/ADSL_trial.html",
       "/posts/statistics/2025/DDEによるExcelデータの読み込み.html",
       "/posts/statistics/2025/Proc_Contentsによる_nameの作成.html",
       "/posts/statistics/2025/RAWデータ加工_Rename.html",

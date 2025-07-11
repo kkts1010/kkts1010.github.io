@@ -1,0 +1,193 @@
+---
+title: "臨床試験データ処理の実践：人口統計データ（ADSL）作成テクニック"
+author: "坂本航太"
+categories: [SAS,解析プログラミング]
+abstract-title: Abstract
+abstract: ""
+date: "2025-06-29"
+---
+
+臨床試験において、被験者の基本情報をまとめた人口統計データ（ADSL: Analysis Data Subject Level）の作成は、全ての解析の基盤となる重要な作業です。今回は、実際の現場で使われているSASプログラミングテクニックを詳しく解説します。
+
+## ADSLデータ作成の2つのプログラム例
+
+### 1. 人口統計データ（Demographics）の作成
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+data work.DT01 ;
+  length STUDYID $10 USUBJID $17 SUBJID ORSUBJID $6 AGE 8 AGEU $5 SEX $1 SEXN 8 RFICDTC $100 ;
+  set work.en ;
+  STUDYID = "STUDY-XXX" ;
+  if length(scan(_subjid, 2, '-')) = 1 then SUBJID = cats(scan(_subjid, 1, '-'), "-0", scan(_subjid, 2, '-')) ;
+  else SUBJID = _subjid ;
+  ORSUBJID = _subjid ;
+  USUBJID = catx("-", STUDYID, SUBJID) ;
+  AGE = _age ;
+  AGEU = "YEARS" ;
+  if _sex = 1 then SEX = "M" ;
+  else if _sex = 2 then SEX = "F" ;
+  SEXN = _sex ;
+  RFICDTC = put(_icdat, yymmdd10.) ;
+  keep STUDYID -- RFICDTC ;
+```
+
+### 2. プロトコルイベント（Protocol Events）データの作成
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}       
+data work.PE01 ;
+  length SUBJID ORSUBJID $6 RFSTDTC RFXSTDTC $100 TRTSDT 8 ;
+  set work.pe ;
+  if length(scan(_subjid, 2, '-')) = 1 then SUBJID = cats(scan(_subjid, 1, '-'), "-0", scan(_subjid, 2, '-')) ;
+  else SUBJID = _subjid ;
+  ORSUBJID = _subjid ;
+  RFSTDTC = strip(put(_tretdat, yymmdd10.)) ;
+  RFXSTDTC = strip(put(_tretdat, yymmdd10.)) ;
+  if length(RFXSTDTC) = 10 then TRTSDT = input(RFXSTDTC, yymmdd10.) ;
+  keep SUBJID -- TRTSDT ;
+```
+
+## 注目すべきテクニック解説
+
+### 1. **被験者ID標準化の統一処理**
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"} 
+if length(scan(_subjid, 2, '-')) = 1 then 
+    SUBJID = cats(scan(_subjid, 1, '-'), "-0", scan(_subjid, 2, '-')) ;
+else SUBJID = _subjid ;
+```
+
+**ポイント**：
+
+-   `scan`関数でハイフン区切りのIDを分割
+
+-   2番目の部分が1桁の場合、ゼロパディングを実施
+
+-   「01-1」→「01-01」のような統一化
+
+-   両プログラムで完全に同じロジックを使用
+
+**効果**：
+
+-   データの一貫性確保
+
+-   後の解析でのID照合エラー防止
+
+-   見た目の統一性向上
+
+### 2. **階層的ID管理システム**
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}    
+ORSUBJID = _subjid ;           // 元のID
+SUBJID = [標準化されたID] ;    // 標準化後のID  
+USUBJID = catx("-", STUDYID, SUBJID) ; // 試験全体でユニークなID
+```
+
+**設計思想**：
+
+-   **ORSUBJID**: 元データのトレーサビリティ確保
+
+-   **SUBJID**: 試験内での標準化されたID
+
+-   **USUBJID**: 複数試験統合時のユニークID
+
+### 3. **数値・文字コードの両方保持**
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}       
+if _sex = 1 then SEX = "M" ;
+else if _sex = 2 then SEX = "F" ;
+SEXN = _sex ;
+```
+
+**利点**：
+
+-   **SEX**: レポート表示用（M/F）
+
+-   **SEXN**: 統計解析用（1/2）
+
+-   用途に応じた使い分けが可能
+
+### 4. **日付データの多角的準備**
+
+#### Demographics側：
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}    
+RFICDTC = put(_icdat, yymmdd10.) ;
+```
+
+インフォームドコンセント日をISO 8601形式に変換
+
+#### Protocol Events側：
+
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}      
+RFSTDTC = strip(put(_tretdat, yymmdd10.)) ;
+RFXSTDTC = strip(put(_tretdat, yymmdd10.)) ;
+if length(RFXSTDTC) = 10 then TRTSDT = input(RFXSTDTC, yymmdd10.) ;
+```
+
+**巧妙な処理**：
+
+-   同じ治療日を開始日・終了日両方に設定
+
+-   `strip`関数で余分な空白を除去
+
+-   完全な日付（10桁）のみ数値変換する安全な処理
+
+### 5. **CDISC準拠の変数命名**
+
+-   **STUDYID**: 試験識別子
+
+-   **USUBJID**: ユニーク被験者ID
+
+-   **SUBJID**: 被験者ID
+
+-   **RFSTDTC**: 参照開始日（文字形式）
+
+-   **RFXSTDTC**: 参照終了日（文字形式）
+
+-   **TRTSDT**: 治療開始日（数値形式）
+
+## 実用的な設計の利点
+
+### 1. **一貫性の確保**
+
+両プログラムで同じID標準化ロジックを使用し、システム全体の整合性を保つ
+
+### 2. **用途別最適化**
+
+-   レポート用（文字形式）
+
+-   計算用（数値形式）
+
+-   表示用（見やすい形式）
+
+### 3. **データ品質の向上**
+
+-   元データの保持によるトレーサビリティ
+
+-   条件分岐による安全な変換処理
+
+-   不完全データの適切な処理
+
+### 4. **保守性の向上**
+
+-   統一されたコーディング規則
+
+-   変数名の体系化
+
+-   処理ロジックの標準化
+
+## まとめ
+
+ADSLデータの作成では、単なるデータ変換ではなく、後の解析作業全体を見据えた設計が重要です。今回紹介したテクニックにより：
+
+-   **データの一貫性**が確保される
+
+-   **国際標準**に準拠したデータ構造が構築される
+
+-   **効率的な解析**が可能になる
+
+-   **データ品質**が向上する
+
+これらの実践的なアプローチにより、信頼性の高い臨床試験データベースの基盤を構築することができます。
+
+*注：実際のプログラム使用の際は、各施設のSOPや規制要件に従って適切に実装してください。*

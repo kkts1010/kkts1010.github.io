@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.30">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="坂本航太">
+
+<title>方法論研究におけるフォルダ構成を考える – Kota Sakamoto</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-9849038e97c5862c14c4eb81893d019b.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-945f87a38397f0f3b8ef34e2f394b6bc.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "一致なし",
+    "search-matching-documents-text": "一致した文書",
+    "search-copy-link-title": "検索へのリンクをコピー",
+    "search-hide-matches-text": "追加の検索結果を非表示",
+    "search-more-match-text": "追加の検索結果",
+    "search-more-matches-text": "追加の検索結果",
+    "search-clear-button-title": "消去",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "取消",
+    "search-submit-button-title": "検索",
+    "search-label": "サーチ"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Kota Sakamoto</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="サーチ"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="ナビゲーションを切り替える" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../posts/statistics/index.html"> 
+<span class="menu-text">Notes</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../posts/Web_tools/Web_tools.html"> 
+<span class="menu-text">Web Tools</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+    <a href="https://github.com/kkts1010/kkts1010.github.io/" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-github"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-page-left">
+      <h1 class="title">方法論研究におけるフォルダ構成を考える</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">博士課程</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta column-page-left">
+
+      <div>
+      <div class="quarto-title-meta-heading">作者</div>
+      <div class="quarto-title-meta-contents">
+               <p>坂本航太 </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">公開</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">2025年7月11日</p>
+      </div>
+    </div>
+    
+      <div>
+      <div class="quarto-title-meta-heading">更新日</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date-modified">2025年7月11日</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">目次</h2>
+   
+  <ul class="collapse">
+  <li><a href="#シミュレーション研究におけるフォルダ構成を考える" id="toc-シミュレーション研究におけるフォルダ構成を考える" class="nav-link active" data-scroll-target="#シミュレーション研究におけるフォルダ構成を考える"><span class="header-section-number">1</span> シミュレーション研究におけるフォルダ構成を考える</a>
+  <ul class="collapse">
+  <li><a href="#シミュレーション研究の強い味方rで自動生成する理想のフォルダ構成" id="toc-シミュレーション研究の強い味方rで自動生成する理想のフォルダ構成" class="nav-link" data-scroll-target="#シミュレーション研究の強い味方rで自動生成する理想のフォルダ構成"><span class="header-section-number">1.1</span> シミュレーション研究の強い味方！Rで自動生成する理想のフォルダ構成</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+
+
+
+
+
+<section id="シミュレーション研究におけるフォルダ構成を考える" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> シミュレーション研究におけるフォルダ構成を考える</h1>
+<p>実データ解析に関するフォルダ構成は、別記事で作成済である。実務と同様の構成で実施したらよい。ここでは、実データを利用することを主眼とせず、特定の統計方法論に基づくシミュレーション研究/方法論研究のフォルダ構造について考える。そして、Rにて自動でフォルダを作成するような標準テンプレートを作成することを目的とする。以下はGeminiに作ってもらったもの。</p>
+<section id="シミュレーション研究の強い味方rで自動生成する理想のフォルダ構成" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="シミュレーション研究の強い味方rで自動生成する理想のフォルダ構成"><span class="header-section-number">1.1</span> シミュレーション研究の強い味方！Rで自動生成する理想のフォルダ構成</h2>
+<p>こんにちは！研究者の皆さん、日々のシミュレーション研究、お疲れ様です。</p>
+<p>シミュレーション研究って、実データ解析とはまた違った難しさがありますよね。特に、<strong>様々なパラメータ設定</strong>、<strong>シナリオごとの結果管理</strong>、そして<strong>いつどのスクリプトを実行したか</strong>といった記録の管理は、研究の再現性や効率に直結する重要な課題です。</p>
+<p>「あの時の結果、どのファイルだっけ…？」 「このスクリプト、どのシミュレーション設定で走らせたんだっけ…？」</p>
+<p>こんな経験、ありませんか？</p>
+<p>今回は、そんな悩みを解決するための「<strong>シミュレーション研究に特化した理想のフォルダ構成</strong>」と、それをRで<strong>自動生成</strong>する便利なテンプレートをご紹介します。Git管理や複雑なドキュメント、さらにはRの初期設定ファイルも一旦置いておいて、まずは研究に集中できるミニマルで効率的な環境をサッと作っちゃいましょう！</p>
+<section id="なぜフォルダ構成が重要なのか" class="level3" data-number="1.1.1">
+<h3 data-number="1.1.1" class="anchored" data-anchor-id="なぜフォルダ構成が重要なのか"><span class="header-section-number">1.1.1</span> なぜフォルダ構成が重要なのか？</h3>
+<p>シミュレーション研究では、特に以下の点が管理のポイントになります。</p>
+<ol type="1">
+<li><p><strong>再現性:</strong> どのスクリプトが、いつ、どの設定で実行され、どんな結果が出たのかが明確であること。</p></li>
+<li><p><strong>効率性:</strong> 目的のファイルに素早くアクセスでき、新しいシミュレーションを追加しやすいこと。</p></li>
+<li><p><strong>整理整頓:</strong> 膨大になりがちな中間ファイルや結果を体系的に保存できること。</p></li>
+</ol>
+<p>これらを解決するために、以下のようなフォルダ構成をおすすめします。</p>
+</section>
+<section id="これが理想シミュレーション研究向けフォルダ構成" class="level3" data-number="1.1.2">
+<h3 data-number="1.1.2" class="anchored" data-anchor-id="これが理想シミュレーション研究向けフォルダ構成"><span class="header-section-number">1.1.2</span> これが理想！シミュレーション研究向けフォルダ構成</h3>
+<p>私たちが提案するフォルダ構成は、研究のワークフローを考慮し、以下のように整理されています。特に、日々の進捗を明確にするために<strong>日付(<code>YYYYMMDD</code>)でのフォルダ管理</strong>を取り入れています。フォルダ名の先頭に数字を付けることで、常に意図した順序で表示されるよう工夫しています。</p>
+<pre><code>プロジェクトルート/
+├── 001_data/
+│   └── raw/           # シミュレーションの元となる外部データや真のパラメータ設定
+├── 002_R/
+│   ├── functions/     # シミュレーションの中核となるR関数群
+│   └── utils/         # 汎用的なユーティリティR関数
+├── 003_output/        # シミュレーション結果の出力ルート
+│   └── YYYYMMDD/      # 例: 20250711 (その日のシミュレーション結果を格納)
+├── 004_src/           # シミュレーション実行スクリプトのルート
+│   └── YYYYMMDD/      # 例: 20250711 (その日に実行したスクリプトを格納)
+├── 005_scripts/       # シミュレーション設定やバッチ処理用スクリプト
+├── 006_docs/          # 研究ノート、アイデアなど（論文以外のドキュメント）
+├── 007_meeting/       # 指導教官との打ち合わせ記録
+│   └── YYYYMMDD/      # 例: 20250710 (その日の打ち合わせ資料・議事録など)
+├── 008_Paper/         # 論文ドラフトや最終版の図・表、参考文献ファイル
+├── renv/              # Rパッケージ管理（renvを使用する場合）</code></pre>
+</section>
+<section id="各フォルダの役割と使い分けを徹底解説" class="level3" data-number="1.1.3">
+<h3 data-number="1.1.3" class="anchored" data-anchor-id="各フォルダの役割と使い分けを徹底解説"><span class="header-section-number">1.1.3</span> 各フォルダの役割と使い分けを徹底解説！</h3>
+<p>それぞれのフォルダには明確な役割があります。適切に使い分けることで、プロジェクト全体が整理され、将来の自分や共同研究者が困ることがなくなります。</p>
+<section id="data" class="level4" data-number="1.1.3.1">
+<h4 data-number="1.1.3.1" class="anchored" data-anchor-id="data"><span class="header-section-number">1.1.3.1</span> 001_data/</h4>
+<ul>
+<li><p><strong>目的:</strong> シミュレーションの<strong>元となる固定データ</strong>を格納する場所です。</p></li>
+<li><p><strong>内容:</strong></p>
+<ul>
+<li><code>raw/</code>: 外部から取得した生データや、シミュレーションの「真の値」として設定するパラメータのファイルなど。シミュレーション内で動的に生成されるデータはここには置きません。</li>
+</ul></li>
+<li><p><strong>使い分け:</strong> シミュレーションの入力となる、変更されない静的なデータを置きます。</p></li>
+</ul>
+</section>
+<section id="r" class="level4" data-number="1.1.3.2">
+<h4 data-number="1.1.3.2" class="anchored" data-anchor-id="r"><span class="header-section-number">1.1.3.2</span> 002_R/</h4>
+<ul>
+<li><p><strong>目的:</strong> <strong>Rの関数ファイル</strong>を格納する場所です。これにより、スクリプト本体がすっきりし、関数を再利用しやすくなります。</p></li>
+<li><p><strong>内容:</strong></p>
+<ul>
+<li><p><code>functions/</code>: シミュレーションの中核となる<strong>カスタム関数</strong>を定義したファイル。例えば、特定の分布からデータを生成する関数、開発中の推定量を計算する関数、統計モデルをフィットする関数などです。これらの関数は、<code>004_src</code>内の実行スクリプトから呼び出して使います。</p></li>
+<li><p><code>utils/</code>: シミュレーション結果の集計、プロット作成、結果の整形など、<strong>汎用的に利用するユーティリティ関数</strong>を定義したファイル。特定のシミュレーションに限定されず、複数の研究で使い回せるような関数が該当します。</p></li>
+</ul></li>
+<li><p><strong>使い分け:</strong> 長いRスクリプトを機能ごとに分割し、再利用可能な部品として管理します。実行スクリプトはこれらの関数を「呼び出す」だけに留めます。</p></li>
+</ul>
+</section>
+<section id="output" class="level4" data-number="1.1.3.3">
+<h4 data-number="1.1.3.3" class="anchored" data-anchor-id="output"><span class="header-section-number">1.1.3.3</span> 003_output/</h4>
+<ul>
+<li><p><strong>目的:</strong> シミュレーションによって<strong>生成された結果</strong>を保存する場所です。</p></li>
+<li><p><strong>内容:</strong></p>
+<ul>
+<li><p><code>YYYYMMDD/</code>: シミュレーションを実行した日付ごとのフォルダ。この中に、その日の実行で得られた結果を保存します。</p>
+<ul>
+<li><p><code>results/</code>: シミュレーションによって得られた<strong>数値結果</strong>（例: 推定量、標準誤差、p値、バイアスなど）を<code>.rds</code>ファイルや<code>.csv</code>ファイルとして保存します。</p></li>
+<li><p><code>figures/</code>: 結果を可視化した<strong>グラフや図</strong>を<code>.png</code>や<code>.pdf</code>形式で保存します。</p></li>
+<li><p><code>tables/</code>: 結果をまとめた<strong>表</strong>を<code>.tex</code>や<code>.docx</code>形式で保存します。</p></li>
+</ul></li>
+</ul></li>
+<li><p><strong>使い分け:</strong> シミュレーションの結果として「残すべきもの」は全てここに集約します。日付フォルダにより、いつの結果かが一目でわかります。</p></li>
+</ul>
+</section>
+<section id="src" class="level4" data-number="1.1.3.4">
+<h4 data-number="1.1.3.4" class="anchored" data-anchor-id="src"><span class="header-section-number">1.1.3.4</span> 004_src/</h4>
+<ul>
+<li><p><strong>目的:</strong> <strong>シミュレーションの具体的な実行ロジック</strong>と、それに伴う<strong>結果解析のコード</strong>を格納する場所です。</p></li>
+<li><p><strong>内容:</strong></p>
+<ul>
+<li><p><code>YYYYMMDD/</code>: シミュレーションを実行した日付ごとのフォルダ。この中に、その日の特定のシミュレーション実行に関するスクリプトを格納します。</p>
+<ul>
+<li><p><code>01_run_simulation.R</code>: シミュレーションを実際に実行し、データを生成し、<code>003_output/YYYYMMDD/results/</code> に保存するスクリプト。</p></li>
+<li><p><code>02_analyze_results.R</code>: <code>003_output/YYYYMMDD/results/</code> に保存された結果を読み込み、解析し、<code>003_output/YYYYMMDD/figures/</code> や <code>003_output/YYYYMMDD/tables/</code> に保存するスクリプト。</p></li>
+<li><p><code>03_generate_report.R</code>: シミュレーション結果をまとめた簡易レポートやQuartoドキュメントを生成するスクリプト。</p></li>
+</ul></li>
+</ul></li>
+<li><p><strong>使い分け:</strong> **「このシミュレーション結果を得るために、どのコードを走らせたか？」**という問いに直接答えるコードを置きます。日付フォルダにまとめることで、再現性が飛躍的に向上します。</p></li>
+</ul>
+</section>
+<section id="scripts" class="level4" data-number="1.1.3.5">
+<h4 data-number="1.1.3.5" class="anchored" data-anchor-id="scripts"><span class="header-section-number">1.1.3.5</span> 005_scripts/</h4>
+<ul>
+<li><p><strong>目的:</strong> プロジェクト全体をスムーズに進めるための<strong>補助的なスクリプトやユーティリティ</strong>を置く場所です。</p></li>
+<li><p><strong>内容:</strong></p>
+<ul>
+<li><p>シミュレーション実行前に必要な環境設定スクリプト（例: パス設定、共通オプション）。</p></li>
+<li><p>複数のシミュレーションを自動で実行するための<strong>バッチ処理スクリプト</strong>（例: HPC環境でのジョブ投入スクリプト）。</p></li>
+<li><p><code>001_data/raw</code> にある生データを、シミュレーションで使いやすい形に加工する一度きりの前処理スクリプト。</p></li>
+<li><p>複数のシミュレーションシナリオで共通して使われるパラメータ設定を定義するスクリプトなど。</p></li>
+</ul></li>
+<li><p><strong>使い分け:</strong> **「このプロジェクトを進める上で、どんなツールや設定が必要か？」**という問いに答えるコードを置きます。特定のシミュレーション実行とは独立しており、汎用性が高いコードが該当します。</p></li>
+</ul>
+</section>
+<section id="docs" class="level4" data-number="1.1.3.6">
+<h4 data-number="1.1.3.6" class="anchored" data-anchor-id="docs"><span class="header-section-number">1.1.3.6</span> 006_docs/</h4>
+<ul>
+<li><p><strong>目的:</strong> 研究に関する<strong>ドキュメント</strong>やアイデア、メモなどを格納する場所です。</p></li>
+<li><p><strong>内容:</strong> 研究ノート、ブレインストーミングのメモ、学会発表の草案、今後の研究アイデア、関連論文のまとめなど。</p></li>
+<li><p><strong>使い分け:</strong> <code>008_Paper/</code> が論文原稿そのものであるのに対し、こちらは論文に直接ならないような「研究の過程」を示す資料を置きます。</p></li>
+</ul>
+</section>
+<section id="meeting" class="level4" data-number="1.1.3.7">
+<h4 data-number="1.1.3.7" class="anchored" data-anchor-id="meeting"><span class="header-section-number">1.1.3.7</span> 007_meeting/</h4>
+<ul>
+<li><p><strong>目的:</strong> 指導教官や共同研究者との<strong>打ち合わせ記録</strong>を保存する場所です。</p></li>
+<li><p><strong>内容:</strong></p>
+<ul>
+<li><code>YYYYMMDD/</code>: 打ち合わせがあった日付ごとのフォルダ。この中に、議事録、議論のポイント、ToDoリスト、共有資料などを保存します。</li>
+</ul></li>
+<li><p><strong>使い分け:</strong> 打ち合わせの履歴を時系列で管理することで、以前の議論内容をすぐに確認できます。</p></li>
+</ul>
+</section>
+<section id="paper" class="level4" data-number="1.1.3.8">
+<h4 data-number="1.1.3.8" class="anchored" data-anchor-id="paper"><span class="header-section-number">1.1.3.8</span> 008_Paper/</h4>
+<ul>
+<li><p><strong>目的:</strong> <strong>論文のドラフト</strong>や、論文に最終的に含める図表のファイル、参考文献ファイルなどを格納する場所です。</p></li>
+<li><p><strong>内容:</strong> Quarto（.qmd）ファイル、LaTeX（.tex）ファイル、Word（.docx）ファイルなどの論文原稿、論文で使う高品質な図（.pdf, .tiff）、表（.tex, .csv）、参考文献データベース（.bib）など。</p></li>
+<li><p><strong>使い分け:</strong> シミュレーション結果 (<code>003_output/</code>) から論文に直接持っていく最終的な成果物をここに集約します。</p></li>
+</ul>
+</section>
+</section>
+<section id="rで一発作成フォルダ自動生成テンプレート" class="level3" data-number="1.1.4">
+<h3 data-number="1.1.4" class="anchored" data-anchor-id="rで一発作成フォルダ自動生成テンプレート"><span class="header-section-number">1.1.4</span> Rで一発作成！フォルダ自動生成テンプレート</h3>
+<p>この理想的なフォルダ構成を、Rのスクリプトでサクッと自動生成しちゃいましょう！以下のコードをRコンソールに貼り付けて実行するだけです。<strong>プロジェクトを作成したいディレクトリに移動してから実行してください。</strong></p>
+<pre><code>#' シミュレーション研究プロジェクトのフォルダ構造を自動生成する関数 (究極のフォルダのみ版)
+#'
+#' @param project_name 作成するプロジェクトのルートフォルダ名
+#' @param use_renv renvパッケージを使用するかどうか (TRUE/FALSE)
+#'
+#' @return なし。指定されたパスにフォルダ構造を作成します。
+#' @export
+create_sim_project_structure_minimal &lt;- function(project_name, use_renv = TRUE) {
+  
+  # プロジェクトルートのパスを設定 (現在の作業ディレクトリに作成)
+  project_path &lt;- file.path(getwd(), project_name)
+
+  # ルートフォルダの作成
+  if (dir.exists(project_path)) {
+    stop(paste0("フォルダ '", project_path, "' は既に存在します。別の名前を指定するか、既存のフォルダを削除してください。"))
+  }
+  dir.create(project_path, recursive = TRUE)
+  message(paste0("プロジェクトルートフォルダ '", project_path, "' を作成しました。\n"))
+  
+  # サブフォルダの定義
+  # src, output, meetingの内部は日付管理されるため、ここでは親フォルダのみ作成
+  sub_folders &lt;- c(
+    "001_data/raw",
+    "002_R/functions",
+    "002_R/utils",
+    "003_output",
+    "004_src",
+    "005_scripts",
+    "006_docs",
+    "007_meeting",
+    "008_Paper"
+  )
+  
+  # サブフォルダの作成
+  for (folder in sub_folders) {
+    dir.create(file.path(project_path, folder), recursive = TRUE)
+    message(paste0("  - フォルダ '", file.path(project_path, folder), "' を作成しました。\n"))
+  }
+  
+  # renvの初期化
+  if (use_renv) {
+    message("renvの初期化を開始します。これには少し時間がかかる場合があります...\n")
+    # 作業ディレクトリを一時的にプロジェクトルートに変更してrenvを初期化
+    old_wd &lt;- getwd()
+    setwd(project_path) # ここでプロジェクトパスに移動
+    tryCatch({
+      if (!requireNamespace("renv", quietly = TRUE)) {
+        install.packages("renv")
+      }
+      renv::init()
+      message("  - renvを初期化しました。\n")
+      message("    プロジェクトルートに '.Rprofile' と 'renv.lock' が生成されます。\n")
+    }, error = function(e) {
+      message(paste0("  - renvの初期化中にエラーが発生しました: ", e$message, "\n"))
+      message("    手動で `renv::init()` を実行してください。\n")
+    }, finally = {
+      setwd(old_wd) # 元の作業ディレクトリに戻す
+    })
+  }
+  
+  message(paste0("\nプロジェクト '", project_name, "' のフォルダ構造が正常に作成されました。"))
+  if (use_renv) {
+    message(paste0("RStudioで '", project_name, ".Rproj' を開いた後、`renv::restore()` を実行して必要なパッケージをインストールしてください。"))
+  } else {
+    message(paste0("RStudioで '", project_name, ".Rproj' を開いて作業を開始してください。"))
+  }
+  message("\n**補足:**")
+  message("  - `004_src/`, `003_output/`, `007_meeting/` フォルダ内は、ご自身で `YYYYMMDD/` 形式のサブフォルダを作成し、ファイルを整理してください。")
+  message("  - `008_Paper/` フォルダ内には、論文ドラフトや関連ファイルを自由に配置してください。")
+}</code></pre>
+<p><strong>使い方：</strong></p>
+<ol type="1">
+<li><p>上記Rコードをコピーし、RStudioのコンソールに貼り付けるか、新しい <code>.R</code> ファイルとして保存します。</p></li>
+<li><p><strong>プロジェクトを作成したい場所に移動します</strong>（例: <code>setwd("~/Your/Projects/Path")</code>）。</p></li>
+<li><p>コンソールで <code>create_sim_project_structure_minimal("任意のプロジェクト名", use_renv = TRUE)</code> を呼び出します。</p>
+<ul>
+<li><p><code>"任意のプロジェクト名"</code> は、新しく作るプロジェクトのルートフォルダ名です。</p></li>
+<li><p><code>use_renv = TRUE</code> にすると <code>renv</code> が自動的に初期化されます。もし <code>renv</code> も不要であれば、<code>use_renv = FALSE</code> に設定してください。</p></li>
+</ul></li>
+</ol>
+</section>
+<section id="日々の運用例" class="level3" data-number="1.1.5">
+<h3 data-number="1.1.5" class="anchored" data-anchor-id="日々の運用例"><span class="header-section-number">1.1.5</span> 日々の運用例</h3>
+<ul>
+<li><p><strong>シミュレーション実行日:</strong></p>
+<ul>
+<li><p>今日が2025年7月11日なら、<code>004_src/20250711/</code> フォルダを作り、その中に実行スクリプト (<code>01_run_sim_A.R</code> など) を置きます。</p></li>
+<li><p>実行結果は <code>003_output/20250711/</code> フォルダ内に保存します（例: <code>results/sim_A_summary.rds</code>, <code>figures/plot_A.png</code>）。</p></li>
+</ul></li>
+<li><p><strong>打ち合わせ日:</strong></p>
+<ul>
+<li>2025年7月10日に指導教官と打ち合わせをしたら、<code>007_meeting/20250710/</code> フォルダを作り、議事録や資料をそこに保存します。</li>
+</ul></li>
+<li><p><strong>論文執筆:</strong></p>
+<ul>
+<li><code>008_Paper/</code> フォルダには、論文のQuartoファイルやLaTeXファイル、そして論文に含める最終的な図表などを格納します。</li>
+</ul></li>
+</ul>
+<p>この自動生成テンプレートを活用して、シミュレーション研究をより効率的かつ体系的に進め、素晴らしい成果に繋げていきましょう！</p>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "コピーしました");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "コピーしました");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
+        for (let i=0; i<annoteTargets.length; i++) {
+          const annoteTarget = annoteTargets[i];
+          const targetCell = annoteTarget.getAttribute("data-target-cell");
+          const targetAnnotation = annoteTarget.getAttribute("data-target-annotation");
+          const contentFn = () => {
+            const content = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+            if (content) {
+              const tipContent = content.cloneNode(true);
+              tipContent.classList.add("code-annotation-tip-content");
+              return tipContent.outerHTML;
+            }
+          }
+          const config = {
+            allowHTML: true,
+            content: contentFn,
+            onShow: (instance) => {
+              selectCodeLines(instance.reference);
+              instance.reference.classList.add('code-annotation-active');
+              window.tippy.hideAll();
+            },
+            onHide: (instance) => {
+              unselectCodeLines();
+              instance.reference.classList.remove('code-annotation-active');
+            },
+            maxWidth: 300,
+            delay: [50, 0],
+            duration: [200, 0],
+            offset: [5, 10],
+            arrow: true,
+            trigger: 'click',
+            appendTo: function(el) {
+              return el.parentElement.parentElement.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'quarto',
+            placement: 'right',
+            positionFixed: true,
+            popperOptions: {
+              modifiers: [
+              {
+                name: 'flip',
+                options: {
+                  flipVariations: false, // true by default
+                  allowedAutoPlacements: ['right'],
+                  fallbackPlacements: ['right', 'top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left'],
+                },
+              },
+              {
+                name: 'preventOverflow',
+                options: {
+                  mainAxis: false,
+                  altAxis: false
+                }
+              }
+              ]        
+            }      
+          };
+          window.tippy(annoteTarget, config); 
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="https://github.com/kkts1010/kkts1010.github.io/">
+<p>Kota Sakamoto</p>
+</a>
+  </li>  
+</ul>
+    </div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/kkts1010/kkts1010.github.io/">
+<p>Kota Sakamoto</p>
+</a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/kkt_1010">
+      <i class="bi bi-twitter" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
