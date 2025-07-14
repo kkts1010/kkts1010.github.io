@@ -264,9 +264,9 @@ create_sim_project_structure_minimal <- function(project_name, use_renv = TRUE) 
 
 1.  上記Rコードをコピーし、RStudioのコンソールに貼り付けるか、新しい `.R` ファイルとして保存します。
 
-2.  **プロジェクトを作成したい場所に移動します**（例: `setwd("~/Your/Projects/Path")`）。
+2.  **プロジェクトを作成したい場所に移動します**（例: `setwd("C:/Users/kotas/OneDrive/デスクトップ/Project")`）。
 
-3.  コンソールで `create_sim_project_structure_minimal("任意のプロジェクト名", use_renv = TRUE)` を呼び出します。
+3.  コンソールで `create_sim_project_structure_minimal("任意のプロジェクト名", use_renv = FALSE)` を呼び出します。
 
     -   `"任意のプロジェクト名"` は、新しく作るプロジェクトのルートフォルダ名です。
 

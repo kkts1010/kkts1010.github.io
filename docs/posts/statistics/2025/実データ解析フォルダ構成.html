@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.30">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="坂本航太">
+
+<title>臨床研究のための実データ解析フォルダ構成 – Kota Sakamoto</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-9849038e97c5862c14c4eb81893d019b.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-945f87a38397f0f3b8ef34e2f394b6bc.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "一致なし",
+    "search-matching-documents-text": "一致した文書",
+    "search-copy-link-title": "検索へのリンクをコピー",
+    "search-hide-matches-text": "追加の検索結果を非表示",
+    "search-more-match-text": "追加の検索結果",
+    "search-more-matches-text": "追加の検索結果",
+    "search-clear-button-title": "消去",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "取消",
+    "search-submit-button-title": "検索",
+    "search-label": "サーチ"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Kota Sakamoto</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="サーチ"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="ナビゲーションを切り替える" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../posts/statistics/index.html"> 
+<span class="menu-text">Notes</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../posts/Web_tools/Web_tools.html"> 
+<span class="menu-text">Web Tools</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+    <a href="https://github.com/kkts1010/kkts1010.github.io/" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-github"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-page-left">
+      <h1 class="title">臨床研究のための実データ解析フォルダ構成</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">博士課程</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta column-page-left">
+
+      <div>
+      <div class="quarto-title-meta-heading">作者</div>
+      <div class="quarto-title-meta-contents">
+               <p>坂本航太 </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">公開</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">2025年7月13日</p>
+      </div>
+    </div>
+    
+      <div>
+      <div class="quarto-title-meta-heading">更新日</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date-modified">2025年7月13日</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">目次</h2>
+   
+  <ul class="collapse">
+  <li><a href="#臨床研究のための実データ解析フォルダ構成透明性と再現性を最大化するプロが教える秘訣" id="toc-臨床研究のための実データ解析フォルダ構成透明性と再現性を最大化するプロが教える秘訣" class="nav-link active" data-scroll-target="#臨床研究のための実データ解析フォルダ構成透明性と再現性を最大化するプロが教える秘訣"><span class="header-section-number">1</span> 臨床研究のための実データ解析フォルダ構成：透明性と再現性を最大化するプロが教える秘訣</a>
+  <ul class="collapse">
+  <li><a href="#なぜフォルダ構成がそこまで重要なのか" id="toc-なぜフォルダ構成がそこまで重要なのか" class="nav-link" data-scroll-target="#なぜフォルダ構成がそこまで重要なのか"><span class="header-section-number">1.1</span> なぜフォルダ構成がそこまで重要なのか？</a></li>
+  <li><a href="#これが理想形臨床研究向けフォルダ構成" id="toc-これが理想形臨床研究向けフォルダ構成" class="nav-link" data-scroll-target="#これが理想形臨床研究向けフォルダ構成"><span class="header-section-number">1.2</span> これが理想形！臨床研究向けフォルダ構成</a></li>
+  <li><a href="#各フォルダの役割と運用のコツを徹底解説" id="toc-各フォルダの役割と運用のコツを徹底解説" class="nav-link" data-scroll-target="#各フォルダの役割と運用のコツを徹底解説"><span class="header-section-number">1.3</span> 各フォルダの役割と運用のコツを徹底解説！</a></li>
+  <li><a href="#rで一発作成フォルダ自動生成テンプレートと使用例" id="toc-rで一発作成フォルダ自動生成テンプレートと使用例" class="nav-link" data-scroll-target="#rで一発作成フォルダ自動生成テンプレートと使用例"><span class="header-section-number">1.4</span> Rで一発作成！フォルダ自動生成テンプレートと使用例</a></li>
+  <li><a href="#まとめあなたの研究を次のレベルへ" id="toc-まとめあなたの研究を次のレベルへ" class="nav-link" data-scroll-target="#まとめあなたの研究を次のレベルへ"><span class="header-section-number">1.5</span> まとめ：あなたの研究を次のレベルへ</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+
+
+
+
+
+<section id="臨床研究のための実データ解析フォルダ構成透明性と再現性を最大化するプロが教える秘訣" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> 臨床研究のための実データ解析フォルダ構成：透明性と再現性を最大化するプロが教える秘訣</h1>
+<p>こんにちは、坂本航太です！</p>
+<p>研究者の皆さん、日々の臨床研究におけるデータ解析、お疲れ様です。膨大なデータと複雑な解析プロセスの中で、「あのデータ、どこにあったっけ？」「この結果はどのバージョンのプログラムで出したんだっけ？」といった混乱に直面した経験はありませんか？特に臨床研究では、解析の<strong>透明性、再現性、そして監査に耐えうる品質</strong>が極めて重要になります。</p>
+<p>今回は、そんな悩みを解決するために、私がこれまでの経験から導き出した「臨床研究の実データ解析に特化した理想的なフォルダ構成」をご紹介します。シミュレーション研究で培ったノウハウも活かしつつ、<strong>ログ管理</strong>や<strong>構造定義書</strong>の重要性、さらには<strong>ミーティングでの効率的な進捗報告</strong>までを考慮に入れた、まさに「プロが使う」ための設計です。</p>
+<p>この構成を導入することで、あなたの研究プロジェクトは劇的に整理され、より効率的かつ信頼性の高いものへと進化するでしょう。</p>
+<section id="なぜフォルダ構成がそこまで重要なのか" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="なぜフォルダ構成がそこまで重要なのか"><span class="header-section-number">1.1</span> なぜフォルダ構成がそこまで重要なのか？</h2>
+<p>単なるファイルの整理術と侮ってはいけません。適切なフォルダ構成は、研究の品質と直結します。</p>
+<ul>
+<li><p><strong>再現性:</strong> いつ、誰が、どのデータとプログラムを使って、どんな結果を出したのかが明確になります。これは科学的根拠の基盤です。</p></li>
+<li><p><strong>透明性:</strong> データの前処理から解析、結果生成までの全プロセスが明確になり、共同研究者や査読者、監査担当者が容易に追跡できるようになります。</p></li>
+<li><p><strong>効率性:</strong> 目的のファイルに素早くアクセスでき、新しい解析の追加やデータ更新、論文執筆作業がスムーズに進みます。</p></li>
+<li><p><strong>監査可能性:</strong> 規制当局への提出が求められる臨床研究では、全てのステップが厳格に管理されている証拠となります。</p></li>
+</ul>
+<p>それでは、具体的なフォルダ構成を見ていきましょう！</p>
+</section>
+<section id="これが理想形臨床研究向けフォルダ構成" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="これが理想形臨床研究向けフォルダ構成"><span class="header-section-number">1.2</span> これが理想形！臨床研究向けフォルダ構成</h2>
+<p>この構成は、研究のワークフロー全体を考慮し、データのライフサイクル、プログラム開発、ドキュメント管理、コミュニケーションまでを網羅しています。フォルダ名の先頭に数字を付けることで、常に論理的な順序で表示されるよう工夫しています。</p>
+<pre><code>プロジェクトルート/
+├── 00_Resources/           # 勉強した教材、参考文献、参考資料など
+├── 01_Docs/                # ドキュメント関連（研究計画書、構造定義書など）
+│   ├── 01_Protocol/        # 研究計画書
+│   ├── 02_Specs/           # 各種仕様書（データ定義書、ADS構造定義書、TLFモックアップ）
+│   └── 03_SAP/             # 統計解析計画書（SAP）
+├── 02_Data/                # データ関連
+│   ├── 01_Raw/             # 生データ（変更不可）
+│   └── 02_External/        # 外部参照データ（辞書、マスタなど）
+├── 03_Programs/            # プログラム関連
+│   ├── 01_ADS/             # 解析用データセット（ADS）作成プログラム
+│   │   ├── Develop/        # 開発中のプログラム
+│   │   └── Final/          # 確定版プログラム
+│   ├── 02_TLF/             # 解析およびTLF作成プログラム
+│   │   ├── Develop/        # 開発中のプログラム
+│   │   └── Final/          # 確定版プログラム
+│   └── 03_Macros_Functions/# 共通マクロ、関数
+├── 04_Output/              # 出力物関連
+│   ├── 01_Logs/            # 全てのプログラム実行ログ
+│   ├── 02_ADS/             # 作成された解析用データセット
+│   ├── 03_TLF/             # Table, Listing, Figure（最終成果物）
+│   │   ├── YYYYMMDD/       # 解析実行日ごとの出力フォルダ
+│   │   │   ├── Tables/
+│   │   │   ├── Listings/
+│   │   │   └── Figures/
+│   └── 04_Interim_Output/  # その他中間出力、一時ファイル、探索的解析結果など
+├── 05_Paper/               # 論文執筆関連
+│   ├── Drafts/             # 論文ドラフト
+│   ├── Figures_Tables_Final/# 論文に掲載する最終版の図表
+│   └── References/         # 参考文献管理
+├── 06_Meeting/             # 会議関連（ミーティング議事録、進捗報告など）
+│   ├── YYYYMMDD_MeetingTitle/# 日付とミーティング名ごとのフォルダ
+│   └── Shared_Materials/   # 共有資料、テンプレートなど
+└── renv/                   # (Rの場合) Rパッケージ管理</code></pre>
+</section>
+<section id="各フォルダの役割と運用のコツを徹底解説" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="各フォルダの役割と運用のコツを徹底解説"><span class="header-section-number">1.3</span> 各フォルダの役割と運用のコツを徹底解説！</h2>
+<p>それぞれのフォルダには明確な役割があります。適切に使い分けることで、プロジェクト全体が整理され、将来の自分や共同研究者が困ることがなくなります。</p>
+<section id="resources研究の知識ベース" class="level3" data-number="1.3.1">
+<h3 data-number="1.3.1" class="anchored" data-anchor-id="resources研究の知識ベース"><span class="header-section-number">1.3.1</span> 00_Resources/：研究の「知識ベース」</h3>
+<p>このフォルダは、シミュレーション研究と同様に、あなたの研究活動を支える<strong>背景知識や参考資料</strong>を格納します。新しい統計手法の論文、Rパッケージの使い方メモ、講義ノートなど、直接データやプログラムに関わらなくても、研究の理解を深めるために不可欠な情報を整理しておきましょう。</p>
+</section>
+<section id="docs研究の骨格と仕様書" class="level3" data-number="1.3.2">
+<h3 data-number="1.3.2" class="anchored" data-anchor-id="docs研究の骨格と仕様書"><span class="header-section-number">1.3.2</span> 01_Docs/：研究の「骨格」と「仕様書」</h3>
+<p>プロジェクトの公式ドキュメントを集約する場所です。特に「構造定義書」がここに位置します。</p>
+<ul>
+<li><p><strong><code>01_Protocol/</code></strong>: <strong>研究計画書 (Protocol)</strong> を保管します。これらは、解析の根拠となる最重要ドキュメントであり、常に最新版を明確にしておく必要があります。</p></li>
+<li><p><strong><code>02_Specs/</code></strong>: ここが「構造定義書」の中心です。生データ、前処理済みデータ、そして解析用データセット（ADS）の<strong>変数定義、ラベル、フォーマット、許容値、欠損値</strong>などを記述します。SASの場合は、この定義書から<code>ATTRIB</code>や<code>PROC FORMAT</code>で利用するSASコードを自動生成できるよう設計すると、効率が格段に上がります。作成するTable, Listing, Figure (TLF) のモックアップもここに置きます。</p></li>
+<li><p><strong><code>03_SAP/</code></strong>: <strong>統計解析計画書 (SAP)</strong> を保管します。以前の <code>03_Reports</code> から独立させ、解析の根幹となるドキュメントであることを明確にしました。</p></li>
+</ul>
+</section>
+<section id="dataデータの聖域と加工履歴" class="level3" data-number="1.3.3">
+<h3 data-number="1.3.3" class="anchored" data-anchor-id="dataデータの聖域と加工履歴"><span class="header-section-number">1.3.3</span> 02_Data/：データの「聖域」と「加工履歴」</h3>
+<p>データの<strong>トレーサビリティ</strong>を確保するための最も重要なフォルダです。</p>
+<ul>
+<li><p><strong><code>01_Raw/</code></strong>: 外部から受け取った<strong>オリジナルの生データ</strong>を<strong>一切変更せずに</strong>格納します。データ受領時のハッシュ値なども記録しておくと、データの完全性を保証できます。</p></li>
+<li><p><strong><code>03_External/</code></strong>: コーディング辞書（MedDRAなど）や外部基準値など、外部から参照するデータはここに置きます。これらのデータも<strong>バージョン管理</strong>を徹底しましょう。</p></li>
+</ul>
+</section>
+<section id="programsプログラムの開発と確定" class="level3" data-number="1.3.4">
+<h3 data-number="1.3.4" class="anchored" data-anchor-id="programsプログラムの開発と確定"><span class="header-section-number">1.3.4</span> 03_Programs/：プログラムの「開発」と「確定」</h3>
+<p>プログラムの<strong>バージョン管理と変更履歴</strong>を明確にするための場所です。</p>
+<ul>
+<li><p><strong><code>01_ADS/</code></strong>: <strong>解析用データセット（ADS）を作成するプログラム</strong>です。</p>
+<ul>
+<li><p><strong><code>Develop/YYYYMMDD/</code></strong>: 日々の試行錯誤や修正を行う際の<strong>開発中のプログラム</strong>を日付ごとに整理します。</p></li>
+<li><p><strong><code>Final/vX.Y/</code></strong>: 品質管理（QC）をパスし、<strong>最終確定したADS作成プログラム</strong>をADSのバージョン（例: <code>v1.0</code>）に対応させて格納します。</p></li>
+</ul></li>
+<li><p><strong><code>02_TLF/</code></strong>: <strong>解析を実行し、Table, Listing, Figure (TLF) を作成するプログラム</strong>です。ADS作成プログラムと同様に、<code>Develop/YYYYMMDD/</code> と <code>Final/vX.Y/</code> で管理します。</p></li>
+<li><p><strong><code>03_Macros_Functions/</code></strong>: プロジェクト全体で共通利用するマクロや関数をまとめます。<code>04_Utilities/</code> は削除し、補助的なスクリプトは必要に応じて<code>Develop</code>フォルダ内や<code>03_Macros_Functions</code>に含める運用を想定します。</p></li>
+</ul>
+</section>
+<section id="output解析結果の証拠と成果物" class="level3" data-number="1.3.5">
+<h3 data-number="1.3.5" class="anchored" data-anchor-id="output解析結果の証拠と成果物"><span class="header-section-number">1.3.5</span> 04_Output/：解析結果の「証拠」と「成果物」</h3>
+<p>解析結果と、それを生成した<strong>全ての証拠（ログ）を体系的に保存</strong>する場所です。</p>
+<ul>
+<li><p><strong><code>01_Logs/</code></strong>: 全てのプログラム実行ログを、<strong>実行日時が分かるファイル名で日付フォルダ（<code>YYYYMMDD/</code>）内に保存</strong>します。ログにはプログラムの開始/終了時間、使用データ、エラーや警告の有無などを明確に記録し、何か問題が起きた際に迅速に原因を特定できるようにします。</p></li>
+<li><p><strong><code>02_ADS/vX.Y/</code></strong>: <code>03_Programs/01_ADS/Final/vX.Y/</code> のプログラムで生成された<strong>最終確定版のADS</strong>を、バージョンごとに格納します。</p></li>
+<li><p><strong><code>03_TLF/YYYYMMDD/</code></strong>: <code>03_Programs/02_TLF/Final/</code> のプログラムで生成された<strong>最終的なTable, Listing, Figure</strong>を、解析実行日ごとに保存します。最終的なTLFには、使用したADSやプログラムのバージョン、作成日時などの情報がフッターやコメントとして埋め込まれていると完璧です。</p></li>
+<li><p><strong><code>04_Interim_Output/</code></strong>: 中間的な出力ファイル、一時ファイル、探索的データ解析の結果、品質管理のチェックリストやサマリー結果など、最終報告書には含まれないが保存しておきたい出力物を格納します。</p></li>
+</ul>
+</section>
+<section id="paper論文執筆の基地" class="level3" data-number="1.3.6">
+<h3 data-number="1.3.6" class="anchored" data-anchor-id="paper論文執筆の基地"><span class="header-section-number">1.3.6</span> 05_Paper/：論文執筆の「基地」</h3>
+<p>論文執筆に特化したフォルダです。</p>
+<ul>
+<li><p><strong><code>Drafts/</code></strong>: 論文のドラフト版を保存します。Word、Quarto (<code>.qmd</code>)、LaTeXファイルなど、使用ツールに応じて格納してください。</p></li>
+<li><p><strong><code>Figures_Tables_Final/</code></strong>: 論文に実際に掲載する<strong>最終版の図表</strong>を高品質なフォーマット（PDF、TIFFなど）で保存します。これらは<code>04_Output/03_TLF/</code> から厳選されたものになります。</p></li>
+<li><p><strong><code>References/</code></strong>: 参考文献管理ファイル（BibTeXファイルなど）や、関連論文のPDFなどを格納します。</p></li>
+</ul>
+</section>
+<section id="meeting議論の記録と進捗" class="level3" data-number="1.3.7">
+<h3 data-number="1.3.7" class="anchored" data-anchor-id="meeting議論の記録と進捗"><span class="header-section-number">1.3.7</span> 06_Meeting/：議論の「記録」と「進捗」</h3>
+<p>会議に関する全ての資料を体系的に管理します。特に、Quartoでの進捗報告を効率的に行うための工夫があります。</p>
+<ul>
+<li><p><strong><code>YYYYMMDD_MeetingTitle/</code></strong>: <strong>日付とミーティングタイトル</strong>を組み合わせたフォルダを、各ミーティングごとに作成します。このフォルダ直下に、議題、議事録（.docx, .pdfなど）、<strong>Quarto (<code>.qmd</code>) 形式の進捗報告書ソースファイル</strong>、そしてその<code>.qmd</code>ファイルからレンダリングされた出力ファイル（.html, .pdfなど）など、そのミーティングに関連する全ての資料を格納します。</p></li>
+<li><p><strong><code>Shared_Materials/</code></strong>: プロジェクト全体で共有されるミーティングテンプレートや共通のガイドライン、過去の参考資料など、特定のミーティングに紐づかない汎用的な資料を置きます。</p></li>
+</ul>
+</section>
+</section>
+<section id="rで一発作成フォルダ自動生成テンプレートと使用例" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="rで一発作成フォルダ自動生成テンプレートと使用例"><span class="header-section-number">1.4</span> Rで一発作成！フォルダ自動生成テンプレートと使用例</h2>
+<p>この理想的なフォルダ構成を、Rのスクリプトでサクッと自動生成しちゃいましょう！以下のコードをRコンソールに貼り付けるか、新しい <code>.R</code> ファイルとして保存して実行するだけです。<code>renv</code> を使用しない設定 (<code>use_renv = FALSE</code>) での具体的な使用例も示しますね。</p>
+<div class="sourceCode" id="cb2" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co">#' 臨床研究における実データ解析プロジェクトのフォルダ構造を自動生成する関数</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="co">#'</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="co">#' @param project_name 作成するプロジェクトのルートフォルダ名</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="co">#' @param use_renv renvパッケージを使用するかどうか (TRUE/FALSE)</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="co">#'</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="co">#' @return なし。指定されたパスにフォルダ構造を作成します。</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a><span class="co">#' @export</span></span>
+<span id="cb2-8"><a href="#cb2-8"></a>create_clinical_data_analysis_project_structure <span class="ot">&lt;-</span> <span class="cf">function</span>(project_name, <span class="at">use_renv =</span> <span class="cn">TRUE</span>) {</span>
+<span id="cb2-9"><a href="#cb2-9"></a>  <span class="co"># プロジェクトルートのパスを設定 (現在の作業ディレクトリに作成)</span></span>
+<span id="cb2-10"><a href="#cb2-10"></a>  project_path <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="fu">getwd</span>(), project_name)</span>
+<span id="cb2-11"><a href="#cb2-11"></a></span>
+<span id="cb2-12"><a href="#cb2-12"></a>  <span class="co"># ルートフォルダの作成</span></span>
+<span id="cb2-13"><a href="#cb2-13"></a>  <span class="cf">if</span> (<span class="fu">dir.exists</span>(project_path)) {</span>
+<span id="cb2-14"><a href="#cb2-14"></a>    <span class="fu">stop</span>(<span class="fu">paste0</span>(<span class="st">"フォルダ '"</span>, project_path, <span class="st">"' は既に存在します。別の名前を指定するか、既存のフォルダを削除してください。"</span>))</span>
+<span id="cb2-15"><a href="#cb2-15"></a>  }</span>
+<span id="cb2-16"><a href="#cb2-16"></a>  <span class="fu">dir.create</span>(project_path, <span class="at">recursive =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-17"><a href="#cb2-17"></a>  <span class="fu">message</span>(<span class="fu">paste0</span>(<span class="st">"プロジェクトルートフォルダ '"</span>, project_path, <span class="st">"' を作成しました。</span><span class="sc">\n</span><span class="st">"</span>))</span>
+<span id="cb2-18"><a href="#cb2-18"></a></span>
+<span id="cb2-19"><a href="#cb2-19"></a>  <span class="co"># サブフォルダの定義</span></span>
+<span id="cb2-20"><a href="#cb2-20"></a>  <span class="co"># Develop/YYYYMMDDやFinal/vX.Yは実行時に手動または別スクリプトで作成することを推奨</span></span>
+<span id="cb2-21"><a href="#cb2-21"></a>  sub_folders <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb2-22"><a href="#cb2-22"></a>    <span class="st">"00_Resources"</span>,</span>
+<span id="cb2-23"><a href="#cb2-23"></a>    <span class="st">"01_Docs/01_Protocol"</span>,</span>
+<span id="cb2-24"><a href="#cb2-24"></a>    <span class="st">"01_Docs/02_Specs"</span>,</span>
+<span id="cb2-25"><a href="#cb2-25"></a>    <span class="st">"01_Docs/03_SAP"</span>, <span class="co"># 変更</span></span>
+<span id="cb2-26"><a href="#cb2-26"></a>    <span class="st">"02_Data/01_Raw"</span>,</span>
+<span id="cb2-27"><a href="#cb2-27"></a>    <span class="st">"02_Data/02_External"</span>, <span class="co"># 変更 (Processed削除)</span></span>
+<span id="cb2-28"><a href="#cb2-28"></a>    <span class="st">"03_Programs/01_ADS/Develop"</span>, <span class="co"># 変更</span></span>
+<span id="cb2-29"><a href="#cb2-29"></a>    <span class="st">"03_Programs/01_ADS/Final"</span>,   <span class="co"># 変更</span></span>
+<span id="cb2-30"><a href="#cb2-30"></a>    <span class="st">"03_Programs/02_TLF/Develop"</span>, <span class="co"># 変更</span></span>
+<span id="cb2-31"><a href="#cb2-31"></a>    <span class="st">"03_Programs/02_TLF/Final"</span>,   <span class="co"># 変更</span></span>
+<span id="cb2-32"><a href="#cb2-32"></a>    <span class="st">"03_Programs/03_Macros_Functions"</span>, <span class="co"># 変更 (Utilities削除)</span></span>
+<span id="cb2-33"><a href="#cb2-33"></a>    <span class="st">"04_Output/01_Logs"</span>,</span>
+<span id="cb2-34"><a href="#cb2-34"></a>    <span class="st">"04_Output/02_ADS"</span>,</span>
+<span id="cb2-35"><a href="#cb2-35"></a>    <span class="st">"04_Output/03_TLF/Tables"</span>,</span>
+<span id="cb2-36"><a href="#cb2-36"></a>    <span class="st">"04_Output/03_TLF/Listings"</span>,</span>
+<span id="cb2-37"><a href="#cb2-37"></a>    <span class="st">"04_Output/03_TLF/Figures"</span>,</span>
+<span id="cb2-38"><a href="#cb2-38"></a>    <span class="st">"04_Output/04_Interim_Output"</span>,</span>
+<span id="cb2-39"><a href="#cb2-39"></a>    <span class="st">"05_Paper/Drafts"</span>,</span>
+<span id="cb2-40"><a href="#cb2-40"></a>    <span class="st">"05_Paper/Figures_Tables_Final"</span>,</span>
+<span id="cb2-41"><a href="#cb2-41"></a>    <span class="st">"05_Paper/References"</span>,</span>
+<span id="cb2-42"><a href="#cb2-42"></a>    <span class="st">"06_Meeting/Shared_Materials"</span> <span class="co"># Meetingフォルダの初期作成</span></span>
+<span id="cb2-43"><a href="#cb2-43"></a>  )</span>
+<span id="cb2-44"><a href="#cb2-44"></a></span>
+<span id="cb2-45"><a href="#cb2-45"></a>  <span class="co"># サブフォルダの作成</span></span>
+<span id="cb2-46"><a href="#cb2-46"></a>  <span class="cf">for</span> (folder <span class="cf">in</span> sub_folders) {</span>
+<span id="cb2-47"><a href="#cb2-47"></a>    <span class="fu">dir.create</span>(<span class="fu">file.path</span>(project_path, folder), <span class="at">recursive =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-48"><a href="#cb2-48"></a>    <span class="fu">message</span>(<span class="fu">paste0</span>(<span class="st">"  - フォルダ '"</span>, <span class="fu">file.path</span>(project_path, folder), <span class="st">"' を作成しました。</span><span class="sc">\n</span><span class="st">"</span>))</span>
+<span id="cb2-49"><a href="#cb2-49"></a>  }</span>
+<span id="cb2-50"><a href="#cb2-50"></a></span>
+<span id="cb2-51"><a href="#cb2-51"></a>  <span class="co"># renvの初期化</span></span>
+<span id="cb2-52"><a href="#cb2-52"></a>  <span class="cf">if</span> (use_renv) {</span>
+<span id="cb2-53"><a href="#cb2-53"></a>    <span class="fu">message</span>(<span class="st">"renvの初期化を開始します。これには少し時間がかかる場合があります...</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-54"><a href="#cb2-54"></a>    old_wd <span class="ot">&lt;-</span> <span class="fu">getwd</span>()</span>
+<span id="cb2-55"><a href="#cb2-55"></a>    <span class="fu">setwd</span>(project_path)</span>
+<span id="cb2-56"><a href="#cb2-56"></a>    <span class="fu">tryCatch</span>({</span>
+<span id="cb2-57"><a href="#cb2-57"></a>      <span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">"renv"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) {</span>
+<span id="cb2-58"><a href="#cb2-58"></a>        <span class="fu">install.packages</span>(<span class="st">"renv"</span>)</span>
+<span id="cb2-59"><a href="#cb2-59"></a>      }</span>
+<span id="cb2-60"><a href="#cb2-60"></a>      renv<span class="sc">::</span><span class="fu">init</span>()</span>
+<span id="cb2-61"><a href="#cb2-61"></a>      <span class="fu">message</span>(<span class="st">"  - renvを初期化しました。</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-62"><a href="#cb2-62"></a>      <span class="fu">message</span>(<span class="st">"    プロジェクトルートに '.Rprofile' と 'renv.lock' が生成されます。</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-63"><a href="#cb2-63"></a>    }, <span class="at">error =</span> <span class="cf">function</span>(e) {</span>
+<span id="cb2-64"><a href="#cb2-64"></a>      <span class="fu">message</span>(<span class="fu">paste0</span>(<span class="st">"  - renvの初期化中にエラーが発生しました: "</span>, e<span class="sc">$</span>message, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>))</span>
+<span id="cb2-65"><a href="#cb2-65"></a>      <span class="fu">message</span>(<span class="st">"    手動で `renv::init()` を実行してください。</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-66"><a href="#cb2-66"></a>    }, <span class="at">finally =</span> {</span>
+<span id="cb2-67"><a href="#cb2-67"></a>      <span class="fu">setwd</span>(old_wd)</span>
+<span id="cb2-68"><a href="#cb2-68"></a>    })</span>
+<span id="cb2-69"><a href="#cb2-69"></a>  }</span>
+<span id="cb2-70"><a href="#cb2-70"></a></span>
+<span id="cb2-71"><a href="#cb2-71"></a>  <span class="fu">message</span>(<span class="fu">paste0</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">プロジェクト '"</span>, project_name, <span class="st">"' のフォルダ構造が正常に作成されました。"</span>))</span>
+<span id="cb2-72"><a href="#cb2-72"></a>  <span class="cf">if</span> (use_renv) {</span>
+<span id="cb2-73"><a href="#cb2-73"></a>    <span class="fu">message</span>(<span class="fu">paste0</span>(<span class="st">"RStudioで '"</span>, project_name, <span class="st">".Rproj' を開いた後、`renv::restore()` を実行して必要なパッケージをインストールしてください。"</span>))</span>
+<span id="cb2-74"><a href="#cb2-74"></a>  } <span class="cf">else</span> {</span>
+<span id="cb2-75"><a href="#cb2-75"></a>    <span class="fu">message</span>(<span class="fu">paste0</span>(<span class="st">"RStudioで '"</span>, project_name, <span class="st">".Rproj' を開いて作業を開始してください。"</span>))</span>
+<span id="cb2-76"><a href="#cb2-76"></a>  }</span>
+<span id="cb2-77"><a href="#cb2-77"></a>  <span class="fu">message</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">**補足:**"</span>)</span>
+<span id="cb2-78"><a href="#cb2-78"></a>  <span class="fu">message</span>(<span class="st">"  - `03_Programs/01_ADS/Develop/`, `03_Programs/02_TLF/Develop/` フォルダ内は、ご自身で `YYYYMMDD/` 形式のサブフォルダを作成し、ファイルを整理してください。"</span>)</span>
+<span id="cb2-79"><a href="#cb2-79"></a>  <span class="fu">message</span>(<span class="st">"  - `03_Programs/.../Final/` や `04_Output/02_ADS/` フォルダ内は、ADSやTLFのバージョンに応じて `vX.Y/` 形式のサブフォルダを作成し、ファイルを整理してください。"</span>)</span>
+<span id="cb2-80"><a href="#cb2-80"></a>  <span class="fu">message</span>(<span class="st">"  - 各プログラムの実行ログは `04_Output/01_Logs/YYYYMMDD/` に、日付とタイムスタンプを含むファイル名で保存することを推奨します。"</span>)</span>
+<span id="cb2-81"><a href="#cb2-81"></a>  <span class="fu">message</span>(<span class="st">"  - `01_Docs/02_Specs/` にデータ定義書やADS構造定義書を必ず作成してください。"</span>)</span>
+<span id="cb2-82"><a href="#cb2-82"></a>  <span class="fu">message</span>(<span class="st">"  - `06_Meeting/` フォルダ内は、ミーティングごとに `YYYYMMDD_MeetingTitle/` 形式のサブフォルダを作成し、その直下に関連する全てのファイルを整理してください。特に `.qmd` ファイルとその出力もここに含めます。"</span>)</span>
+<span id="cb2-83"><a href="#cb2-83"></a>}</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="具体的な使用例renv-false-の場合" class="level3" data-number="1.4.1">
+<h3 data-number="1.4.1" class="anchored" data-anchor-id="具体的な使用例renv-false-の場合"><span class="header-section-number">1.4.1</span> 具体的な使用例（<code>renv = FALSE</code> の場合）</h3>
+<ol type="1">
+<li><p><strong>Rスクリプトの保存:</strong> 上記のRコードを、例えば <code>create_project_structure.R</code> という名前で保存します。</p></li>
+<li><p><strong>プロジェクト作成場所への移動:</strong> RコンソールまたはRStudioのターミナルで、新しいプロジェクトを作成したいディレクトリに移動します</p></li>
+</ol>
+<div class="sourceCode" id="cb3" data-eval="FALSE,&quot; code-line-numbers"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 例：ホームディレクトリの「研究プロジェクト」フォルダに移動する場合</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">"C:/Users/kotas/OneDrive/デスクトップ/Project"</span>)</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="3" type="1">
+<li><p><strong>関数の実行:</strong> 作成したいプロジェクトの名前を指定して、<code>create_clinical_data_analysis_project_structure()</code> 関数を呼び出します。今回は <code>renv</code> を使わないので、<code>use_renv = FALSE</code> を設定します。</p>
+<div class="sourceCode" id="cb4" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># 「MyClinicalStudy_2025」という名前のプロジェクトフォルダを作成し、renvは使用しない</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="fu">create_clinical_data_analysis_project_structure</span>(<span class="st">"ClinicalStudy"</span>, <span class="at">use_renv =</span> <span class="cn">FALSE</span>)</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p><strong>結果の確認:</strong> コマンドを実行すると、指定したディレクトリ内に <code>MyClinicalStudy_2025/</code> という新しいフォルダが作成され、その中に上記のフォルダ構造が自動的に生成されているのが確認できるはずです。Rコンソールには、フォルダ作成の進行状況と完了メッセージが表示されます。</p></li>
+</ol>
+<p>これで、すぐにプロジェクト作業に取りかかれる、クリーンで整理された環境が手に入ります。</p>
+</section>
+</section>
+<section id="まとめあなたの研究を次のレベルへ" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="まとめあなたの研究を次のレベルへ"><span class="header-section-number">1.5</span> まとめ：あなたの研究を次のレベルへ</h2>
+<p>このフォルダ構成は、単なるファイルの置き場所ではありません。臨床研究におけるデータ解析の<strong>透明性、再現性、そして監査可能性</strong>を飛躍的に向上させるための、体系的なワークフローそのものです。</p>
+<ul>
+<li><p><strong><code>00_Resources</code></strong>: 知識の蓄積を忘れずに。</p></li>
+<li><p><strong><code>01_Docs</code></strong>: <strong>構造定義書</strong>と**統計解析計画書（SAP）**が解析の羅針盤。</p></li>
+<li><p><strong><code>02_Data</code></strong>: 生データは「聖域」、加工履歴を明確に。</p></li>
+<li><p><strong><code>03_Programs</code></strong>: <strong>ADS</strong>と<strong>TLF</strong>作成プログラムを明確に分離し、開発と確定を分けて管理。</p></li>
+<li><p><strong><code>04_Output</code></strong>: <strong>ログ</strong>こそが解析結果の揺るぎない証拠。</p></li>
+<li><p><strong><code>05_Paper</code></strong>: 論文執筆をスムーズに。</p></li>
+<li><p><strong><code>06_Meeting</code></strong>: <strong>Quarto</strong>を活用し、ミーティングでの進捗報告も効率的かつ明確に。</p></li>
+</ul>
+<p>このテンプレートを活用して、あなたの臨床研究プロジェクトをより強固で、信頼性の高いものにしていきましょう！もし具体的な解析作業で疑問が生じたら、いつでも聞いてくださいね。</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "コピーしました");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "コピーしました");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
+        for (let i=0; i<annoteTargets.length; i++) {
+          const annoteTarget = annoteTargets[i];
+          const targetCell = annoteTarget.getAttribute("data-target-cell");
+          const targetAnnotation = annoteTarget.getAttribute("data-target-annotation");
+          const contentFn = () => {
+            const content = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+            if (content) {
+              const tipContent = content.cloneNode(true);
+              tipContent.classList.add("code-annotation-tip-content");
+              return tipContent.outerHTML;
+            }
+          }
+          const config = {
+            allowHTML: true,
+            content: contentFn,
+            onShow: (instance) => {
+              selectCodeLines(instance.reference);
+              instance.reference.classList.add('code-annotation-active');
+              window.tippy.hideAll();
+            },
+            onHide: (instance) => {
+              unselectCodeLines();
+              instance.reference.classList.remove('code-annotation-active');
+            },
+            maxWidth: 300,
+            delay: [50, 0],
+            duration: [200, 0],
+            offset: [5, 10],
+            arrow: true,
+            trigger: 'click',
+            appendTo: function(el) {
+              return el.parentElement.parentElement.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'quarto',
+            placement: 'right',
+            positionFixed: true,
+            popperOptions: {
+              modifiers: [
+              {
+                name: 'flip',
+                options: {
+                  flipVariations: false, // true by default
+                  allowedAutoPlacements: ['right'],
+                  fallbackPlacements: ['right', 'top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left'],
+                },
+              },
+              {
+                name: 'preventOverflow',
+                options: {
+                  mainAxis: false,
+                  altAxis: false
+                }
+              }
+              ]        
+            }      
+          };
+          window.tippy(annoteTarget, config); 
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="https://github.com/kkts1010/kkts1010.github.io/">
+<p>Kota Sakamoto</p>
+</a>
+  </li>  
+</ul>
+    </div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/kkts1010/kkts1010.github.io/">
+<p>Kota Sakamoto</p>
+</a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/kkt_1010">
+      <i class="bi bi-twitter" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

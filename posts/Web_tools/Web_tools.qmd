@@ -12,12 +12,16 @@ title: "Web Tools"
 ## 論文雑誌
 
 -   [計量生物学](https://www.jstage.jst.go.jp/browse/jjb/list/-char/ja)
--   [薬剤疫学](https://www.jstage.jst.go.jp/browse/jjpe/-char/ja)
--   [Journal of Epideimology](https://jeaweb.jp/journal/issues/jstage/index.html)
 -   [Statistics in Medicine](https://onlinelibrary.wiley.com/loi/10970258)
 -   [Pharmaceutical Statistics](https://onlinelibrary.wiley.com/toc/15391612/current)
 -   [Biostatistics](https://academic.oup.com/biostatistics)
+-   [International Journal of Epidemiology](https://academic.oup.com/ije)
+-   [American Journal of Epidemiology](https://academic.oup.com/aje)
+-   [Epidemiology](https://journals.lww.com/epidem/pages/default.aspx)
+-   [Journal of Clinical Epidemiology](https://www.sciencedirect.com/journal/journal-of-clinical-epidemiology)
 -   [Pharmacoepidemiology ＆ Drug Safety](https://onlinelibrary.wiley.com/journal/10991557)
+-   [Journal of Epideimology](https://jeaweb.jp/journal/issues/jstage/index.html)
+-   [薬剤疫学](https://www.jstage.jst.go.jp/browse/jjpe/-char/ja)
 -   [すうがくぶんか株式会社](https://sugakubunka.com/)
 -   [Quarto](https://quarto.org/)
 -   [Git公式書籍（日本語](https://git-scm.com/book/ja/v2)
@@ -128,4 +132,4 @@ title: "Web Tools"
 -   [ExcelファイルをまとめてPDFファイルに変換したい](https://zenn.dev/takaha4k/articles/a0980bea89b883)
 -   [複数のExcelファイルを一括でPDFファイルに変換する方法](https://kouritsukafiles.com/convert-excelfiles-to-pdf/)
 -   [メモ帳だけで作成！複数のExcelファイルをPDFに一括変換](https://skainoblog.com/pdftoexcel/)
--   [WinMerge日本語版](https://winmergejp.bitbucket.io/)
+-   [WinMerge日本語版](https://winmergejp.bitbucket.io/)quarto render
