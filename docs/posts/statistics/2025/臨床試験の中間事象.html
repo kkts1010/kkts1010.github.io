@@ -8,7 +8,7 @@
 
 <meta name="author" content="坂本航太">
 
-<title>大人の英語学習勉強1 – Kota Sakamoto</title>
+<title>臨床試験の中間事象 – Kota Sakamoto</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -69,6 +69,49 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../../styles.css">
 </head>
@@ -118,9 +161,9 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-page-left">
-      <h1 class="title">大人の英語学習勉強1</h1>
+      <h1 class="title">臨床試験の中間事象</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">English</div>
+                <div class="quarto-category">臨床試験</div>
               </div>
                   </div>
   </div>
@@ -138,14 +181,14 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">公開</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">2025年7月23日</p>
+        <p class="date">2025年7月28日</p>
       </div>
     </div>
     
       <div>
       <div class="quarto-title-meta-heading">更新日</div>
       <div class="quarto-title-meta-contents">
-        <p class="date-modified">2025年7月23日</p>
+        <p class="date-modified">2025年7月28日</p>
       </div>
     </div>
       
@@ -160,12 +203,13 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">目次</h2>
    
   <ul class="collapse">
-  <li><a href="#背景" id="toc-背景" class="nav-link active" data-scroll-target="#背景"><span class="header-section-number">1</span> 背景</a></li>
-  <li><a href="#目次" id="toc-目次" class="nav-link" data-scroll-target="#目次"><span class="header-section-number">2</span> 目次</a>
-  <ul class="collapse">
-  <li><a href="#関先生の真英文法の目次" id="toc-関先生の真英文法の目次" class="nav-link" data-scroll-target="#関先生の真英文法の目次"><span class="header-section-number">2.1</span> 関先生の真英文法の目次</a></li>
-  <li><a href="#英語の基本ルール" id="toc-英語の基本ルール" class="nav-link" data-scroll-target="#英語の基本ルール"><span class="header-section-number">2.2</span> 英語の基本ルール</a></li>
-  </ul></li>
+  <li><a href="#臨床試験の中間事象" id="toc-臨床試験の中間事象" class="nav-link active" data-scroll-target="#臨床試験の中間事象"><span class="header-section-number">1</span> 臨床試験の中間事象</a></li>
+  <li><a href="#中間事象とは" id="toc-中間事象とは" class="nav-link" data-scroll-target="#中間事象とは"><span class="header-section-number">2</span> 中間事象とは？</a></li>
+  <li><a href="#中間事象は治療の一部かアウトカムの一部か" id="toc-中間事象は治療の一部かアウトカムの一部か" class="nav-link" data-scroll-target="#中間事象は治療の一部かアウトカムの一部か"><span class="header-section-number">3</span> 中間事象は治療の一部か？アウトカムの一部か？</a></li>
+  <li><a href="#中間事象の発現頻度が群間で異なるか" id="toc-中間事象の発現頻度が群間で異なるか" class="nav-link" data-scroll-target="#中間事象の発現頻度が群間で異なるか"><span class="header-section-number">4</span> 中間事象の発現頻度が群間で異なるか</a></li>
+  <li><a href="#中間事象が生じた理由は何か共変量によって説明できるか" id="toc-中間事象が生じた理由は何か共変量によって説明できるか" class="nav-link" data-scroll-target="#中間事象が生じた理由は何か共変量によって説明できるか"><span class="header-section-number">5</span> 中間事象が生じた理由は何か、共変量によって説明できるか</a></li>
+  <li><a href="#ich-e9-r1の5つのストラテジー" id="toc-ich-e9-r1の5つのストラテジー" class="nav-link" data-scroll-target="#ich-e9-r1の5つのストラテジー"><span class="header-section-number">6</span> ICH E9 (R1)の5つのストラテジー</a></li>
+  <li><a href="#例抗がん剤試験を想定するestimand" id="toc-例抗がん剤試験を想定するestimand" class="nav-link" data-scroll-target="#例抗がん剤試験を想定するestimand"><span class="header-section-number">7</span> 例：抗がん剤試験を想定するEstimand</a></li>
   </ul>
 </nav>
     </div>
@@ -176,171 +220,107 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="背景" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span> 背景</h1>
-<p>本業がある社会人こそ、英文法を利用することで効率良く英語を使えるようになります。交渉での細かいニュアンスには、「時制・助動詞」の力が絶対に必要になりますし、複雑な説明をするときには「比較・関係詞」を駆使することになります。英文法が崩れたプレゼンテーションはもやは聞いてもらえないでしょう。</p>
-<p>「大人の会話」であるだけに、中学英文法では足りず、高校レベルまでの英文法の全範囲が必須となります。何より、きちんとした英文法を使うことは、ビジネスにおいての「信用」につながります！</p>
-<p>私にとっては、研究者としての立場もあり、論文投稿に加えて、「論文を読む」という動作において、正しく著者の考えを理解するために、「英文法」は必須です。基礎を固めておきましょう。</p>
-<p>ここでは、高校英文法をひとつひとつ分かりやすく。という本を基に勉強していく！</p>
+<section id="臨床試験の中間事象" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="臨床試験の中間事象"><span class="header-section-number">1</span> 臨床試験の中間事象</h2>
+<p>中間事象を扱う視点として、当該事象は治療の一部か、アウトカムの一部か、頻度は群間で異なるか、当該事象が生じた理由は何か、などが重要である。</p>
 </section>
-<section id="目次" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> 目次</h1>
-<ol type="1">
-<li><p>基本文系</p>
-<ol type="1">
-<li><p>SVの文</p></li>
-<li><p>SVCの文</p></li>
-<li><p>SVOの文</p></li>
-<li><p>SVOOの文</p></li>
-<li><p>SVOCの文</p></li>
-</ol></li>
-<li><p>時制</p>
-<ol type="1">
-<li><p>現在形</p></li>
-<li><p>過去形</p></li>
-<li><p>未来を表す表現</p></li>
-<li><p>現在完了形</p></li>
-<li><p>過去形と現在完了形の違い</p></li>
-<li><p>過去完了形</p></li>
-<li><p>未来完了形</p></li>
-<li><p>現在進行形</p></li>
-<li><p>過去進行形・未来進行形</p></li>
-<li><p>現在完了進行形</p></li>
-<li><p>過去完了進行形</p></li>
-</ol></li>
-<li><p>受動態</p>
-<ol type="1">
-<li><p>受動態</p></li>
-<li><p>SVOOの受動態</p></li>
-<li><p>SVOCの受動態</p></li>
-<li><p>進行形と完了形の受動態</p></li>
-</ol></li>
-<li><p>助動詞</p>
-<ol type="1">
-<li><p>助動詞</p></li>
-<li><p>助動詞のもう一つの意味</p></li>
-<li><p>助動詞のいろいろな表現</p></li>
-</ol></li>
-<li><p>準動詞</p>
-<ol type="1">
-<li><p>不定詞とは</p></li>
-<li><p>不定詞の意味上の主語</p></li>
-<li><p>SVO＋不定詞、SVO＋原型不定詞</p></li>
-<li><p>不定詞のいろいろなかたち</p>
-<ol type="1">
-<li>否定形、進行形、独立不定詞</li>
-</ol></li>
-<li><p>不定詞のいろいろなかたち</p>
-<ol type="1">
-<li>完了不定詞、不定詞の受動態</li>
-</ol></li>
-<li><p>動名詞</p></li>
-<li><p>不定詞と動名詞のちがい</p></li>
-<li><p>分詞</p></li>
-<li><p>補語になる分詞</p></li>
-<li><p>分詞構文</p></li>
-<li><p>分詞構文のいろいろなかたち</p>
-<ol type="1">
-<li>完了形の分子構文、接続詞＋分詞構文</li>
-</ol></li>
-<li><p>独立分詞構文と慣用表現</p>
-<ol type="1">
-<li>独立分詞構文とwith＋名詞＋分詞</li>
-</ol></li>
-</ol></li>
-<li><p>仮定法</p>
-<ol type="1">
-<li><p>仮定法過去</p></li>
-<li><p>仮定法過去完了、仮定法過去と仮定法過去完了のミックス形</p></li>
-<li><p>仮定法の重要表現</p>
-<ol type="1">
-<li>未来の仮定法、仮定法の慣用表現</li>
-</ol></li>
-<li><p>仮定法の重要表現</p>
-<ol type="1">
-<li>未来の仮定法、仮定法の慣用表現</li>
-</ol></li>
-</ol></li>
-<li><p>比較</p>
-<ol type="1">
-<li><p>原級を使った表現</p></li>
-<li><p>比較級を使った表現</p></li>
-<li><p>最上級を使った表現</p></li>
-</ol></li>
-<li><p>関係詞</p>
-<ol type="1">
-<li><p>関係代名詞の用法</p>
-<ol type="1">
-<li><p>関係代名詞の基本、主格の関係代名詞</p></li>
-<li><p>目的格の関係代名詞、所有格の関係代名詞</p></li>
-<li><p>そのほかの関係代名詞</p>
-<ol type="1">
-<li>関係代名詞that、関係代名詞what</li>
-</ol></li>
-<li><p>関係代名詞の注意すべき用法</p>
-<ol type="1">
-<li>前置詞＋関係代名詞</li>
-</ol></li>
-<li><p>関係副詞の用法</p></li>
-<li><p>関係代名詞と関係副詞の違い</p></li>
-<li><p>カンマ付きの関係代名詞と関係副詞</p>
-<ol type="1">
-<li>関係代名詞、関係副詞の非制限用法</li>
-</ol></li>
-<li><p>複合関係詞の用法</p></li>
-</ol></li>
-</ol></li>
-<li><p>その他の重要な文法</p>
-<ol type="1">
-<li><p>名詞のカタマリをつくる接続詞</p></li>
-<li><p>副詞のカタマリをつくる接続詞</p></li>
-<li><p>強調構文とは</p></li>
-<li><p>形式主語・形式目的語を使った文</p></li>
-<li><p>時制の一致と話法</p></li>
-<li><p>疑問詞を使った重要表現</p></li>
-</ol></li>
-</ol>
-<section id="関先生の真英文法の目次" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="関先生の真英文法の目次"><span class="header-section-number">2.1</span> 関先生の真英文法の目次</h2>
-<ol type="1">
-<li><p>時制</p>
-<ol type="1">
-<li><p>現在形と過去形</p></li>
-<li><p>時制の細かい用法</p></li>
-<li><p>進行形</p></li>
-</ol></li>
-<li><p>時制</p>
-<ol type="1">
-<li><p>現在完了形</p></li>
-<li><p>過去完了形</p></li>
-<li><p>未来完了形（will have p.p.）</p></li>
-<li><p>現在完了形の応用</p></li>
-</ol></li>
-<li><p>接続詞</p>
-<ol type="1">
-<li><p>等位接続詞（and型）</p></li>
-<li><p>従属接続詞（when/if型）</p></li>
-<li><p>名詞節もつくる従属接続詞</p></li>
-<li><p>時・条件を表す副詞節内での「現在形の特別用法」</p></li>
-</ol></li>
-<li><p>仮定法</p>
-<ol type="1">
-<li><p>仮定法の公式</p></li>
-<li><p>公式通りではない仮定法</p></li>
-<li><p>仮定法の「慣用表現」</p></li>
-</ol></li>
-<li><p>助動詞</p></li>
-</ol>
-</section>
-<section id="英語の基本ルール" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="英語の基本ルール"><span class="header-section-number">2.2</span> 英語の基本ルール</h2>
-<p>英語の文章を作るパーツ</p>
+<section id="中間事象とは" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="中間事象とは"><span class="header-section-number">2</span> 中間事象とは？</h2>
+<p>ランダム化は、交絡に伴うバイアスを回避するための有力な手段であるが、ランダム化比較試験であってもあらゆる問題がないわけではない。たとえば、治療開始後に、以下のような事象が生じることがある。</p>
 <ul>
-<li></li>
+<li><p>対象者を選ぶための適格基準に違反することが、事後的に明らかになる。</p></li>
+<li><p>プロトコールに規定された治療計画から逸脱する。例えば、治療の中止、治療の切り替え、代替え治療の開始</p></li>
+<li><p>有害事象や死亡のため、アウトカムの一部が観測できなかったり、その解釈に影響を与えたりする。</p></li>
 </ul>
-
-
+<p>これらの出来事を中間事象と呼ぶ。中間事象の取り扱いは、その試験でどのようなパラメータを推定しようとするかを左右するため、試験計画の段階で考慮すべきである。</p>
 </section>
+<section id="中間事象は治療の一部かアウトカムの一部か" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="中間事象は治療の一部かアウトカムの一部か"><span class="header-section-number">3</span> 中間事象は治療の一部か？アウトカムの一部か？</h2>
+<p>指針として、それが広い意味で治療の一部とみなされるのか、アウトカムの結果と解釈すべきかどうかは大事であろう。</p>
+<p>例として、試験薬の投与中止が考えられる。もし、治療を開始する前に、試験への参加拒否を理由に、患者が投与中止を申し出たとしよう。このケースでは、偶発的なもので、解析結果への影響は軽微と判断して、解析対象集団から除外することが一般的である。</p>
+<p>別の例として、なんらかの有害事象のため投与が中止され、有効性アウトカムが観測されなかったとしよう。このケースで、解析対象集団から除外すると、明らかに治験薬の安全性を過大推定してしまう。このケースでは、安全性解析対象集団には含めるべきだし、有効性の解釈においてこの患者が欠測のため解析に寄与しなかったとしても、そのことをきちんと報告すべきである。</p>
+<p>中間事象の有無で層別して、試験治療群とコントロール群の結果を記述したり、比較したりすることがある。中間事象がアウトカムの一部ともなされるようなケースでは注意が必要である。なぜなら、治療の結果が良い層と悪い層を分けて、それぞれの層で試験治療とコントロール治療を比較してることになるからである。</p>
+</section>
+<section id="中間事象の発現頻度が群間で異なるか" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="中間事象の発現頻度が群間で異なるか"><span class="header-section-number">4</span> 中間事象の発現頻度が群間で異なるか</h2>
+<p>中間事象の発現頻度が群間で異なると、例えば、中間事象の発現頻度が少ない方が、その扱いによって因果効果の違いが生じにくい。一方で、中間事象が多く発現しており、しかもどちらかの群で偏っていると、因果効果への影響は大きくなるし、治療の有効性や安全性について解釈が難しくなる。</p>
+</section>
+<section id="中間事象が生じた理由は何か共変量によって説明できるか" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="中間事象が生じた理由は何か共変量によって説明できるか"><span class="header-section-number">5</span> 中間事象が生じた理由は何か、共変量によって説明できるか</h2>
+<p>中間事象によってアウトカムの欠測が生じ、それによって因果効果の推定にバイアスが含まれることがある。特にバイアスが懸念されるのは、中間事象が生じるメカニズムがアウトカムと関連しているときである。外的要因による欠測ならば、MCARの仮定の下で、欠測の影響を無視可能となるかもしれない。</p>
+<p><strong>欠測に伴うバイアスを調整するには、欠測メカニズムを説明するような共変量を解析で考慮しなければならない。そのためには、どのような中間事象があり得るかを予想し、それが生じた理由など中間事象に関連するデータを収集できるように、あらかじめ計画を立てておく必要がある。</strong></p>
+</section>
+<section id="ich-e9-r1の5つのストラテジー" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="ich-e9-r1の5つのストラテジー"><span class="header-section-number">6</span> ICH E9 (R1)の5つのストラテジー</h2>
+<section id="治療方針ストラテジー" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="治療方針ストラテジー"><span class="header-section-number">6.1</span> 治療方針ストラテジー</h3>
+<p>対象者<span class="math inline">i</span>の観察されるアウトカムを<span class="math inline">Y_i</span>、ランダム割付の結果を<span class="math inline">Z_i(Z_i = 1なら試験治療群、Z_i = 0 ならコントロール群</span> として、ランダム化とアウトカムの途中に生じる中間事象を<span class="math inline">M_i</span>で表すに。コントロール治療と試験治療のそれぞれの割付に対応するPotential Outcomeを<span class="math inline">Y_i^{Z=0}</span>と<span class="math inline">Y_i^{Z=1}</span>で表す。中間事象<span class="math inline">M_i</span>の影響で、実際に行われる治療<span class="math inline">A_i</span> はランダム化の通りではないとする。あくまでランダム化の効果をみているのであって、<span class="math inline">A_i</span>はみてない。</p>
+<p>すなわち治療方針ストラテジーの推定目標は以下の、割付結果がアウトカムに与える平均因果効果と考えられる。</p>
+<p><span class="math display">
+E(Y_i^{Z=1} - Y_i^{Z=0})
+</span></p>
+<p>この推定目標の特徴は2つある。まず、この推定目標は、治療自体の効果というより、ランダム化時点で決めた治療方針のどちらが有効か、という意味での効果を表している。もう一つの特徴は、（治療変数）とは異なり、割付変数についてはランダム化により非交絡性が保証されている点である。そのため、治療方針ストラテジーを取れば、妥当な統計的推測が可能となる。</p>
+</section>
+<section id="複合ストラテジー" class="level3" data-number="6.2">
+<h3 data-number="6.2" class="anchored" data-anchor-id="複合ストラテジー"><span class="header-section-number">6.2</span> 複合ストラテジー</h3>
+<p>試験治療とコントロール治療に対応する潜在的な中間事象の値を、それぞれ<span class="math inline">M_i^{Z = 1}</span> と<span class="math inline">M_i^{Z = 0}</span>と表す。複合ストラテジーの推定目標は、アウトカムyと中間事象mのなんらかの関数<span class="math inline">f(y,m)</span> を用いて、以下のように表現できる。</p>
+<p><span class="math display">
+E[f(Y_i^{Z=1},M_i^{Z=1}) -  f(Y_i^{Z=0},M_i^{Z=0}) ]
+</span></p>
+</section>
+<section id="仮想ストラテジー" class="level3" data-number="6.3">
+<h3 data-number="6.3" class="anchored" data-anchor-id="仮想ストラテジー"><span class="header-section-number">6.3</span> 仮想ストラテジー</h3>
+<p>中間事象が発現しなかった仮想的な状況を想定する。この場合、関心のある推定目標は、仮想的な状況において得られたであろうアウトカムのある種の予測値である。</p>
+<p>仮想ストラテジーでは、状況によって様々な推定目標が考えられる。ここでは、ランダムに割り付けられた治療を、対象者の一部が遵守しなかった状況を考えよう。そして、実際に受けた治療を、治療変数<span class="math inline">A_i</span> で表す。推定目標として自然なのは、治療変数<span class="math inline">A_i</span>がアウトカム<span class="math inline">Y_i</span>に与える因果効果である。試験治療とコントロール治療が仮に行われた状況に対応する潜在結果変数をそれぞれ、 <span class="math inline">Y^{A=0}</span>、<span class="math inline">Y^{A=1}</span>と表すと、<span class="math inline">A_i</span>の平均因果効果は以下で表すことができる。</p>
+<p><span class="math display">
+E(Y_i^{A=1}-Y_i^{A=0})
+</span></p>
+<p>ただし、この場合の<span class="math inline">A_i</span>は直接ランダムに割り付けられたものではないこと、治療を遵守しなかった対象者のアウトカムは医学的判断で採用できない可能性がある（欠測で扱いになる）ことに注意が必要である。この問題の対処法の1つとして、アウトカムになんらかのモデルを仮定して、結果を予測するというアプローチが考えられる。</p>
+</section>
+<section id="主要層ストラテジー" class="level3" data-number="6.4">
+<h3 data-number="6.4" class="anchored" data-anchor-id="主要層ストラテジー"><span class="header-section-number">6.4</span> 主要層ストラテジー</h3>
+<p>省略</p>
+</section>
+<section id="治療下ストラテジー" class="level3" data-number="6.5">
+<h3 data-number="6.5" class="anchored" data-anchor-id="治療下ストラテジー"><span class="header-section-number">6.5</span> 治療下ストラテジー</h3>
+<p>中間事象が発現し、治療が中止したり変更したりする時点より前の治療への反応をアウトカムとする。このストラテジーが特に意味を持つのは、経時データと生存時間データの場合であろう。アウトカムが経時的に繰り返し測定されている場合、全時点の測定値を採用するか、治療下のものに測定値を限定するかを選ばなければならない。同様に、特定のイベントまでの時間をアウトカムとして解析するとき、治療中止や変更を無視することもあれば、その時点で打ち切り（censoring）として取り扱うこともある。後者の解析では、<strong>治療が継続している期間内のハザードを比較しており、治療下ストラテジーの一種と考えられる</strong></p>
+</section>
+</section>
+<section id="例抗がん剤試験を想定するestimand" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="例抗がん剤試験を想定するestimand"><span class="header-section-number">7</span> 例：抗がん剤試験を想定するEstimand</h2>
+<p>アウトカムを生存時間とすると、3パターン感がられる。</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>ストラテジー</th>
+<th style="text-align: left;">治療方針</th>
+<th>治療下</th>
+<th>仮想</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>中間事象</td>
+<td style="text-align: left;">治療切り替え</td>
+<td>治療切り替え</td>
+<td>治療切り替え</td>
+</tr>
+<tr class="even">
+<td>考慮の仕方</td>
+<td style="text-align: left;">無視</td>
+<td>打ち切り</td>
+<td>IPCW</td>
+</tr>
+<tr class="odd">
+<td>要約指標</td>
+<td style="text-align: left;">ハザード比</td>
+<td>ハザード比</td>
+<td>ハザード比</td>
+</tr>
+</tbody>
+</table>
+
+
 </section>
 
 </main> <!-- /main -->
