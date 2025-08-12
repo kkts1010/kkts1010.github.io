@@ -1,0 +1,87 @@
+---
+title: "主語と述語"
+author: "坂本航太"
+categories: [English]
+date-modified: "2025-08-08"
+abstract-title: Abstract
+abstract: ""
+date: "2025-08-08"
+---
+
+## 主語と述語
+
+主語と述語は、文章の骨格です。命令文や感嘆文を除いて、英語の文章には必ず主語と述語が存在します。論文に命令文や感嘆文を用いることはほぼないので、論文中の文章には主語と動詞が必ず登場します。
+
+　主語と動詞の適切な用法を知ることは、fool-proof Englishの表現技法を身に付ける第一歩となります。本章では、まず文章の構造（単文・重文・複文）について説明をします。次に、読み手の思考の流れを円滑化する文章の書き方を解説します。さらに論文に頻出する動詞を列挙し、具体的な用例を示します。
+
+## 文章の構造
+
+文章の構造には、単文、重文、複文がある。
+
+単文：1つの主語と1つの動詞を含む文章。
+
+重文：2つ（以上）の単文を等位接続詞で結んだ文章。
+
+複文：主節と従属節を従位接続詞や関係詞（関係代名詞・関係副詞）で結んだ文章。
+
+等位接続詞：and, but , or など
+
+従位接続詞：that , if ,though, while , before , after , until ,because など
+
+関係代名詞：that, who , which ,whose , whom , what
+
+関係副詞：when , where , why , how
+
+論文はなるべく単文をベースに書くべきです。2つの単文をつないだ重文は用いてもよいでしょう。1つの主節と1つの従属節から構成される複文も許容範囲です。
+
+しかし、3つ以上の単文をつなげた重文、従属節の中にさらに従属節を含む複文などはやめましょう。
+
+## 読み手の思考の流れを円滑化する。
+
+文章の可読性（readability）を高めるためには、簡潔な文章に仕上げるとともに、主語・動詞をはじめとする単語の並び順を工夫することが重要です。読み手の論理的思考の流れがスムーズになるように、語順に気を配るべきです。思考の中断や逆転、後ろから前への読み返しを招くような語順は避けなければなりません。
+
+## 主語と動詞を文の前に配置する。
+
+読み手は、主語と動詞を探しながら文章を読みます。そのため書き手は、主語と動詞を文章中のなるべく前の方に、意識的に配置するとよいでしょう。そのようにすれば、読み手は主語と動詞をすぐに発見でき、安心して文章を読み進められます。
+
+主語にかかる修飾語が長すぎると、主語と動詞が離れてしまい、読みづらくなります。長い文章の最後の方に動詞が配置されていると、読み手はそこに至るまでに不安を抱えながら読み進めなければなりません。
+
+主語と動詞が離れている文章の修正例を挙げます。
+
+例①
+
+修正前：**The relationship** between A and B **is** shown in Table1.
+
+修正後：**Table1 shows** the relationship between A and B.
+
+修正前は、Table1が受動態になっており、by usが省略されている形である。つまり、showの主語はweである。修正後は、Table1を主語にしました。
+
+英語では、このように無生物主語がよく用いられます。
+
+例②
+
+修正前：The proportions of patients who entered ICU, who received emergency intubation, and who required systenmic xx were higher in those who developed severe asthma.
+
+修正後：Patients with severe asthma were more likely to undergo ICU admission, emergency intubation, and systemic xx.
+
+修正前の文は、主語の後の関係詞節が長く、主語と動詞が離れており読みにくい。修正後はpatients with severe asthmaを主語に捉えて、be more likely to やundergoという論文頻出表現を用いて、全体を短くまとめている。
+
+例③
+
+修正前：Data on several comordibities, including xxx were not available.
+
+修正後：No data were available on xxx.
+
+修正前の文章において、includingがどこまで続くのか分かりずらい。さらに、**not**という否定語が文章の後半に出てくるため、最後の最後で思考の逆転が必要になる。よみにくい！修正後の文章では、否定語を先頭に、主語と動詞の位置を前の方に配置しました。また、includingを含む句をかっこでくくり、冗長さ・曖昧さを削除することにしました。
+
+## 中心となる単語を先頭に配置する。
+
+論文には、
+
+## 動詞の名詞系を避ける。
+
+## 代名詞の位置に注意する。
+
+## 動作・状態の主体を明示する。
+
+## 冗長な文章の修正例

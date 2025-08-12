@@ -106,10 +106,139 @@ The をつけるのは、以下のような場合である。
 
 ## 論文における冠詞
 
--   論文における可算名詞と不可算名詞の区別
+### 論文における可算名詞と不可算名詞の区別
 
 1.  researchとstudy
 
 どちらも「研究」という意味があります。researchは常に不可算名詞であるので、researchesのように複数形になることはありません。なので、 a researchのように不定冠詞をつけることも誤りになります。Studyは「勉強」、「学問」という意味では不可算名詞になりますが、「研究」という意味では可算名詞です。a studyは「1つの研究」、studiesは「複数の研究です」
 
-例：
+例：Previous research showed that physical activity may be effective in reducing burnout.\
+例：Numerous studies showed that treatment with hypertension can reduce the risk of cardiovascular disease.
+
+### data,criteria,index
+
+dataは、datnumという可算名詞の複数形です。なお、data-baseは可算名詞であり、a database、databasesが正しいです。
+
+例：Data were collected from a large inpatient database.
+
+criteriaはCriterionという可算名詞の複数形です。
+
+例：The exclusion criteria were as follows: recent cardiopulmonary resuscitation; pregnancy.
+
+### 抽象名詞の可算・不可算
+
+以下の名詞は常に不可算となります。
+
+-   evidence
+
+-   information
+
+-   knowledge
+
+-   progress
+
+-   advice
+
+-   damage
+
+-   harm
+
+-   presence
+
+-   absence
+
+-   superiority
+
+-   inferiority
+
+-   smoking
+
+-   severity
+
+概念を表すときは不可算名詞、個々の具体例を示す場合には可算名詞になる抽象名詞は、論文ではかなり多く認められます。
+
+例えば、recordは、「記録すること」を意味する場合は不可算名詞、「個々の具体的な記録」を表す場合は可算名詞（records）です。
+
+例：Lipid profile was obtained from electronic medical records.
+
+他にも、surgeryは通常不可算名詞で、「外科」を示します。しかし、「個々の手術や術式」を示す場合は可算名詞（a surgery, surgeries）となる。
+
+例：Preserving elective surgeries was difficult in the Covid-19 pandemic.
+
+以下の名詞も同様に、通常は不可算となるが、個々の具体例を示す場合は可算名詞になることもある。
+
+-   disease、diagnosis、treatment
+
+### 病名、症状、兆候、薬品名
+
+「疾患・病気」を表すdisaease、illnessという単語は、
+
+動詞の名詞系は通お嬢、不可算名詞です。例えば、initiation、recommendation、selection。しかし、一部は、概念を表す場合は不可算名詞となる。例えば、choice、investigation、onservation
+
+-   疫学・統計用語の多くは可算名詞です。
+
+    -   hypothesis
+
+    -   mean
+
+    -   standard deviation
+
+    -   median
+
+    -   rate
+
+    -   proportion
+
+    -   test
+
+    -   odds ratio
+
+-   不可算名詞もある
+
+    -   effectiveness
+
+    -   efficacy
+
+    -   matching
+
+## ネイティブチェックに引っかかった冠詞の例
+
+康永先生は、大学で指導している研究者らが論文を執筆したときは、必ず、英文校正会社に原稿のネイティブチェックを依頼しているそうです。その例を示す。
+
+例①
+
+-   修正前：We applied self-controlled case series (SCCS) design to evaluate change in composite outcome of hospital admissions and emergency department visits.
+
+-   修正後：We applied **a** self-controlled case series (SCCS) design to evaluate **changes** in **the** composite outcome of hospital admissions and emergency department visits.
+
+ここで、design、change、outcomeはいずれも可算名詞であるので、aやtheをつける必要がある。designは初出の単数の可算名詞なのでaをつけている。changeは複数形にして、初出なので無冠詞とした。outdomeについては修飾語であるcompositeがついているので、特定できる、ということでtheをつけている。むず！！
+
+例②
+
+-   修正前：Baseline characteristics of eligible patients for SCCS are presented in Table1.
+
+-   修正後：**The** baseline characteristics of eligible patients for the SCCS are presented in Table1.
+
+ここで、CharacteristicsにはBaselineという修飾語がついているので、特定可能となるため**The**をつけている。SCCSについては、すでにMethodで説明しているので、特定可能なので**The**としている。
+
+例③
+
+-   修正前：All groups had significant decline in the composite outcome in subgroup analyses.
+
+-   修正後：All groups had a significant decline in the composite outcome in the subgroup
+
+declineについては、この場合は可算名詞なので、**a**をつけている。subgroup analyesesはMethodsで説明済なので、**the**をつけている。
+
+例④
+
+-   修正前：P value \< 0.05 was considered statistically significant.
+
+-   修正後：A p value \< 0.05 was considered statistically significant.
+
+valueは「価値」という抽象名詞で不可算になりますが、ここでは「数値」という意味で可算名詞になります。
+
+例⑤
+
+-   The patients backgrounds are shown in Table1.
+
+論文の図表において、Table1, Figure1などは大文字で表記します。これらは本文中で初出であっても特定できます。Theをつけたくなりますが、慣習上、theをつける必要はありません。
