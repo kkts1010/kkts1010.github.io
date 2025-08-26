@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.30">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="坂本航太">
+
+<title>主語と動詞 – Kota Sakamoto</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-9849038e97c5862c14c4eb81893d019b.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-945f87a38397f0f3b8ef34e2f394b6bc.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "一致なし",
+    "search-matching-documents-text": "一致した文書",
+    "search-copy-link-title": "検索へのリンクをコピー",
+    "search-hide-matches-text": "追加の検索結果を非表示",
+    "search-more-match-text": "追加の検索結果",
+    "search-more-matches-text": "追加の検索結果",
+    "search-clear-button-title": "消去",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "取消",
+    "search-submit-button-title": "検索",
+    "search-label": "サーチ"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Kota Sakamoto</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="サーチ"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="ナビゲーションを切り替える" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../posts/statistics/index.html"> 
+<span class="menu-text">Notes</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../posts/Web_tools/Web_tools.html"> 
+<span class="menu-text">Web Tools</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+    <a href="https://github.com/kkts1010/kkts1010.github.io/" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-github"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-page-left">
+      <h1 class="title">主語と動詞</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">English</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta column-page-left">
+
+      <div>
+      <div class="quarto-title-meta-heading">作者</div>
+      <div class="quarto-title-meta-contents">
+               <p>坂本航太 </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">公開</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">2025年8月8日</p>
+      </div>
+    </div>
+    
+      <div>
+      <div class="quarto-title-meta-heading">更新日</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date-modified">2025年8月8日</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">目次</h2>
+   
+  <ul class="collapse">
+  <li><a href="#主語と動詞" id="toc-主語と動詞" class="nav-link active" data-scroll-target="#主語と動詞"><span class="header-section-number">1</span> 主語と動詞</a></li>
+  <li><a href="#文章の構造" id="toc-文章の構造" class="nav-link" data-scroll-target="#文章の構造"><span class="header-section-number">2</span> 文章の構造</a></li>
+  <li><a href="#読み手の思考の流れを円滑化する" id="toc-読み手の思考の流れを円滑化する" class="nav-link" data-scroll-target="#読み手の思考の流れを円滑化する"><span class="header-section-number">3</span> 読み手の思考の流れを円滑化する。</a></li>
+  <li><a href="#主語と動詞を文の前に配置する" id="toc-主語と動詞を文の前に配置する" class="nav-link" data-scroll-target="#主語と動詞を文の前に配置する"><span class="header-section-number">4</span> 主語と動詞を文の前に配置する。</a></li>
+  <li><a href="#中心となる単語を先頭に配置する" id="toc-中心となる単語を先頭に配置する" class="nav-link" data-scroll-target="#中心となる単語を先頭に配置する"><span class="header-section-number">5</span> 中心となる単語を先頭に配置する。</a></li>
+  <li><a href="#動詞の名詞系を避ける" id="toc-動詞の名詞系を避ける" class="nav-link" data-scroll-target="#動詞の名詞系を避ける"><span class="header-section-number">6</span> 動詞の名詞系を避ける。</a></li>
+  <li><a href="#代名詞の位置に注意する" id="toc-代名詞の位置に注意する" class="nav-link" data-scroll-target="#代名詞の位置に注意する"><span class="header-section-number">7</span> 代名詞の位置に注意する。</a></li>
+  <li><a href="#動作状態の主体を明示する" id="toc-動作状態の主体を明示する" class="nav-link" data-scroll-target="#動作状態の主体を明示する"><span class="header-section-number">8</span> 動作・状態の主体を明示する。</a></li>
+  <li><a href="#冗長な文章の修正例" id="toc-冗長な文章の修正例" class="nav-link" data-scroll-target="#冗長な文章の修正例"><span class="header-section-number">9</span> 冗長な文章の修正例</a></li>
+  <li><a href="#動詞を制する者" id="toc-動詞を制する者" class="nav-link" data-scroll-target="#動詞を制する者"><span class="header-section-number">10</span> 動詞を制する者</a></li>
+  <li><a href="#実施する達成する" id="toc-実施する達成する" class="nav-link" data-scroll-target="#実施する達成する"><span class="header-section-number">11</span> （1）実施する、達成する</a></li>
+  <li><a href="#調べる" id="toc-調べる" class="nav-link" data-scroll-target="#調べる"><span class="header-section-number">12</span> （2）調べる</a></li>
+  <li><a href="#示す表す" id="toc-示す表す" class="nav-link" data-scroll-target="#示す表す"><span class="header-section-number">13</span> （3）示す、表す</a></li>
+  <li><a href="#明らかにする" id="toc-明らかにする" class="nav-link" data-scroll-target="#明らかにする"><span class="header-section-number">14</span> （4）明らかにする</a></li>
+  <li><a href="#説明する" id="toc-説明する" class="nav-link" data-scroll-target="#説明する"><span class="header-section-number">15</span> （5）説明する</a></li>
+  <li><a href="#示唆する" id="toc-示唆する" class="nav-link" data-scroll-target="#示唆する"><span class="header-section-number">16</span> （6）示唆する</a></li>
+  <li><a href="#強調する" id="toc-強調する" class="nav-link" data-scroll-target="#強調する"><span class="header-section-number">17</span> （7）強調する</a></li>
+  <li><a href="#仮定する" id="toc-仮定する" class="nav-link" data-scroll-target="#仮定する"><span class="header-section-number">18</span> （8）仮定する</a></li>
+  <li><a href="#推論する推計する推測する" id="toc-推論する推計する推測する" class="nav-link" data-scroll-target="#推論する推計する推測する"><span class="header-section-number">19</span> （9）推論する、推計する、推測する</a></li>
+  <li><a href="#評価する" id="toc-評価する" class="nav-link" data-scroll-target="#評価する"><span class="header-section-number">20</span> （10）評価する</a></li>
+  <li><a href="#関連する" id="toc-関連する" class="nav-link" data-scroll-target="#関連する"><span class="header-section-number">21</span> （11）関連する</a></li>
+  <li><a href="#起因する" id="toc-起因する" class="nav-link" data-scroll-target="#起因する"><span class="header-section-number">22</span> （12）起因する</a></li>
+  <li><a href="#引き起こす" id="toc-引き起こす" class="nav-link" data-scroll-target="#引き起こす"><span class="header-section-number">23</span> （13）引き起こす</a></li>
+  <li><a href="#受ける" id="toc-受ける" class="nav-link" data-scroll-target="#受ける"><span class="header-section-number">24</span> （14）受ける</a></li>
+  <li><a href="#対処する" id="toc-対処する" class="nav-link" data-scroll-target="#対処する"><span class="header-section-number">25</span> （15）対処する</a></li>
+  <li><a href="#影響する" id="toc-影響する" class="nav-link" data-scroll-target="#影響する"><span class="header-section-number">26</span> （16）影響する</a></li>
+  <li><a href="#可能にする" id="toc-可能にする" class="nav-link" data-scroll-target="#可能にする"><span class="header-section-number">27</span> （17）可能にする</a></li>
+  <li><a href="#含む" id="toc-含む" class="nav-link" data-scroll-target="#含む"><span class="header-section-number">28</span> （18）含む</a></li>
+  <li><a href="#分割する割り当てる" id="toc-分割する割り当てる" class="nav-link" data-scroll-target="#分割する割り当てる"><span class="header-section-number">29</span> （19）分割する、割り当てる、</a></li>
+  <li><a href="#特定する" id="toc-特定する" class="nav-link" data-scroll-target="#特定する"><span class="header-section-number">30</span> （20）特定する</a></li>
+  <li><a href="#その他" id="toc-その他" class="nav-link" data-scroll-target="#その他"><span class="header-section-number">31</span> （21）その他</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+
+
+
+
+
+<section id="主語と動詞" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="主語と動詞"><span class="header-section-number">1</span> 主語と動詞</h2>
+<p>主語と述語は、文章の骨格です。命令文や感嘆文を除いて、英語の文章には必ず主語と述語が存在します。論文に命令文や感嘆文を用いることはほぼないので、論文中の文章には主語と動詞が必ず登場します。</p>
+<p>　主語と動詞の適切な用法を知ることは、fool-proof Englishの表現技法を身に付ける第一歩となります。本章では、まず文章の構造（単文・重文・複文）について説明をします。次に、読み手の思考の流れを円滑化する文章の書き方を解説します。さらに論文に頻出する動詞を列挙し、具体的な用例を示します。</p>
+</section>
+<section id="文章の構造" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="文章の構造"><span class="header-section-number">2</span> 文章の構造</h2>
+<p>文章の構造には、単文、重文、複文がある。</p>
+<p>単文：1つの主語と1つの動詞を含む文章。</p>
+<p>重文：2つ（以上）の単文を等位接続詞で結んだ文章。</p>
+<p>複文：主節と従属節を従位接続詞や関係詞（関係代名詞・関係副詞）で結んだ文章。</p>
+<p>等位接続詞：and, but , or など</p>
+<p>従位接続詞：that , if ,though, while , before , after , until ,because など</p>
+<p>関係代名詞：that, who , which ,whose , whom , what</p>
+<p>関係副詞：when , where , why , how</p>
+<p>論文はなるべく単文をベースに書くべきです。2つの単文をつないだ重文は用いてもよいでしょう。1つの主節と1つの従属節から構成される複文も許容範囲です。</p>
+<p>しかし、3つ以上の単文をつなげた重文、従属節の中にさらに従属節を含む複文などはやめましょう。</p>
+</section>
+<section id="読み手の思考の流れを円滑化する" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="読み手の思考の流れを円滑化する"><span class="header-section-number">3</span> 読み手の思考の流れを円滑化する。</h2>
+<p>文章の可読性（readability）を高めるためには、簡潔な文章に仕上げるとともに、主語・動詞をはじめとする単語の並び順を工夫することが重要です。読み手の論理的思考の流れがスムーズになるように、語順に気を配るべきです。思考の中断や逆転、後ろから前への読み返しを招くような語順は避けなければなりません。</p>
+</section>
+<section id="主語と動詞を文の前に配置する" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="主語と動詞を文の前に配置する"><span class="header-section-number">4</span> 主語と動詞を文の前に配置する。</h2>
+<p>読み手は、主語と動詞を探しながら文章を読みます。そのため書き手は、主語と動詞を文章中のなるべく前の方に、意識的に配置するとよいでしょう。そのようにすれば、読み手は主語と動詞をすぐに発見でき、安心して文章を読み進められます。</p>
+<p>主語にかかる修飾語が長すぎると、主語と動詞が離れてしまい、読みづらくなります。長い文章の最後の方に動詞が配置されていると、読み手はそこに至るまでに不安を抱えながら読み進めなければなりません。</p>
+<p>主語と動詞が離れている文章の修正例を挙げます。</p>
+<p>例①</p>
+<p>修正前：<strong>The relationship</strong> between A and B <strong>is</strong> shown in Table1.</p>
+<p>修正後：<strong>Table1 shows</strong> the relationship between A and B.</p>
+<p>修正前は、Table1が受動態になっており、by usが省略されている形である。つまり、showの主語はweである。修正後は、Table1を主語にしました。</p>
+<p>英語では、このように無生物主語がよく用いられます。</p>
+<p>例②</p>
+<p>修正前：The proportions of patients who entered ICU, who received emergency intubation, and who required systenmic xx were higher in those who developed severe asthma.</p>
+<p>修正後：Patients with severe asthma were more likely to undergo ICU admission, emergency intubation, and systemic xx.</p>
+<p>修正前の文は、主語の後の関係詞節が長く、主語と動詞が離れており読みにくい。修正後はpatients with severe asthmaを主語に捉えて、be more likely to やundergoという論文頻出表現を用いて、全体を短くまとめている。</p>
+<p>例③</p>
+<p>修正前：Data on several comordibities, including xxx were not available.</p>
+<p>修正後：No data were available on xxx.</p>
+<p>修正前の文章において、includingがどこまで続くのか分かりずらい。さらに、<strong>not</strong>という否定語が文章の後半に出てくるため、最後の最後で思考の逆転が必要になる。よみにくい！修正後の文章では、否定語を先頭に、主語と動詞の位置を前の方に配置しました。また、includingを含む句をかっこでくくり、冗長さ・曖昧さを削除することにしました。</p>
+</section>
+<section id="中心となる単語を先頭に配置する" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="中心となる単語を先頭に配置する"><span class="header-section-number">5</span> 中心となる単語を先頭に配置する。</h2>
+<p>論文には必ず中心となるテーマがあります。対象となる疾患名や治療法・薬剤名など、論文の中心テーマを示す単語は、Introductionの第一文の先頭に配置しましょう。そうすることで、書き手が注目している中心テーマが何であるかを、読み手にいち早く知ってもらうことが大事です。各文章においても、中心となる単語を先頭に配置することにより、読み手の意識をその単語に集中させることができる。</p>
+<p>例①</p>
+<p>修正前：Randomized controlled trials have shown the effect of <strong>xxx</strong>.</p>
+<p>修正後：<strong>xxx</strong> has been shown to be effective in randomized controlled trials.</p>
+<p>例②</p>
+<p>修正前：Among drugs for xxx, <strong>A</strong> was the most common regimen.</p>
+<p>修正後：<strong>A</strong> was most commonly used for xxx.</p>
+</section>
+<section id="動詞の名詞系を避ける" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="動詞の名詞系を避ける"><span class="header-section-number">6</span> 動詞の名詞系を避ける。</h2>
+<p>簡潔な文章とは、必要最小限の単語数からなる文章です。「動詞の名詞系＋of ～」という形の表現は、無駄に単語数を増やすので、避けるべきである。ofが長いんだな。</p>
+<p>例①</p>
+<p>修正前：<strong>Separation of xxx</strong> from the serum was conducted.</p>
+<p>修正後：The xxx <strong>were separated</strong> from the serum.</p>
+<p>例②</p>
+<p>修正前：<strong>Log transformation of the non-normal data</strong> was performed.</p>
+<p>修正後：The non-normal data were <strong>log-transformed</strong>.</p>
+</section>
+<section id="代名詞の位置に注意する" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="代名詞の位置に注意する"><span class="header-section-number">7</span> 代名詞の位置に注意する。</h2>
+<p>代名詞が指し示す名詞が先にあって、代名詞はその後に存在すること（後方指示）が原則です。</p>
+<p>次の文章は、代名詞（it）が先にあって、代名詞が指し示す名詞（lauric acid）が後に存在する。読み手はitが何を示すのか分からないので読みずらい！！</p>
+<p>例①</p>
+<p>修正後：XX is user for xx, although it is xxx.</p>
+<p>形式主語itを用いてthat節やto不定詞を受ける表現をよくみかけます。決して悪くはなく、適宜用いてもよいでしょう。しかし、文中での主語の導入が一歩遅れてしまうことは留意すべきです。<strong>できれば、形式主語を用いずに表現できる場合は、用いない方がよいでしょう</strong></p>
+<p>例①</p>
+<p>修正前：It seemed that that patients had ..</p>
+<p>修正後：The patients seemed to have..</p>
+<p>例②</p>
+<p>修正前：It is mandatory for physicians to provide A with B.</p>
+<p>修正後：Physicians must provide A with B.</p>
+</section>
+<section id="動作状態の主体を明示する" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="動作状態の主体を明示する"><span class="header-section-number">8</span> 動作・状態の主体を明示する。</h2>
+<p>動詞の変化形（不定詞、分詞、名詞形）を用いる場合、動詞の意味上の主語（動作の主体）が文脈上明らかであれば、それを省略できる。しかし、動作の主体が不明であるのにそれを省略すうると、曖昧な文章になります。</p>
+<p>修正前：It was impossible to obtain information on the volume of blood loss in the database.</p>
+<p>ここでは主語は誰なのか？weなのか、広く一般の人々（they）なのか、判然としません。</p>
+<p>修正後：The database did not include information on the volume of blood loss.</p>
+</section>
+<section id="冗長な文章の修正例" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="冗長な文章の修正例"><span class="header-section-number">9</span> 冗長な文章の修正例</h2>
+<section id="無駄な単語を削除する" class="level3" data-number="9.1">
+<h3 data-number="9.1" class="anchored" data-anchor-id="無駄な単語を削除する"><span class="header-section-number">9.1</span> 無駄な単語を削除する。</h3>
+<p>例文①</p>
+<p>修正前：We identified 8,561 hospitalized patients who received surgery and among them, 72 patients were identified as case patients developed surgical site infection.</p>
+<p>修正後：We identified 8,561 hospitalized patients who received surgery. Among them, 72 developed surgical site infection.</p>
+<p>例文②</p>
+<p>修正前：In the multivariable analysis, only treatment at high-volume hospitals was significantly associated with xxx, while the other factors were not significantly associated with in-hospital motality.</p>
+<p>修正後：In the multivariable analysis, treatment at high-volume hospitals was the only factor significantly associated with lower in-hospital mortality.</p>
+</section>
+</section>
+<section id="動詞を制する者" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="動詞を制する者"><span class="header-section-number">10</span> 動詞を制する者</h2>
+</section>
+<section id="実施する達成する" class="level2" data-number="11">
+<h2 data-number="11" class="anchored" data-anchor-id="実施する達成する"><span class="header-section-number">11</span> （1）実施する、達成する</h2>
+<ul>
+<li><p>conduct</p></li>
+<li><p>perform</p></li>
+<li><p>achieve</p></li>
+<li><p>complete</p></li>
+</ul>
+</section>
+<section id="調べる" class="level2" data-number="12">
+<h2 data-number="12" class="anchored" data-anchor-id="調べる"><span class="header-section-number">12</span> （2）調べる</h2>
+<ul>
+<li><p>examine</p></li>
+<li><p>investigate</p></li>
+<li><p>explore</p></li>
+<li><p>verify</p></li>
+<li></li>
+</ul>
+</section>
+<section id="示す表す" class="level2" data-number="13">
+<h2 data-number="13" class="anchored" data-anchor-id="示す表す"><span class="header-section-number">13</span> （3）示す、表す</h2>
+<ul>
+<li><p>demonstrate</p></li>
+<li><p>reveal</p></li>
+<li><p>exhibit</p></li>
+<li><p>denote</p></li>
+<li><p>depict</p></li>
+<li><p>describe</p></li>
+<li><p>manifest</p></li>
+</ul>
+</section>
+<section id="明らかにする" class="level2" data-number="14">
+<h2 data-number="14" class="anchored" data-anchor-id="明らかにする"><span class="header-section-number">14</span> （4）明らかにする</h2>
+</section>
+<section id="説明する" class="level2" data-number="15">
+<h2 data-number="15" class="anchored" data-anchor-id="説明する"><span class="header-section-number">15</span> （5）説明する</h2>
+</section>
+<section id="示唆する" class="level2" data-number="16">
+<h2 data-number="16" class="anchored" data-anchor-id="示唆する"><span class="header-section-number">16</span> （6）示唆する</h2>
+</section>
+<section id="強調する" class="level2" data-number="17">
+<h2 data-number="17" class="anchored" data-anchor-id="強調する"><span class="header-section-number">17</span> （7）強調する</h2>
+</section>
+<section id="仮定する" class="level2" data-number="18">
+<h2 data-number="18" class="anchored" data-anchor-id="仮定する"><span class="header-section-number">18</span> （8）仮定する</h2>
+</section>
+<section id="推論する推計する推測する" class="level2" data-number="19">
+<h2 data-number="19" class="anchored" data-anchor-id="推論する推計する推測する"><span class="header-section-number">19</span> （9）推論する、推計する、推測する</h2>
+</section>
+<section id="評価する" class="level2" data-number="20">
+<h2 data-number="20" class="anchored" data-anchor-id="評価する"><span class="header-section-number">20</span> （10）評価する</h2>
+</section>
+<section id="関連する" class="level2" data-number="21">
+<h2 data-number="21" class="anchored" data-anchor-id="関連する"><span class="header-section-number">21</span> （11）関連する</h2>
+</section>
+<section id="起因する" class="level2" data-number="22">
+<h2 data-number="22" class="anchored" data-anchor-id="起因する"><span class="header-section-number">22</span> （12）起因する</h2>
+</section>
+<section id="引き起こす" class="level2" data-number="23">
+<h2 data-number="23" class="anchored" data-anchor-id="引き起こす"><span class="header-section-number">23</span> （13）引き起こす</h2>
+</section>
+<section id="受ける" class="level2" data-number="24">
+<h2 data-number="24" class="anchored" data-anchor-id="受ける"><span class="header-section-number">24</span> （14）受ける</h2>
+</section>
+<section id="対処する" class="level2" data-number="25">
+<h2 data-number="25" class="anchored" data-anchor-id="対処する"><span class="header-section-number">25</span> （15）対処する</h2>
+</section>
+<section id="影響する" class="level2" data-number="26">
+<h2 data-number="26" class="anchored" data-anchor-id="影響する"><span class="header-section-number">26</span> （16）影響する</h2>
+</section>
+<section id="可能にする" class="level2" data-number="27">
+<h2 data-number="27" class="anchored" data-anchor-id="可能にする"><span class="header-section-number">27</span> （17）可能にする</h2>
+</section>
+<section id="含む" class="level2" data-number="28">
+<h2 data-number="28" class="anchored" data-anchor-id="含む"><span class="header-section-number">28</span> （18）含む</h2>
+</section>
+<section id="分割する割り当てる" class="level2" data-number="29">
+<h2 data-number="29" class="anchored" data-anchor-id="分割する割り当てる"><span class="header-section-number">29</span> （19）分割する、割り当てる、</h2>
+</section>
+<section id="特定する" class="level2" data-number="30">
+<h2 data-number="30" class="anchored" data-anchor-id="特定する"><span class="header-section-number">30</span> （20）特定する</h2>
+</section>
+<section id="その他" class="level2" data-number="31">
+<h2 data-number="31" class="anchored" data-anchor-id="その他"><span class="header-section-number">31</span> （21）その他</h2>
+<section id="section" class="level3" data-number="31.1">
+<h3 data-number="31.1" class="anchored" data-anchor-id="section"><span class="header-section-number">31.1</span> </h3>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "コピーしました");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "コピーしました");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
+        for (let i=0; i<annoteTargets.length; i++) {
+          const annoteTarget = annoteTargets[i];
+          const targetCell = annoteTarget.getAttribute("data-target-cell");
+          const targetAnnotation = annoteTarget.getAttribute("data-target-annotation");
+          const contentFn = () => {
+            const content = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+            if (content) {
+              const tipContent = content.cloneNode(true);
+              tipContent.classList.add("code-annotation-tip-content");
+              return tipContent.outerHTML;
+            }
+          }
+          const config = {
+            allowHTML: true,
+            content: contentFn,
+            onShow: (instance) => {
+              selectCodeLines(instance.reference);
+              instance.reference.classList.add('code-annotation-active');
+              window.tippy.hideAll();
+            },
+            onHide: (instance) => {
+              unselectCodeLines();
+              instance.reference.classList.remove('code-annotation-active');
+            },
+            maxWidth: 300,
+            delay: [50, 0],
+            duration: [200, 0],
+            offset: [5, 10],
+            arrow: true,
+            trigger: 'click',
+            appendTo: function(el) {
+              return el.parentElement.parentElement.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'quarto',
+            placement: 'right',
+            positionFixed: true,
+            popperOptions: {
+              modifiers: [
+              {
+                name: 'flip',
+                options: {
+                  flipVariations: false, // true by default
+                  allowedAutoPlacements: ['right'],
+                  fallbackPlacements: ['right', 'top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left'],
+                },
+              },
+              {
+                name: 'preventOverflow',
+                options: {
+                  mainAxis: false,
+                  altAxis: false
+                }
+              }
+              ]        
+            }      
+          };
+          window.tippy(annoteTarget, config); 
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="https://github.com/kkts1010/kkts1010.github.io/">
+<p>Kota Sakamoto</p>
+</a>
+  </li>  
+</ul>
+    </div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/kkts1010/kkts1010.github.io/">
+<p>Kota Sakamoto</p>
+</a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/kkt_1010">
+      <i class="bi bi-twitter" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

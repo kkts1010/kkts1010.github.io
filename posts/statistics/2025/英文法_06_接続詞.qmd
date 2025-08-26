@@ -1,0 +1,119 @@
+---
+title: "接続詞"
+author: "坂本航太"
+categories: [English]
+date-modified: "2025-08-23"
+abstract-title: Abstract
+abstract: ""
+date: "2025-08-23"
+---
+
+## 接続詞
+
+接続詞は、文と文のつながりや、論理展開の方向性を決める役割があります。論文においては、適切な接続詞を用いてロジックをつなぐことがとりわけ重要となる。本章では、はじめに接続詞の基礎知識をまとめる。
+
+## 接続詞の基礎知識
+
+### 接続詞の分類
+
+接続詞には、等位接続詞、従位接続詞、接続副詞がある。
+
+-   等位接続詞：対等の関係にある文と文、句と句、語と語をつなぐ接続詞
+
+    -   例：and , but , or ,soなど
+
+-   従位接続詞：主節に従位節をつなぐ接続詞
+
+    -   例：that , if ,whether , unless, though , although, as , while , whereas , before , after , till , until , since , once ,because
+
+-   接続副詞：もともと副詞であるものの接続詞的な働きをもつ語句
+
+    -   例：however, moreover , furthermore ,also ,otherwise , yet , then
+
+### 注意すべき接続詞の用法
+
+1.  and, so
+
+    文頭にAndを置くことは誤りではないものの、論文にはふさわしくありあせん。文と文をカンマで区切りandでつなくこと（... , and ...)はよく行われます。soは口語的なので、文頭（So,...）でも文中（...,so...)でも論文では用いない方がよいでしょう。
+
+2.  but, however
+
+    文頭にButを置くことは誤りではないものの、論文にはふさわしくありあせん。文と文をカンマで区切りbutでつなくこと（... , but ...)はよく行われます。howeverは文頭においてもよく、However, ... や文中に挿入することもできます。..., however,...
+
+3.  nor
+
+    等位接続詞norには、以下の2つの用法があります。
+
+    ①neither A nor B 「AもBも～ない」
+
+    例：Neither soy nor isoflavone intake affects make reporoductive hormones.
+
+    Both A and Bは複数扱い、either A or Bとneigher A nor Bは単数扱いです。
+
+    ②否定文. nor ～「否定文, また～でない」
+
+    例：Understanding A does not reflect the xxx . nor will it improve xxx.
+
+    nor以降の主語と動詞は倒置される。
+
+4.  ifとwhether
+
+    ifは、①「（間接疑問文を導いて）～かどうか」、②「もしも～ならば」
+
+    whetherは、①「（間接疑問文を導いて）～かどうか」、②「～であろうとなかろうと」
+
+    ①について、主語や補語となる節、前置詞の目的語となる節、同格節では、whetherのみ用いられ、ifは用いられません。
+
+5.  becauseとsince
+
+    becuaseは、読者がまだ把握していないと考えられる新規の情報を理由・根拠として挙げる場合に用いられる。
+
+    sinceは、周知の事実や、読者がすでに把握していると考えられる情報を理由・根拠として挙げる場合に用いられます。
+
+    接続詞asも理由を表す場合に用いられます。because/sinceよりもやや堅い表現です。しかし、asには「～と同様に」、「～につれて」と他の意味もあるので紛らわしい表現になりがちです。Fool-proof Englishでは、理由のasは用いず、because、sinceの使用が推奨されます。
+
+    なお、1つ前の文章に対する理由や根拠に関する説明を、becauseを用いずに、独立した一文でthat節を用いて説明することもあります。
+
+    ・The reason for this may be that ...
+
+    ・One possible explanation for this is that ...
+
+## 論文における接続詞
+
+1.  従位接続詞thatを用いる表現
+
+    provided that：　～である限りは（= only if ）
+
+    in that ： ～という点では
+
+    except that：～ということを除けば
+
+    given that ：～であることを考えると
+
+2.  in case
+
+3.  even if , even though
+
+4.  while , whereas
+
+5.  albeit
+
+### 接続副詞
+
+1.  besides, also, moreover,furthermore：また、そのうえ、さらに
+
+2.  neverthless, nonetheless：にもかかわらず、それでもなお
+
+3.  therefore, thereby , thus , hence：それゆえ、したがって
+
+    文頭のtherefore,...は、かなり堅い表現です。最後に重要な結論を導く場面で用います。1つの論文中に、文頭のTherefore,...を多用すべきではありません。文頭ではなく、文中に挿入すると、かなり柔らかい表現になります。
+
+    therebyは文頭で用いられることはありません。「完全文, thereby \~ing」の形で、完全文をカンマで区切った直後にtherebyを置いて動名詞句を導きます。
+
+4.  thus
+
+    therefore,therebyよりもやわらかめの表現です。文頭にThus
+
+5.  hence
+
+    「そのため、それゆえ」といった意味であり、文頭に用いられる。

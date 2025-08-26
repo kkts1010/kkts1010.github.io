@@ -1,5 +1,5 @@
 ---
-title: "主語と述語"
+title: "主語と動詞"
 author: "坂本航太"
 categories: [English]
 date-modified: "2025-08-08"
@@ -8,7 +8,7 @@ abstract: ""
 date: "2025-08-08"
 ---
 
-## 主語と述語
+## 主語と動詞
 
 主語と述語は、文章の骨格です。命令文や感嘆文を除いて、英語の文章には必ず主語と述語が存在します。論文に命令文や感嘆文を用いることはほぼないので、論文中の文章には主語と動詞が必ず登場します。
 
@@ -76,12 +76,160 @@ date: "2025-08-08"
 
 ## 中心となる単語を先頭に配置する。
 
-論文には、
+論文には必ず中心となるテーマがあります。対象となる疾患名や治療法・薬剤名など、論文の中心テーマを示す単語は、Introductionの第一文の先頭に配置しましょう。そうすることで、書き手が注目している中心テーマが何であるかを、読み手にいち早く知ってもらうことが大事です。各文章においても、中心となる単語を先頭に配置することにより、読み手の意識をその単語に集中させることができる。
+
+例①
+
+修正前：Randomized controlled trials have shown the effect of **xxx**.
+
+修正後：**xxx** has been shown to be effective in randomized controlled trials.
+
+例②
+
+修正前：Among drugs for xxx, **A** was the most common regimen.
+
+修正後：**A** was most commonly used for xxx.
 
 ## 動詞の名詞系を避ける。
 
+簡潔な文章とは、必要最小限の単語数からなる文章です。「動詞の名詞系＋of ～」という形の表現は、無駄に単語数を増やすので、避けるべきである。ofが長いんだな。
+
+例①
+
+修正前：**Separation of xxx** from the serum was conducted.
+
+修正後：The xxx **were separated** from the serum.
+
+例②
+
+修正前：**Log transformation of the non-normal data** was performed.
+
+修正後：The non-normal data were **log-transformed**.
+
 ## 代名詞の位置に注意する。
+
+代名詞が指し示す名詞が先にあって、代名詞はその後に存在すること（後方指示）が原則です。
+
+次の文章は、代名詞（it）が先にあって、代名詞が指し示す名詞（lauric acid）が後に存在する。読み手はitが何を示すのか分からないので読みずらい！！
+
+例①
+
+修正後：XX is user for xx, although it is xxx.
+
+形式主語itを用いてthat節やto不定詞を受ける表現をよくみかけます。決して悪くはなく、適宜用いてもよいでしょう。しかし、文中での主語の導入が一歩遅れてしまうことは留意すべきです。**できれば、形式主語を用いずに表現できる場合は、用いない方がよいでしょう**
+
+例①
+
+修正前：It seemed that that patients had ..
+
+修正後：The patients seemed to have..
+
+例②
+
+修正前：It is mandatory for physicians to provide A with B.
+
+修正後：Physicians must provide A with B.
 
 ## 動作・状態の主体を明示する。
 
+動詞の変化形（不定詞、分詞、名詞形）を用いる場合、動詞の意味上の主語（動作の主体）が文脈上明らかであれば、それを省略できる。しかし、動作の主体が不明であるのにそれを省略すうると、曖昧な文章になります。
+
+修正前：It was impossible to obtain information on the volume of blood loss in the database.
+
+ここでは主語は誰なのか？weなのか、広く一般の人々（they）なのか、判然としません。
+
+修正後：The database did not include information on the volume of blood loss.
+
 ## 冗長な文章の修正例
+
+### 無駄な単語を削除する。
+
+例文①
+
+修正前：We identified 8,561 hospitalized patients who received surgery and among them, 72 patients were identified as case patients developed surgical site infection.
+
+修正後：We identified 8,561 hospitalized patients who received surgery. Among them, 72 developed surgical site infection.
+
+例文②
+
+修正前：In the multivariable analysis, only treatment at high-volume hospitals was significantly associated with xxx, while the other factors were not significantly associated with in-hospital motality.
+
+修正後：In the multivariable analysis, treatment at high-volume hospitals was the only factor significantly associated with lower in-hospital mortality.
+
+## 動詞を制する者
+
+## （1）実施する、達成する
+
+-   conduct
+
+-   perform
+
+-   achieve
+
+-   complete
+
+## （2）調べる
+
+-   examine
+
+-   investigate
+
+-   explore
+
+-   verify
+
+-   
+
+## （3）示す、表す
+
+-   demonstrate
+
+-   reveal
+
+-   exhibit
+
+-   denote
+
+-   depict
+
+-   describe
+
+-   manifest
+
+## （4）明らかにする
+
+## （5）説明する
+
+## （6）示唆する
+
+## （7）強調する
+
+## （8）仮定する
+
+## （9）推論する、推計する、推測する
+
+## （10）評価する
+
+## （11）関連する
+
+## （12）起因する
+
+## （13）引き起こす
+
+## （14）受ける
+
+## （15）対処する
+
+## （16）影響する
+
+## （17）可能にする
+
+## （18）含む
+
+## （19）分割する、割り当てる、
+
+## （20）特定する
+
+## （21）その他
+
+###

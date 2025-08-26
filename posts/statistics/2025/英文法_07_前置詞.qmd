@@ -1,0 +1,117 @@
+---
+title: "前置詞"
+author: "坂本航太"
+categories: [English]
+date-modified: "2025-08-23"
+abstract-title: Abstract
+abstract: ""
+date: "2025-08-23"
+---
+
+## 前置詞
+
+前置詞は、通常は名詞や代名詞の前に置かれ、場所・空間、時間などのほか、さまざまな意味を添えて、語句と語句を繋げる役割がある。1つの前置詞が多様な意味を持つことが多く、使い分けが難しい。論文における前置詞の用例をみよう
+
+## 前置詞の基礎知識
+
+### （1）前置詞の意味別一覧
+
+### （2）場所・空間を表す主な前置詞
+
+-   位置
+
+    -   atは，広がりのない地点を示します。
+
+        -   例：Thousands of patients with trauma were seen at a large hospital in Tokyo.
+
+    -   inは、広がりのある場所や建物などの内部を示します。
+
+        -   例：We recorded treatments that patients received in hospital.
+
+    -   onは、面に接している状態を示します。
+
+        -   例：on the road, writing on the wall
+
+-   上下
+
+    -   overは、「～の上」であり、接していても離れていても用いられます。
+
+    -   underは、「～の下」であり、接していても離れていても用いられます。
+
+    -   upは、「上に向かって」を意味する。
+
+        -   go up the stairs：階段を上る
+
+    -   downは、「下に向かって」を意味する。
+
+        -   walk down the slope：斜面を下る
+
+    -   前置詞としてのaboveは、「～の上方」、belowは「～の下方」という意味になる。どちらも副詞としても用いられ、aboveは「上方に」、belowは「下方に」という意味になる。
+
+        -   例：The body mass index classifications are listed below.
+
+### （3）時間を表す主な前置詞
+
+-   時点
+
+    -   時点を表す前置詞には、at,on,inがある。
+
+    -   atは時刻を示す。
+
+    -   onは曜日、日付などを示す。
+
+    -   inは月・季節・年・世紀などを示す。
+
+始点・終点を表す前置詞には、from, to , by ,before , after ,since ,till
+
+期間を表す前置詞には、for , during , through , over , within
+
+### （4）その他の意味をもつ前置詞
+
+「～についての」という内容を示す前置詞として、一般的にはaboutが用いられる。論文では、onも用いられる
+
+-   例
+
+    -   a study on ：～についての研究
+
+    -   data on ：～についてのデータ
+
+    -   information on：～についての情報
+
+## 論文における前置詞
+
+### （1）前置詞の使い分け
+
+-   die ofとdie from
+
+-   compare toとcompare with
+
+    -   compare toは、原則として、本質的に異なるものの間に類似点がある場合に、「例える」「～と照らしあわせてみる」という意味で用いられます。
+
+    -   compare withは、原則として、本質的に類似しているもの同士をさらに比較・分析する場合に、「比較する」という意味で用いられます。しかし、これらの原則は実際にはあまり守られておらず、compare withの代わりにcompare toが用いられるケースもよくみられている。なお、as compare to/withという形も見られえてる。
+
+        -   例：We aimed to evaluate whether conservative oxygenation would reduce duration of organ support or incidence of death compared to standard care.
+
+        -   例：A meta-analysis suggested an increased mortality risk for paclitaxel-coated devices compared with uncoated control devices.
+
+        -   例：We conducted a phase 3 trial of erdafitinib as compared with chemotherapy in patients with metastatic urothelial carcinoma.
+
+-   AとBの関連
+
+    -   A is associated with Bは、論文における頻出表現です。論文のタイトルでは、Association between A and Bという形がよぅみられます。
+
+        -   例：Association between care experience and mental health hospitalization among children in Scotland.
+
+    -   Association between A and Bは、「Association of A with B」と言い換えても同義です。Association between A and Bを用いる場合、AまたはBを構成する語句の中にandが入っていると、betweenの後にandが2回出現するため、読みにくくなってしまいます。その場合は、「association of A and B」を用いるとよいでしょう。
+
+        -   Association of early life physical and sexual abuse with premature mortality
+
+### （2）前置詞を含む成句
+
+-   ofを含む成句
+
+-   asを含む成句
+
+-   inを含む成句
+
+-   toを含む成句

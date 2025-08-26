@@ -1,0 +1,57 @@
+---
+title: "否定表現"
+author: "坂本航太"
+categories: [English]
+date-modified: "2025-08-23"
+abstract-title: Abstract
+abstract: ""
+date: "2025-08-23"
+---
+
+## 否定表現
+
+否定表現は多彩です。not/never/noといった定番の否定表現だけでなく、種々の否定表現のバリエーションを身に付けることにより、奥行きのある文章を書けるようになります。
+
+この章では、否定表現の基礎知識として、普通の否定、強い否定のほかに、準否定・部分否定・二重否定などを説明します。また、論文でも用いられる、否定語を用いない否定的表現、否定の意味を添える接頭語について解説します。
+
+## 否定表現の基礎知識
+
+普通の否定にはnotが用いられます。強い否定にはnever,noが用いられます。そのほかに、準否定、部分否定、二重否定があります。
+
+### 準否定
+
+準否定語には以下があります。
+
+-   seldom/rarely：めったに～ない【頻度】
+
+-   hardly/scarcely：ほとんど～ない【頻度】
+
+-   few/little：ほとんど～ない【数量】
+
+なお、barelyは「かろうじて～する」、「どういか～する」という意味で肯定です。
+
+例：Only a few these therapies are barely translated into clinical practices.
+
+### 部分否定
+
+all,both always,necessarily,completely,entirelyなどの前にnotがあると、部分否定になる。
+
+-   not all：すべてが～というわけではない
+
+-   not always：いつも～というわけではない
+
+-   not necessarily：必ずしも～というわけではない
+
+例：Not all of the studies detailed how caries was defined
+
+### 二重否定
+
+二重否定は弱い肯定の意味になります。
+
+## 論文における否定表現
+
+### 否定語は文中のなるべく前の方に置く
+
+### 否定語を用いない否定表現
+
+### 否定の意味を添える接頭語

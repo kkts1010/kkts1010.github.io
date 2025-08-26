@@ -1,0 +1,29 @@
+---
+title: "統計のための線形代数・微分積分まとめ2"
+author: "坂本航太"
+categories: [数理統計]
+date-modified: "2025-08-18"
+abstract-title: Abstract
+abstract: ""
+date: "2025-08-18"
+---
+
+## 行列式の重要な性質
+
+1.  　$detA=detA^T$
+
+2.  行列式と積は可換である。すなわち、A,Bをn次正方行列とするとき、以下が成立する。
+
+    $detAB=detA detB$
+
+3.  Aが正則のとき、
+
+    $det(A)^{-1}=det(A^{-1})$
+
+3のみ証明を与える。
+
+-   2を認めるならば、
+
+-   $I = detI= det(AA^{-1})=detAdet(A^{-1})$
+
+##

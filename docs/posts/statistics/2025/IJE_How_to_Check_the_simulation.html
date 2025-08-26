@@ -1,0 +1,1873 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.30">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="坂本航太">
+
+<title>How to check the simulation study – Kota Sakamoto</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-9849038e97c5862c14c4eb81893d019b.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-945f87a38397f0f3b8ef34e2f394b6bc.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "一致なし",
+    "search-matching-documents-text": "一致した文書",
+    "search-copy-link-title": "検索へのリンクをコピー",
+    "search-hide-matches-text": "追加の検索結果を非表示",
+    "search-more-match-text": "追加の検索結果",
+    "search-more-matches-text": "追加の検索結果",
+    "search-clear-button-title": "消去",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "取消",
+    "search-submit-button-title": "検索",
+    "search-label": "サーチ"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Kota Sakamoto</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="サーチ"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="ナビゲーションを切り替える" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../posts/statistics/index.html"> 
+<span class="menu-text">Notes</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../posts/Web_tools/Web_tools.html"> 
+<span class="menu-text">Web Tools</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+    <a href="https://github.com/kkts1010/kkts1010.github.io/" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-github"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-page-left">
+      <h1 class="title">How to check the simulation study</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">疫学研究</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta column-page-left">
+
+      <div>
+      <div class="quarto-title-meta-heading">作者</div>
+      <div class="quarto-title-meta-contents">
+               <p>坂本航太 </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">公開</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">2025年8月26日</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">目次</h2>
+   
+  <ul class="collapse">
+  <li><a href="#論文紹介" id="toc-論文紹介" class="nav-link active" data-scroll-target="#論文紹介"><span class="header-section-number">0.1</span> 論文紹介</a></li>
+  <li><a href="#abstract" id="toc-abstract" class="nav-link" data-scroll-target="#abstract"><span class="header-section-number">0.2</span> Abstract</a></li>
+  <li><a href="#本文" id="toc-本文" class="nav-link" data-scroll-target="#本文"><span class="header-section-number">0.3</span> 本文</a></li>
+  <li><a href="#table-1.-terms-used-in-simulation-studies" id="toc-table-1.-terms-used-in-simulation-studies" class="nav-link" data-scroll-target="#table-1.-terms-used-in-simulation-studies"><span class="header-section-number">0.4</span> Table 1. Terms used in simulation studies</a></li>
+  <li><a href="#design-planning-the-simulation" id="toc-design-planning-the-simulation" class="nav-link" data-scroll-target="#design-planning-the-simulation"><span class="header-section-number">1</span> Design : planning the simulation</a>
+  <ul class="collapse">
+  <li><a href="#include-a-setting-with-known-properties" id="toc-include-a-setting-with-known-properties" class="nav-link" data-scroll-target="#include-a-setting-with-known-properties"><span class="header-section-number">1.1</span> (1) include a setting with known properties</a></li>
+  </ul></li>
+  <li><a href="#conduct-coding-the-simulation" id="toc-conduct-coding-the-simulation" class="nav-link" data-scroll-target="#conduct-coding-the-simulation"><span class="header-section-number">2</span> Conduct: coding the simulation</a>
+  <ul class="collapse">
+  <li><a href="#write-well-structured-code" id="toc-write-well-structured-code" class="nav-link" data-scroll-target="#write-well-structured-code"><span class="header-section-number">2.1</span> (2) Write well-structured code</a></li>
+  <li><a href="#study-a-single-very-large-data-set" id="toc-study-a-single-very-large-data-set" class="nav-link" data-scroll-target="#study-a-single-very-large-data-set"><span class="header-section-number">2.2</span> (3) Study a single very large data set</a></li>
+  <li><a href="#run-the-simulation-with-a-small-number-of-repetitions" id="toc-run-the-simulation-with-a-small-number-of-repetitions" class="nav-link" data-scroll-target="#run-the-simulation-with-a-small-number-of-repetitions"><span class="header-section-number">2.3</span> (4) Run the simulation with a small number of repetitions</a></li>
+  <li><a href="#anticipate-analysis-failures" id="toc-anticipate-analysis-failures" class="nav-link" data-scroll-target="#anticipate-analysis-failures"><span class="header-section-number">2.4</span> (5) Anticipate analysis failures</a></li>
+  <li><a href="#make-it-easy-to-recreate-any-simulated-data-set" id="toc-make-it-easy-to-recreate-any-simulated-data-set" class="nav-link" data-scroll-target="#make-it-easy-to-recreate-any-simulated-data-set"><span class="header-section-number">2.5</span> (6) Make it easy to recreate any simulated data set</a></li>
+  </ul></li>
+  <li><a href="#analysis-method-failures-and-outliers" id="toc-analysis-method-failures-and-outliers" class="nav-link" data-scroll-target="#analysis-method-failures-and-outliers"><span class="header-section-number">3</span> Analysis: method failures and outliers</a>
+  <ul class="collapse">
+  <li><a href="#count-and-understand-method-failures." id="toc-count-and-understand-method-failures." class="nav-link" data-scroll-target="#count-and-understand-method-failures."><span class="header-section-number">3.1</span> (7) Count and understand method failures.</a></li>
+  <li><a href="#look-for-outliers" id="toc-look-for-outliers" class="nav-link" data-scroll-target="#look-for-outliers"><span class="header-section-number">3.2</span> (8) Look for outliers</a></li>
+  <li><a href="#understand-outliers." id="toc-understand-outliers." class="nav-link" data-scroll-target="#understand-outliers."><span class="header-section-number">3.3</span> (9) Understand outliers.</a></li>
+  <li><a href="#deal-with-outliers" id="toc-deal-with-outliers" class="nav-link" data-scroll-target="#deal-with-outliers"><span class="header-section-number">3.4</span> (10) Deal with outliers</a></li>
+  </ul></li>
+  <li><a href="#analysis-unexpected-findings" id="toc-analysis-unexpected-findings" class="nav-link" data-scroll-target="#analysis-unexpected-findings"><span class="header-section-number">4</span> Analysis: unexpected findings</a>
+  <ul class="collapse">
+  <li><a href="#check-monte-carlo-errors" id="toc-check-monte-carlo-errors" class="nav-link" data-scroll-target="#check-monte-carlo-errors"><span class="header-section-number">4.1</span> (11) Check Monte Carlo errors</a></li>
+  <li><a href="#why-are-model-based-standard-errors-wrong" id="toc-why-are-model-based-standard-errors-wrong" class="nav-link" data-scroll-target="#why-are-model-based-standard-errors-wrong"><span class="header-section-number">4.2</span> (12) Why are model-based standard errors wrong?</a></li>
+  <li><a href="#why-is-coverage-poor" id="toc-why-is-coverage-poor" class="nav-link" data-scroll-target="#why-is-coverage-poor"><span class="header-section-number">4.3</span> (13) Why is coverage poor?</a></li>
+  <li><a href="#why-do-unexpected-findings-occur" id="toc-why-do-unexpected-findings-occur" class="nav-link" data-scroll-target="#why-do-unexpected-findings-occur"><span class="header-section-number">4.4</span> (14) Why do unexpected findings occur?</a></li>
+  <li><a href="#when-do-unexpected-findings-occur" id="toc-when-do-unexpected-findings-occur" class="nav-link" data-scroll-target="#when-do-unexpected-findings-occur"><span class="header-section-number">4.5</span> (15) When do unexpected findings occur?</a></li>
+  <li><a href="#general-checking-method" id="toc-general-checking-method" class="nav-link" data-scroll-target="#general-checking-method"><span class="header-section-number">4.6</span> (15) General checking method</a></li>
+  <li><a href="#simulation-studyの結果の表の見せ方" id="toc-simulation-studyの結果の表の見せ方" class="nav-link" data-scroll-target="#simulation-studyの結果の表の見せ方"><span class="header-section-number">4.7</span> Simulation Studyの結果の表の見せ方</a></li>
+  </ul></li>
+  <li><a href="#rプログラムを眺める" id="toc-rプログラムを眺める" class="nav-link" data-scroll-target="#rプログラムを眺める"><span class="header-section-number">5</span> Rプログラムを眺める</a>
+  <ul class="collapse">
+  <li><a href="#doall.r" id="toc-doall.r" class="nav-link" data-scroll-target="#doall.r"><span class="header-section-number">5.1</span> doall.R</a></li>
+  <li><a href="#simcheck02.r" id="toc-simcheck02.r" class="nav-link" data-scroll-target="#simcheck02.r"><span class="header-section-number">5.2</span> simcheck02.r</a></li>
+  <li><a href="#simcheck3.r" id="toc-simcheck3.r" class="nav-link" data-scroll-target="#simcheck3.r"><span class="header-section-number">5.3</span> simcheck3.r</a></li>
+  <li><a href="#simcheck04.r" id="toc-simcheck04.r" class="nav-link" data-scroll-target="#simcheck04.r"><span class="header-section-number">5.4</span> simcheck04.r</a></li>
+  <li><a href="#simcheck05.r" id="toc-simcheck05.r" class="nav-link" data-scroll-target="#simcheck05.r"><span class="header-section-number">5.5</span> simcheck05.r</a></li>
+  <li><a href="#simcheck06.r" id="toc-simcheck06.r" class="nav-link" data-scroll-target="#simcheck06.r"><span class="header-section-number">5.6</span> simcheck06.r</a></li>
+  <li><a href="#simcheck07.r" id="toc-simcheck07.r" class="nav-link" data-scroll-target="#simcheck07.r"><span class="header-section-number">5.7</span> simcheck07.r</a></li>
+  <li><a href="#simcheck08.r" id="toc-simcheck08.r" class="nav-link" data-scroll-target="#simcheck08.r"><span class="header-section-number">5.8</span> simcheck08.r</a></li>
+  <li><a href="#simcheck09.r" id="toc-simcheck09.r" class="nav-link" data-scroll-target="#simcheck09.r"><span class="header-section-number">5.9</span> simcheck09.r</a></li>
+  <li><a href="#simcheck10.r" id="toc-simcheck10.r" class="nav-link" data-scroll-target="#simcheck10.r"><span class="header-section-number">5.10</span> simcheck10.r</a></li>
+  <li><a href="#simcheck11.r" id="toc-simcheck11.r" class="nav-link" data-scroll-target="#simcheck11.r"><span class="header-section-number">5.11</span> simcheck11.r</a></li>
+  <li><a href="#simcheck12.r" id="toc-simcheck12.r" class="nav-link" data-scroll-target="#simcheck12.r"><span class="header-section-number">5.12</span> simcheck12.r</a></li>
+  <li><a href="#simcheck99.r" id="toc-simcheck99.r" class="nav-link" data-scroll-target="#simcheck99.r"><span class="header-section-number">5.13</span> simcheck99.r</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+
+
+
+
+
+<section id="論文紹介" class="level2" data-number="0.1">
+<h2 data-number="0.1" class="anchored" data-anchor-id="論文紹介"><span class="header-section-number">0.1</span> 論文紹介</h2>
+<p>以下の論文を基にRでのシミュレーション研究の方法を学ぶ</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<strong>How to check a simulation study <em>Open Access</em></strong>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><a href="javascript:;">Ian R White</a> , <a href="javascript:;">Tra My Pham</a> , <a href="javascript:;">Matteo Quartagno</a> , <a href="javascript:;">Tim P Morris</a></p>
+<p><em>International Journal of Epidemiology</em>, Volume 53, Issue 1, February 2024, dyad134, <a href="https://doi.org/10.1093/ije/dyad134" class="uri">https://doi.org/10.1093/ije/dyad134</a></p>
+</div>
+</div>
+</section>
+<section id="abstract" class="level2" data-number="0.2">
+<h2 data-number="0.2" class="anchored" data-anchor-id="abstract"><span class="header-section-number">0.2</span> Abstract</h2>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+ノート
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Simulation studies are powerful tools in epidemiology and biostatistics, but they can be hard to conduct successfully. Sometimes unexpected results are obtained. We offer advice on how to check a simulation study when this occurs, and how to design and conduct the study to give results that are easier to check. <strong>Simulation studies should be designed to include some settings in which answers are already known.</strong> They should be coded in stages, with data-generating mechanisms checked before simulated data are analysed. <strong>Results should be explored carefully, with scatterplots of standard error estimates against point estimates surprisingly powerful tools.</strong> Failed estimation and outlying estimates should be identified and dealt with by changing data-generating mechanisms or coding realistic hybrid analysis procedures. Finally, we give a series of ideas that have been useful to us in the past for checking unexpected results. Following our advice may help to prevent errors and to improve the quality of published simulation studies.</p>
+</div>
+</div>
+</section>
+<section id="本文" class="level2" data-number="0.3">
+<h2 data-number="0.3" class="anchored" data-anchor-id="本文"><span class="header-section-number">0.3</span> 本文</h2>
+<ul>
+<li><p>We can divide the execution of a simulation study into three stages:</p>
+<ul>
+<li><p>‘design’ (identifying the aims, data-generating mechanisms, estimands, methods of analysis and performance measures)</p></li>
+<li><p>‘conduct’ (writing the code to simulate multiple data sets and analyse each one, yielding a data set of estimates);</p></li>
+<li><p>‘analysis’ (computing the performance measures from the estimates data set).</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="table-1.-terms-used-in-simulation-studies" class="level2" data-number="0.4">
+<h2 data-number="0.4" class="anchored" data-anchor-id="table-1.-terms-used-in-simulation-studies"><span class="header-section-number">0.4</span> Table 1. Terms used in simulation studies</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 75%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Term</th>
+<th style="text-align: left;">Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Aspects of a simulation study</strong></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Aims</td>
+<td style="text-align: left;">What question(s) the simulation study addresses</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Data-generating mechanisms</td>
+<td style="text-align: left;">How the simulated data sets are to be generated</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Estimands</td>
+<td style="text-align: left;">The quantity or quantities to be estimated by the analysis of each simulated data set</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Methods of analysis</td>
+<td style="text-align: left;">How the simulated data sets are to be analysed: typically producing a point estimate and a CI</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Performance measures</td>
+<td style="text-align: left;">How the performance of the methods of analysis is to be summarized</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Implementation</td>
+<td style="text-align: left;">How the simulation is to be performed, including the software used, the number of repetitions and the handling of random number states</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Data sets involved in a simulation study</strong></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Simulated data set</td>
+<td style="text-align: left;">A data set produced by one of the data-generating mechanisms in one repetition</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Estimates data set</td>
+<td style="text-align: left;">A data set containing results of each method of analysis for each simulated data set across many repetitions, used to estimate performance</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">States data set</td>
+<td style="text-align: left;">A data set containing random number states for each simulated data set, that can be used to recreate any simulated data set</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Performance measures data set</td>
+<td style="text-align: left;">A data set containing the estimated performance measures for each data-generating mechanism and each method of analysis</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Some performance measures</strong></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Bias</td>
+<td style="text-align: left;">How the mean point estimate differs from the true estimand value</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Empirical standard error</td>
+<td style="text-align: left;">The standard deviation of the point estimates in an estimates data set</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Model-based standard error</td>
+<td style="text-align: left;">The average^ standard error estimate in an estimates data set</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Relative error in model-based standard error</td>
+<td style="text-align: left;">The difference between the model-based standard error and the empirical standard error, expressed as a fraction of the latter</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Coverage</td>
+<td style="text-align: left;">The proportion of CIs that include the true estimand value</td>
+</tr>
+</tbody>
+</table>
+<p>^ Strictly, the root mean square of the standard error estimates.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 6%">
+<col style="width: 93%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Aim</th>
+<th style="text-align: left;">To compare multiple imputation with complete case analysis</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Data-generating methods</strong></td>
+<td style="text-align: left;">Quantitative confounder C is drawn from a standard Normal distribution. Binary exposure E and binary outcome D are drawn from logistic models depending on C (so E does not cause D). Values of C are made missing, initially using a missing completely at random model. Parameters to be varied are the marginal probabilities of E and D, the strength of the dependence of E and D on C, and the missing data mechanism. The sample size of 500 is fixed.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Estimand</strong></td>
+<td style="text-align: left;">The log odds ratio between E and D, conditional on C. Its true value is zero.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Methods</strong></td>
+<td style="text-align: left;"><p>Logistic regression of D on E and C, using:</p>
+<p>i) full data before data deletion in C</p>
+<p>ii) complete cases (excluding cases with missing C)</p>
+<p>iii) multiply imputed data to handle missing values of C—various imputation models may be used.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Performance measures</strong></td>
+<td style="text-align: left;"><p>・Bias</p>
+<p>・empirical standard error</p>
+<p>・ relative error in model-based standard error</p>
+<p>・ coverage.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Implementation</strong></td>
+<td style="text-align: left;">1000 repetitions advice on choosing this is available.</td>
+</tr>
+</tbody>
+</table>
+<p>^ Specific values used in the data-generating mechanisms can be found in the code</p>
+</section>
+<section id="design-planning-the-simulation" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Design : planning the simulation</h1>
+<section id="include-a-setting-with-known-properties" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="include-a-setting-with-known-properties"><span class="header-section-number">1.1</span> (1) include a setting with known properties</h2>
+<p>We frequently do simulation studies to learn the properties of methods of analysis, but often we can identify a particular data-generating mechanism and a particular method of analysis where we know some aspect of the answer. This requires knowledge of the statistical properties of the methods. We can then check our results against these known answers.</p>
+<p>Example:</p>
+<p>In the multiple imputation simulation study, we included analysis of the full data before data deletion. Assuming the analysis procedure is correct, we expect this to be unbiased with correct coverage and more precise than any methods of analysis of the incomplete data. We also include a complete case analysis in a scenario with data missing completely at random, which is expected to be unbiased with correct coverage and less precise than multiple imputation methods of analysis. The above statements about lack of bias are not strictly correct, since logistic regression is biased in small samples. We could therefore include a further setting with a larger sample size.</p>
+<p>コメント：</p>
+<p>logistic regressinモデルが最尤推定量の漸近一致性しかないことを理解しておかないといけない。</p>
+</section>
+</section>
+<section id="conduct-coding-the-simulation" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Conduct: coding the simulation</h1>
+<section id="write-well-structured-code" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="write-well-structured-code"><span class="header-section-number">2.1</span> (2) Write well-structured code</h2>
+<p>It is helpful to write code that separates data generation, data analysis and computation of performance measures, so that each part can be studied separately. Code should be well commented to help collaborators and the coder’s future self; the final code should later be published and comments will then help the general reader.</p>
+<p>Example</p>
+<p>The Stata script simcheck02.do and the R script simcheck02.R separate out <strong>data generation</strong> and <strong>data analysis</strong>. We will add the calculation of performance measures later.</p>
+</section>
+<section id="study-a-single-very-large-data-set" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="study-a-single-very-large-data-set"><span class="header-section-number">2.2</span> (3) Study a single very large data set</h2>
+<p>The code for data generation should next be used to generate a single very large data set. Viewing descriptive statistics (e.g.&nbsp;histogram of a continuous outcome, cross-tabulation of exposure by outcome event) allows a check that the data match one’s intentions. In many cases, the model used to generate the data can be directly fitted to the simulated data. This should recover the parameters of the data-generating model such that CIs for the results usually include the known true values. Then the simulation code should be used to do the analyses.The results should be carefully checked for correct back- ground information (e.g.&nbsp;is the number of observations correct? ) and for credibility. Again, where methods are known to be correct, CIs for the results should usually include the known true values.</p>
+<p>Example:</p>
+<p>The scripts simcheck03.do and simcheck03.R generate a sin- gle data set of size 100 000 using a particular data-generating</p>
+<p>mechanism. They include standard descriptive statistics such as a cross-tabulation of D against E, showing that there is an unconditional association between D and E (log odds ratio 1⁄4 0.74 in Stata and 0.70 in R). This is important because one way in which imputation procedures could perform badly is by failing to control for confounding. The scripts also show that the logistic regressions of E and D on C have coefficient values very near to the values in the data-generating mechanism and that the analysis program runs successfully.</p>
+</section>
+<section id="run-the-simulation-with-a-small-number-of-repetitions" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="run-the-simulation-with-a-small-number-of-repetitions"><span class="header-section-number">2.3</span> (4) Run the simulation with a small number of repetitions</h2>
+<p>The simulation code should next be checked with a small number of repetitions: three repetitions are often enough at this stage. The screen output should be switched on so that it can be studied. The size of the simulated data set should be checked for each repetition. It is useful to verify that the second and third repetitions produce different data and results. Sometimes simulation code wrongly sets the random number state after starting the first repetition. If (for example) this is at the end of a repetition, then the second and third repetitions would produce identical data and results.</p>
+<p>This is the first time that we have created an estimates data set so it is timely to check that the estimates data set has the right structure, is indexed with the correct simulation repetition number and contains values that match the values reported in the screen output. For example, sometimes users store a variance when they meant to store a standard error estimate. Confusion can arise if screen output displays exponentiated parameters (odds ratios) but estimates are stored on the estimation scale (log odds ratios).</p>
+<p>Example</p>
+<p>The scripts simcheck04.do and simcheck04.R run three repe- titions of the simulation. The results look sensible and match the screen output.</p>
+</section>
+<section id="anticipate-analysis-failures" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="anticipate-analysis-failures"><span class="header-section-number">2.4</span> (5) Anticipate analysis failures</h2>
+<p>If a certain method of analysis can be anticipated to cause an error in some simulated data sets (e.g.&nbsp;perfect prediction in a logistic regression), the code should be written to capture the error so that the simulation does not halt. The method failure (with error code) should be stored in the estimates data set. Strategies for handling failures are described in later points.</p>
+<p>Example</p>
+<p>The scripts simcheck05.do and simcheck05.R recognize that either the imputation step or the model fitting to the imputed data may fail. They therefore detect either of these failures and post missing values to the estimates data set.</p>
+</section>
+<section id="make-it-easy-to-recreate-any-simulated-data-set" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="make-it-easy-to-recreate-any-simulated-data-set"><span class="header-section-number">2.5</span> (6) Make it easy to recreate any simulated data set</h2>
+<p>The estimates data set should include an identifier for the simulated data set alongside every estimate. If we can recreate the simulated data set for any particular identifier, then we can explore method failures and outliers (see points below). There are two ways to do this. One way is to store the random number state at the start of each data generation in a states data set so that the user can recreate any simulated data set. The alternative is to store every simulated data set.</p>
+<p>Some analyses, such as multiple imputation, also use random numbers. Recreating such analyses requires resetting the appropriate random number state. One way is to recreate the simulated data set (as above) and then repeat the analysis; if multiple analyses use random numbers then they must all be repeated in the original order. The alternative is to store the random number state at the start of each stochastic analysis.</p>
+<p>Example</p>
+<p>The scripts simcheck06.do and simcheck06.R store the random number states in a separate file. They then show how to reconstruct the third simulated data set.</p>
+</section>
+</section>
+<section id="analysis-method-failures-and-outliers" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Analysis: method failures and outliers</h1>
+<p>Once the code is written and tested, we are ready to run the simulation study and start looking at the results. We first dis- cuss detecting and handling method failures and outliers.</p>
+<section id="count-and-understand-method-failures." class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="count-and-understand-method-failures."><span class="header-section-number">3.1</span> (7) Count and understand method failures.</h2>
+<p>For each data-generating mechanism and method, the user should identify what fraction of repetitions led to failed esti mation. The reasons for failed estimation need to be under- stood and the code should be improved if possible. That is, a bad optimization routine should be improved if it makes a method appear to fail. Unexpected results may be specific to particular software or packages.</p>
+<p>Example</p>
+<p>The scripts simcheck07.do and simcheck07.R use a different data-generating mechanism from previous runs. Inspecting the estimates data set shows four method failures in Stata and two in R. On closer exploration of the simulated data sets, we find that these data are very sparse, having either no exposed individuals or no outcome events in the individuals with observed C (a random positivity violation that may not be intended), and this is causing the complete case analysis to fail. The R function glm behaves differently and returns estimates even in the absence of outcome events. The sensible conclusion (in our setting in which positivity violations are not of main interest) is that the data-generating mechanism is too extreme and should be changed to generate</p>
+</section>
+<section id="look-for-outliers" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="look-for-outliers"><span class="header-section-number">3.2</span> (8) Look for outliers</h2>
+<p>It is important to examine the estimates data set carefully. A useful visual device is a scatter plot of the standard error estimate against the point estimate over all repetitions, separated by the data-generating mechanism and method. This scatter plot can identify the presence of outliers. Estimates can be outliers for the point estimate or the model-based standard error (or both). Such outliers are frequent causes, respectively, of unexpected bias and of unexpected error in the model- based standard error. A small number of outliers by them- selves do not affect coverage and often researchers are puzzled by, for example, a model-based standard error being apparently very large without any impact on coverage.</p>
+<p>Example</p>
+<p>The scripts simcheck08.do and simcheck08.R explore the estimates data sets produced by simcheck07.do and simcheck07.R. They plot the standard error estimates against the point estimates by method of analysis. Results differ be- tween the packages. In Stata (Figure 2, upper part), a substantial number of data sets have standard error estimates equal to zero, which indicates a problem with the analysis. Further inspection shows these data sets also have estimated coefficients equal to zero. In R (Figure 2, lower part), a substantial number of data sets have very large standard error estimate (2000–5000). These also have large point estimates, mostly between –10 and –20, some near þ20. We could change these outlying standard error estimates and their associated point estimates to missing values, but it is more important to understand their cause. We do this next.</p>
+</section>
+<section id="understand-outliers." class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="understand-outliers."><span class="header-section-number">3.3</span> (9) Understand outliers.</h2>
+<p>If outliers are found, it is helpful to open or recreate one or more of the corresponding simulated data sets. The user should verify the outlying estimate and explore the reasons for it, such as by checking details of the analysis output and by supplementary analysis such as exploring model residuals or imputed data values.</p>
+<p>Example</p>
+<p>Scripts simcheck09.do and simcheck09.R each pull out one particular problem data set identified in point (viii). In both cases, the problem data set has no events among individuals with observed confounders. The different outputs from the two software packages (Figure 2) arise from the packages’ dif- ferent handling of this problem. Stata has detected perfect prediction,3 has dropped the exposure variable E from the model and has reported zero values for the point estimate and its standard error estimate. R has performed estimation regardless, has found the parameter estimate going towards plus or minus infinity without achieving convergence and has reported values when approximate convergence is achieved. Solutions to these problems are discussed next.</p>
+</section>
+<section id="deal-with-outliers" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="deal-with-outliers"><span class="header-section-number">3.4</span> (10) Deal with outliers</h2>
+<p>Any outliers are likely to strongly affect estimates of performance. It may be appropriate to change the data-generating mechanism to avoid outlying estimates. Otherwise, if outlying estimates would not be believed or reported in practice—that is, if the issue would be detected and the method of analysis not used—then they should not be included in the analysis of the simulation results. One way to do this is to exclude simulated data sets that result in outlying estimates. However, this can introduce a selection bias because the excluded simulated data sets are unlikely to be representative. An alternative is to code an automatic ‘backup procedure’ when a method returns an absurd result. This changes the method being investigated from a pure method to a hybrid procedure and it should make performance measures more relevant to practice. Alongside any of these approaches, the number of method failures or outliers is a useful additional performance measure.</p>
+<p>Example</p>
+<p>One way to avoid the problems seen in the multiple imputation simulation study is to increase the proportion of exposed away from the sparse case seen. We adopt this approach in the remaining points. Alternatively, if we were interested in the sparse case, we should ask whether outlying estimates might make sense in practice. An analyst might accept a log odds ratio of –15 and report an estimated odds ratio of zero, which implies either no events in the exposed group or no non-events in the unexposed. However, they should certainly not accept the very wide 95% CI. Instead they would probably use exact methods to generate a more correct CI. We could therefore code such exact methods into our simulation study as a backup procedure if extreme estimates are found. A different way to fix the analysis, and a more convenient solution for the simulation study, is to handle perfect prediction by using penalized logistic regression.5 This could be done as a backup procedure in analyses exhibiting a problem or in all analyses. The latter is illustrated in simcheck10.do and simcheck10.R.</p>
+</section>
+</section>
+<section id="analysis-unexpected-findings" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Analysis: unexpected findings</h1>
+<section id="check-monte-carlo-errors" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="check-monte-carlo-errors"><span class="header-section-number">4.1</span> (11) Check Monte Carlo errors</h2>
+<p>Sometimes, some simulation findings are hard to believe: for example, a method selected to be unbiased appears to be biased or one method appears to be more precise than another when it should be less precise. In this case, it is important to look at the Monte Carlo errors and decide whether the findings are compatible with Monte Carlo error.</p>
+<p>Example</p>
+<p>The scripts simcheck11.do and simcheck11.R are our first complete runs of a simulation study avoiding sparse data. Results for bias suggest a larger bias in complete case analysis (e.g.&nbsp;in Stata –0.094) than in the other methods (–0.068 full data, ＋0.063 multiple imputation). Given that we are simulating under missing completely at random, we expect complete case analysis to be unbiased. Instead of concluding that our code is wrong, we should spot that these results are compatible with Monte Carlo error—that is, the observed bias for complete case analysis is &lt;2 Monte Carlo standard errors (0.049 ×2 = 0.098) and hence is perfectly compatible with zero bias. In fact these results were produced with just 100 repetitions. To detect a bias of this magnitude, more repetitions (say 1000) are needed.</p>
+</section>
+<section id="why-are-model-based-standard-errors-wrong" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="why-are-model-based-standard-errors-wrong"><span class="header-section-number">4.2</span> (12) Why are model-based standard errors wrong?</h2>
+<p>If model-based standard errors disagree with the empirical standard errors, it is worth considering whether the sources of variation in the data-generating mechanism and analysis correspond. For example, in a missing data simulation study, if each repetition under a given data-generating mechanism starts from the same full data set, then uncertainty due to the full data set will be reflected in the model-based standard error but not in the empirical standard error, making them not comparable regardless of the analysis used.</p>
+<p>Example</p>
+<p>The scripts simcheck12.do and simcheck12.R demonstrate this issue. Previous scripts drew a new full data set for each repetition, but these scripts create each simulated data set by deleting values from the same full data set. The model-based standard errors (e.g.&nbsp;in Stata 0.52 and 0.46 for complete case analysis and multiple imputation, respectively) are found to be substantially larger than the empirical standard errors (0.27 and 0.17). This is because the model-based standard errors account for sampling variation in the full data set whereas the sampling variation in the full data set does not exist in the simulation study so is not reflected in the empirical standard error. One solution here is to generate a new full data set for each repetition.</p>
+</section>
+<section id="why-is-coverage-poor" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="why-is-coverage-poor"><span class="header-section-number">4.3</span> (13) Why is coverage poor?</h2>
+<p>If coverage is poor, it is helpful to identify whether it is driven by bias, by intervals of the wrong width or both. Zip plots are a useful visualization devices for this purpose. They plot each interval, ordered according to compatibility with the true value, giving the impression of a ‘zip’ (or ‘zipper’).1</p>
+</section>
+<section id="why-do-unexpected-findings-occur" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="why-do-unexpected-findings-occur"><span class="header-section-number">4.4</span> (14) Why do unexpected findings occur?</h2>
+<p>Somewhat different errors can arise when focusing on test characteristics. Some pitfalls are to interchange power and type I error, or to mistake one-sided and two-sided type I tests.</p>
+</section>
+<section id="when-do-unexpected-findings-occur" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="when-do-unexpected-findings-occur"><span class="header-section-number">4.5</span> (15) When do unexpected findings occur?</h2>
+<p>If some findings remain hard to believe, it may be helpful to ask under what settings these findings occur. For example, if they occur only when the data-generating mechanism includes a particular source of variation, then maybe analyses are not allowing for this source of variation.</p>
+</section>
+<section id="general-checking-method" class="level2" data-number="4.6">
+<h2 data-number="4.6" class="anchored" data-anchor-id="general-checking-method"><span class="header-section-number">4.6</span> (15) General checking method</h2>
+<p>If after the above steps the results of the simulation study are still in doubt, it can be useful to recode the simulation study in a different statistical package or have a different person code it. Sometimes another closely related simulation study that has been published with code is helpful. The user should first check that the published code does reproduce the published results. They can then change the published data-generating mechanisms to match those in the current simulation study (as closely as possible), run them and com- pare the results. Alternatively they can change their own data- generating mechanism parameters to match the published ones (as closely as possible) and run them and compare the results. This should help to narrow down where any errors are occurring. However, if code has been carefully checked and still gives an unexpected result, it is important to consider that the findings may be genuine showing that the theory may be wrong.</p>
+</section>
+<section id="simulation-studyの結果の表の見せ方" class="level2" data-number="4.7">
+<h2 data-number="4.7" class="anchored" data-anchor-id="simulation-studyの結果の表の見せ方"><span class="header-section-number">4.7</span> Simulation Studyの結果の表の見せ方</h2>
+<p><img src="images/paste-5.png" class="img-fluid"></p>
+</section>
+</section>
+<section id="rプログラムを眺める" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Rプログラムを眺める</h1>
+<section id="doall.r" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="doall.r"><span class="header-section-number">5.1</span> doall.R</h2>
+<div class="sourceCode" id="cb1" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># simcheck: run all R files</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="co"># IW 6sep2023</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="co"># run in the "R" directory</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a></span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="co"># R packages needed are: </span></span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="co">#   foreign, boot, mice, foreach, dplyr, ggplot2, logistf, miceafter, rsimsum</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a></span>
+<span id="cb1-9"><a href="#cb1-9"></a><span class="co"># do</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a><span class="fu">source</span>(<span class="st">"simcheck02.R"</span>)</span>
+<span id="cb1-11"><a href="#cb1-11"></a><span class="fu">source</span>(<span class="st">"simcheck03.R"</span>)</span>
+<span id="cb1-12"><a href="#cb1-12"></a><span class="fu">source</span>(<span class="st">"simcheck04.R"</span>)</span>
+<span id="cb1-13"><a href="#cb1-13"></a><span class="fu">source</span>(<span class="st">"simcheck05.R"</span>)</span>
+<span id="cb1-14"><a href="#cb1-14"></a><span class="fu">source</span>(<span class="st">"simcheck06.R"</span>)</span>
+<span id="cb1-15"><a href="#cb1-15"></a><span class="fu">source</span>(<span class="st">"simcheck07.R"</span>)</span>
+<span id="cb1-16"><a href="#cb1-16"></a><span class="fu">source</span>(<span class="st">"simcheck08.R"</span>)</span>
+<span id="cb1-17"><a href="#cb1-17"></a><span class="fu">source</span>(<span class="st">"simcheck09.R"</span>)</span>
+<span id="cb1-18"><a href="#cb1-18"></a><span class="fu">source</span>(<span class="st">"simcheck10.R"</span>)</span>
+<span id="cb1-19"><a href="#cb1-19"></a><span class="fu">source</span>(<span class="st">"simcheck11.R"</span>)</span>
+<span id="cb1-20"><a href="#cb1-20"></a><span class="fu">source</span>(<span class="st">"simcheck12.R"</span>)</span>
+<span id="cb1-21"><a href="#cb1-21"></a><span class="fu">source</span>(<span class="st">"simcheck99.R"</span>)</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>最後はまとめて一括実行できるように準備する。</p>
+<p>実施に必要なパッケージも記載されている。</p>
+</section>
+<section id="simcheck02.r" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="simcheck02.r"><span class="header-section-number">5.2</span> simcheck02.r</h2>
+<div class="sourceCode" id="cb2" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="do">###################################</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="do">### simcheck02.R: script for    </span><span class="al">###</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="do">### simulating and analysing    </span><span class="al">###</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="do">### data.                       </span><span class="al">###</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="do">###################################</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a></span>
+<span id="cb2-7"><a href="#cb2-7"></a><span class="co"># Load relevant libraries</span></span>
+<span id="cb2-8"><a href="#cb2-8"></a><span class="fu">library</span>(boot) <span class="co"># Contains inv.logit function</span></span>
+<span id="cb2-9"><a href="#cb2-9"></a><span class="fu">library</span>(mice) <span class="co"># for MI</span></span>
+<span id="cb2-10"><a href="#cb2-10"></a></span>
+<span id="cb2-11"><a href="#cb2-11"></a><span class="co"># First, we write a function to generate a single data set:</span></span>
+<span id="cb2-12"><a href="#cb2-12"></a></span>
+<span id="cb2-13"><a href="#cb2-13"></a><span class="co">#比較演算子</span></span>
+<span id="cb2-14"><a href="#cb2-14"></a>D <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">10</span>) <span class="sc">&lt;</span> <span class="fu">inv.logit</span>(<span class="fu">eval</span>(<span class="fu">parse</span>(<span class="at">text=</span><span class="st">"-1"</span>)))</span>
+<span id="cb2-15"><a href="#cb2-15"></a></span>
+<span id="cb2-16"><a href="#cb2-16"></a>gendata <span class="ot">&lt;-</span> <span class="cf">function</span>( obs, logite, logitd, pmiss ) {</span>
+<span id="cb2-17"><a href="#cb2-17"></a>  </span>
+<span id="cb2-18"><a href="#cb2-18"></a>  Ctrue <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(obs)</span>
+<span id="cb2-19"><a href="#cb2-19"></a>  E <span class="ot">&lt;-</span> <span class="fu">runif</span>(obs) <span class="sc">&lt;</span> <span class="fu">inv.logit</span>(<span class="fu">eval</span>(<span class="fu">parse</span>(<span class="at">text=</span>logite)))</span>
+<span id="cb2-20"><a href="#cb2-20"></a>  D <span class="ot">&lt;-</span> <span class="fu">runif</span>(obs) <span class="sc">&lt;</span> <span class="fu">inv.logit</span>(<span class="fu">eval</span>(<span class="fu">parse</span>(<span class="at">text=</span>logitd)))</span>
+<span id="cb2-21"><a href="#cb2-21"></a>  Cobs<span class="ot">&lt;-</span>Ctrue</span>
+<span id="cb2-22"><a href="#cb2-22"></a>  Cobs[<span class="fu">runif</span>(obs)<span class="sc">&lt;</span>pmiss]<span class="ot">&lt;-</span><span class="cn">NA</span></span>
+<span id="cb2-23"><a href="#cb2-23"></a>  data.out<span class="ot">&lt;-</span><span class="fu">data.frame</span>(Cobs,D,E,Ctrue)</span>
+<span id="cb2-24"><a href="#cb2-24"></a>  </span>
+<span id="cb2-25"><a href="#cb2-25"></a>  <span class="fu">return</span>(data.out)  <span class="co"># for clarity, but redundant </span></span>
+<span id="cb2-26"><a href="#cb2-26"></a>  </span>
+<span id="cb2-27"><a href="#cb2-27"></a>}</span>
+<span id="cb2-28"><a href="#cb2-28"></a></span>
+<span id="cb2-29"><a href="#cb2-29"></a><span class="co"># Next we provide a function to analyse partially observed data.set:</span></span>
+<span id="cb2-30"><a href="#cb2-30"></a></span>
+<span id="cb2-31"><a href="#cb2-31"></a>anadata <span class="ot">&lt;-</span> <span class="cf">function</span>( dataframe, rep) {</span>
+<span id="cb2-32"><a href="#cb2-32"></a>  </span>
+<span id="cb2-33"><a href="#cb2-33"></a>  <span class="co"># Method 1: full data before data deletion  </span></span>
+<span id="cb2-34"><a href="#cb2-34"></a>  fit.fd<span class="ot">&lt;-</span><span class="fu">glm</span>(D<span class="sc">~</span>E<span class="sc">+</span>Ctrue, <span class="at">family=</span><span class="fu">binomial</span>(<span class="at">link=</span><span class="st">"logit"</span>), <span class="at">data=</span>dataframe, <span class="at">singular.ok=</span>F, <span class="at">epsilon =</span> <span class="fl">1e-14</span>)</span>
+<span id="cb2-35"><a href="#cb2-35"></a>  res<span class="ot">&lt;-</span><span class="fu">data.frame</span>(</span>
+<span id="cb2-36"><a href="#cb2-36"></a>    rep <span class="ot">&lt;-</span> rep,</span>
+<span id="cb2-37"><a href="#cb2-37"></a>    method <span class="ot">&lt;-</span> <span class="st">"Full"</span>,</span>
+<span id="cb2-38"><a href="#cb2-38"></a>    est <span class="ot">&lt;-</span> <span class="fu">coef</span>(fit.fd)[<span class="st">"ETRUE"</span>],</span>
+<span id="cb2-39"><a href="#cb2-39"></a>    se <span class="ot">&lt;-</span> <span class="fu">coef</span>(<span class="fu">summary</span>(fit.fd))[<span class="st">"ETRUE"</span>,<span class="dv">2</span>],</span>
+<span id="cb2-40"><a href="#cb2-40"></a>    N <span class="ot">&lt;-</span> <span class="fu">nobs</span>(fit.fd),</span>
+<span id="cb2-41"><a href="#cb2-41"></a>    df <span class="ot">&lt;-</span> <span class="cn">NA</span>, <span class="co"># df is only needed for MI but must be included for all</span></span>
+<span id="cb2-42"><a href="#cb2-42"></a>  <span class="at">row.names =</span> <span class="cn">NULL</span>)</span>
+<span id="cb2-43"><a href="#cb2-43"></a>  </span>
+<span id="cb2-44"><a href="#cb2-44"></a>  <span class="co"># Method 2: CCA </span></span>
+<span id="cb2-45"><a href="#cb2-45"></a>  fit.cca<span class="ot">&lt;-</span><span class="fu">glm</span>(D<span class="sc">~</span>E<span class="sc">+</span>Cobs, <span class="at">family=</span><span class="fu">binomial</span>(<span class="at">link=</span><span class="st">"logit"</span>), <span class="at">data=</span>dataframe, <span class="at">singular.ok=</span>F, <span class="at">epsilon =</span> <span class="fl">1e-14</span>)</span>
+<span id="cb2-46"><a href="#cb2-46"></a>  res<span class="ot">&lt;-</span><span class="fu">rbind</span>(res,<span class="fu">c</span>(</span>
+<span id="cb2-47"><a href="#cb2-47"></a>   rep,</span>
+<span id="cb2-48"><a href="#cb2-48"></a>    <span class="st">"CCA"</span>,</span>
+<span id="cb2-49"><a href="#cb2-49"></a>    <span class="fu">coef</span>(fit.cca)[<span class="st">"ETRUE"</span>],</span>
+<span id="cb2-50"><a href="#cb2-50"></a>    <span class="fu">coef</span>(<span class="fu">summary</span>(fit.cca))[<span class="st">"ETRUE"</span>,<span class="dv">2</span>],</span>
+<span id="cb2-51"><a href="#cb2-51"></a>    <span class="fu">nobs</span>(fit.cca),</span>
+<span id="cb2-52"><a href="#cb2-52"></a>    <span class="cn">NA</span> <span class="co"># df is only needed for MI but must be included for all</span></span>
+<span id="cb2-53"><a href="#cb2-53"></a>    ),</span>
+<span id="cb2-54"><a href="#cb2-54"></a>  <span class="at">row.names=</span><span class="cn">NULL</span>)</span>
+<span id="cb2-55"><a href="#cb2-55"></a>  </span>
+<span id="cb2-56"><a href="#cb2-56"></a>  <span class="co"># Method 3: MI </span></span>
+<span id="cb2-57"><a href="#cb2-57"></a>  df.mice<span class="ot">&lt;-</span>dataframe[,<span class="fu">c</span>(<span class="st">"Cobs"</span>, <span class="st">"D"</span>, <span class="st">"E"</span>)]</span>
+<span id="cb2-58"><a href="#cb2-58"></a>  df.mice<span class="sc">$</span>int<span class="ot">&lt;-</span>df.mice<span class="sc">$</span>D<span class="sc">*</span>df.mice<span class="sc">$</span>E</span>
+<span id="cb2-59"><a href="#cb2-59"></a>  imp <span class="ot">&lt;-</span> <span class="fu">mice</span>(df.mice, <span class="at">method =</span> <span class="st">"norm"</span>, <span class="at">m =</span> <span class="dv">5</span>, <span class="at">printFlag =</span> F)</span>
+<span id="cb2-60"><a href="#cb2-60"></a>  fit <span class="ot">&lt;-</span> <span class="fu">with</span>(<span class="at">data =</span> imp, <span class="at">exp =</span> <span class="fu">glm</span>(D<span class="sc">~</span>E<span class="sc">+</span>Cobs, <span class="at">family=</span><span class="fu">binomial</span>(<span class="at">link=</span><span class="st">"logit"</span>), <span class="at">singular.ok=</span>F, <span class="at">epsilon =</span> <span class="fl">1e-14</span>))</span>
+<span id="cb2-61"><a href="#cb2-61"></a>  rub.rul<span class="ot">&lt;-</span><span class="fu">summary</span>(<span class="fu">pool</span>(fit))</span>
+<span id="cb2-62"><a href="#cb2-62"></a>  res<span class="ot">&lt;-</span><span class="fu">rbind</span>(res,<span class="fu">c</span>(</span>
+<span id="cb2-63"><a href="#cb2-63"></a>    rep,</span>
+<span id="cb2-64"><a href="#cb2-64"></a>    <span class="st">"MI"</span>,</span>
+<span id="cb2-65"><a href="#cb2-65"></a>    rub.rul[rub.rul<span class="sc">$</span>term<span class="sc">==</span><span class="st">"ETRUE"</span>,<span class="st">"estimate"</span>],</span>
+<span id="cb2-66"><a href="#cb2-66"></a>    rub.rul[rub.rul<span class="sc">$</span>term<span class="sc">==</span><span class="st">"ETRUE"</span>,<span class="st">"std.error"</span>],</span>
+<span id="cb2-67"><a href="#cb2-67"></a>    <span class="fu">nobs</span>(fit.fd),</span>
+<span id="cb2-68"><a href="#cb2-68"></a>    rub.rul[rub.rul<span class="sc">$</span>term<span class="sc">==</span><span class="st">"ETRUE"</span>,<span class="st">"df"</span>]),</span>
+<span id="cb2-69"><a href="#cb2-69"></a>  <span class="at">row.names=</span><span class="cn">NULL</span>)</span>
+<span id="cb2-70"><a href="#cb2-70"></a>  </span>
+<span id="cb2-71"><a href="#cb2-71"></a>  <span class="fu">colnames</span>(res) <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="st">"rep"</span>, <span class="st">"method"</span>, <span class="st">"est"</span>, <span class="st">"se"</span>, <span class="st">"N"</span>, <span class="st">"df"</span>)</span>
+<span id="cb2-72"><a href="#cb2-72"></a>  <span class="fu">return</span>(res)</span>
+<span id="cb2-73"><a href="#cb2-73"></a>  </span>
+<span id="cb2-74"><a href="#cb2-74"></a>}</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="simcheck3.r" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="simcheck3.r"><span class="header-section-number">5.3</span> simcheck3.r</h2>
+<div class="sourceCode" id="cb3" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="do">###################################</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="do">### simcheck03.R: Simulate      </span><span class="al">###</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="do">### and analyse a single data   </span><span class="al">###</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="do">### set.                        </span><span class="al">###</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="do">###################################</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a></span>
+<span id="cb3-7"><a href="#cb3-7"></a><span class="co"># Load relevant libraries and source simcheck02.R</span></span>
+<span id="cb3-8"><a href="#cb3-8"></a><span class="fu">library</span>(boot) <span class="co"># Contains inv.logit function</span></span>
+<span id="cb3-9"><a href="#cb3-9"></a><span class="fu">library</span>(mice) <span class="co"># for MI</span></span>
+<span id="cb3-10"><a href="#cb3-10"></a><span class="fu">source</span>(<span class="st">"simcheck02.R"</span>)</span>
+<span id="cb3-11"><a href="#cb3-11"></a></span>
+<span id="cb3-12"><a href="#cb3-12"></a><span class="co"># Set seed</span></span>
+<span id="cb3-13"><a href="#cb3-13"></a><span class="fu">set.seed</span>(<span class="dv">576819506</span>)</span>
+<span id="cb3-14"><a href="#cb3-14"></a></span>
+<span id="cb3-15"><a href="#cb3-15"></a><span class="co"># generate a single large data set</span></span>
+<span id="cb3-16"><a href="#cb3-16"></a>dataframe <span class="ot">&lt;-</span> <span class="fu">gendata</span>( <span class="at">obs =</span> <span class="dv">100000</span>, <span class="at">logite =</span> <span class="st">"-1+Ctrue"</span>, <span class="at">logitd =</span> <span class="st">"-1+Ctrue"</span>, <span class="at">pmiss =</span> <span class="fl">0.3</span>)</span>
+<span id="cb3-17"><a href="#cb3-17"></a></span>
+<span id="cb3-18"><a href="#cb3-18"></a><span class="co"># summarise the data</span></span>
+<span id="cb3-19"><a href="#cb3-19"></a><span class="fu">summary</span>(dataframe)</span>
+<span id="cb3-20"><a href="#cb3-20"></a><span class="fu">addmargins</span>(<span class="fu">table</span>(dataframe[<span class="fu">is.na</span>(dataframe<span class="sc">$</span>Cobs),<span class="st">"D"</span>],dataframe[<span class="fu">is.na</span>(dataframe<span class="sc">$</span>Cobs),<span class="st">"E"</span>])) </span>
+<span id="cb3-21"><a href="#cb3-21"></a><span class="fu">addmargins</span>(<span class="fu">table</span>(dataframe[<span class="sc">!</span><span class="fu">is.na</span>(dataframe<span class="sc">$</span>Cobs),<span class="st">"D"</span>],dataframe[<span class="sc">!</span><span class="fu">is.na</span>(dataframe<span class="sc">$</span>Cobs),<span class="st">"E"</span>])) </span>
+<span id="cb3-22"><a href="#cb3-22"></a>fit.unad <span class="ot">&lt;-</span> <span class="fu">glm</span>(D<span class="sc">~</span>E, <span class="at">data=</span>dataframe, <span class="at">family=</span><span class="fu">binomial</span>(<span class="at">link=</span><span class="st">"logit"</span>))</span>
+<span id="cb3-23"><a href="#cb3-23"></a><span class="fu">summary</span>(fit.unad)</span>
+<span id="cb3-24"><a href="#cb3-24"></a><span class="fu">confint</span>(fit.unad)</span>
+<span id="cb3-25"><a href="#cb3-25"></a></span>
+<span id="cb3-26"><a href="#cb3-26"></a><span class="co"># fit the data generating models</span></span>
+<span id="cb3-27"><a href="#cb3-27"></a><span class="fu">glm</span>(E<span class="sc">~</span>Ctrue, <span class="at">data=</span>dataframe, <span class="at">family=</span><span class="fu">binomial</span>(<span class="at">link=</span><span class="st">"logit"</span>))</span>
+<span id="cb3-28"><a href="#cb3-28"></a><span class="fu">glm</span>(D<span class="sc">~</span>Ctrue, <span class="at">data=</span>dataframe, <span class="at">family=</span><span class="fu">binomial</span>(<span class="at">link=</span><span class="st">"logit"</span>))</span>
+<span id="cb3-29"><a href="#cb3-29"></a></span>
+<span id="cb3-30"><a href="#cb3-30"></a><span class="co"># analyse the data</span></span>
+<span id="cb3-31"><a href="#cb3-31"></a>results <span class="ot">&lt;-</span> <span class="fu">anadata</span>(dataframe, <span class="dv">1</span>)</span>
+<span id="cb3-32"><a href="#cb3-32"></a>results  </span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="simcheck04.r" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="simcheck04.r"><span class="header-section-number">5.4</span> simcheck04.r</h2>
+<div class="sourceCode" id="cb4" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="do">###################################</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="do">### simcheck04.R: Run a few     </span><span class="al">###</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="do">### iterations.                 </span><span class="al">###</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a><span class="do">###################################</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a></span>
+<span id="cb4-6"><a href="#cb4-6"></a><span class="co"># Load relevant libraries and source simcheck02.R</span></span>
+<span id="cb4-7"><a href="#cb4-7"></a><span class="fu">library</span>(boot) <span class="co"># Contains inv.logit function</span></span>
+<span id="cb4-8"><a href="#cb4-8"></a><span class="fu">library</span>(mice) <span class="co"># for MI</span></span>
+<span id="cb4-9"><a href="#cb4-9"></a><span class="fu">library</span>(foreach) <span class="co"># for using foreach loop</span></span>
+<span id="cb4-10"><a href="#cb4-10"></a><span class="fu">source</span>(<span class="st">"simcheck02.R"</span>)</span>
+<span id="cb4-11"><a href="#cb4-11"></a></span>
+<span id="cb4-12"><a href="#cb4-12"></a><span class="co"># Set seed</span></span>
+<span id="cb4-13"><a href="#cb4-13"></a><span class="fu">set.seed</span>(<span class="dv">576819506</span>)</span>
+<span id="cb4-14"><a href="#cb4-14"></a></span>
+<span id="cb4-15"><a href="#cb4-15"></a><span class="co"># run 3 repetitions</span></span>
+<span id="cb4-16"><a href="#cb4-16"></a>results <span class="ot">&lt;-</span> <span class="fu">foreach</span>( <span class="at">i =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">.combine=</span><span class="st">"rbind"</span>) <span class="sc">%do%</span> {</span>
+<span id="cb4-17"><a href="#cb4-17"></a>  dataframe <span class="ot">&lt;-</span> <span class="fu">gendata</span>( <span class="at">obs =</span> <span class="dv">500</span>, <span class="at">logite =</span> <span class="st">"-1+Ctrue"</span>, <span class="at">logitd =</span> <span class="st">"-1+Ctrue"</span>, <span class="at">pmiss =</span> <span class="fl">0.3</span>)</span>
+<span id="cb4-18"><a href="#cb4-18"></a>  <span class="fu">anadata</span>(dataframe, i)</span>
+<span id="cb4-19"><a href="#cb4-19"></a></span>
+<span id="cb4-20"><a href="#cb4-20"></a>}</span>
+<span id="cb4-21"><a href="#cb4-21"></a></span>
+<span id="cb4-22"><a href="#cb4-22"></a><span class="co"># view results</span></span>
+<span id="cb4-23"><a href="#cb4-23"></a><span class="co"># Vies関数をかましておくことで、チェックができる！</span></span>
+<span id="cb4-24"><a href="#cb4-24"></a><span class="fu">View</span>(results)</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="simcheck05.r" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="simcheck05.r"><span class="header-section-number">5.5</span> simcheck05.r</h2>
+<div class="sourceCode" id="cb5" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="do">###################################</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="do">### simcheck05.R: script for    </span><span class="al">###</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="do">### anticipating analysis       </span><span class="al">###</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="do">### failures.                   </span><span class="al">###</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a><span class="do">###################################</span></span>
+<span id="cb5-6"><a href="#cb5-6"></a></span>
+<span id="cb5-7"><a href="#cb5-7"></a><span class="co"># Load relevant libraries</span></span>
+<span id="cb5-8"><a href="#cb5-8"></a><span class="fu">library</span>(boot) <span class="co"># Contains inv.logit function</span></span>
+<span id="cb5-9"><a href="#cb5-9"></a><span class="fu">library</span>(mice) <span class="co"># for MI</span></span>
+<span id="cb5-10"><a href="#cb5-10"></a></span>
+<span id="cb5-11"><a href="#cb5-11"></a><span class="co"># First, we write a function to generate a single data set:</span></span>
+<span id="cb5-12"><a href="#cb5-12"></a></span>
+<span id="cb5-13"><a href="#cb5-13"></a>gendata <span class="ot">&lt;-</span> <span class="cf">function</span>( obs, logite, logitd, pmiss ) {</span>
+<span id="cb5-14"><a href="#cb5-14"></a>  </span>
+<span id="cb5-15"><a href="#cb5-15"></a>  Ctrue <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(obs)</span>
+<span id="cb5-16"><a href="#cb5-16"></a>  E <span class="ot">&lt;-</span> <span class="fu">runif</span>(obs) <span class="sc">&lt;</span> <span class="fu">inv.logit</span>(<span class="fu">eval</span>(<span class="fu">parse</span>(<span class="at">text=</span>logite)))</span>
+<span id="cb5-17"><a href="#cb5-17"></a>  D <span class="ot">&lt;-</span> <span class="fu">runif</span>(obs) <span class="sc">&lt;</span> <span class="fu">inv.logit</span>(<span class="fu">eval</span>(<span class="fu">parse</span>(<span class="at">text=</span>logitd)))</span>
+<span id="cb5-18"><a href="#cb5-18"></a>  Cobs<span class="ot">&lt;-</span>Ctrue</span>
+<span id="cb5-19"><a href="#cb5-19"></a>  Cobs[<span class="fu">runif</span>(obs)<span class="sc">&lt;</span>pmiss]<span class="ot">&lt;-</span><span class="cn">NA</span></span>
+<span id="cb5-20"><a href="#cb5-20"></a>  data.out<span class="ot">&lt;-</span><span class="fu">data.frame</span>(Cobs,D,E,Ctrue)</span>
+<span id="cb5-21"><a href="#cb5-21"></a>  </span>
+<span id="cb5-22"><a href="#cb5-22"></a>  <span class="fu">return</span>(data.out)  <span class="co"># for clarity, but redundant </span></span>
+<span id="cb5-23"><a href="#cb5-23"></a>  </span>
+<span id="cb5-24"><a href="#cb5-24"></a>}</span>
+<span id="cb5-25"><a href="#cb5-25"></a></span>
+<span id="cb5-26"><a href="#cb5-26"></a><span class="co"># Next we provide a function to analyse partially observed data.set anticipating possible failures:</span></span>
+<span id="cb5-27"><a href="#cb5-27"></a></span>
+<span id="cb5-28"><a href="#cb5-28"></a>anadata <span class="ot">&lt;-</span> <span class="cf">function</span>( dataframe, rep, <span class="at">print.output=</span>F) {</span>
+<span id="cb5-29"><a href="#cb5-29"></a>  </span>
+<span id="cb5-30"><a href="#cb5-30"></a>  <span class="co"># Method 1: full data before data deletion  </span></span>
+<span id="cb5-31"><a href="#cb5-31"></a>  fit.fd<span class="ot">&lt;-</span><span class="fu">try</span>(<span class="fu">glm</span>(D<span class="sc">~</span>E<span class="sc">+</span>Ctrue, <span class="at">family=</span><span class="fu">binomial</span>(<span class="at">link=</span><span class="st">"logit"</span>), <span class="at">data=</span>dataframe, <span class="at">singular.ok=</span>F))</span>
+<span id="cb5-32"><a href="#cb5-32"></a>  <span class="cf">if</span> (print.output) <span class="fu">print</span>(<span class="fu">summary</span>(fit.fd)) <span class="co"># To print output when checking on few iterations</span></span>
+<span id="cb5-33"><a href="#cb5-33"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">inherits</span>(fit.fd, <span class="st">"try-error"</span>)) {</span>
+<span id="cb5-34"><a href="#cb5-34"></a>    res<span class="ot">&lt;-</span><span class="fu">data.frame</span>(</span>
+<span id="cb5-35"><a href="#cb5-35"></a>      rep <span class="ot">&lt;-</span> rep,</span>
+<span id="cb5-36"><a href="#cb5-36"></a>      method <span class="ot">&lt;-</span> <span class="st">"Full"</span>,</span>
+<span id="cb5-37"><a href="#cb5-37"></a>      est <span class="ot">&lt;-</span> <span class="fu">coef</span>(fit.fd)[<span class="st">"ETRUE"</span>],</span>
+<span id="cb5-38"><a href="#cb5-38"></a>      se <span class="ot">&lt;-</span> <span class="fu">coef</span>(<span class="fu">summary</span>(fit.fd))[<span class="st">"ETRUE"</span>,<span class="dv">2</span>],</span>
+<span id="cb5-39"><a href="#cb5-39"></a>      N <span class="ot">&lt;-</span> <span class="fu">nobs</span>(fit.fd),</span>
+<span id="cb5-40"><a href="#cb5-40"></a>      df <span class="ot">&lt;-</span> <span class="cn">NA</span>, <span class="co"># df is only needed for MI but must be included for all</span></span>
+<span id="cb5-41"><a href="#cb5-41"></a>      <span class="at">row.names =</span> <span class="cn">NULL</span>)</span>
+<span id="cb5-42"><a href="#cb5-42"></a>  } <span class="cf">else</span> {</span>
+<span id="cb5-43"><a href="#cb5-43"></a>    res<span class="ot">&lt;-</span><span class="fu">data.frame</span>(</span>
+<span id="cb5-44"><a href="#cb5-44"></a>      rep <span class="ot">&lt;-</span> rep,</span>
+<span id="cb5-45"><a href="#cb5-45"></a>      method <span class="ot">&lt;-</span> <span class="st">"Full"</span>,</span>
+<span id="cb5-46"><a href="#cb5-46"></a>      est <span class="ot">&lt;-</span> <span class="cn">NA</span>,</span>
+<span id="cb5-47"><a href="#cb5-47"></a>      se <span class="ot">&lt;-</span> <span class="cn">NA</span>,</span>
+<span id="cb5-48"><a href="#cb5-48"></a>      N <span class="ot">&lt;-</span> <span class="cn">NA</span>,</span>
+<span id="cb5-49"><a href="#cb5-49"></a>      df <span class="ot">&lt;-</span> <span class="cn">NA</span>, <span class="co"># df is only needed for MI but must be included for all</span></span>
+<span id="cb5-50"><a href="#cb5-50"></a>      <span class="at">row.names =</span> <span class="cn">NULL</span>)</span>
+<span id="cb5-51"><a href="#cb5-51"></a>    </span>
+<span id="cb5-52"><a href="#cb5-52"></a>  }</span>
+<span id="cb5-53"><a href="#cb5-53"></a>  </span>
+<span id="cb5-54"><a href="#cb5-54"></a>  <span class="co"># Method 2: CCA </span></span>
+<span id="cb5-55"><a href="#cb5-55"></a>  fit.cca<span class="ot">&lt;-</span><span class="fu">try</span>(<span class="fu">glm</span>(D<span class="sc">~</span>E<span class="sc">+</span>Cobs, <span class="at">family=</span><span class="fu">binomial</span>(<span class="at">link=</span><span class="st">"logit"</span>), <span class="at">data=</span>dataframe, <span class="at">singular.ok=</span>F))</span>
+<span id="cb5-56"><a href="#cb5-56"></a>  <span class="cf">if</span> (print.output) <span class="fu">print</span>(<span class="fu">summary</span>(fit.cca)) <span class="co"># To print output when checking on few iterations</span></span>
+<span id="cb5-57"><a href="#cb5-57"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">inherits</span>(fit.cca, <span class="st">"try-error"</span>)) {</span>
+<span id="cb5-58"><a href="#cb5-58"></a>    res<span class="ot">&lt;-</span><span class="fu">rbind</span>(res,<span class="fu">c</span>(</span>
+<span id="cb5-59"><a href="#cb5-59"></a>      rep,</span>
+<span id="cb5-60"><a href="#cb5-60"></a>      <span class="st">"CCA"</span>,</span>
+<span id="cb5-61"><a href="#cb5-61"></a>      <span class="fu">coef</span>(fit.cca)[<span class="st">"ETRUE"</span>],</span>
+<span id="cb5-62"><a href="#cb5-62"></a>      <span class="fu">coef</span>(<span class="fu">summary</span>(fit.cca))[<span class="st">"ETRUE"</span>,<span class="dv">2</span>],</span>
+<span id="cb5-63"><a href="#cb5-63"></a>      <span class="fu">nobs</span>(fit.cca),</span>
+<span id="cb5-64"><a href="#cb5-64"></a>      <span class="cn">NA</span> <span class="co"># df is only needed for MI but must be included for all</span></span>
+<span id="cb5-65"><a href="#cb5-65"></a>    ),</span>
+<span id="cb5-66"><a href="#cb5-66"></a>    <span class="at">row.names=</span><span class="cn">NULL</span>)</span>
+<span id="cb5-67"><a href="#cb5-67"></a>  } <span class="cf">else</span> {</span>
+<span id="cb5-68"><a href="#cb5-68"></a>    res<span class="ot">&lt;-</span><span class="fu">rbind</span>(res,<span class="fu">c</span>(</span>
+<span id="cb5-69"><a href="#cb5-69"></a>      rep,</span>
+<span id="cb5-70"><a href="#cb5-70"></a>      <span class="st">"CCA"</span>,</span>
+<span id="cb5-71"><a href="#cb5-71"></a>      <span class="cn">NA</span>,</span>
+<span id="cb5-72"><a href="#cb5-72"></a>      <span class="cn">NA</span>,</span>
+<span id="cb5-73"><a href="#cb5-73"></a>      <span class="cn">NA</span>,</span>
+<span id="cb5-74"><a href="#cb5-74"></a>      <span class="cn">NA</span> <span class="co"># df is only needed for MI but must be included for all</span></span>
+<span id="cb5-75"><a href="#cb5-75"></a>    ),</span>
+<span id="cb5-76"><a href="#cb5-76"></a>    <span class="at">row.names=</span><span class="cn">NULL</span>)</span>
+<span id="cb5-77"><a href="#cb5-77"></a>  }</span>
+<span id="cb5-78"><a href="#cb5-78"></a></span>
+<span id="cb5-79"><a href="#cb5-79"></a>  </span>
+<span id="cb5-80"><a href="#cb5-80"></a>  <span class="co"># Method 3: MI </span></span>
+<span id="cb5-81"><a href="#cb5-81"></a>  df.mice<span class="ot">&lt;-</span>dataframe[,<span class="fu">c</span>(<span class="st">"Cobs"</span>, <span class="st">"D"</span>, <span class="st">"E"</span>)]</span>
+<span id="cb5-82"><a href="#cb5-82"></a>  df.mice<span class="sc">$</span>int<span class="ot">&lt;-</span>df.mice<span class="sc">$</span>D<span class="sc">*</span>df.mice<span class="sc">$</span>E</span>
+<span id="cb5-83"><a href="#cb5-83"></a>  imp <span class="ot">&lt;-</span> <span class="fu">try</span>(<span class="fu">mice</span>(df.mice, <span class="at">method =</span> <span class="st">"norm"</span>, <span class="at">m =</span> <span class="dv">5</span>, <span class="at">printFlag =</span> F))</span>
+<span id="cb5-84"><a href="#cb5-84"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">inherits</span>(imp, <span class="st">"try-error"</span>)) {</span>
+<span id="cb5-85"><a href="#cb5-85"></a>    fit <span class="ot">&lt;-</span> <span class="fu">with</span>(<span class="at">data =</span> imp, <span class="at">exp =</span> <span class="fu">glm</span>(D<span class="sc">~</span>E<span class="sc">+</span>Cobs, <span class="at">family=</span><span class="fu">binomial</span>(<span class="at">link=</span><span class="st">"logit"</span>), <span class="at">singular.ok=</span>F))</span>
+<span id="cb5-86"><a href="#cb5-86"></a>    <span class="cf">if</span> (<span class="sc">!</span><span class="fu">inherits</span>(fit, <span class="st">"try-error"</span>)) {</span>
+<span id="cb5-87"><a href="#cb5-87"></a>      rub.rul<span class="ot">&lt;-</span><span class="fu">summary</span>(<span class="fu">pool</span>(fit))</span>
+<span id="cb5-88"><a href="#cb5-88"></a>      <span class="cf">if</span> (print.output) <span class="fu">print</span>(rub.rul) <span class="co"># To print output when checking on few iterations</span></span>
+<span id="cb5-89"><a href="#cb5-89"></a>      res<span class="ot">&lt;-</span><span class="fu">rbind</span>(res,<span class="fu">c</span>(</span>
+<span id="cb5-90"><a href="#cb5-90"></a>        rep,</span>
+<span id="cb5-91"><a href="#cb5-91"></a>        <span class="st">"MI"</span>,</span>
+<span id="cb5-92"><a href="#cb5-92"></a>        rub.rul[rub.rul<span class="sc">$</span>term<span class="sc">==</span><span class="st">"ETRUE"</span>,<span class="st">"estimate"</span>],</span>
+<span id="cb5-93"><a href="#cb5-93"></a>        rub.rul[rub.rul<span class="sc">$</span>term<span class="sc">==</span><span class="st">"ETRUE"</span>,<span class="st">"std.error"</span>],</span>
+<span id="cb5-94"><a href="#cb5-94"></a>        <span class="fu">nobs</span>(fit.fd),</span>
+<span id="cb5-95"><a href="#cb5-95"></a>        rub.rul[rub.rul<span class="sc">$</span>term<span class="sc">==</span><span class="st">"ETRUE"</span>,<span class="st">"df"</span>]),</span>
+<span id="cb5-96"><a href="#cb5-96"></a>        <span class="at">row.names=</span><span class="cn">NULL</span>)</span>
+<span id="cb5-97"><a href="#cb5-97"></a>    } <span class="cf">else</span> {</span>
+<span id="cb5-98"><a href="#cb5-98"></a>      </span>
+<span id="cb5-99"><a href="#cb5-99"></a>      res<span class="ot">&lt;-</span><span class="fu">rbind</span>(res,<span class="fu">c</span>(</span>
+<span id="cb5-100"><a href="#cb5-100"></a>        rep,</span>
+<span id="cb5-101"><a href="#cb5-101"></a>        <span class="st">"MI"</span>,</span>
+<span id="cb5-102"><a href="#cb5-102"></a>        <span class="cn">NA</span>,</span>
+<span id="cb5-103"><a href="#cb5-103"></a>        <span class="cn">NA</span>,</span>
+<span id="cb5-104"><a href="#cb5-104"></a>        <span class="cn">NA</span>,</span>
+<span id="cb5-105"><a href="#cb5-105"></a>        <span class="cn">NA</span>),</span>
+<span id="cb5-106"><a href="#cb5-106"></a>        <span class="at">row.names=</span><span class="cn">NULL</span>)</span>
+<span id="cb5-107"><a href="#cb5-107"></a>    }</span>
+<span id="cb5-108"><a href="#cb5-108"></a>  } <span class="cf">else</span> {</span>
+<span id="cb5-109"><a href="#cb5-109"></a>    </span>
+<span id="cb5-110"><a href="#cb5-110"></a>    res<span class="ot">&lt;-</span><span class="fu">rbind</span>(res,<span class="fu">c</span>(</span>
+<span id="cb5-111"><a href="#cb5-111"></a>      rep,</span>
+<span id="cb5-112"><a href="#cb5-112"></a>      <span class="st">"MI"</span>,</span>
+<span id="cb5-113"><a href="#cb5-113"></a>      <span class="cn">NA</span>,</span>
+<span id="cb5-114"><a href="#cb5-114"></a>      <span class="cn">NA</span>,</span>
+<span id="cb5-115"><a href="#cb5-115"></a>      <span class="cn">NA</span>,</span>
+<span id="cb5-116"><a href="#cb5-116"></a>      <span class="cn">NA</span>),</span>
+<span id="cb5-117"><a href="#cb5-117"></a>      <span class="at">row.names=</span><span class="cn">NULL</span>)</span>
+<span id="cb5-118"><a href="#cb5-118"></a>  }</span>
+<span id="cb5-119"><a href="#cb5-119"></a>  </span>
+<span id="cb5-120"><a href="#cb5-120"></a>  <span class="fu">colnames</span>(res) <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="st">"rep"</span>, <span class="st">"method"</span>, <span class="st">"est"</span>, <span class="st">"se"</span>, <span class="st">"N"</span>, <span class="st">"df"</span>)</span>
+<span id="cb5-121"><a href="#cb5-121"></a>  </span>
+<span id="cb5-122"><a href="#cb5-122"></a>  <span class="fu">return</span>(res)</span>
+<span id="cb5-123"><a href="#cb5-123"></a>  </span>
+<span id="cb5-124"><a href="#cb5-124"></a>}</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="simcheck06.r" class="level2" data-number="5.6">
+<h2 data-number="5.6" class="anchored" data-anchor-id="simcheck06.r"><span class="header-section-number">5.6</span> simcheck06.r</h2>
+<div class="sourceCode" id="cb6" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="do">###################################</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="do">### simcheck06.R: Make it easy  </span><span class="al">###</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="do">### to re-create any simulated  </span><span class="al">###</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a><span class="do">### data set.                   </span><span class="al">###</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a><span class="do">###################################</span></span>
+<span id="cb6-6"><a href="#cb6-6"></a></span>
+<span id="cb6-7"><a href="#cb6-7"></a><span class="co"># Load relevant libraries and source simcheck05.R</span></span>
+<span id="cb6-8"><a href="#cb6-8"></a><span class="fu">library</span>(boot) <span class="co"># Contains inv.logit function</span></span>
+<span id="cb6-9"><a href="#cb6-9"></a><span class="fu">library</span>(mice) <span class="co"># for MI</span></span>
+<span id="cb6-10"><a href="#cb6-10"></a><span class="fu">library</span>(foreach) <span class="co"># for using foreach loop</span></span>
+<span id="cb6-11"><a href="#cb6-11"></a><span class="fu">source</span>(<span class="st">"simcheck05.R"</span>)</span>
+<span id="cb6-12"><a href="#cb6-12"></a></span>
+<span id="cb6-13"><a href="#cb6-13"></a><span class="co"># Set seed</span></span>
+<span id="cb6-14"><a href="#cb6-14"></a><span class="fu">set.seed</span>(<span class="dv">576819506</span>)</span>
+<span id="cb6-15"><a href="#cb6-15"></a></span>
+<span id="cb6-16"><a href="#cb6-16"></a><span class="co"># run 3 repetitions</span></span>
+<span id="cb6-17"><a href="#cb6-17"></a>results <span class="ot">&lt;-</span> <span class="fu">foreach</span>( <span class="at">i =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>) <span class="sc">%do%</span> {    <span class="co"># Note that in order to save the seed we return results as a list</span></span>
+<span id="cb6-18"><a href="#cb6-18"></a>  dataframe <span class="ot">&lt;-</span> <span class="fu">gendata</span>( <span class="at">obs =</span> <span class="dv">500</span>, <span class="at">logite =</span> <span class="st">"-1+Ctrue"</span>, <span class="at">logitd =</span> <span class="st">"-1+Ctrue"</span>, <span class="at">pmiss =</span> <span class="fl">0.3</span>)</span>
+<span id="cb6-19"><a href="#cb6-19"></a>  resul<span class="ot">&lt;-</span><span class="fu">anadata</span>(dataframe, i, <span class="at">print.output =</span> T) <span class="co"># Printing output to double check we are storing correct estimates</span></span>
+<span id="cb6-20"><a href="#cb6-20"></a>  <span class="fu">attr</span>(resul, <span class="st">"seed"</span>)<span class="ot">&lt;-</span>.Random.seed  <span class="co"># Now store the seed after running the sim study, in case you want to continue from here later</span></span>
+<span id="cb6-21"><a href="#cb6-21"></a>  resul</span>
+<span id="cb6-22"><a href="#cb6-22"></a>}</span>
+<span id="cb6-23"><a href="#cb6-23"></a></span>
+<span id="cb6-24"><a href="#cb6-24"></a><span class="co"># view stored results for 3rd repetition</span></span>
+<span id="cb6-25"><a href="#cb6-25"></a><span class="fu">View</span>(results[[<span class="dv">3</span>]])</span>
+<span id="cb6-26"><a href="#cb6-26"></a></span>
+<span id="cb6-27"><a href="#cb6-27"></a><span class="co"># reconstruct data set for 3rd repetition and check it gives same results</span></span>
+<span id="cb6-28"><a href="#cb6-28"></a>.Random.seed <span class="ot">&lt;-</span> <span class="fu">attr</span>(results[[<span class="dv">2</span>]], <span class="st">"seed"</span>) <span class="co"># Need the seed status after running 2 repetitions</span></span>
+<span id="cb6-29"><a href="#cb6-29"></a>dataframe <span class="ot">&lt;-</span> <span class="fu">gendata</span>( <span class="at">obs =</span> <span class="dv">500</span>, <span class="at">logite =</span> <span class="st">"-1+Ctrue"</span>, <span class="at">logitd =</span> <span class="st">"-1+Ctrue"</span>, <span class="at">pmiss =</span> <span class="fl">0.3</span>)</span>
+<span id="cb6-30"><a href="#cb6-30"></a>resul<span class="ot">&lt;-</span><span class="fu">anadata</span>(dataframe, i)</span>
+<span id="cb6-31"><a href="#cb6-31"></a><span class="fu">View</span>(resul)</span>
+<span id="cb6-32"><a href="#cb6-32"></a><span class="co"># can verify that these results are the same</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="simcheck07.r" class="level2" data-number="5.7">
+<h2 data-number="5.7" class="anchored" data-anchor-id="simcheck07.r"><span class="header-section-number">5.7</span> simcheck07.r</h2>
+<div class="sourceCode" id="cb7" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="do">###################################</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="do">### simcheck07.R: Assess method </span><span class="al">###</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="do">### failures.                   </span><span class="al">###</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a><span class="do">###################################</span></span>
+<span id="cb7-5"><a href="#cb7-5"></a>  </span>
+<span id="cb7-6"><a href="#cb7-6"></a><span class="co"># Load relevant libraries and source simcheck05.R</span></span>
+<span id="cb7-7"><a href="#cb7-7"></a><span class="fu">library</span>(boot) <span class="co"># Contains inv.logit function</span></span>
+<span id="cb7-8"><a href="#cb7-8"></a><span class="fu">library</span>(mice) <span class="co"># for MI</span></span>
+<span id="cb7-9"><a href="#cb7-9"></a><span class="fu">library</span>(foreach) <span class="co"># for using foreach loop</span></span>
+<span id="cb7-10"><a href="#cb7-10"></a><span class="fu">library</span>(dplyr) <span class="co"># To transform list for data frame in single data frame</span></span>
+<span id="cb7-11"><a href="#cb7-11"></a><span class="fu">source</span>(<span class="st">"simcheck05.R"</span>)</span>
+<span id="cb7-12"><a href="#cb7-12"></a></span>
+<span id="cb7-13"><a href="#cb7-13"></a><span class="co"># Set seed</span></span>
+<span id="cb7-14"><a href="#cb7-14"></a><span class="fu">set.seed</span>(<span class="dv">576819506</span>)</span>
+<span id="cb7-15"><a href="#cb7-15"></a></span>
+<span id="cb7-16"><a href="#cb7-16"></a><span class="co"># run simulation study</span></span>
+<span id="cb7-17"><a href="#cb7-17"></a><span class="co"># we increase reps to 120 for illustrative purposes</span></span>
+<span id="cb7-18"><a href="#cb7-18"></a>results <span class="ot">&lt;-</span> <span class="fu">foreach</span>( <span class="at">i =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">120</span>) <span class="sc">%do%</span> {    <span class="co"># Note that in order to save the seed we return results as a list</span></span>
+<span id="cb7-19"><a href="#cb7-19"></a>  dataframe <span class="ot">&lt;-</span> <span class="fu">gendata</span>( <span class="at">obs =</span> <span class="dv">200</span>, <span class="at">logite =</span> <span class="st">"-4+Ctrue"</span>, <span class="at">logitd =</span> <span class="st">"-4+Ctrue"</span>, <span class="at">pmiss =</span> <span class="fl">0.3</span>)</span>
+<span id="cb7-20"><a href="#cb7-20"></a>  resul<span class="ot">&lt;-</span><span class="fu">anadata</span>(dataframe, i)</span>
+<span id="cb7-21"><a href="#cb7-21"></a>  <span class="fu">attr</span>(resul, <span class="st">"seed"</span>)<span class="ot">&lt;-</span>.Random.seed  <span class="co"># Now store the seed after running the sim study, in case you want to continue from here later</span></span>
+<span id="cb7-22"><a href="#cb7-22"></a>  <span class="fu">cat</span>(<span class="st">"."</span>)  <span class="co"># To create progress bar. This can also be done with utils::txtProgressBar()` </span></span>
+<span id="cb7-23"><a href="#cb7-23"></a>  <span class="cf">if</span> (i<span class="sc">%%</span><span class="dv">50</span><span class="sc">==</span><span class="dv">0</span>) <span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb7-24"><a href="#cb7-24"></a>  resul</span>
+<span id="cb7-25"><a href="#cb7-25"></a>}</span>
+<span id="cb7-26"><a href="#cb7-26"></a>results.df<span class="ot">&lt;-</span><span class="fu">bind_rows</span>(results, <span class="at">.id =</span> <span class="st">"rep"</span>)</span>
+<span id="cb7-27"><a href="#cb7-27"></a>results.df[,<span class="dv">3</span>]<span class="ot">&lt;-</span><span class="fu">as.numeric</span>(results.df[,<span class="dv">3</span>])</span>
+<span id="cb7-28"><a href="#cb7-28"></a>results.df[,<span class="dv">4</span>]<span class="ot">&lt;-</span><span class="fu">as.numeric</span>(results.df[,<span class="dv">4</span>])</span>
+<span id="cb7-29"><a href="#cb7-29"></a>results.df[,<span class="dv">5</span>]<span class="ot">&lt;-</span><span class="fu">as.numeric</span>(results.df[,<span class="dv">5</span>])</span>
+<span id="cb7-30"><a href="#cb7-30"></a>results.df[,<span class="dv">6</span>]<span class="ot">&lt;-</span><span class="fu">as.numeric</span>(results.df[,<span class="dv">6</span>])</span>
+<span id="cb7-31"><a href="#cb7-31"></a><span class="fu">summary</span>(results.df)</span>
+<span id="cb7-32"><a href="#cb7-32"></a></span>
+<span id="cb7-33"><a href="#cb7-33"></a><span class="co"># Inspect results for method failures</span></span>
+<span id="cb7-34"><a href="#cb7-34"></a><span class="fu">View</span>(results.df[<span class="fu">is.na</span>(results.df<span class="sc">$</span>est),])</span>
+<span id="cb7-35"><a href="#cb7-35"></a><span class="fu">View</span>(results.df[results.df<span class="sc">$</span>rep<span class="sc">==</span><span class="dv">110</span>,])</span>
+<span id="cb7-36"><a href="#cb7-36"></a></span>
+<span id="cb7-37"><a href="#cb7-37"></a><span class="co"># Reconstruct one data set with method failures</span></span>
+<span id="cb7-38"><a href="#cb7-38"></a>.Random.seed <span class="ot">&lt;-</span> <span class="fu">attr</span>(results[[<span class="dv">109</span>]], <span class="st">"seed"</span>) <span class="co"># Need the seed status after running 109 repetitions</span></span>
+<span id="cb7-39"><a href="#cb7-39"></a>dataframe <span class="ot">&lt;-</span> <span class="fu">gendata</span>( <span class="at">obs =</span> <span class="dv">200</span>, <span class="at">logite =</span> <span class="st">"-4+Ctrue"</span>, <span class="at">logitd =</span> <span class="st">"-4+Ctrue"</span>, <span class="at">pmiss =</span> <span class="fl">0.3</span>)</span>
+<span id="cb7-40"><a href="#cb7-40"></a></span>
+<span id="cb7-41"><a href="#cb7-41"></a><span class="co"># and explore it</span></span>
+<span id="cb7-42"><a href="#cb7-42"></a><span class="fu">addmargins</span>(<span class="fu">table</span>(dataframe[<span class="sc">!</span><span class="fu">is.na</span>(dataframe<span class="sc">$</span>Cobs),<span class="st">"D"</span>],dataframe[<span class="sc">!</span><span class="fu">is.na</span>(dataframe<span class="sc">$</span>Cobs),<span class="st">"E"</span>])) </span>
+<span id="cb7-43"><a href="#cb7-43"></a>fit.ad <span class="ot">&lt;-</span> <span class="fu">glm</span>(D<span class="sc">~</span>E<span class="sc">+</span>Cobs, <span class="at">data=</span>dataframe, <span class="at">family=</span><span class="fu">binomial</span>(<span class="at">link=</span><span class="st">"logit"</span>))</span>
+<span id="cb7-44"><a href="#cb7-44"></a><span class="fu">summary</span>(fit.ad)</span>
+<span id="cb7-45"><a href="#cb7-45"></a></span>
+<span id="cb7-46"><a href="#cb7-46"></a><span class="co"># Save results</span></span>
+<span id="cb7-47"><a href="#cb7-47"></a><span class="fu">save</span>(results, results.df, <span class="at">file=</span><span class="st">"simcheck07_results.RData"</span>)</span>
+<span id="cb7-48"><a href="#cb7-48"></a></span>
+<span id="cb7-49"><a href="#cb7-49"></a><span class="co"># Export results for Stata</span></span>
+<span id="cb7-50"><a href="#cb7-50"></a><span class="fu">library</span>(foreign) <span class="co"># read/write data to different formats</span></span>
+<span id="cb7-51"><a href="#cb7-51"></a><span class="fu">write.dta</span>(results.df, <span class="st">"simcheck07_Rresults.dta"</span>) <span class="co"># to Stata format</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="simcheck08.r" class="level2" data-number="5.8">
+<h2 data-number="5.8" class="anchored" data-anchor-id="simcheck08.r"><span class="header-section-number">5.8</span> simcheck08.r</h2>
+<div class="sourceCode" id="cb8" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="do">###################################</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="do">### simcheck08.R: Check for     </span><span class="al">###</span></span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="do">### outliers.                   </span><span class="al">###</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a><span class="do">###################################</span></span>
+<span id="cb8-5"><a href="#cb8-5"></a></span>
+<span id="cb8-6"><a href="#cb8-6"></a><span class="co"># Load relevant libraries, source simcheck05.R and load simcheck08_results.RData</span></span>
+<span id="cb8-7"><a href="#cb8-7"></a><span class="fu">library</span>(boot) <span class="co"># Contains inv.logit function</span></span>
+<span id="cb8-8"><a href="#cb8-8"></a><span class="fu">library</span>(mice) <span class="co"># for MI</span></span>
+<span id="cb8-9"><a href="#cb8-9"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb8-10"><a href="#cb8-10"></a></span>
+<span id="cb8-11"><a href="#cb8-11"></a><span class="fu">source</span>(<span class="st">"simcheck05.R"</span>)</span>
+<span id="cb8-12"><a href="#cb8-12"></a><span class="fu">load</span>(<span class="st">"simcheck07_results.RData"</span>)</span>
+<span id="cb8-13"><a href="#cb8-13"></a></span>
+<span id="cb8-14"><a href="#cb8-14"></a><span class="co"># Find where very large se occurs</span></span>
+<span id="cb8-15"><a href="#cb8-15"></a>large.ses<span class="ot">&lt;-</span><span class="fu">unique</span>(results.df[results.df<span class="sc">$</span>se<span class="sc">&gt;</span><span class="dv">100</span>,<span class="st">"rep"</span>])</span>
+<span id="cb8-16"><a href="#cb8-16"></a></span>
+<span id="cb8-17"><a href="#cb8-17"></a><span class="co"># Re-level so that Full is reference:</span></span>
+<span id="cb8-18"><a href="#cb8-18"></a>results.df<span class="sc">$</span>method<span class="ot">&lt;-</span><span class="fu">factor</span>(results.df<span class="sc">$</span>method, <span class="at">levels=</span><span class="fu">c</span>(<span class="st">"Full"</span>, <span class="st">"CCA"</span>, <span class="st">"MI"</span>))</span>
+<span id="cb8-19"><a href="#cb8-19"></a></span>
+<span id="cb8-20"><a href="#cb8-20"></a><span class="co"># Scatterplot of SE against estimate</span></span>
+<span id="cb8-21"><a href="#cb8-21"></a><span class="fu">ggplot</span>(results.df,<span class="fu">aes</span>(<span class="at">x=</span>est,<span class="at">y=</span>se)) <span class="sc">+</span> </span>
+<span id="cb8-22"><a href="#cb8-22"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span> </span>
+<span id="cb8-23"><a href="#cb8-23"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>method, <span class="at">ncol =</span> <span class="dv">3</span>) <span class="sc">+</span> </span>
+<span id="cb8-24"><a href="#cb8-24"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Point estimate"</span>, <span class="at">y=</span><span class="st">"Standard error estimate"</span>)</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="simcheck09.r" class="level2" data-number="5.9">
+<h2 data-number="5.9" class="anchored" data-anchor-id="simcheck09.r"><span class="header-section-number">5.9</span> simcheck09.r</h2>
+<div class="sourceCode" id="cb9" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="do">###################################</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="do">### simcheck09.R: Investigate   </span><span class="al">###</span></span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="do">### outliers.                   </span><span class="al">###</span></span>
+<span id="cb9-4"><a href="#cb9-4"></a><span class="do">###################################</span></span>
+<span id="cb9-5"><a href="#cb9-5"></a></span>
+<span id="cb9-6"><a href="#cb9-6"></a><span class="co"># Load relevant libraries and source simcheck05.R</span></span>
+<span id="cb9-7"><a href="#cb9-7"></a><span class="fu">library</span>(boot) <span class="co"># Contains inv.logit function</span></span>
+<span id="cb9-8"><a href="#cb9-8"></a><span class="fu">library</span>(mice) <span class="co"># for MI</span></span>
+<span id="cb9-9"><a href="#cb9-9"></a><span class="fu">library</span>(foreach) <span class="co"># for using foreach loop</span></span>
+<span id="cb9-10"><a href="#cb9-10"></a><span class="fu">library</span>(dplyr) <span class="co"># To transform list fo data frame in single data frame</span></span>
+<span id="cb9-11"><a href="#cb9-11"></a><span class="fu">source</span>(<span class="st">"simcheck05.R"</span>)</span>
+<span id="cb9-12"><a href="#cb9-12"></a></span>
+<span id="cb9-13"><a href="#cb9-13"></a><span class="fu">load</span>(<span class="st">"simcheck07_results.RData"</span>)</span>
+<span id="cb9-14"><a href="#cb9-14"></a></span>
+<span id="cb9-15"><a href="#cb9-15"></a><span class="co"># Find where very large se occurs</span></span>
+<span id="cb9-16"><a href="#cb9-16"></a>large.ses<span class="ot">&lt;-</span><span class="fu">unique</span>(results.df[results.df<span class="sc">$</span>se<span class="sc">&gt;</span><span class="dv">100</span>,<span class="st">"rep"</span>])</span>
+<span id="cb9-17"><a href="#cb9-17"></a></span>
+<span id="cb9-18"><a href="#cb9-18"></a><span class="co"># let's pick out the second rep</span></span>
+<span id="cb9-19"><a href="#cb9-19"></a>results.df[results.df<span class="sc">$</span>rep<span class="sc">==</span><span class="dv">2</span>,]</span>
+<span id="cb9-20"><a href="#cb9-20"></a></span>
+<span id="cb9-21"><a href="#cb9-21"></a><span class="co"># Reconstruct this data set with method failures</span></span>
+<span id="cb9-22"><a href="#cb9-22"></a>.Random.seed <span class="ot">&lt;-</span> <span class="fu">attr</span>(results[[<span class="dv">1</span>]], <span class="st">"seed"</span>) <span class="co"># Need the seed status after running 1 repetitions</span></span>
+<span id="cb9-23"><a href="#cb9-23"></a>dataframe <span class="ot">&lt;-</span> <span class="fu">gendata</span>( <span class="at">obs =</span> <span class="dv">200</span>, <span class="at">logite =</span> <span class="st">"-4+Ctrue"</span>, <span class="at">logitd =</span> <span class="st">"-4+Ctrue"</span>, <span class="at">pmiss =</span> <span class="fl">0.3</span>)</span>
+<span id="cb9-24"><a href="#cb9-24"></a></span>
+<span id="cb9-25"><a href="#cb9-25"></a><span class="co"># and explore it</span></span>
+<span id="cb9-26"><a href="#cb9-26"></a><span class="fu">addmargins</span>(<span class="fu">table</span>(dataframe[<span class="sc">!</span><span class="fu">is.na</span>(dataframe<span class="sc">$</span>Cobs),<span class="st">"D"</span>],dataframe[<span class="sc">!</span><span class="fu">is.na</span>(dataframe<span class="sc">$</span>Cobs),<span class="st">"E"</span>])) </span>
+<span id="cb9-27"><a href="#cb9-27"></a>fit.ad <span class="ot">&lt;-</span> <span class="fu">glm</span>(D<span class="sc">~</span>E<span class="sc">+</span>Cobs, <span class="at">data=</span>dataframe, <span class="at">family=</span><span class="fu">binomial</span>(<span class="at">link=</span><span class="st">"logit"</span>), <span class="at">singular.ok=</span>F, <span class="at">epsilon =</span> <span class="fl">1e-14</span>)</span>
+<span id="cb9-28"><a href="#cb9-28"></a><span class="fu">summary</span>(fit.ad)</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="simcheck10.r" class="level2" data-number="5.10">
+<h2 data-number="5.10" class="anchored" data-anchor-id="simcheck10.r"><span class="header-section-number">5.10</span> simcheck10.r</h2>
+<div class="sourceCode" id="cb10" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="do">###################################</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="do">### simcheck10.R: Deal with     </span><span class="al">###</span></span>
+<span id="cb10-3"><a href="#cb10-3"></a><span class="do">### Outliers.                   </span><span class="al">###</span></span>
+<span id="cb10-4"><a href="#cb10-4"></a><span class="do">###################################</span></span>
+<span id="cb10-5"><a href="#cb10-5"></a></span>
+<span id="cb10-6"><a href="#cb10-6"></a><span class="co"># Load relevant libraries and source simcheck05.R</span></span>
+<span id="cb10-7"><a href="#cb10-7"></a><span class="fu">library</span>(boot) <span class="co"># Contains inv.logit function</span></span>
+<span id="cb10-8"><a href="#cb10-8"></a><span class="fu">library</span>(mice) <span class="co"># for MI</span></span>
+<span id="cb10-9"><a href="#cb10-9"></a><span class="fu">library</span>(foreach) <span class="co"># for using foreach loop</span></span>
+<span id="cb10-10"><a href="#cb10-10"></a><span class="fu">library</span>(dplyr) <span class="co"># To transform list fo data frame in single data frame</span></span>
+<span id="cb10-11"><a href="#cb10-11"></a><span class="fu">library</span>(logistf) <span class="co"># To use Firth correction</span></span>
+<span id="cb10-12"><a href="#cb10-12"></a><span class="fu">library</span>(miceafter) <span class="co"># To apply Rubin s rules after using logistf</span></span>
+<span id="cb10-13"><a href="#cb10-13"></a><span class="fu">source</span>(<span class="st">"simcheck05.R"</span>)</span>
+<span id="cb10-14"><a href="#cb10-14"></a></span>
+<span id="cb10-15"><a href="#cb10-15"></a><span class="co"># Set seed</span></span>
+<span id="cb10-16"><a href="#cb10-16"></a><span class="fu">set.seed</span>(<span class="dv">576819506</span>)</span>
+<span id="cb10-17"><a href="#cb10-17"></a></span>
+<span id="cb10-18"><a href="#cb10-18"></a><span class="co"># Changed program to analyse the data using Firth correction:</span></span>
+<span id="cb10-19"><a href="#cb10-19"></a></span>
+<span id="cb10-20"><a href="#cb10-20"></a>anadata <span class="ot">&lt;-</span> <span class="cf">function</span>( dataframe, rep) {</span>
+<span id="cb10-21"><a href="#cb10-21"></a>  </span>
+<span id="cb10-22"><a href="#cb10-22"></a>  <span class="co"># Method 1: full data before data deletion  </span></span>
+<span id="cb10-23"><a href="#cb10-23"></a>  fit.fd<span class="ot">&lt;-</span><span class="fu">try</span>(<span class="fu">logistf</span>(D<span class="sc">~</span>E<span class="sc">+</span>Ctrue, <span class="at">data=</span>dataframe, <span class="at">singular.ok=</span>F, <span class="at">epsilon =</span> <span class="fl">1e-14</span>))</span>
+<span id="cb10-24"><a href="#cb10-24"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">inherits</span>(fit.fd, <span class="st">"try-error"</span>)) {</span>
+<span id="cb10-25"><a href="#cb10-25"></a>    res<span class="ot">&lt;-</span><span class="fu">data.frame</span>(</span>
+<span id="cb10-26"><a href="#cb10-26"></a>      rep <span class="ot">&lt;-</span> rep,</span>
+<span id="cb10-27"><a href="#cb10-27"></a>      method <span class="ot">&lt;-</span> <span class="st">"Full"</span>,</span>
+<span id="cb10-28"><a href="#cb10-28"></a>      est <span class="ot">&lt;-</span> <span class="fu">coef</span>(fit.fd)[<span class="st">"ETRUE"</span>],</span>
+<span id="cb10-29"><a href="#cb10-29"></a>      se <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">diag</span>(<span class="fu">summary</span>(fit.fd)<span class="sc">$</span>var))[<span class="dv">2</span>],</span>
+<span id="cb10-30"><a href="#cb10-30"></a>      N <span class="ot">&lt;-</span> <span class="fu">nobs</span>(fit.fd),</span>
+<span id="cb10-31"><a href="#cb10-31"></a>      df <span class="ot">&lt;-</span> <span class="cn">NA</span>, <span class="co"># df is only needed for MI but must be included for all</span></span>
+<span id="cb10-32"><a href="#cb10-32"></a>      <span class="at">row.names =</span> <span class="cn">NULL</span>)</span>
+<span id="cb10-33"><a href="#cb10-33"></a>  } <span class="cf">else</span> {</span>
+<span id="cb10-34"><a href="#cb10-34"></a>    res<span class="ot">&lt;-</span><span class="fu">data.frame</span>(</span>
+<span id="cb10-35"><a href="#cb10-35"></a>      rep <span class="ot">&lt;-</span> rep,</span>
+<span id="cb10-36"><a href="#cb10-36"></a>      method <span class="ot">&lt;-</span> <span class="st">"Full"</span>,</span>
+<span id="cb10-37"><a href="#cb10-37"></a>      est <span class="ot">&lt;-</span> <span class="cn">NA</span>,</span>
+<span id="cb10-38"><a href="#cb10-38"></a>      se <span class="ot">&lt;-</span> <span class="cn">NA</span>,</span>
+<span id="cb10-39"><a href="#cb10-39"></a>      N <span class="ot">&lt;-</span> <span class="cn">NA</span>,</span>
+<span id="cb10-40"><a href="#cb10-40"></a>      df <span class="ot">&lt;-</span> <span class="cn">NA</span>, <span class="co"># df is only needed for MI but must be included for all</span></span>
+<span id="cb10-41"><a href="#cb10-41"></a>      <span class="at">row.names =</span> <span class="cn">NULL</span>)</span>
+<span id="cb10-42"><a href="#cb10-42"></a>    </span>
+<span id="cb10-43"><a href="#cb10-43"></a>  }</span>
+<span id="cb10-44"><a href="#cb10-44"></a>  </span>
+<span id="cb10-45"><a href="#cb10-45"></a>  <span class="co"># Method 2: CCA </span></span>
+<span id="cb10-46"><a href="#cb10-46"></a>  fit.cca<span class="ot">&lt;-</span><span class="fu">try</span>(<span class="fu">logistf</span>(D<span class="sc">~</span>E<span class="sc">+</span>Cobs, <span class="at">data=</span>dataframe, <span class="at">singular.ok=</span>F, <span class="at">epsilon =</span> <span class="fl">1e-14</span>))</span>
+<span id="cb10-47"><a href="#cb10-47"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">inherits</span>(fit.cca, <span class="st">"try-error"</span>)) {</span>
+<span id="cb10-48"><a href="#cb10-48"></a>    res<span class="ot">&lt;-</span><span class="fu">rbind</span>(res,<span class="fu">c</span>(</span>
+<span id="cb10-49"><a href="#cb10-49"></a>      rep,</span>
+<span id="cb10-50"><a href="#cb10-50"></a>      <span class="st">"CCA"</span>,</span>
+<span id="cb10-51"><a href="#cb10-51"></a>      <span class="fu">coef</span>(fit.cca)[<span class="st">"ETRUE"</span>],</span>
+<span id="cb10-52"><a href="#cb10-52"></a>      <span class="fu">sqrt</span>(<span class="fu">diag</span>(<span class="fu">summary</span>(fit.cca)<span class="sc">$</span>var))[<span class="dv">2</span>],</span>
+<span id="cb10-53"><a href="#cb10-53"></a>      <span class="fu">nobs</span>(fit.cca),</span>
+<span id="cb10-54"><a href="#cb10-54"></a>      <span class="cn">NA</span> <span class="co"># df is only needed for MI but must be included for all</span></span>
+<span id="cb10-55"><a href="#cb10-55"></a>    ),</span>
+<span id="cb10-56"><a href="#cb10-56"></a>    <span class="at">row.names=</span><span class="cn">NULL</span>)</span>
+<span id="cb10-57"><a href="#cb10-57"></a>  } <span class="cf">else</span> {</span>
+<span id="cb10-58"><a href="#cb10-58"></a>    res<span class="ot">&lt;-</span><span class="fu">rbind</span>(res,<span class="fu">c</span>(</span>
+<span id="cb10-59"><a href="#cb10-59"></a>      rep,</span>
+<span id="cb10-60"><a href="#cb10-60"></a>      <span class="st">"CCA"</span>,</span>
+<span id="cb10-61"><a href="#cb10-61"></a>      <span class="cn">NA</span>,</span>
+<span id="cb10-62"><a href="#cb10-62"></a>      <span class="cn">NA</span>,</span>
+<span id="cb10-63"><a href="#cb10-63"></a>      <span class="cn">NA</span>,</span>
+<span id="cb10-64"><a href="#cb10-64"></a>      <span class="cn">NA</span> <span class="co"># df is only needed for MI but must be included for all</span></span>
+<span id="cb10-65"><a href="#cb10-65"></a>    ),</span>
+<span id="cb10-66"><a href="#cb10-66"></a>    <span class="at">row.names=</span><span class="cn">NULL</span>)</span>
+<span id="cb10-67"><a href="#cb10-67"></a>  }</span>
+<span id="cb10-68"><a href="#cb10-68"></a>  </span>
+<span id="cb10-69"><a href="#cb10-69"></a>  </span>
+<span id="cb10-70"><a href="#cb10-70"></a>  <span class="co"># Method 3: MI </span></span>
+<span id="cb10-71"><a href="#cb10-71"></a>  df.mice<span class="ot">&lt;-</span>dataframe[,<span class="fu">c</span>(<span class="st">"Cobs"</span>, <span class="st">"D"</span>, <span class="st">"E"</span>)]</span>
+<span id="cb10-72"><a href="#cb10-72"></a>  df.mice<span class="sc">$</span>int<span class="ot">&lt;-</span>df.mice<span class="sc">$</span>D<span class="sc">*</span>df.mice<span class="sc">$</span>E</span>
+<span id="cb10-73"><a href="#cb10-73"></a>  imp <span class="ot">&lt;-</span> <span class="fu">try</span>(<span class="fu">mice</span>(df.mice, <span class="at">method =</span> <span class="st">"norm"</span>, <span class="at">m =</span> <span class="dv">5</span>, <span class="at">printFlag =</span> F))</span>
+<span id="cb10-74"><a href="#cb10-74"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">inherits</span>(imp, <span class="st">"try-error"</span>)) {</span>
+<span id="cb10-75"><a href="#cb10-75"></a>    fit <span class="ot">&lt;-</span> <span class="fu">with</span>(<span class="at">data =</span> imp, <span class="at">exp =</span> <span class="fu">logistf</span>(D<span class="sc">~</span>E<span class="sc">+</span>Cobs, <span class="at">singular.ok=</span>F, <span class="at">epsilon =</span> <span class="fl">1e-14</span>))</span>
+<span id="cb10-76"><a href="#cb10-76"></a>    <span class="cf">if</span> (<span class="sc">!</span><span class="fu">inherits</span>(fit, <span class="st">"try-error"</span>)) {</span>
+<span id="cb10-77"><a href="#cb10-77"></a>      coefs<span class="ot">&lt;-</span><span class="fu">c</span>(</span>
+<span id="cb10-78"><a href="#cb10-78"></a>        fit<span class="sc">$</span>analyses[[<span class="dv">1</span>]]<span class="sc">$</span>coefficients[<span class="st">"ETRUE"</span>],</span>
+<span id="cb10-79"><a href="#cb10-79"></a>        fit<span class="sc">$</span>analyses[[<span class="dv">2</span>]]<span class="sc">$</span>coefficients[<span class="st">"ETRUE"</span>],</span>
+<span id="cb10-80"><a href="#cb10-80"></a>        fit<span class="sc">$</span>analyses[[<span class="dv">3</span>]]<span class="sc">$</span>coefficients[<span class="st">"ETRUE"</span>],</span>
+<span id="cb10-81"><a href="#cb10-81"></a>        fit<span class="sc">$</span>analyses[[<span class="dv">4</span>]]<span class="sc">$</span>coefficients[<span class="st">"ETRUE"</span>],</span>
+<span id="cb10-82"><a href="#cb10-82"></a>        fit<span class="sc">$</span>analyses[[<span class="dv">5</span>]]<span class="sc">$</span>coefficients[<span class="st">"ETRUE"</span>]</span>
+<span id="cb10-83"><a href="#cb10-83"></a>      )</span>
+<span id="cb10-84"><a href="#cb10-84"></a>      ses<span class="ot">&lt;-</span><span class="fu">c</span>(</span>
+<span id="cb10-85"><a href="#cb10-85"></a>        <span class="fu">sqrt</span>(<span class="fu">diag</span>(fit<span class="sc">$</span>analyses[[<span class="dv">1</span>]]<span class="sc">$</span>var))[<span class="dv">2</span>],</span>
+<span id="cb10-86"><a href="#cb10-86"></a>        <span class="fu">sqrt</span>(<span class="fu">diag</span>(fit<span class="sc">$</span>analyses[[<span class="dv">2</span>]]<span class="sc">$</span>var))[<span class="dv">2</span>],</span>
+<span id="cb10-87"><a href="#cb10-87"></a>        <span class="fu">sqrt</span>(<span class="fu">diag</span>(fit<span class="sc">$</span>analyses[[<span class="dv">3</span>]]<span class="sc">$</span>var))[<span class="dv">2</span>],</span>
+<span id="cb10-88"><a href="#cb10-88"></a>        <span class="fu">sqrt</span>(<span class="fu">diag</span>(fit<span class="sc">$</span>analyses[[<span class="dv">4</span>]]<span class="sc">$</span>var))[<span class="dv">2</span>],</span>
+<span id="cb10-89"><a href="#cb10-89"></a>        <span class="fu">sqrt</span>(<span class="fu">diag</span>(fit<span class="sc">$</span>analyses[[<span class="dv">5</span>]]<span class="sc">$</span>var))[<span class="dv">2</span>]</span>
+<span id="cb10-90"><a href="#cb10-90"></a>      )</span>
+<span id="cb10-91"><a href="#cb10-91"></a>      rub.rul <span class="ot">&lt;-</span> <span class="fu">pool_scalar_RR</span>(coefs, ses, <span class="at">dfcom=</span><span class="dv">200-3</span>) <span class="co"># mice pool could not be used with logistf</span></span>
+<span id="cb10-92"><a href="#cb10-92"></a>      res<span class="ot">&lt;-</span><span class="fu">rbind</span>(res,<span class="fu">c</span>(</span>
+<span id="cb10-93"><a href="#cb10-93"></a>        rep,</span>
+<span id="cb10-94"><a href="#cb10-94"></a>        <span class="st">"MI"</span>,</span>
+<span id="cb10-95"><a href="#cb10-95"></a>        rub.rul<span class="sc">$</span>pool_est,</span>
+<span id="cb10-96"><a href="#cb10-96"></a>        rub.rul<span class="sc">$</span>pool_se,</span>
+<span id="cb10-97"><a href="#cb10-97"></a>        <span class="fu">nobs</span>(fit.fd),</span>
+<span id="cb10-98"><a href="#cb10-98"></a>        rub.rul<span class="sc">$</span>v_adj), </span>
+<span id="cb10-99"><a href="#cb10-99"></a>        <span class="at">row.names=</span><span class="cn">NULL</span>)</span>
+<span id="cb10-100"><a href="#cb10-100"></a>    } <span class="cf">else</span> {</span>
+<span id="cb10-101"><a href="#cb10-101"></a>      </span>
+<span id="cb10-102"><a href="#cb10-102"></a>      res<span class="ot">&lt;-</span><span class="fu">rbind</span>(res,<span class="fu">c</span>(</span>
+<span id="cb10-103"><a href="#cb10-103"></a>        rep,</span>
+<span id="cb10-104"><a href="#cb10-104"></a>        <span class="st">"MI"</span>,</span>
+<span id="cb10-105"><a href="#cb10-105"></a>        <span class="cn">NA</span>,</span>
+<span id="cb10-106"><a href="#cb10-106"></a>        <span class="cn">NA</span>,</span>
+<span id="cb10-107"><a href="#cb10-107"></a>        <span class="cn">NA</span>,</span>
+<span id="cb10-108"><a href="#cb10-108"></a>        <span class="cn">NA</span>),</span>
+<span id="cb10-109"><a href="#cb10-109"></a>        <span class="at">row.names=</span><span class="cn">NULL</span>)</span>
+<span id="cb10-110"><a href="#cb10-110"></a>    }</span>
+<span id="cb10-111"><a href="#cb10-111"></a>  } <span class="cf">else</span> {</span>
+<span id="cb10-112"><a href="#cb10-112"></a>    </span>
+<span id="cb10-113"><a href="#cb10-113"></a>    res<span class="ot">&lt;-</span><span class="fu">rbind</span>(res,<span class="fu">c</span>(</span>
+<span id="cb10-114"><a href="#cb10-114"></a>      rep,</span>
+<span id="cb10-115"><a href="#cb10-115"></a>      <span class="st">"MI"</span>,</span>
+<span id="cb10-116"><a href="#cb10-116"></a>      <span class="cn">NA</span>,</span>
+<span id="cb10-117"><a href="#cb10-117"></a>      <span class="cn">NA</span>,</span>
+<span id="cb10-118"><a href="#cb10-118"></a>      <span class="cn">NA</span>,</span>
+<span id="cb10-119"><a href="#cb10-119"></a>      <span class="cn">NA</span>),</span>
+<span id="cb10-120"><a href="#cb10-120"></a>      <span class="at">row.names=</span><span class="cn">NULL</span>)</span>
+<span id="cb10-121"><a href="#cb10-121"></a>  }</span>
+<span id="cb10-122"><a href="#cb10-122"></a>  </span>
+<span id="cb10-123"><a href="#cb10-123"></a>  <span class="fu">colnames</span>(res) <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="st">"rep"</span>, <span class="st">"method"</span>, <span class="st">"est"</span>, <span class="st">"se"</span>, <span class="st">"N"</span>, <span class="st">"df"</span>)</span>
+<span id="cb10-124"><a href="#cb10-124"></a>  </span>
+<span id="cb10-125"><a href="#cb10-125"></a>  <span class="fu">return</span>(res)</span>
+<span id="cb10-126"><a href="#cb10-126"></a>  </span>
+<span id="cb10-127"><a href="#cb10-127"></a>}</span>
+<span id="cb10-128"><a href="#cb10-128"></a></span>
+<span id="cb10-129"><a href="#cb10-129"></a><span class="co"># run simulation study</span></span>
+<span id="cb10-130"><a href="#cb10-130"></a>results <span class="ot">&lt;-</span> <span class="fu">foreach</span>( <span class="at">i =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">120</span>) <span class="sc">%do%</span> {    <span class="co"># Note that in order to save the seed we return results as a list</span></span>
+<span id="cb10-131"><a href="#cb10-131"></a>  dataframe <span class="ot">&lt;-</span> <span class="fu">gendata</span>( <span class="at">obs =</span> <span class="dv">200</span>, <span class="at">logite =</span> <span class="st">"-4+Ctrue"</span>, <span class="at">logitd =</span> <span class="st">"-4+Ctrue"</span>, <span class="at">pmiss =</span> <span class="fl">0.3</span>)</span>
+<span id="cb10-132"><a href="#cb10-132"></a>  resul<span class="ot">&lt;-</span><span class="fu">anadata</span>(dataframe, i)</span>
+<span id="cb10-133"><a href="#cb10-133"></a>  <span class="fu">attr</span>(resul, <span class="st">"seed"</span>)<span class="ot">&lt;-</span>.Random.seed  <span class="co"># Now store the seed after running the sim study, in case you want to continue from here later</span></span>
+<span id="cb10-134"><a href="#cb10-134"></a>  <span class="fu">cat</span>(<span class="st">"."</span>)</span>
+<span id="cb10-135"><a href="#cb10-135"></a>  <span class="cf">if</span> (i<span class="sc">%%</span><span class="dv">50</span><span class="sc">==</span><span class="dv">0</span>) <span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb10-136"><a href="#cb10-136"></a>  resul</span>
+<span id="cb10-137"><a href="#cb10-137"></a>}</span>
+<span id="cb10-138"><a href="#cb10-138"></a>results.df<span class="ot">&lt;-</span><span class="fu">bind_rows</span>(results, <span class="at">.id =</span> <span class="st">"rep"</span>)</span>
+<span id="cb10-139"><a href="#cb10-139"></a>results.df[,<span class="dv">3</span>]<span class="ot">&lt;-</span><span class="fu">as.numeric</span>(results.df[,<span class="dv">3</span>])</span>
+<span id="cb10-140"><a href="#cb10-140"></a>results.df[,<span class="dv">4</span>]<span class="ot">&lt;-</span><span class="fu">as.numeric</span>(results.df[,<span class="dv">4</span>])</span>
+<span id="cb10-141"><a href="#cb10-141"></a>results.df[,<span class="dv">5</span>]<span class="ot">&lt;-</span><span class="fu">as.numeric</span>(results.df[,<span class="dv">5</span>])</span>
+<span id="cb10-142"><a href="#cb10-142"></a>results.df[,<span class="dv">6</span>]<span class="ot">&lt;-</span><span class="fu">as.numeric</span>(results.df[,<span class="dv">6</span>])</span>
+<span id="cb10-143"><a href="#cb10-143"></a><span class="fu">summary</span>(results.df)</span>
+<span id="cb10-144"><a href="#cb10-144"></a><span class="fu">View</span>(results.df)</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="simcheck11.r" class="level2" data-number="5.11">
+<h2 data-number="5.11" class="anchored" data-anchor-id="simcheck11.r"><span class="header-section-number">5.11</span> simcheck11.r</h2>
+<div class="sourceCode" id="cb11" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="do">###################################</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="do">### simcheck11.R: Check Monte   </span><span class="al">###</span></span>
+<span id="cb11-3"><a href="#cb11-3"></a><span class="do">### Carlo errors.               </span><span class="al">###</span></span>
+<span id="cb11-4"><a href="#cb11-4"></a><span class="do">###################################</span></span>
+<span id="cb11-5"><a href="#cb11-5"></a></span>
+<span id="cb11-6"><a href="#cb11-6"></a><span class="co"># Load relevant libraries and source simcheck05.R</span></span>
+<span id="cb11-7"><a href="#cb11-7"></a><span class="fu">library</span>(boot) <span class="co"># Contains inv.logit function</span></span>
+<span id="cb11-8"><a href="#cb11-8"></a><span class="fu">library</span>(mice) <span class="co"># for MI</span></span>
+<span id="cb11-9"><a href="#cb11-9"></a><span class="fu">library</span>(foreach) <span class="co"># for using foreach loop</span></span>
+<span id="cb11-10"><a href="#cb11-10"></a><span class="fu">library</span>(dplyr) <span class="co"># To transform list fo data frame in single data frame</span></span>
+<span id="cb11-11"><a href="#cb11-11"></a><span class="fu">library</span>(rsimsum) <span class="co"># For computing performance measures with MCSE</span></span>
+<span id="cb11-12"><a href="#cb11-12"></a><span class="fu">source</span>(<span class="st">"simcheck05.R"</span>)</span>
+<span id="cb11-13"><a href="#cb11-13"></a></span>
+<span id="cb11-14"><a href="#cb11-14"></a><span class="co"># Set seed</span></span>
+<span id="cb11-15"><a href="#cb11-15"></a><span class="fu">set.seed</span>(<span class="dv">576819506</span>)</span>
+<span id="cb11-16"><a href="#cb11-16"></a></span>
+<span id="cb11-17"><a href="#cb11-17"></a><span class="co"># run simulation study</span></span>
+<span id="cb11-18"><a href="#cb11-18"></a>results <span class="ot">&lt;-</span> <span class="fu">foreach</span>( <span class="at">i =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>) <span class="sc">%do%</span> {    <span class="co"># Note that in order to save the seed we return results as a list</span></span>
+<span id="cb11-19"><a href="#cb11-19"></a>  dataframe <span class="ot">&lt;-</span> <span class="fu">gendata</span>( <span class="at">obs =</span> <span class="dv">500</span>, <span class="at">logite =</span> <span class="st">"-3+Ctrue"</span>, <span class="at">logitd =</span> <span class="st">"-1+Ctrue"</span>, <span class="at">pmiss =</span> <span class="fl">0.3</span>)</span>
+<span id="cb11-20"><a href="#cb11-20"></a>  resul<span class="ot">&lt;-</span><span class="fu">anadata</span>(dataframe, i)</span>
+<span id="cb11-21"><a href="#cb11-21"></a>  <span class="fu">attr</span>(resul, <span class="st">"seed"</span>)<span class="ot">&lt;-</span>.Random.seed  <span class="co"># Now store the seed after running the sim study, in case you want to continue from here later</span></span>
+<span id="cb11-22"><a href="#cb11-22"></a>  <span class="fu">cat</span>(<span class="st">"."</span>)</span>
+<span id="cb11-23"><a href="#cb11-23"></a>  <span class="cf">if</span> (i<span class="sc">%%</span><span class="dv">50</span><span class="sc">==</span><span class="dv">0</span>) <span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb11-24"><a href="#cb11-24"></a>  resul</span>
+<span id="cb11-25"><a href="#cb11-25"></a>}</span>
+<span id="cb11-26"><a href="#cb11-26"></a>results.df<span class="ot">&lt;-</span><span class="fu">bind_rows</span>(results, <span class="at">.id =</span> <span class="st">"rep"</span>)</span>
+<span id="cb11-27"><a href="#cb11-27"></a>results.df[,<span class="dv">3</span>]<span class="ot">&lt;-</span><span class="fu">as.numeric</span>(results.df[,<span class="dv">3</span>])</span>
+<span id="cb11-28"><a href="#cb11-28"></a>results.df[,<span class="dv">4</span>]<span class="ot">&lt;-</span><span class="fu">as.numeric</span>(results.df[,<span class="dv">4</span>])</span>
+<span id="cb11-29"><a href="#cb11-29"></a>results.df[,<span class="dv">5</span>]<span class="ot">&lt;-</span><span class="fu">as.numeric</span>(results.df[,<span class="dv">5</span>])</span>
+<span id="cb11-30"><a href="#cb11-30"></a>results.df[,<span class="dv">6</span>]<span class="ot">&lt;-</span><span class="fu">as.numeric</span>(results.df[,<span class="dv">6</span>])</span>
+<span id="cb11-31"><a href="#cb11-31"></a><span class="fu">summary</span>(results.df)</span>
+<span id="cb11-32"><a href="#cb11-32"></a></span>
+<span id="cb11-33"><a href="#cb11-33"></a><span class="fu">colnames</span>(results.df)[<span class="fu">which</span>(<span class="fu">colnames</span>(results.df)<span class="sc">==</span><span class="st">"est"</span>)]<span class="ot">&lt;-</span><span class="st">"logOR"</span></span>
+<span id="cb11-34"><a href="#cb11-34"></a>s <span class="ot">&lt;-</span> <span class="fu">simsum</span>(<span class="at">data =</span> results.df, <span class="at">estvarname =</span> <span class="st">"logOR"</span>, <span class="at">true =</span> <span class="dv">0</span>, <span class="at">se =</span> <span class="st">"se"</span>, <span class="at">methodvar =</span> <span class="st">"method"</span>, <span class="at">ref =</span> <span class="st">"Full"</span>)</span>
+<span id="cb11-35"><a href="#cb11-35"></a><span class="fu">summary</span>(s)</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="simcheck12.r" class="level2" data-number="5.12">
+<h2 data-number="5.12" class="anchored" data-anchor-id="simcheck12.r"><span class="header-section-number">5.12</span> simcheck12.r</h2>
+<div class="sourceCode" id="cb12" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="do">###################################</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a><span class="do">### simcheck12.R: Why are       </span><span class="al">###</span></span>
+<span id="cb12-3"><a href="#cb12-3"></a><span class="do">### Model-based SEs wrong?      </span><span class="al">###</span></span>
+<span id="cb12-4"><a href="#cb12-4"></a><span class="do">###################################</span></span>
+<span id="cb12-5"><a href="#cb12-5"></a></span>
+<span id="cb12-6"><a href="#cb12-6"></a><span class="co"># Load relevant libraries </span></span>
+<span id="cb12-7"><a href="#cb12-7"></a><span class="fu">library</span>(boot) <span class="co"># Contains inv.logit function</span></span>
+<span id="cb12-8"><a href="#cb12-8"></a><span class="fu">library</span>(mice) <span class="co"># for MI</span></span>
+<span id="cb12-9"><a href="#cb12-9"></a><span class="fu">library</span>(foreach) <span class="co"># for using foreach loop</span></span>
+<span id="cb12-10"><a href="#cb12-10"></a><span class="fu">library</span>(dplyr) <span class="co"># To transform list fo data frame in single data frame</span></span>
+<span id="cb12-11"><a href="#cb12-11"></a><span class="fu">library</span>(rsimsum) <span class="co"># For computing performance measures with MCSE</span></span>
+<span id="cb12-12"><a href="#cb12-12"></a></span>
+<span id="cb12-13"><a href="#cb12-13"></a><span class="co"># First, we write a function to generate complete data:</span></span>
+<span id="cb12-14"><a href="#cb12-14"></a></span>
+<span id="cb12-15"><a href="#cb12-15"></a>gendata <span class="ot">&lt;-</span> <span class="cf">function</span>( obs, logite, logitd) {</span>
+<span id="cb12-16"><a href="#cb12-16"></a>  </span>
+<span id="cb12-17"><a href="#cb12-17"></a>  Ctrue <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(obs)</span>
+<span id="cb12-18"><a href="#cb12-18"></a>  E <span class="ot">&lt;-</span> <span class="fu">runif</span>(obs) <span class="sc">&lt;</span> <span class="fu">inv.logit</span>(<span class="fu">eval</span>(<span class="fu">parse</span>(<span class="at">text=</span>logite)))</span>
+<span id="cb12-19"><a href="#cb12-19"></a>  D <span class="ot">&lt;-</span> <span class="fu">runif</span>(obs) <span class="sc">&lt;</span> <span class="fu">inv.logit</span>(<span class="fu">eval</span>(<span class="fu">parse</span>(<span class="at">text=</span>logitd)))</span>
+<span id="cb12-20"><a href="#cb12-20"></a>  data.out<span class="ot">&lt;-</span><span class="fu">data.frame</span>(D,E,Ctrue)</span>
+<span id="cb12-21"><a href="#cb12-21"></a>  </span>
+<span id="cb12-22"><a href="#cb12-22"></a>  <span class="fu">return</span>(data.out)  <span class="co"># for clarity, but redundant </span></span>
+<span id="cb12-23"><a href="#cb12-23"></a>  </span>
+<span id="cb12-24"><a href="#cb12-24"></a>}</span>
+<span id="cb12-25"><a href="#cb12-25"></a></span>
+<span id="cb12-26"><a href="#cb12-26"></a><span class="co"># Second, program to impose the missing data:</span></span>
+<span id="cb12-27"><a href="#cb12-27"></a></span>
+<span id="cb12-28"><a href="#cb12-28"></a>gendata2 <span class="ot">&lt;-</span> <span class="cf">function</span>( dat, pmiss) {</span>
+<span id="cb12-29"><a href="#cb12-29"></a>  </span>
+<span id="cb12-30"><a href="#cb12-30"></a>  data.out<span class="ot">&lt;-</span>dat</span>
+<span id="cb12-31"><a href="#cb12-31"></a>  data.out<span class="sc">$</span>Cobs<span class="ot">&lt;-</span>dat<span class="sc">$</span>Ctrue</span>
+<span id="cb12-32"><a href="#cb12-32"></a>  data.out<span class="sc">$</span>Cobs[<span class="fu">runif</span>(<span class="fu">nrow</span>(dat))<span class="sc">&lt;</span>pmiss]<span class="ot">&lt;-</span><span class="cn">NA</span></span>
+<span id="cb12-33"><a href="#cb12-33"></a>  </span>
+<span id="cb12-34"><a href="#cb12-34"></a>  <span class="fu">return</span>(data.out)  <span class="co"># for clarity, but redundant </span></span>
+<span id="cb12-35"><a href="#cb12-35"></a>  </span>
+<span id="cb12-36"><a href="#cb12-36"></a>}</span>
+<span id="cb12-37"><a href="#cb12-37"></a></span>
+<span id="cb12-38"><a href="#cb12-38"></a><span class="co"># Next we provide a function to analyse partially observed data.set:</span></span>
+<span id="cb12-39"><a href="#cb12-39"></a></span>
+<span id="cb12-40"><a href="#cb12-40"></a>anadata <span class="ot">&lt;-</span> <span class="cf">function</span>( dataframe, rep) {</span>
+<span id="cb12-41"><a href="#cb12-41"></a>  </span>
+<span id="cb12-42"><a href="#cb12-42"></a>  <span class="co"># Method 2: CCA  </span></span>
+<span id="cb12-43"><a href="#cb12-43"></a>  fit.cca<span class="ot">&lt;-</span><span class="fu">try</span>(<span class="fu">glm</span>(D<span class="sc">~</span>E<span class="sc">+</span>Cobs, <span class="at">family=</span><span class="fu">binomial</span>(<span class="at">link=</span><span class="st">"logit"</span>), <span class="at">data=</span>dataframe, <span class="at">singular.ok=</span>F, <span class="at">epsilon =</span> <span class="fl">1e-14</span>))</span>
+<span id="cb12-44"><a href="#cb12-44"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">inherits</span>(fit.cca, <span class="st">"try-error"</span>)) {</span>
+<span id="cb12-45"><a href="#cb12-45"></a>    res<span class="ot">&lt;-</span><span class="fu">data.frame</span>(</span>
+<span id="cb12-46"><a href="#cb12-46"></a>      rep <span class="ot">&lt;-</span> rep,</span>
+<span id="cb12-47"><a href="#cb12-47"></a>      method <span class="ot">&lt;-</span> <span class="st">"CCA"</span>,</span>
+<span id="cb12-48"><a href="#cb12-48"></a>      est <span class="ot">&lt;-</span> <span class="fu">coef</span>(fit.cca)[<span class="st">"ETRUE"</span>],</span>
+<span id="cb12-49"><a href="#cb12-49"></a>      se <span class="ot">&lt;-</span> <span class="fu">coef</span>(<span class="fu">summary</span>(fit.cca))[<span class="st">"ETRUE"</span>,<span class="dv">2</span>],</span>
+<span id="cb12-50"><a href="#cb12-50"></a>      N <span class="ot">&lt;-</span> <span class="fu">nobs</span>(fit.cca),</span>
+<span id="cb12-51"><a href="#cb12-51"></a>      df <span class="ot">&lt;-</span> <span class="cn">NA</span>, <span class="co"># df is only needed for MI but must be included for all</span></span>
+<span id="cb12-52"><a href="#cb12-52"></a>      <span class="at">row.names =</span> <span class="cn">NULL</span>)</span>
+<span id="cb12-53"><a href="#cb12-53"></a>  } <span class="cf">else</span> {</span>
+<span id="cb12-54"><a href="#cb12-54"></a>    res<span class="ot">&lt;-</span><span class="fu">data.frame</span>(</span>
+<span id="cb12-55"><a href="#cb12-55"></a>      rep <span class="ot">&lt;-</span> rep,</span>
+<span id="cb12-56"><a href="#cb12-56"></a>      method <span class="ot">&lt;-</span> <span class="st">"CCA"</span>,</span>
+<span id="cb12-57"><a href="#cb12-57"></a>      est <span class="ot">&lt;-</span> <span class="cn">NA</span>,</span>
+<span id="cb12-58"><a href="#cb12-58"></a>      se <span class="ot">&lt;-</span> <span class="cn">NA</span>,</span>
+<span id="cb12-59"><a href="#cb12-59"></a>      N <span class="ot">&lt;-</span> <span class="cn">NA</span>,</span>
+<span id="cb12-60"><a href="#cb12-60"></a>      df <span class="ot">&lt;-</span> <span class="cn">NA</span>, <span class="co"># df is only needed for MI but must be included for all</span></span>
+<span id="cb12-61"><a href="#cb12-61"></a>      <span class="at">row.names =</span> <span class="cn">NULL</span>)</span>
+<span id="cb12-62"><a href="#cb12-62"></a>    </span>
+<span id="cb12-63"><a href="#cb12-63"></a>  }</span>
+<span id="cb12-64"><a href="#cb12-64"></a>  </span>
+<span id="cb12-65"><a href="#cb12-65"></a>  <span class="co"># Method 3: MI </span></span>
+<span id="cb12-66"><a href="#cb12-66"></a>  df.mice<span class="ot">&lt;-</span>dataframe[,<span class="fu">c</span>(<span class="st">"Cobs"</span>, <span class="st">"D"</span>, <span class="st">"E"</span>)]</span>
+<span id="cb12-67"><a href="#cb12-67"></a>  df.mice<span class="sc">$</span>int<span class="ot">&lt;-</span>df.mice<span class="sc">$</span>D<span class="sc">*</span>df.mice<span class="sc">$</span>E</span>
+<span id="cb12-68"><a href="#cb12-68"></a>  imp <span class="ot">&lt;-</span> <span class="fu">try</span>(<span class="fu">mice</span>(df.mice, <span class="at">method =</span> <span class="st">"norm"</span>, <span class="at">m =</span> <span class="dv">5</span>, <span class="at">printFlag =</span> F))</span>
+<span id="cb12-69"><a href="#cb12-69"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">inherits</span>(imp, <span class="st">"try-error"</span>)) {</span>
+<span id="cb12-70"><a href="#cb12-70"></a>    fit <span class="ot">&lt;-</span> <span class="fu">with</span>(<span class="at">data =</span> imp, <span class="at">exp =</span> <span class="fu">glm</span>(D<span class="sc">~</span>E<span class="sc">+</span>Cobs, <span class="at">family=</span><span class="fu">binomial</span>(<span class="at">link=</span><span class="st">"logit"</span>), <span class="at">singular.ok=</span>F, <span class="at">epsilon =</span> <span class="fl">1e-14</span>))</span>
+<span id="cb12-71"><a href="#cb12-71"></a>    <span class="cf">if</span> (<span class="sc">!</span><span class="fu">inherits</span>(fit, <span class="st">"try-error"</span>)) {</span>
+<span id="cb12-72"><a href="#cb12-72"></a>      rub.rul<span class="ot">&lt;-</span><span class="fu">summary</span>(<span class="fu">pool</span>(fit))</span>
+<span id="cb12-73"><a href="#cb12-73"></a>      res<span class="ot">&lt;-</span><span class="fu">rbind</span>(res,<span class="fu">c</span>(</span>
+<span id="cb12-74"><a href="#cb12-74"></a>        rep,</span>
+<span id="cb12-75"><a href="#cb12-75"></a>        <span class="st">"MI"</span>,</span>
+<span id="cb12-76"><a href="#cb12-76"></a>        rub.rul[rub.rul<span class="sc">$</span>term<span class="sc">==</span><span class="st">"ETRUE"</span>,<span class="st">"estimate"</span>],</span>
+<span id="cb12-77"><a href="#cb12-77"></a>        rub.rul[rub.rul<span class="sc">$</span>term<span class="sc">==</span><span class="st">"ETRUE"</span>,<span class="st">"std.error"</span>],</span>
+<span id="cb12-78"><a href="#cb12-78"></a>        <span class="fu">nobs</span>(fit.fd),</span>
+<span id="cb12-79"><a href="#cb12-79"></a>        rub.rul[rub.rul<span class="sc">$</span>term<span class="sc">==</span><span class="st">"ETRUE"</span>,<span class="st">"df"</span>]),</span>
+<span id="cb12-80"><a href="#cb12-80"></a>        <span class="at">row.names=</span><span class="cn">NULL</span>)</span>
+<span id="cb12-81"><a href="#cb12-81"></a>    } <span class="cf">else</span> {</span>
+<span id="cb12-82"><a href="#cb12-82"></a>      </span>
+<span id="cb12-83"><a href="#cb12-83"></a>      res<span class="ot">&lt;-</span><span class="fu">rbind</span>(res,<span class="fu">c</span>(</span>
+<span id="cb12-84"><a href="#cb12-84"></a>        rep,</span>
+<span id="cb12-85"><a href="#cb12-85"></a>        <span class="st">"MI"</span>,</span>
+<span id="cb12-86"><a href="#cb12-86"></a>        <span class="cn">NA</span>,</span>
+<span id="cb12-87"><a href="#cb12-87"></a>        <span class="cn">NA</span>,</span>
+<span id="cb12-88"><a href="#cb12-88"></a>        <span class="cn">NA</span>,</span>
+<span id="cb12-89"><a href="#cb12-89"></a>        <span class="cn">NA</span>),</span>
+<span id="cb12-90"><a href="#cb12-90"></a>        <span class="at">row.names=</span><span class="cn">NULL</span>)</span>
+<span id="cb12-91"><a href="#cb12-91"></a>    }</span>
+<span id="cb12-92"><a href="#cb12-92"></a>  } <span class="cf">else</span> {</span>
+<span id="cb12-93"><a href="#cb12-93"></a>    </span>
+<span id="cb12-94"><a href="#cb12-94"></a>    res<span class="ot">&lt;-</span><span class="fu">rbind</span>(res,<span class="fu">c</span>(</span>
+<span id="cb12-95"><a href="#cb12-95"></a>      rep,</span>
+<span id="cb12-96"><a href="#cb12-96"></a>      <span class="st">"MI"</span>,</span>
+<span id="cb12-97"><a href="#cb12-97"></a>      <span class="cn">NA</span>,</span>
+<span id="cb12-98"><a href="#cb12-98"></a>      <span class="cn">NA</span>,</span>
+<span id="cb12-99"><a href="#cb12-99"></a>      <span class="cn">NA</span>,</span>
+<span id="cb12-100"><a href="#cb12-100"></a>      <span class="cn">NA</span>),</span>
+<span id="cb12-101"><a href="#cb12-101"></a>      <span class="at">row.names=</span><span class="cn">NULL</span>)</span>
+<span id="cb12-102"><a href="#cb12-102"></a>  }</span>
+<span id="cb12-103"><a href="#cb12-103"></a>  </span>
+<span id="cb12-104"><a href="#cb12-104"></a>  <span class="fu">colnames</span>(res) <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="st">"rep"</span>, <span class="st">"method"</span>, <span class="st">"est"</span>, <span class="st">"se"</span>, <span class="st">"N"</span>, <span class="st">"df"</span>)</span>
+<span id="cb12-105"><a href="#cb12-105"></a>  </span>
+<span id="cb12-106"><a href="#cb12-106"></a>  <span class="fu">return</span>(res)</span>
+<span id="cb12-107"><a href="#cb12-107"></a>  </span>
+<span id="cb12-108"><a href="#cb12-108"></a>}</span>
+<span id="cb12-109"><a href="#cb12-109"></a></span>
+<span id="cb12-110"><a href="#cb12-110"></a><span class="co"># Create complete data and find true value </span></span>
+<span id="cb12-111"><a href="#cb12-111"></a></span>
+<span id="cb12-112"><a href="#cb12-112"></a>full.data <span class="ot">&lt;-</span> <span class="fu">gendata</span>( <span class="at">obs =</span> <span class="dv">500</span>, <span class="at">logite =</span> <span class="st">"-3+Ctrue"</span>, <span class="at">logitd =</span> <span class="st">"-1+Ctrue"</span>)</span>
+<span id="cb12-113"><a href="#cb12-113"></a>fit.fd<span class="ot">&lt;-</span><span class="fu">try</span>(<span class="fu">glm</span>(D<span class="sc">~</span>E<span class="sc">+</span>Ctrue, <span class="at">family=</span><span class="fu">binomial</span>(<span class="at">link=</span><span class="st">"logit"</span>), <span class="at">data=</span>full.data, <span class="at">singular.ok=</span>F, <span class="at">epsilon =</span> <span class="fl">1e-14</span>))</span>
+<span id="cb12-114"><a href="#cb12-114"></a><span class="cf">if</span> (<span class="fu">class</span>(fit.fd)[<span class="dv">1</span>]<span class="sc">!=</span> <span class="st">"try-error"</span>) {</span>
+<span id="cb12-115"><a href="#cb12-115"></a>  true<span class="ot">&lt;-</span><span class="fu">coef</span>(fit.fd)[<span class="st">"ETRUE"</span>]</span>
+<span id="cb12-116"><a href="#cb12-116"></a>} <span class="cf">else</span> {</span>
+<span id="cb12-117"><a href="#cb12-117"></a>  true<span class="ot">&lt;-</span><span class="dv">0</span></span>
+<span id="cb12-118"><a href="#cb12-118"></a>}</span>
+<span id="cb12-119"><a href="#cb12-119"></a></span>
+<span id="cb12-120"><a href="#cb12-120"></a><span class="co"># Perform simulation (1000 repetitions)</span></span>
+<span id="cb12-121"><a href="#cb12-121"></a></span>
+<span id="cb12-122"><a href="#cb12-122"></a>results <span class="ot">&lt;-</span> <span class="fu">foreach</span>( <span class="at">i =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>) <span class="sc">%do%</span> {    <span class="co"># Note that in order to save the seed we return results as a list</span></span>
+<span id="cb12-123"><a href="#cb12-123"></a>  dataframe <span class="ot">&lt;-</span> <span class="fu">gendata2</span>( <span class="at">dat=</span>full.data, <span class="at">pmiss =</span> <span class="fl">0.3</span>)</span>
+<span id="cb12-124"><a href="#cb12-124"></a>  resul<span class="ot">&lt;-</span><span class="fu">anadata</span>(dataframe, i)</span>
+<span id="cb12-125"><a href="#cb12-125"></a>  <span class="fu">attr</span>(resul, <span class="st">"seed"</span>)<span class="ot">&lt;-</span>.Random.seed  <span class="co"># Now store the seed after running the sim study, in case you want to continue from here later</span></span>
+<span id="cb12-126"><a href="#cb12-126"></a>  <span class="fu">cat</span>(<span class="st">"."</span>)</span>
+<span id="cb12-127"><a href="#cb12-127"></a>  <span class="cf">if</span> (i<span class="sc">%%</span><span class="dv">50</span><span class="sc">==</span><span class="dv">0</span>) <span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb12-128"><a href="#cb12-128"></a>  resul</span>
+<span id="cb12-129"><a href="#cb12-129"></a>}</span>
+<span id="cb12-130"><a href="#cb12-130"></a>results.df<span class="ot">&lt;-</span><span class="fu">bind_rows</span>(results, <span class="at">.id =</span> <span class="st">"rep"</span>)</span>
+<span id="cb12-131"><a href="#cb12-131"></a>results.df[,<span class="dv">3</span>]<span class="ot">&lt;-</span><span class="fu">as.numeric</span>(results.df[,<span class="dv">3</span>])</span>
+<span id="cb12-132"><a href="#cb12-132"></a>results.df[,<span class="dv">4</span>]<span class="ot">&lt;-</span><span class="fu">as.numeric</span>(results.df[,<span class="dv">4</span>])</span>
+<span id="cb12-133"><a href="#cb12-133"></a>results.df[,<span class="dv">5</span>]<span class="ot">&lt;-</span><span class="fu">as.numeric</span>(results.df[,<span class="dv">5</span>])</span>
+<span id="cb12-134"><a href="#cb12-134"></a>results.df[,<span class="dv">6</span>]<span class="ot">&lt;-</span><span class="fu">as.numeric</span>(results.df[,<span class="dv">6</span>])</span>
+<span id="cb12-135"><a href="#cb12-135"></a><span class="fu">summary</span>(results.df)</span>
+<span id="cb12-136"><a href="#cb12-136"></a></span>
+<span id="cb12-137"><a href="#cb12-137"></a><span class="fu">colnames</span>(results.df)[<span class="fu">which</span>(<span class="fu">colnames</span>(results.df)<span class="sc">==</span><span class="st">"est"</span>)]<span class="ot">&lt;-</span><span class="st">"logOR"</span></span>
+<span id="cb12-138"><a href="#cb12-138"></a>s <span class="ot">&lt;-</span> <span class="fu">simsum</span>(<span class="at">data =</span> results.df, <span class="at">estvarname =</span> <span class="st">"logOR"</span>, <span class="at">true =</span> true, <span class="at">se =</span> <span class="st">"se"</span>, <span class="at">methodvar =</span> <span class="st">"method"</span>, <span class="at">ref =</span> <span class="st">"CCA"</span>)</span>
+<span id="cb12-139"><a href="#cb12-139"></a><span class="fu">summary</span>(s)</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="simcheck99.r" class="level2" data-number="5.13">
+<h2 data-number="5.13" class="anchored" data-anchor-id="simcheck99.r"><span class="header-section-number">5.13</span> simcheck99.r</h2>
+<div class="sourceCode" id="cb13" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="do">###################################</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a><span class="do">### simcheck99.R: A complete    </span><span class="al">###</span></span>
+<span id="cb13-3"><a href="#cb13-3"></a><span class="do">### successful simulation study.</span><span class="al">###</span></span>
+<span id="cb13-4"><a href="#cb13-4"></a><span class="do">###################################</span></span>
+<span id="cb13-5"><a href="#cb13-5"></a></span>
+<span id="cb13-6"><a href="#cb13-6"></a><span class="co"># Load relevant libraries and source simcheck05.R</span></span>
+<span id="cb13-7"><a href="#cb13-7"></a><span class="fu">library</span>(boot) <span class="co"># Contains inv.logit function</span></span>
+<span id="cb13-8"><a href="#cb13-8"></a><span class="fu">library</span>(mice) <span class="co"># for MI</span></span>
+<span id="cb13-9"><a href="#cb13-9"></a><span class="fu">library</span>(foreach) <span class="co"># for using foreach loop</span></span>
+<span id="cb13-10"><a href="#cb13-10"></a><span class="fu">library</span>(dplyr) <span class="co"># To transform list of data frame in single data frame</span></span>
+<span id="cb13-11"><a href="#cb13-11"></a><span class="fu">library</span>(rsimsum) <span class="co"># For computing performance measures with MCSE</span></span>
+<span id="cb13-12"><a href="#cb13-12"></a><span class="fu">source</span>(<span class="st">"simcheck05.R"</span>)</span>
+<span id="cb13-13"><a href="#cb13-13"></a></span>
+<span id="cb13-14"><a href="#cb13-14"></a><span class="co"># First, we write a function to generate complete data:</span></span>
+<span id="cb13-15"><a href="#cb13-15"></a></span>
+<span id="cb13-16"><a href="#cb13-16"></a>gendata <span class="ot">&lt;-</span> <span class="cf">function</span>( obs, logite, logitd) {</span>
+<span id="cb13-17"><a href="#cb13-17"></a>  </span>
+<span id="cb13-18"><a href="#cb13-18"></a>  Ctrue <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(obs)</span>
+<span id="cb13-19"><a href="#cb13-19"></a>  E <span class="ot">&lt;-</span> <span class="fu">runif</span>(obs) <span class="sc">&lt;</span> <span class="fu">inv.logit</span>(<span class="fu">eval</span>(<span class="fu">parse</span>(<span class="at">text=</span>logite)))</span>
+<span id="cb13-20"><a href="#cb13-20"></a>  D <span class="ot">&lt;-</span> <span class="fu">runif</span>(obs) <span class="sc">&lt;</span> <span class="fu">inv.logit</span>(<span class="fu">eval</span>(<span class="fu">parse</span>(<span class="at">text=</span>logitd)))</span>
+<span id="cb13-21"><a href="#cb13-21"></a>  data.out<span class="ot">&lt;-</span><span class="fu">data.frame</span>(D,E,Ctrue)</span>
+<span id="cb13-22"><a href="#cb13-22"></a>  </span>
+<span id="cb13-23"><a href="#cb13-23"></a>  <span class="fu">return</span>(data.out)  <span class="co"># for clarity, but redundant </span></span>
+<span id="cb13-24"><a href="#cb13-24"></a>  </span>
+<span id="cb13-25"><a href="#cb13-25"></a>}</span>
+<span id="cb13-26"><a href="#cb13-26"></a></span>
+<span id="cb13-27"><a href="#cb13-27"></a><span class="co"># Second, program to impose the missing data:</span></span>
+<span id="cb13-28"><a href="#cb13-28"></a></span>
+<span id="cb13-29"><a href="#cb13-29"></a>gendata2 <span class="ot">&lt;-</span> <span class="cf">function</span>( dat, pmiss) {</span>
+<span id="cb13-30"><a href="#cb13-30"></a>  </span>
+<span id="cb13-31"><a href="#cb13-31"></a>  data.out<span class="ot">&lt;-</span>dat</span>
+<span id="cb13-32"><a href="#cb13-32"></a>  data.out<span class="sc">$</span>Cobs<span class="ot">&lt;-</span>dat<span class="sc">$</span>Ctrue</span>
+<span id="cb13-33"><a href="#cb13-33"></a>  data.out<span class="sc">$</span>Cobs[<span class="fu">runif</span>(<span class="fu">nrow</span>(dat))<span class="sc">&lt;</span>pmiss]<span class="ot">&lt;-</span><span class="cn">NA</span></span>
+<span id="cb13-34"><a href="#cb13-34"></a>  </span>
+<span id="cb13-35"><a href="#cb13-35"></a>  <span class="fu">return</span>(data.out)  <span class="co"># for clarity, but redundant </span></span>
+<span id="cb13-36"><a href="#cb13-36"></a>  </span>
+<span id="cb13-37"><a href="#cb13-37"></a>}</span>
+<span id="cb13-38"><a href="#cb13-38"></a></span>
+<span id="cb13-39"><a href="#cb13-39"></a><span class="co"># Set seed</span></span>
+<span id="cb13-40"><a href="#cb13-40"></a><span class="fu">set.seed</span>(<span class="dv">576819506</span>)</span>
+<span id="cb13-41"><a href="#cb13-41"></a></span>
+<span id="cb13-42"><a href="#cb13-42"></a><span class="co"># run simulation study</span></span>
+<span id="cb13-43"><a href="#cb13-43"></a>results <span class="ot">&lt;-</span> <span class="fu">foreach</span>( <span class="at">i =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>) <span class="sc">%do%</span> {    <span class="co"># Note that in order to save the seed we return results as a list</span></span>
+<span id="cb13-44"><a href="#cb13-44"></a>  </span>
+<span id="cb13-45"><a href="#cb13-45"></a>  full.data <span class="ot">&lt;-</span> <span class="fu">gendata</span>( <span class="at">obs =</span> <span class="dv">500</span>, <span class="at">logite =</span> <span class="st">"-3+Ctrue"</span>, <span class="at">logitd =</span> <span class="st">"-1+Ctrue"</span>)</span>
+<span id="cb13-46"><a href="#cb13-46"></a>  </span>
+<span id="cb13-47"><a href="#cb13-47"></a>  <span class="co"># First, MCAR:</span></span>
+<span id="cb13-48"><a href="#cb13-48"></a>  dataframe <span class="ot">&lt;-</span> <span class="fu">gendata2</span>( <span class="at">dat =</span> full.data, <span class="at">pmiss=</span><span class="fl">0.3</span>)</span>
+<span id="cb13-49"><a href="#cb13-49"></a>  resul1<span class="ot">&lt;-</span><span class="fu">anadata</span>(dataframe, i)</span>
+<span id="cb13-50"><a href="#cb13-50"></a>  resul1<span class="sc">$</span>dgm<span class="ot">&lt;-</span><span class="st">"MCAR"</span></span>
+<span id="cb13-51"><a href="#cb13-51"></a>  </span>
+<span id="cb13-52"><a href="#cb13-52"></a>  <span class="co"># Then, MAR:</span></span>
+<span id="cb13-53"><a href="#cb13-53"></a>  dataframe2 <span class="ot">&lt;-</span> <span class="fu">gendata2</span>( <span class="at">dat =</span> full.data, <span class="at">pmiss=</span>.<span class="dv">1</span><span class="fl">+.2</span><span class="sc">*</span>full.data<span class="sc">$</span>E<span class="fl">+.2</span><span class="sc">*</span>full.data<span class="sc">$</span>D)</span>
+<span id="cb13-54"><a href="#cb13-54"></a>  resul2<span class="ot">&lt;-</span><span class="fu">anadata</span>(dataframe2, i)</span>
+<span id="cb13-55"><a href="#cb13-55"></a>  resul2<span class="sc">$</span>dgm<span class="ot">&lt;-</span><span class="st">"MAR"</span></span>
+<span id="cb13-56"><a href="#cb13-56"></a></span>
+<span id="cb13-57"><a href="#cb13-57"></a>  <span class="co"># Finally MNAR:</span></span>
+<span id="cb13-58"><a href="#cb13-58"></a>  dataframe3 <span class="ot">&lt;-</span> <span class="fu">gendata2</span>( <span class="at">dat =</span> full.data, <span class="at">pmiss=</span>.<span class="dv">2</span><span class="fl">+.2</span><span class="sc">*</span>full.data<span class="sc">$</span>Ctrue)</span>
+<span id="cb13-59"><a href="#cb13-59"></a>  resul3<span class="ot">&lt;-</span><span class="fu">anadata</span>(dataframe3, i)</span>
+<span id="cb13-60"><a href="#cb13-60"></a>  resul3<span class="sc">$</span>dgm<span class="ot">&lt;-</span><span class="st">"MNAR"</span></span>
+<span id="cb13-61"><a href="#cb13-61"></a>  </span>
+<span id="cb13-62"><a href="#cb13-62"></a>  resul<span class="ot">&lt;-</span><span class="fu">rbind</span>(resul1,resul2,resul3)</span>
+<span id="cb13-63"><a href="#cb13-63"></a>  </span>
+<span id="cb13-64"><a href="#cb13-64"></a>  <span class="fu">attr</span>(resul, <span class="st">"seed"</span>)<span class="ot">&lt;-</span>.Random.seed  <span class="co"># Now store the seed after running the sim study, in case you want to continue from here later</span></span>
+<span id="cb13-65"><a href="#cb13-65"></a>  <span class="fu">cat</span>(<span class="st">"."</span>)</span>
+<span id="cb13-66"><a href="#cb13-66"></a>  <span class="cf">if</span> (i<span class="sc">%%</span><span class="dv">50</span><span class="sc">==</span><span class="dv">0</span>) <span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb13-67"><a href="#cb13-67"></a>  resul</span>
+<span id="cb13-68"><a href="#cb13-68"></a>}</span>
+<span id="cb13-69"><a href="#cb13-69"></a>results.df<span class="ot">&lt;-</span><span class="fu">bind_rows</span>(results, <span class="at">.id =</span> <span class="st">"rep"</span>)</span>
+<span id="cb13-70"><a href="#cb13-70"></a>results.df[,<span class="dv">3</span>]<span class="ot">&lt;-</span><span class="fu">as.numeric</span>(results.df[,<span class="dv">3</span>])</span>
+<span id="cb13-71"><a href="#cb13-71"></a>results.df[,<span class="dv">4</span>]<span class="ot">&lt;-</span><span class="fu">as.numeric</span>(results.df[,<span class="dv">4</span>])</span>
+<span id="cb13-72"><a href="#cb13-72"></a>results.df[,<span class="dv">5</span>]<span class="ot">&lt;-</span><span class="fu">as.numeric</span>(results.df[,<span class="dv">5</span>])</span>
+<span id="cb13-73"><a href="#cb13-73"></a>results.df[,<span class="dv">6</span>]<span class="ot">&lt;-</span><span class="fu">as.numeric</span>(results.df[,<span class="dv">6</span>])</span>
+<span id="cb13-74"><a href="#cb13-74"></a><span class="fu">summary</span>(results.df)</span>
+<span id="cb13-75"><a href="#cb13-75"></a></span>
+<span id="cb13-76"><a href="#cb13-76"></a><span class="fu">colnames</span>(results.df)[<span class="fu">which</span>(<span class="fu">colnames</span>(results.df)<span class="sc">==</span><span class="st">"est"</span>)]<span class="ot">&lt;-</span><span class="st">"logOR"</span></span>
+<span id="cb13-77"><a href="#cb13-77"></a></span>
+<span id="cb13-78"><a href="#cb13-78"></a><span class="co"># correct one outlier to missing</span></span>
+<span id="cb13-79"><a href="#cb13-79"></a>results.df[results.df<span class="sc">$</span>se<span class="sc">&gt;</span><span class="dv">10</span>,]</span>
+<span id="cb13-80"><a href="#cb13-80"></a>results.df<span class="sc">$</span>logOR[results.df<span class="sc">$</span>se<span class="sc">&gt;</span><span class="dv">10</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb13-81"><a href="#cb13-81"></a>results.df<span class="sc">$</span>se[results.df<span class="sc">$</span>se<span class="sc">&gt;</span><span class="dv">10</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb13-82"><a href="#cb13-82"></a></span>
+<span id="cb13-83"><a href="#cb13-83"></a>s <span class="ot">&lt;-</span> <span class="fu">simsum</span>(<span class="at">data =</span> results.df, <span class="at">estvarname =</span> <span class="st">"logOR"</span>, <span class="at">true =</span> <span class="dv">0</span>, <span class="at">se =</span> <span class="st">"se"</span>, <span class="at">methodvar =</span> <span class="st">"method"</span>, <span class="at">ref =</span> <span class="st">"CCA"</span>, <span class="at">by=</span><span class="st">"dgm"</span>)</span>
+<span id="cb13-84"><a href="#cb13-84"></a><span class="fu">summary</span>(s)</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "コピーしました");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "コピーしました");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
+        for (let i=0; i<annoteTargets.length; i++) {
+          const annoteTarget = annoteTargets[i];
+          const targetCell = annoteTarget.getAttribute("data-target-cell");
+          const targetAnnotation = annoteTarget.getAttribute("data-target-annotation");
+          const contentFn = () => {
+            const content = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+            if (content) {
+              const tipContent = content.cloneNode(true);
+              tipContent.classList.add("code-annotation-tip-content");
+              return tipContent.outerHTML;
+            }
+          }
+          const config = {
+            allowHTML: true,
+            content: contentFn,
+            onShow: (instance) => {
+              selectCodeLines(instance.reference);
+              instance.reference.classList.add('code-annotation-active');
+              window.tippy.hideAll();
+            },
+            onHide: (instance) => {
+              unselectCodeLines();
+              instance.reference.classList.remove('code-annotation-active');
+            },
+            maxWidth: 300,
+            delay: [50, 0],
+            duration: [200, 0],
+            offset: [5, 10],
+            arrow: true,
+            trigger: 'click',
+            appendTo: function(el) {
+              return el.parentElement.parentElement.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'quarto',
+            placement: 'right',
+            positionFixed: true,
+            popperOptions: {
+              modifiers: [
+              {
+                name: 'flip',
+                options: {
+                  flipVariations: false, // true by default
+                  allowedAutoPlacements: ['right'],
+                  fallbackPlacements: ['right', 'top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left'],
+                },
+              },
+              {
+                name: 'preventOverflow',
+                options: {
+                  mainAxis: false,
+                  altAxis: false
+                }
+              }
+              ]        
+            }      
+          };
+          window.tippy(annoteTarget, config); 
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="https://github.com/kkts1010/kkts1010.github.io/">
+<p>Kota Sakamoto</p>
+</a>
+  </li>  
+</ul>
+    </div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/kkts1010/kkts1010.github.io/">
+<p>Kota Sakamoto</p>
+</a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/kkt_1010">
+      <i class="bi bi-twitter" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

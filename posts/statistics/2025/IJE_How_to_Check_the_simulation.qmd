@@ -1,0 +1,1128 @@
+---
+title: "How to check the simulation study"
+author: "坂本航太"
+categories: [疫学研究]
+abstract-title: Abstract
+abstract: ""
+date: "2025-08-26"
+---
+
+## 論文紹介
+
+以下の論文を基にRでのシミュレーション研究の方法を学ぶ
+
+::: callout-note
+# **How to check a simulation study *Open Access***
+
+[Ian R White](javascript:;) , [Tra My Pham](javascript:;) , [Matteo Quartagno](javascript:;) , [Tim P Morris](javascript:;)
+
+*International Journal of Epidemiology*, Volume 53, Issue 1, February 2024, dyad134, <https://doi.org/10.1093/ije/dyad134>
+:::
+
+## Abstract
+
+::: callout-note
+Simulation studies are powerful tools in epidemiology and biostatistics, but they can be hard to conduct successfully. Sometimes unexpected results are obtained. We offer advice on how to check a simulation study when this occurs, and how to design and conduct the study to give results that are easier to check. **Simulation studies should be designed to include some settings in which answers are already known.** They should be coded in stages, with data-generating mechanisms checked before simulated data are analysed. **Results should be explored carefully, with scatterplots of standard error estimates against point estimates surprisingly powerful tools.** Failed estimation and outlying estimates should be identified and dealt with by changing data-generating mechanisms or coding realistic hybrid analysis procedures. Finally, we give a series of ideas that have been useful to us in the past for checking unexpected results. Following our advice may help to prevent errors and to improve the quality of published simulation studies.
+:::
+
+## 本文
+
+-   We can divide the execution of a simulation study into three stages:
+
+    -   ‘design’ (identifying the aims, data-generating mechanisms, estimands, methods of analysis and performance measures)
+
+    -   ‘conduct’ (writing the code to simulate multiple data sets and analyse each one, yielding a data set of estimates);
+
+    -   ‘analysis’ (computing the performance measures from the estimates data set).
+
+## Table 1. Terms used in simulation studies
+
++----------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------+
+| Term                                         | Explanation                                                                                                                                |
++:=============================================+:===========================================================================================================================================+
+| **Aspects of a simulation study**            |                                                                                                                                            |
++----------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------+
+| Aims                                         | What question(s) the simulation study addresses                                                                                            |
++----------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------+
+| Data-generating mechanisms                   | How the simulated data sets are to be generated                                                                                            |
++----------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------+
+| Estimands                                    | The quantity or quantities to be estimated by the analysis of each simulated data set                                                      |
++----------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------+
+| Methods of analysis                          | How the simulated data sets are to be analysed: typically producing a point estimate and a CI                                              |
++----------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------+
+| Performance measures                         | How the performance of the methods of analysis is to be summarized                                                                         |
++----------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------+
+| Implementation                               | How the simulation is to be performed, including the software used, the number of repetitions and the handling of random number states     |
++----------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------+
+| **Data sets involved in a simulation study** |                                                                                                                                            |
++----------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------+
+| Simulated data set                           | A data set produced by one of the data-generating mechanisms in one repetition                                                             |
++----------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------+
+| Estimates data set                           | A data set containing results of each method of analysis for each simulated data set across many repetitions, used to estimate performance |
++----------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------+
+| States data set                              | A data set containing random number states for each simulated data set, that can be used to recreate any simulated data set                |
++----------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------+
+| Performance measures data set                | A data set containing the estimated performance measures for each data-generating mechanism and each method of analysis                    |
++----------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------+
+| **Some performance measures**                |                                                                                                                                            |
++----------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------+
+| Bias                                         | How the mean point estimate differs from the true estimand value                                                                           |
++----------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------+
+| Empirical standard error                     | The standard deviation of the point estimates in an estimates data set                                                                     |
++----------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------+
+| Model-based standard error                   | The average\^ standard error estimate in an estimates data set                                                                             |
++----------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------+
+| Relative error in model-based standard error | The difference between the model-based standard error and the empirical standard error, expressed as a fraction of the latter              |
++----------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------+
+| Coverage                                     | The proportion of CIs that include the true estimand value                                                                                 |
++----------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------+
+
+\^ Strictly, the root mean square of the standard error estimates.
+
++-----------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Aim                         | To compare multiple imputation with complete case analysis                                                                                                                                                                                                                                                                                                                                                                                                    |
++:============================+:==============================================================================================================================================================================================================================================================================================================================================================================================================================================================+
+| **Data-generating methods** | Quantitative confounder C is drawn from a standard Normal distribution. Binary exposure E and binary outcome D are drawn from logistic models depending on C (so E does not cause D). Values of C are made missing, initially using a missing completely at random model. Parameters to be varied are the marginal probabilities of E and D, the strength of the dependence of E and D on C, and the missing data mechanism. The sample size of 500 is fixed. |
++-----------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| **Estimand**                | The log odds ratio between E and D, conditional on C. Its true value is zero.                                                                                                                                                                                                                                                                                                                                                                                 |
++-----------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| **Methods**                 | Logistic regression of D on E and C, using:                                                                                                                                                                                                                                                                                                                                                                                                                   |
+|                             |                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+|                             | i\) full data before data deletion in C                                                                                                                                                                                                                                                                                                                                                                                                                       |
+|                             |                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+|                             | ii\) complete cases (excluding cases with missing C)                                                                                                                                                                                                                                                                                                                                                                                                          |
+|                             |                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+|                             | iii\) multiply imputed data to handle missing values of C—various imputation models may be used.                                                                                                                                                                                                                                                                                                                                                              |
++-----------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| **Performance measures**    | ・Bias                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+|                             |                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+|                             | ・empirical standard error                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+|                             |                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+|                             | ・ relative error in model-based standard error                                                                                                                                                                                                                                                                                                                                                                                                               |
+|                             |                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+|                             | ・ coverage.                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
++-----------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| **Implementation**          | 1000 repetitions advice on choosing this is available.                                                                                                                                                                                                                                                                                                                                                                                                        |
++-----------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+\^ Specific values used in the data-generating mechanisms can be found in the code
+
+# Design : planning the simulation
+
+## (1) include a setting with known properties
+
+We frequently do simulation studies to learn the properties of methods of analysis, but often we can identify a particular data-generating mechanism and a particular method of analysis where we know some aspect of the answer. This requires knowledge of the statistical properties of the methods. We can then check our results against these known answers.
+
+Example:
+
+In the multiple imputation simulation study, we included analysis of the full data before data deletion. Assuming the analysis procedure is correct, we expect this to be unbiased with correct coverage and more precise than any methods of analysis of the incomplete data. We also include a complete case analysis in a scenario with data missing completely at random, which is expected to be unbiased with correct coverage and less precise than multiple imputation methods of analysis. The above statements about lack of bias are not strictly correct, since logistic regression is biased in small samples. We could therefore include a further setting with a larger sample size.
+
+コメント：
+
+logistic regressinモデルが最尤推定量の漸近一致性しかないことを理解しておかないといけない。
+
+# Conduct: coding the simulation
+
+## (2) Write well-structured code
+
+It is helpful to write code that separates data generation, data analysis and computation of performance measures, so that each part can be studied separately. Code should be well commented to help collaborators and the coder’s future self; the final code should later be published and comments will then help the general reader.
+
+Example
+
+The Stata script simcheck02.do and the R script simcheck02.R separate out **data generation** and **data analysis**. We will add the calculation of performance measures later.
+
+## (3) Study a single very large data set
+
+The code for data generation should next be used to generate a single very large data set. Viewing descriptive statistics (e.g. histogram of a continuous outcome, cross-tabulation of exposure by outcome event) allows a check that the data match one’s intentions. In many cases, the model used to generate the data can be directly fitted to the simulated data. This should recover the parameters of the data-generating model such that CIs for the results usually include the known true values. Then the simulation code should be used to do the analyses.The results should be carefully checked for correct back- ground information (e.g. is the number of observations correct? ) and for credibility. Again, where methods are known to be correct, CIs for the results should usually include the known true values.
+
+Example:
+
+The scripts simcheck03.do and simcheck03.R generate a sin- gle data set of size 100 000 using a particular data-generating
+
+mechanism. They include standard descriptive statistics such as a cross-tabulation of D against E, showing that there is an unconditional association between D and E (log odds ratio 1⁄4 0.74 in Stata and 0.70 in R). This is important because one way in which imputation procedures could perform badly is by failing to control for confounding. The scripts also show that the logistic regressions of E and D on C have coefficient values very near to the values in the data-generating mechanism and that the analysis program runs successfully.
+
+## (4) Run the simulation with a small number of repetitions
+
+The simulation code should next be checked with a small number of repetitions: three repetitions are often enough at this stage. The screen output should be switched on so that it can be studied. The size of the simulated data set should be checked for each repetition. It is useful to verify that the second and third repetitions produce different data and results. Sometimes simulation code wrongly sets the random number state after starting the first repetition. If (for example) this is at the end of a repetition, then the second and third repetitions would produce identical data and results.
+
+This is the first time that we have created an estimates data set so it is timely to check that the estimates data set has the right structure, is indexed with the correct simulation repetition number and contains values that match the values reported in the screen output. For example, sometimes users store a variance when they meant to store a standard error estimate. Confusion can arise if screen output displays exponentiated parameters (odds ratios) but estimates are stored on the estimation scale (log odds ratios).
+
+Example
+
+The scripts simcheck04.do and simcheck04.R run three repe- titions of the simulation. The results look sensible and match the screen output.
+
+## (5) Anticipate analysis failures
+
+If a certain method of analysis can be anticipated to cause an error in some simulated data sets (e.g. perfect prediction in a logistic regression), the code should be written to capture the error so that the simulation does not halt. The method failure (with error code) should be stored in the estimates data set. Strategies for handling failures are described in later points.
+
+Example
+
+The scripts simcheck05.do and simcheck05.R recognize that either the imputation step or the model fitting to the imputed data may fail. They therefore detect either of these failures and post missing values to the estimates data set.
+
+## (6) Make it easy to recreate any simulated data set
+
+The estimates data set should include an identifier for the simulated data set alongside every estimate. If we can recreate the simulated data set for any particular identifier, then we can explore method failures and outliers (see points below). There are two ways to do this. One way is to store the random number state at the start of each data generation in a states data set so that the user can recreate any simulated data set. The alternative is to store every simulated data set.
+
+Some analyses, such as multiple imputation, also use random numbers. Recreating such analyses requires resetting the appropriate random number state. One way is to recreate the simulated data set (as above) and then repeat the analysis; if multiple analyses use random numbers then they must all be repeated in the original order. The alternative is to store the random number state at the start of each stochastic analysis.
+
+Example
+
+The scripts simcheck06.do and simcheck06.R store the random number states in a separate file. They then show how to reconstruct the third simulated data set.
+
+# Analysis: method failures and outliers
+
+Once the code is written and tested, we are ready to run the simulation study and start looking at the results. We first dis- cuss detecting and handling method failures and outliers.
+
+## (7) Count and understand method failures.
+
+For each data-generating mechanism and method, the user should identify what fraction of repetitions led to failed esti mation. The reasons for failed estimation need to be under- stood and the code should be improved if possible. That is, a bad optimization routine should be improved if it makes a method appear to fail. Unexpected results may be specific to particular software or packages.
+
+Example
+
+The scripts simcheck07.do and simcheck07.R use a different data-generating mechanism from previous runs. Inspecting the estimates data set shows four method failures in Stata and two in R. On closer exploration of the simulated data sets, we find that these data are very sparse, having either no exposed individuals or no outcome events in the individuals with observed C (a random positivity violation that may not be intended), and this is causing the complete case analysis to fail. The R function glm behaves differently and returns estimates even in the absence of outcome events. The sensible conclusion (in our setting in which positivity violations are not of main interest) is that the data-generating mechanism is too extreme and should be changed to generate
+
+## (8) Look for outliers
+
+It is important to examine the estimates data set carefully. A useful visual device is a scatter plot of the standard error estimate against the point estimate over all repetitions, separated by the data-generating mechanism and method. This scatter plot can identify the presence of outliers. Estimates can be outliers for the point estimate or the model-based standard error (or both). Such outliers are frequent causes, respectively, of unexpected bias and of unexpected error in the model- based standard error. A small number of outliers by them- selves do not affect coverage and often researchers are puzzled by, for example, a model-based standard error being apparently very large without any impact on coverage.
+
+Example
+
+The scripts simcheck08.do and simcheck08.R explore the estimates data sets produced by simcheck07.do and simcheck07.R. They plot the standard error estimates against the point estimates by method of analysis. Results differ be- tween the packages. In Stata (Figure 2, upper part), a substantial number of data sets have standard error estimates equal to zero, which indicates a problem with the analysis. Further inspection shows these data sets also have estimated coefficients equal to zero. In R (Figure 2, lower part), a substantial number of data sets have very large standard error estimate (2000–5000). These also have large point estimates, mostly between –10 and –20, some near þ20. We could change these outlying standard error estimates and their associated point estimates to missing values, but it is more important to understand their cause. We do this next.
+
+## (9) Understand outliers.
+
+If outliers are found, it is helpful to open or recreate one or more of the corresponding simulated data sets. The user should verify the outlying estimate and explore the reasons for it, such as by checking details of the analysis output and by supplementary analysis such as exploring model residuals or imputed data values.
+
+Example
+
+Scripts simcheck09.do and simcheck09.R each pull out one particular problem data set identified in point (viii). In both cases, the problem data set has no events among individuals with observed confounders. The different outputs from the two software packages (Figure 2) arise from the packages’ dif- ferent handling of this problem. Stata has detected perfect prediction,3 has dropped the exposure variable E from the model and has reported zero values for the point estimate and its standard error estimate. R has performed estimation regardless, has found the parameter estimate going towards plus or minus infinity without achieving convergence and has reported values when approximate convergence is achieved. Solutions to these problems are discussed next.
+
+## (10) Deal with outliers
+
+Any outliers are likely to strongly affect estimates of performance. It may be appropriate to change the data-generating mechanism to avoid outlying estimates. Otherwise, if outlying estimates would not be believed or reported in practice—that is, if the issue would be detected and the method of analysis not used—then they should not be included in the analysis of the simulation results. One way to do this is to exclude simulated data sets that result in outlying estimates. However, this can introduce a selection bias because the excluded simulated data sets are unlikely to be representative. An alternative is to code an automatic ‘backup procedure’ when a method returns an absurd result. This changes the method being investigated from a pure method to a hybrid procedure and it should make performance measures more relevant to practice. Alongside any of these approaches, the number of method failures or outliers is a useful additional performance measure.
+
+Example
+
+One way to avoid the problems seen in the multiple imputation simulation study is to increase the proportion of exposed away from the sparse case seen. We adopt this approach in the remaining points. Alternatively, if we were interested in the sparse case, we should ask whether outlying estimates might make sense in practice. An analyst might accept a log odds ratio of –15 and report an estimated odds ratio of zero, which implies either no events in the exposed group or no non-events in the unexposed. However, they should certainly not accept the very wide 95% CI. Instead they would probably use exact methods to generate a more correct CI. We could therefore code such exact methods into our simulation study as a backup procedure if extreme estimates are found. A different way to fix the analysis, and a more convenient solution for the simulation study, is to handle perfect prediction by using penalized logistic regression.5 This could be done as a backup procedure in analyses exhibiting a problem or in all analyses. The latter is illustrated in simcheck10.do and simcheck10.R.
+
+# Analysis: unexpected findings
+
+## (11) Check Monte Carlo errors
+
+Sometimes, some simulation findings are hard to believe: for example, a method selected to be unbiased appears to be biased or one method appears to be more precise than another when it should be less precise. In this case, it is important to look at the Monte Carlo errors and decide whether the findings are compatible with Monte Carlo error.
+
+Example
+
+The scripts simcheck11.do and simcheck11.R are our first complete runs of a simulation study avoiding sparse data. Results for bias suggest a larger bias in complete case analysis (e.g. in Stata –0.094) than in the other methods (–0.068 full data, ＋0.063 multiple imputation). Given that we are simulating under missing completely at random, we expect complete case analysis to be unbiased. Instead of concluding that our code is wrong, we should spot that these results are compatible with Monte Carlo error—that is, the observed bias for complete case analysis is \<2 Monte Carlo standard errors (0.049 ×2 = 0.098) and hence is perfectly compatible with zero bias. In fact these results were produced with just 100 repetitions. To detect a bias of this magnitude, more repetitions (say 1000) are needed.
+
+## (12) Why are model-based standard errors wrong?
+
+If model-based standard errors disagree with the empirical standard errors, it is worth considering whether the sources of variation in the data-generating mechanism and analysis correspond. For example, in a missing data simulation study, if each repetition under a given data-generating mechanism starts from the same full data set, then uncertainty due to the full data set will be reflected in the model-based standard error but not in the empirical standard error, making them not comparable regardless of the analysis used.
+
+Example
+
+The scripts simcheck12.do and simcheck12.R demonstrate this issue. Previous scripts drew a new full data set for each repetition, but these scripts create each simulated data set by deleting values from the same full data set. The model-based standard errors (e.g. in Stata 0.52 and 0.46 for complete case analysis and multiple imputation, respectively) are found to be substantially larger than the empirical standard errors (0.27 and 0.17). This is because the model-based standard errors account for sampling variation in the full data set whereas the sampling variation in the full data set does not exist in the simulation study so is not reflected in the empirical standard error. One solution here is to generate a new full data set for each repetition.
+
+## (13) Why is coverage poor?
+
+If coverage is poor, it is helpful to identify whether it is driven by bias, by intervals of the wrong width or both. Zip plots are a useful visualization devices for this purpose. They plot each interval, ordered according to compatibility with the true value, giving the impression of a ‘zip’ (or ‘zipper’).1
+
+## (14) Why do unexpected findings occur?
+
+Somewhat different errors can arise when focusing on test characteristics. Some pitfalls are to interchange power and type I error, or to mistake one-sided and two-sided type I tests.
+
+## (15) When do unexpected findings occur?
+
+If some findings remain hard to believe, it may be helpful to ask under what settings these findings occur. For example, if they occur only when the data-generating mechanism includes a particular source of variation, then maybe analyses are not allowing for this source of variation.
+
+## (15) General checking method
+
+If after the above steps the results of the simulation study are still in doubt, it can be useful to recode the simulation study in a different statistical package or have a different person code it. Sometimes another closely related simulation study that has been published with code is helpful. The user should first check that the published code does reproduce the published results. They can then change the published data-generating mechanisms to match those in the current simulation study (as closely as possible), run them and com- pare the results. Alternatively they can change their own data- generating mechanism parameters to match the published ones (as closely as possible) and run them and compare the results. This should help to narrow down where any errors are occurring. However, if code has been carefully checked and still gives an unexpected result, it is important to consider that the findings may be genuine showing that the theory may be wrong.
+
+## Simulation Studyの結果の表の見せ方
+
+![](images/paste-5.png)
+
+# Rプログラムを眺める
+
+## doall.R
+
+``` {.r eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+# simcheck: run all R files
+# IW 6sep2023
+
+# run in the "R" directory
+
+# R packages needed are: 
+#   foreign, boot, mice, foreach, dplyr, ggplot2, logistf, miceafter, rsimsum
+
+# do
+source("simcheck02.R")
+source("simcheck03.R")
+source("simcheck04.R")
+source("simcheck05.R")
+source("simcheck06.R")
+source("simcheck07.R")
+source("simcheck08.R")
+source("simcheck09.R")
+source("simcheck10.R")
+source("simcheck11.R")
+source("simcheck12.R")
+source("simcheck99.R")
+```
+
+最後はまとめて一括実行できるように準備する。
+
+実施に必要なパッケージも記載されている。
+
+## simcheck02.r
+
+``` {.r eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+###################################
+### simcheck02.R: script for    ###
+### simulating and analysing    ###
+### data.                       ###
+###################################
+
+# Load relevant libraries
+library(boot) # Contains inv.logit function
+library(mice) # for MI
+
+# First, we write a function to generate a single data set:
+
+#比較演算子
+D <- runif(10) < inv.logit(eval(parse(text="-1")))
+
+gendata <- function( obs, logite, logitd, pmiss ) {
+  
+  Ctrue <- rnorm(obs)
+  E <- runif(obs) < inv.logit(eval(parse(text=logite)))
+  D <- runif(obs) < inv.logit(eval(parse(text=logitd)))
+  Cobs<-Ctrue
+  Cobs[runif(obs)<pmiss]<-NA
+  data.out<-data.frame(Cobs,D,E,Ctrue)
+  
+  return(data.out)  # for clarity, but redundant 
+  
+}
+
+# Next we provide a function to analyse partially observed data.set:
+
+anadata <- function( dataframe, rep) {
+  
+  # Method 1: full data before data deletion  
+  fit.fd<-glm(D~E+Ctrue, family=binomial(link="logit"), data=dataframe, singular.ok=F, epsilon = 1e-14)
+  res<-data.frame(
+    rep <- rep,
+    method <- "Full",
+    est <- coef(fit.fd)["ETRUE"],
+    se <- coef(summary(fit.fd))["ETRUE",2],
+    N <- nobs(fit.fd),
+    df <- NA, # df is only needed for MI but must be included for all
+  row.names = NULL)
+  
+  # Method 2: CCA 
+  fit.cca<-glm(D~E+Cobs, family=binomial(link="logit"), data=dataframe, singular.ok=F, epsilon = 1e-14)
+  res<-rbind(res,c(
+   rep,
+    "CCA",
+    coef(fit.cca)["ETRUE"],
+    coef(summary(fit.cca))["ETRUE",2],
+    nobs(fit.cca),
+    NA # df is only needed for MI but must be included for all
+    ),
+  row.names=NULL)
+  
+  # Method 3: MI 
+  df.mice<-dataframe[,c("Cobs", "D", "E")]
+  df.mice$int<-df.mice$D*df.mice$E
+  imp <- mice(df.mice, method = "norm", m = 5, printFlag = F)
+  fit <- with(data = imp, exp = glm(D~E+Cobs, family=binomial(link="logit"), singular.ok=F, epsilon = 1e-14))
+  rub.rul<-summary(pool(fit))
+  res<-rbind(res,c(
+    rep,
+    "MI",
+    rub.rul[rub.rul$term=="ETRUE","estimate"],
+    rub.rul[rub.rul$term=="ETRUE","std.error"],
+    nobs(fit.fd),
+    rub.rul[rub.rul$term=="ETRUE","df"]),
+  row.names=NULL)
+  
+  colnames(res) <- c( "rep", "method", "est", "se", "N", "df")
+  return(res)
+  
+}
+```
+
+## simcheck3.r
+
+``` {.r eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+###################################
+### simcheck03.R: Simulate      ###
+### and analyse a single data   ###
+### set.                        ###
+###################################
+
+# Load relevant libraries and source simcheck02.R
+library(boot) # Contains inv.logit function
+library(mice) # for MI
+source("simcheck02.R")
+
+# Set seed
+set.seed(576819506)
+
+# generate a single large data set
+dataframe <- gendata( obs = 100000, logite = "-1+Ctrue", logitd = "-1+Ctrue", pmiss = 0.3)
+
+# summarise the data
+summary(dataframe)
+addmargins(table(dataframe[is.na(dataframe$Cobs),"D"],dataframe[is.na(dataframe$Cobs),"E"])) 
+addmargins(table(dataframe[!is.na(dataframe$Cobs),"D"],dataframe[!is.na(dataframe$Cobs),"E"])) 
+fit.unad <- glm(D~E, data=dataframe, family=binomial(link="logit"))
+summary(fit.unad)
+confint(fit.unad)
+
+# fit the data generating models
+glm(E~Ctrue, data=dataframe, family=binomial(link="logit"))
+glm(D~Ctrue, data=dataframe, family=binomial(link="logit"))
+
+# analyse the data
+results <- anadata(dataframe, 1)
+results  
+```
+
+## simcheck04.r
+
+``` {.r eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+###################################
+### simcheck04.R: Run a few     ###
+### iterations.                 ###
+###################################
+
+# Load relevant libraries and source simcheck02.R
+library(boot) # Contains inv.logit function
+library(mice) # for MI
+library(foreach) # for using foreach loop
+source("simcheck02.R")
+
+# Set seed
+set.seed(576819506)
+
+# run 3 repetitions
+results <- foreach( i = 1:3, .combine="rbind") %do% {
+  dataframe <- gendata( obs = 500, logite = "-1+Ctrue", logitd = "-1+Ctrue", pmiss = 0.3)
+  anadata(dataframe, i)
+
+}
+
+# view results
+# Vies関数をかましておくことで、チェックができる！
+View(results)
+```
+
+## simcheck05.r
+
+``` {.r eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+###################################
+### simcheck05.R: script for    ###
+### anticipating analysis       ###
+### failures.                   ###
+###################################
+
+# Load relevant libraries
+library(boot) # Contains inv.logit function
+library(mice) # for MI
+
+# First, we write a function to generate a single data set:
+
+gendata <- function( obs, logite, logitd, pmiss ) {
+  
+  Ctrue <- rnorm(obs)
+  E <- runif(obs) < inv.logit(eval(parse(text=logite)))
+  D <- runif(obs) < inv.logit(eval(parse(text=logitd)))
+  Cobs<-Ctrue
+  Cobs[runif(obs)<pmiss]<-NA
+  data.out<-data.frame(Cobs,D,E,Ctrue)
+  
+  return(data.out)  # for clarity, but redundant 
+  
+}
+
+# Next we provide a function to analyse partially observed data.set anticipating possible failures:
+
+anadata <- function( dataframe, rep, print.output=F) {
+  
+  # Method 1: full data before data deletion  
+  fit.fd<-try(glm(D~E+Ctrue, family=binomial(link="logit"), data=dataframe, singular.ok=F))
+  if (print.output) print(summary(fit.fd)) # To print output when checking on few iterations
+  if (!inherits(fit.fd, "try-error")) {
+    res<-data.frame(
+      rep <- rep,
+      method <- "Full",
+      est <- coef(fit.fd)["ETRUE"],
+      se <- coef(summary(fit.fd))["ETRUE",2],
+      N <- nobs(fit.fd),
+      df <- NA, # df is only needed for MI but must be included for all
+      row.names = NULL)
+  } else {
+    res<-data.frame(
+      rep <- rep,
+      method <- "Full",
+      est <- NA,
+      se <- NA,
+      N <- NA,
+      df <- NA, # df is only needed for MI but must be included for all
+      row.names = NULL)
+    
+  }
+  
+  # Method 2: CCA 
+  fit.cca<-try(glm(D~E+Cobs, family=binomial(link="logit"), data=dataframe, singular.ok=F))
+  if (print.output) print(summary(fit.cca)) # To print output when checking on few iterations
+  if (!inherits(fit.cca, "try-error")) {
+    res<-rbind(res,c(
+      rep,
+      "CCA",
+      coef(fit.cca)["ETRUE"],
+      coef(summary(fit.cca))["ETRUE",2],
+      nobs(fit.cca),
+      NA # df is only needed for MI but must be included for all
+    ),
+    row.names=NULL)
+  } else {
+    res<-rbind(res,c(
+      rep,
+      "CCA",
+      NA,
+      NA,
+      NA,
+      NA # df is only needed for MI but must be included for all
+    ),
+    row.names=NULL)
+  }
+
+  
+  # Method 3: MI 
+  df.mice<-dataframe[,c("Cobs", "D", "E")]
+  df.mice$int<-df.mice$D*df.mice$E
+  imp <- try(mice(df.mice, method = "norm", m = 5, printFlag = F))
+  if (!inherits(imp, "try-error")) {
+    fit <- with(data = imp, exp = glm(D~E+Cobs, family=binomial(link="logit"), singular.ok=F))
+    if (!inherits(fit, "try-error")) {
+      rub.rul<-summary(pool(fit))
+      if (print.output) print(rub.rul) # To print output when checking on few iterations
+      res<-rbind(res,c(
+        rep,
+        "MI",
+        rub.rul[rub.rul$term=="ETRUE","estimate"],
+        rub.rul[rub.rul$term=="ETRUE","std.error"],
+        nobs(fit.fd),
+        rub.rul[rub.rul$term=="ETRUE","df"]),
+        row.names=NULL)
+    } else {
+      
+      res<-rbind(res,c(
+        rep,
+        "MI",
+        NA,
+        NA,
+        NA,
+        NA),
+        row.names=NULL)
+    }
+  } else {
+    
+    res<-rbind(res,c(
+      rep,
+      "MI",
+      NA,
+      NA,
+      NA,
+      NA),
+      row.names=NULL)
+  }
+  
+  colnames(res) <- c( "rep", "method", "est", "se", "N", "df")
+  
+  return(res)
+  
+}
+```
+
+## simcheck06.r
+
+``` {.r eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+###################################
+### simcheck06.R: Make it easy  ###
+### to re-create any simulated  ###
+### data set.                   ###
+###################################
+
+# Load relevant libraries and source simcheck05.R
+library(boot) # Contains inv.logit function
+library(mice) # for MI
+library(foreach) # for using foreach loop
+source("simcheck05.R")
+
+# Set seed
+set.seed(576819506)
+
+# run 3 repetitions
+results <- foreach( i = 1:3) %do% {    # Note that in order to save the seed we return results as a list
+  dataframe <- gendata( obs = 500, logite = "-1+Ctrue", logitd = "-1+Ctrue", pmiss = 0.3)
+  resul<-anadata(dataframe, i, print.output = T) # Printing output to double check we are storing correct estimates
+  attr(resul, "seed")<-.Random.seed  # Now store the seed after running the sim study, in case you want to continue from here later
+  resul
+}
+
+# view stored results for 3rd repetition
+View(results[[3]])
+
+# reconstruct data set for 3rd repetition and check it gives same results
+.Random.seed <- attr(results[[2]], "seed") # Need the seed status after running 2 repetitions
+dataframe <- gendata( obs = 500, logite = "-1+Ctrue", logitd = "-1+Ctrue", pmiss = 0.3)
+resul<-anadata(dataframe, i)
+View(resul)
+# can verify that these results are the same
+```
+
+## simcheck07.r
+
+``` {.r eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+###################################
+### simcheck07.R: Assess method ###
+### failures.                   ###
+###################################
+  
+# Load relevant libraries and source simcheck05.R
+library(boot) # Contains inv.logit function
+library(mice) # for MI
+library(foreach) # for using foreach loop
+library(dplyr) # To transform list for data frame in single data frame
+source("simcheck05.R")
+
+# Set seed
+set.seed(576819506)
+
+# run simulation study
+# we increase reps to 120 for illustrative purposes
+results <- foreach( i = 1:120) %do% {    # Note that in order to save the seed we return results as a list
+  dataframe <- gendata( obs = 200, logite = "-4+Ctrue", logitd = "-4+Ctrue", pmiss = 0.3)
+  resul<-anadata(dataframe, i)
+  attr(resul, "seed")<-.Random.seed  # Now store the seed after running the sim study, in case you want to continue from here later
+  cat(".")  # To create progress bar. This can also be done with utils::txtProgressBar()` 
+  if (i%%50==0) cat("\n")
+  resul
+}
+results.df<-bind_rows(results, .id = "rep")
+results.df[,3]<-as.numeric(results.df[,3])
+results.df[,4]<-as.numeric(results.df[,4])
+results.df[,5]<-as.numeric(results.df[,5])
+results.df[,6]<-as.numeric(results.df[,6])
+summary(results.df)
+
+# Inspect results for method failures
+View(results.df[is.na(results.df$est),])
+View(results.df[results.df$rep==110,])
+
+# Reconstruct one data set with method failures
+.Random.seed <- attr(results[[109]], "seed") # Need the seed status after running 109 repetitions
+dataframe <- gendata( obs = 200, logite = "-4+Ctrue", logitd = "-4+Ctrue", pmiss = 0.3)
+
+# and explore it
+addmargins(table(dataframe[!is.na(dataframe$Cobs),"D"],dataframe[!is.na(dataframe$Cobs),"E"])) 
+fit.ad <- glm(D~E+Cobs, data=dataframe, family=binomial(link="logit"))
+summary(fit.ad)
+
+# Save results
+save(results, results.df, file="simcheck07_results.RData")
+
+# Export results for Stata
+library(foreign) # read/write data to different formats
+write.dta(results.df, "simcheck07_Rresults.dta") # to Stata format
+```
+
+## simcheck08.r
+
+``` {.r eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+###################################
+### simcheck08.R: Check for     ###
+### outliers.                   ###
+###################################
+
+# Load relevant libraries, source simcheck05.R and load simcheck08_results.RData
+library(boot) # Contains inv.logit function
+library(mice) # for MI
+library(ggplot2)
+
+source("simcheck05.R")
+load("simcheck07_results.RData")
+
+# Find where very large se occurs
+large.ses<-unique(results.df[results.df$se>100,"rep"])
+
+# Re-level so that Full is reference:
+results.df$method<-factor(results.df$method, levels=c("Full", "CCA", "MI"))
+
+# Scatterplot of SE against estimate
+ggplot(results.df,aes(x=est,y=se)) + 
+  geom_point(size = 2) + 
+  facet_wrap(~method, ncol = 3) + 
+  labs(x="Point estimate", y="Standard error estimate")
+```
+
+## simcheck09.r
+
+``` {.r eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+###################################
+### simcheck09.R: Investigate   ###
+### outliers.                   ###
+###################################
+
+# Load relevant libraries and source simcheck05.R
+library(boot) # Contains inv.logit function
+library(mice) # for MI
+library(foreach) # for using foreach loop
+library(dplyr) # To transform list fo data frame in single data frame
+source("simcheck05.R")
+
+load("simcheck07_results.RData")
+
+# Find where very large se occurs
+large.ses<-unique(results.df[results.df$se>100,"rep"])
+
+# let's pick out the second rep
+results.df[results.df$rep==2,]
+
+# Reconstruct this data set with method failures
+.Random.seed <- attr(results[[1]], "seed") # Need the seed status after running 1 repetitions
+dataframe <- gendata( obs = 200, logite = "-4+Ctrue", logitd = "-4+Ctrue", pmiss = 0.3)
+
+# and explore it
+addmargins(table(dataframe[!is.na(dataframe$Cobs),"D"],dataframe[!is.na(dataframe$Cobs),"E"])) 
+fit.ad <- glm(D~E+Cobs, data=dataframe, family=binomial(link="logit"), singular.ok=F, epsilon = 1e-14)
+summary(fit.ad)
+```
+
+## simcheck10.r
+
+``` {.r eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+###################################
+### simcheck10.R: Deal with     ###
+### Outliers.                   ###
+###################################
+
+# Load relevant libraries and source simcheck05.R
+library(boot) # Contains inv.logit function
+library(mice) # for MI
+library(foreach) # for using foreach loop
+library(dplyr) # To transform list fo data frame in single data frame
+library(logistf) # To use Firth correction
+library(miceafter) # To apply Rubin s rules after using logistf
+source("simcheck05.R")
+
+# Set seed
+set.seed(576819506)
+
+# Changed program to analyse the data using Firth correction:
+
+anadata <- function( dataframe, rep) {
+  
+  # Method 1: full data before data deletion  
+  fit.fd<-try(logistf(D~E+Ctrue, data=dataframe, singular.ok=F, epsilon = 1e-14))
+  if (!inherits(fit.fd, "try-error")) {
+    res<-data.frame(
+      rep <- rep,
+      method <- "Full",
+      est <- coef(fit.fd)["ETRUE"],
+      se <- sqrt(diag(summary(fit.fd)$var))[2],
+      N <- nobs(fit.fd),
+      df <- NA, # df is only needed for MI but must be included for all
+      row.names = NULL)
+  } else {
+    res<-data.frame(
+      rep <- rep,
+      method <- "Full",
+      est <- NA,
+      se <- NA,
+      N <- NA,
+      df <- NA, # df is only needed for MI but must be included for all
+      row.names = NULL)
+    
+  }
+  
+  # Method 2: CCA 
+  fit.cca<-try(logistf(D~E+Cobs, data=dataframe, singular.ok=F, epsilon = 1e-14))
+  if (!inherits(fit.cca, "try-error")) {
+    res<-rbind(res,c(
+      rep,
+      "CCA",
+      coef(fit.cca)["ETRUE"],
+      sqrt(diag(summary(fit.cca)$var))[2],
+      nobs(fit.cca),
+      NA # df is only needed for MI but must be included for all
+    ),
+    row.names=NULL)
+  } else {
+    res<-rbind(res,c(
+      rep,
+      "CCA",
+      NA,
+      NA,
+      NA,
+      NA # df is only needed for MI but must be included for all
+    ),
+    row.names=NULL)
+  }
+  
+  
+  # Method 3: MI 
+  df.mice<-dataframe[,c("Cobs", "D", "E")]
+  df.mice$int<-df.mice$D*df.mice$E
+  imp <- try(mice(df.mice, method = "norm", m = 5, printFlag = F))
+  if (!inherits(imp, "try-error")) {
+    fit <- with(data = imp, exp = logistf(D~E+Cobs, singular.ok=F, epsilon = 1e-14))
+    if (!inherits(fit, "try-error")) {
+      coefs<-c(
+        fit$analyses[[1]]$coefficients["ETRUE"],
+        fit$analyses[[2]]$coefficients["ETRUE"],
+        fit$analyses[[3]]$coefficients["ETRUE"],
+        fit$analyses[[4]]$coefficients["ETRUE"],
+        fit$analyses[[5]]$coefficients["ETRUE"]
+      )
+      ses<-c(
+        sqrt(diag(fit$analyses[[1]]$var))[2],
+        sqrt(diag(fit$analyses[[2]]$var))[2],
+        sqrt(diag(fit$analyses[[3]]$var))[2],
+        sqrt(diag(fit$analyses[[4]]$var))[2],
+        sqrt(diag(fit$analyses[[5]]$var))[2]
+      )
+      rub.rul <- pool_scalar_RR(coefs, ses, dfcom=200-3) # mice pool could not be used with logistf
+      res<-rbind(res,c(
+        rep,
+        "MI",
+        rub.rul$pool_est,
+        rub.rul$pool_se,
+        nobs(fit.fd),
+        rub.rul$v_adj), 
+        row.names=NULL)
+    } else {
+      
+      res<-rbind(res,c(
+        rep,
+        "MI",
+        NA,
+        NA,
+        NA,
+        NA),
+        row.names=NULL)
+    }
+  } else {
+    
+    res<-rbind(res,c(
+      rep,
+      "MI",
+      NA,
+      NA,
+      NA,
+      NA),
+      row.names=NULL)
+  }
+  
+  colnames(res) <- c( "rep", "method", "est", "se", "N", "df")
+  
+  return(res)
+  
+}
+
+# run simulation study
+results <- foreach( i = 1:120) %do% {    # Note that in order to save the seed we return results as a list
+  dataframe <- gendata( obs = 200, logite = "-4+Ctrue", logitd = "-4+Ctrue", pmiss = 0.3)
+  resul<-anadata(dataframe, i)
+  attr(resul, "seed")<-.Random.seed  # Now store the seed after running the sim study, in case you want to continue from here later
+  cat(".")
+  if (i%%50==0) cat("\n")
+  resul
+}
+results.df<-bind_rows(results, .id = "rep")
+results.df[,3]<-as.numeric(results.df[,3])
+results.df[,4]<-as.numeric(results.df[,4])
+results.df[,5]<-as.numeric(results.df[,5])
+results.df[,6]<-as.numeric(results.df[,6])
+summary(results.df)
+View(results.df)
+```
+
+## simcheck11.r
+
+``` {.r eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+###################################
+### simcheck11.R: Check Monte   ###
+### Carlo errors.               ###
+###################################
+
+# Load relevant libraries and source simcheck05.R
+library(boot) # Contains inv.logit function
+library(mice) # for MI
+library(foreach) # for using foreach loop
+library(dplyr) # To transform list fo data frame in single data frame
+library(rsimsum) # For computing performance measures with MCSE
+source("simcheck05.R")
+
+# Set seed
+set.seed(576819506)
+
+# run simulation study
+results <- foreach( i = 1:100) %do% {    # Note that in order to save the seed we return results as a list
+  dataframe <- gendata( obs = 500, logite = "-3+Ctrue", logitd = "-1+Ctrue", pmiss = 0.3)
+  resul<-anadata(dataframe, i)
+  attr(resul, "seed")<-.Random.seed  # Now store the seed after running the sim study, in case you want to continue from here later
+  cat(".")
+  if (i%%50==0) cat("\n")
+  resul
+}
+results.df<-bind_rows(results, .id = "rep")
+results.df[,3]<-as.numeric(results.df[,3])
+results.df[,4]<-as.numeric(results.df[,4])
+results.df[,5]<-as.numeric(results.df[,5])
+results.df[,6]<-as.numeric(results.df[,6])
+summary(results.df)
+
+colnames(results.df)[which(colnames(results.df)=="est")]<-"logOR"
+s <- simsum(data = results.df, estvarname = "logOR", true = 0, se = "se", methodvar = "method", ref = "Full")
+summary(s)
+```
+
+## simcheck12.r
+
+``` {.r eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+###################################
+### simcheck12.R: Why are       ###
+### Model-based SEs wrong?      ###
+###################################
+
+# Load relevant libraries 
+library(boot) # Contains inv.logit function
+library(mice) # for MI
+library(foreach) # for using foreach loop
+library(dplyr) # To transform list fo data frame in single data frame
+library(rsimsum) # For computing performance measures with MCSE
+
+# First, we write a function to generate complete data:
+
+gendata <- function( obs, logite, logitd) {
+  
+  Ctrue <- rnorm(obs)
+  E <- runif(obs) < inv.logit(eval(parse(text=logite)))
+  D <- runif(obs) < inv.logit(eval(parse(text=logitd)))
+  data.out<-data.frame(D,E,Ctrue)
+  
+  return(data.out)  # for clarity, but redundant 
+  
+}
+
+# Second, program to impose the missing data:
+
+gendata2 <- function( dat, pmiss) {
+  
+  data.out<-dat
+  data.out$Cobs<-dat$Ctrue
+  data.out$Cobs[runif(nrow(dat))<pmiss]<-NA
+  
+  return(data.out)  # for clarity, but redundant 
+  
+}
+
+# Next we provide a function to analyse partially observed data.set:
+
+anadata <- function( dataframe, rep) {
+  
+  # Method 2: CCA  
+  fit.cca<-try(glm(D~E+Cobs, family=binomial(link="logit"), data=dataframe, singular.ok=F, epsilon = 1e-14))
+  if (!inherits(fit.cca, "try-error")) {
+    res<-data.frame(
+      rep <- rep,
+      method <- "CCA",
+      est <- coef(fit.cca)["ETRUE"],
+      se <- coef(summary(fit.cca))["ETRUE",2],
+      N <- nobs(fit.cca),
+      df <- NA, # df is only needed for MI but must be included for all
+      row.names = NULL)
+  } else {
+    res<-data.frame(
+      rep <- rep,
+      method <- "CCA",
+      est <- NA,
+      se <- NA,
+      N <- NA,
+      df <- NA, # df is only needed for MI but must be included for all
+      row.names = NULL)
+    
+  }
+  
+  # Method 3: MI 
+  df.mice<-dataframe[,c("Cobs", "D", "E")]
+  df.mice$int<-df.mice$D*df.mice$E
+  imp <- try(mice(df.mice, method = "norm", m = 5, printFlag = F))
+  if (!inherits(imp, "try-error")) {
+    fit <- with(data = imp, exp = glm(D~E+Cobs, family=binomial(link="logit"), singular.ok=F, epsilon = 1e-14))
+    if (!inherits(fit, "try-error")) {
+      rub.rul<-summary(pool(fit))
+      res<-rbind(res,c(
+        rep,
+        "MI",
+        rub.rul[rub.rul$term=="ETRUE","estimate"],
+        rub.rul[rub.rul$term=="ETRUE","std.error"],
+        nobs(fit.fd),
+        rub.rul[rub.rul$term=="ETRUE","df"]),
+        row.names=NULL)
+    } else {
+      
+      res<-rbind(res,c(
+        rep,
+        "MI",
+        NA,
+        NA,
+        NA,
+        NA),
+        row.names=NULL)
+    }
+  } else {
+    
+    res<-rbind(res,c(
+      rep,
+      "MI",
+      NA,
+      NA,
+      NA,
+      NA),
+      row.names=NULL)
+  }
+  
+  colnames(res) <- c( "rep", "method", "est", "se", "N", "df")
+  
+  return(res)
+  
+}
+
+# Create complete data and find true value 
+
+full.data <- gendata( obs = 500, logite = "-3+Ctrue", logitd = "-1+Ctrue")
+fit.fd<-try(glm(D~E+Ctrue, family=binomial(link="logit"), data=full.data, singular.ok=F, epsilon = 1e-14))
+if (class(fit.fd)[1]!= "try-error") {
+  true<-coef(fit.fd)["ETRUE"]
+} else {
+  true<-0
+}
+
+# Perform simulation (1000 repetitions)
+
+results <- foreach( i = 1:1000) %do% {    # Note that in order to save the seed we return results as a list
+  dataframe <- gendata2( dat=full.data, pmiss = 0.3)
+  resul<-anadata(dataframe, i)
+  attr(resul, "seed")<-.Random.seed  # Now store the seed after running the sim study, in case you want to continue from here later
+  cat(".")
+  if (i%%50==0) cat("\n")
+  resul
+}
+results.df<-bind_rows(results, .id = "rep")
+results.df[,3]<-as.numeric(results.df[,3])
+results.df[,4]<-as.numeric(results.df[,4])
+results.df[,5]<-as.numeric(results.df[,5])
+results.df[,6]<-as.numeric(results.df[,6])
+summary(results.df)
+
+colnames(results.df)[which(colnames(results.df)=="est")]<-"logOR"
+s <- simsum(data = results.df, estvarname = "logOR", true = true, se = "se", methodvar = "method", ref = "CCA")
+summary(s)
+
+```
+
+## simcheck99.r
+
+``` {.r eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
+###################################
+### simcheck99.R: A complete    ###
+### successful simulation study.###
+###################################
+
+# Load relevant libraries and source simcheck05.R
+library(boot) # Contains inv.logit function
+library(mice) # for MI
+library(foreach) # for using foreach loop
+library(dplyr) # To transform list of data frame in single data frame
+library(rsimsum) # For computing performance measures with MCSE
+source("simcheck05.R")
+
+# First, we write a function to generate complete data:
+
+gendata <- function( obs, logite, logitd) {
+  
+  Ctrue <- rnorm(obs)
+  E <- runif(obs) < inv.logit(eval(parse(text=logite)))
+  D <- runif(obs) < inv.logit(eval(parse(text=logitd)))
+  data.out<-data.frame(D,E,Ctrue)
+  
+  return(data.out)  # for clarity, but redundant 
+  
+}
+
+# Second, program to impose the missing data:
+
+gendata2 <- function( dat, pmiss) {
+  
+  data.out<-dat
+  data.out$Cobs<-dat$Ctrue
+  data.out$Cobs[runif(nrow(dat))<pmiss]<-NA
+  
+  return(data.out)  # for clarity, but redundant 
+  
+}
+
+# Set seed
+set.seed(576819506)
+
+# run simulation study
+results <- foreach( i = 1:1000) %do% {    # Note that in order to save the seed we return results as a list
+  
+  full.data <- gendata( obs = 500, logite = "-3+Ctrue", logitd = "-1+Ctrue")
+  
+  # First, MCAR:
+  dataframe <- gendata2( dat = full.data, pmiss=0.3)
+  resul1<-anadata(dataframe, i)
+  resul1$dgm<-"MCAR"
+  
+  # Then, MAR:
+  dataframe2 <- gendata2( dat = full.data, pmiss=.1+.2*full.data$E+.2*full.data$D)
+  resul2<-anadata(dataframe2, i)
+  resul2$dgm<-"MAR"
+
+  # Finally MNAR:
+  dataframe3 <- gendata2( dat = full.data, pmiss=.2+.2*full.data$Ctrue)
+  resul3<-anadata(dataframe3, i)
+  resul3$dgm<-"MNAR"
+  
+  resul<-rbind(resul1,resul2,resul3)
+  
+  attr(resul, "seed")<-.Random.seed  # Now store the seed after running the sim study, in case you want to continue from here later
+  cat(".")
+  if (i%%50==0) cat("\n")
+  resul
+}
+results.df<-bind_rows(results, .id = "rep")
+results.df[,3]<-as.numeric(results.df[,3])
+results.df[,4]<-as.numeric(results.df[,4])
+results.df[,5]<-as.numeric(results.df[,5])
+results.df[,6]<-as.numeric(results.df[,6])
+summary(results.df)
+
+colnames(results.df)[which(colnames(results.df)=="est")]<-"logOR"
+
+# correct one outlier to missing
+results.df[results.df$se>10,]
+results.df$logOR[results.df$se>10] <- NA
+results.df$se[results.df$se>10] <- NA
+
+s <- simsum(data = results.df, estvarname = "logOR", true = 0, se = "se", methodvar = "method", ref = "CCA", by="dgm")
+summary(s)
+```

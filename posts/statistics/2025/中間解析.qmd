@@ -165,7 +165,7 @@ WebにあるSASによる中間解析の解説記事は[SASuse総会の浜田先�
 
 SASでは以下のように実施される。 SASのhelpは[こちら](https://documentation.sas.com/doc/en/statug/15.2/statug_seqdesign_toc.htm)
 
-```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 PROC SEQDESIGN <options>;
 <label:> DESIGN options;
 SAMPLESIZE <MODEL= option>;
@@ -194,7 +194,7 @@ SASヘルプに記載されているのは下記である。
 -   情報時間の半分で中間解析1回：有効・無効中止
 -   エラーの消費（O'Brien-Fleming型のα消費関数、Pocock型のβ消費関数）
 
-```{.sas eval=FALSE, code-line-numbers=true, code-overflow=wrap}
+``` {.sas eval="FALSE," code-line-numbers="true," code-overflow="wrap"}
 ods graphics on;
 proc seqdesign altref=0.69315 errspend
    pss(cref=0 0.5 1) stopprob(cref=0 0.5 1)
