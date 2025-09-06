@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.30">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="坂本航太">
+
+<title>Using simulation studies to evaluate statistical methods – Kota Sakamoto</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-9849038e97c5862c14c4eb81893d019b.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-945f87a38397f0f3b8ef34e2f394b6bc.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "一致なし",
+    "search-matching-documents-text": "一致した文書",
+    "search-copy-link-title": "検索へのリンクをコピー",
+    "search-hide-matches-text": "追加の検索結果を非表示",
+    "search-more-match-text": "追加の検索結果",
+    "search-more-matches-text": "追加の検索結果",
+    "search-clear-button-title": "消去",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "取消",
+    "search-submit-button-title": "検索",
+    "search-label": "サーチ"
+  }
+}</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Kota Sakamoto</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="サーチ"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="ナビゲーションを切り替える" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../posts/statistics/index.html"> 
+<span class="menu-text">Notes</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../posts/Web_tools/Web_tools.html"> 
+<span class="menu-text">Web Tools</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+    <a href="https://github.com/kkts1010/kkts1010.github.io/" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-github"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-page-left">
+      <h1 class="title">Using simulation studies to evaluate statistical methods</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">臨床統計</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta column-page-left">
+
+      <div>
+      <div class="quarto-title-meta-heading">作者</div>
+      <div class="quarto-title-meta-contents">
+               <p>坂本航太 </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">公開</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">2025年8月26日</p>
+      </div>
+    </div>
+    
+      <div>
+      <div class="quarto-title-meta-heading">更新日</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date-modified">2025年8月26日</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">目次</h2>
+   
+  <ul class="collapse">
+  <li><a href="#abstract" id="toc-abstract" class="nav-link active" data-scroll-target="#abstract"><span class="header-section-number">1</span> Abstract</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction"><span class="header-section-number">2</span> Introduction</a></li>
+  <li><a href="#section2simulation-in-practice-a-review-of-statistics-in-medicine-volume-34" id="toc-section2simulation-in-practice-a-review-of-statistics-in-medicine-volume-34" class="nav-link" data-scroll-target="#section2simulation-in-practice-a-review-of-statistics-in-medicine-volume-34"><span class="header-section-number">3</span> Section2：SIMULATION IN PRACTICE: A REVIEW OF STATISTICS IN MEDICINE, VOLUME 34</a></li>
+  <li><a href="#section3planning-simulation-studies-using-ademp" id="toc-section3planning-simulation-studies-using-ademp" class="nav-link" data-scroll-target="#section3planning-simulation-studies-using-ademp"><span class="header-section-number">4</span> Section3:PLANNING SIMULATION STUDIES USING ADEMP</a></li>
+  <li><a href="#computational-and-programming-issues-in-simulation-studies" id="toc-computational-and-programming-issues-in-simulation-studies" class="nav-link" data-scroll-target="#computational-and-programming-issues-in-simulation-studies"><span class="header-section-number">5</span> 4 COMPUTATIONAL AND PROGRAMMING ISSUES IN SIMULATION STUDIES</a></li>
+  <li><a href="#analysis-of-estimates-data" id="toc-analysis-of-estimates-data" class="nav-link" data-scroll-target="#analysis-of-estimates-data"><span class="header-section-number">6</span> 5. ANALYSIS OF ESTIMATES DATA</a></li>
+  <li><a href="#reporting" id="toc-reporting" class="nav-link" data-scroll-target="#reporting"><span class="header-section-number">7</span> 6. REPORTING</a></li>
+  <li><a href="#worked-illustrative-example" id="toc-worked-illustrative-example" class="nav-link" data-scroll-target="#worked-illustrative-example"><span class="header-section-number">8</span> 7. WORKED ILLUSTRATIVE EXAMPLE</a></li>
+  <li><a href="#concluding-remarks" id="toc-concluding-remarks" class="nav-link" data-scroll-target="#concluding-remarks"><span class="header-section-number">9</span> 8. CONCLUDING REMARKS</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+
+
+
+
+
+<section id="abstract" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="abstract"><span class="header-section-number">1</span> Abstract</h2>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+ノート
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Simulation studies are computer experiments that involve creating data by pseudo-random sampling. A key strength of simulation studies is the ability to understand the behavior of statistical methods because some “truth” (usually some parameter/s of interest) is known from the process of generating the data. This allows us to consider properties of methods, such as bias. While widely used, simulation studies are often poorly designed, analyzed, and reported. <strong>This tutorial outlines the rationale for using simulation studies and offers guidance for design, execution, analysis, reporting, and presentation.</strong> In particular, this tutorial provides a structured approach for planning and reporting simulation studies, <strong>which involves defining aims, data-generating mechanisms, estimands, methods, and performance measures (“ADEMP”);</strong> coherent terminology for simulation studies; guidance on coding simulation studies; a critical discussion of key performance measures and their estimation; guidance on structuring tabular and graphical presentation of results; and new graphical presentations. With a view to describing recent practice, we review 100 articles taken from Volume 34 of Statistics in Medicine, which included at least one simulation study and identify areas for improvement.</p>
+</div>
+</div>
+</section>
+<section id="introduction" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="introduction"><span class="header-section-number">2</span> Introduction</h2>
+<p>Simulation studies are computer experiments that involve creating data by pseudo-random sampling from known probability distributions. They are an invaluable tool for statistical research, particularly for the evaluation of new methods and for the comparison of alternative methods. Simulation studies are much used in the pages of Statistics in Medicine, <strong>but our experience is that some statisticians lack the necessary understanding to execute a simulation study with confidence, while others are overconfident and so fail to think carefully about design and report results poorly.</strong> Proper understanding of simulation studies would enable the former to both run and critically appraise published simulation studies themselves and the latter to conduct simulation studies with greater care and report with transparency. <strong>Simulation studies are empirical experiments, and statisticians should therefore use knowledge of experimental design and analysis in running them.</strong> As we shall see, inadequacies with design, analysis, and reporting lead to uncritical use and interpretation of simulation studies. In this context, better understanding of the rationale, design, execution, analysis, and reporting of simulation studies is necessary to improve understanding and interpretation of the findings.</p>
+<p>　Simulation studies are used to obtain empirical results about the performance of statistical methods in certain scenarios, as opposed to more general analytic (algebraic) results, which may cover many scenarios. <strong>It is not always possible, or may be difficult, to obtain analytic results.</strong> Simulation studies come into their own when methods make wrong assumptions or data are messy because they can assess the resilience of methods in such situations. This is not always possible with analytic results, where results may apply only when data arise from a specific model. “Monte Carlo simulation” means statistical techniques that use pseudo-random sampling, and has many uses that are not simulation studies. For example, it is required to implement multiple imputation and Markov Chain Monte Carlo methods. The remainder of this paper does not consider these uses, unless the properties of some such method are being evaluated by a simulation study. There are many ways to use simulation studies in medical statistics. Some examples are:</p>
+<ul>
+<li><p>To check algebra (and code), or to provide reassurance that no large error has been made, where a new statistical method has been derived mathematically.</p></li>
+<li><p>To assess the relevance of large-sample theory approximations (eg, considering the sampling distribution of an estimator) in finite samples.</p></li>
+<li><p>For the absolute evaluation of a new or existing statistical method. Often a new method is checked using simulation to ensure it works in the scenarios for which it was designed.</p></li>
+<li><p>For comparative evaluation of two or more statistical methods.</p></li>
+<li><p>For calculation of sample size or power when designing a study under certain assumptions.1</p></li>
+</ul>
+<p>This article is focused primarily on using simulation studies for the evaluation of methods. Simulation studies for this purpose are typically motivated by frequentist theory and used to evaluate the frequentist properties of methods, even if the methods are Bayesian.2,3 It seems that as a profession we fail to follow good practice regarding design, analysis, presentation and reporting in our simulation studies, as lamented previously by Hoaglin and Andrews,4 Hauck and Anderson,5 Ripley,6 Burton et al,7 and Koehler et al.8 For example, few reports of simulation studies acknowledge that Monte Carlo procedures will give different results when based on a different set of random numbers and hence are subject to uncertainty, yet failing to report measures of uncertainty would be unacceptable in medical research. <strong>There exist some wonderful books on simulation methods in general6,9,10 and several excellent articles encouraging rigor in specific aspects of simulation studies,1,4,5,8,11-16</strong> but until now, no unified practical guidance on simulation studies. This tutorial provides such guidance. More specifically, <strong>we: introduce a structured approach for planning and reporting simulation studies; provide coherent terminology for simulation studies;</strong> offer guidance on coding simulation studies; critically discuss key performance measures and their estimation; make suggestions for structuring tabular and graphical presentation of results; and introduce several new graphical presentations. This guidance should enable practitioners to execute a simulation study for the first time and contains much for more experience practitioners. For reference, the main steps involved, key decisions and recommendations are summarised in Table 1. The structure of this tutorial is as follows.</p>
+<p>We describe a review of a sample of the simulation studies reported in Statistics in Medicine Volume 34 (Section 2).</p>
+<p>In Section 3, we outline a systematic approach to planning simulation studies, using the new “ADEMP” structure (which we define there). Section 4 gives guidance on computational considerations for coding simulation studies.</p>
+<p>In Section 5, we discuss the purposes of various performance measures and their estimation, stressing the importance of estimating and reporting the Monte Carlo standard error (SE) as a measure of uncertainty due to using a finite number of simulation repetitions.</p>
+<p>Section 6 outlines how to report simulation studies, again using the ADEMP structure, and offers guidance on tabular and graphical presentation of results.</p>
+<p>Section 7 works through a simple simulation to illustrate in practice the approaches that we are advocating.</p>
+<p>Section 8 offers some concluding remarks, with a short Section 8.1 that considers some future directions. Examples are drawn from the review and from the authors’ areas of interest (which relate mainly to modeling survival data, missing data, meta-analysis, and randomised trial design).</p>
+</section>
+<section id="section2simulation-in-practice-a-review-of-statistics-in-medicine-volume-34" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="section2simulation-in-practice-a-review-of-statistics-in-medicine-volume-34"><span class="header-section-number">3</span> Section2：SIMULATION IN PRACTICE: A REVIEW OF STATISTICS IN MEDICINE, VOLUME 34</h2>
+<p>We undertook a review of practice based on articles published in Volume 34 of Statistics in Medicine (2015). This review recorded information relevant to the ideas in this article. In this section, we briefly outline the review but do not give results, which instead are provided at relevant points. The raw data on which results are based are provided as a Stata file in the supplementary materials (see file “volume34reviewdata.dta”; pared down, without comments).</p>
+<p>We restricted attention to research articles, excluding tutorials in biostatistics, commentaries, book reviews, corrections, letters to the editor and authors’ responses. In the volume, there were a total of 264 research articles of which 199 (75%) included at least one simulation study. In planning the review, we needed to select a sample size. Most of the questions of interest involved binary answers. For such questions, to estimate proportions with maximum standard error of 0.05 (occurring when the proportion is 0.5), we randomly selected 100 articles that involved a simulation study, before randomly assigning articles to a reviewer. TPM reviewed 35 simulation studies, IRW reviewed 34 and MJC reviewed 31. In case the reviewer was an author or coauthor of the article, the simulation study was swapped with another reviewer. TPM also reviewed five of the simulation studies allocated to each of the other reviewers to check agreement on key information (results on agreement are given in the Appendix and Figure A1).</p>
+</section>
+<section id="section3planning-simulation-studies-using-ademp" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="section3planning-simulation-studies-using-ademp"><span class="header-section-number">4</span> Section3:PLANNING SIMULATION STUDIES USING ADEMP</h2>
+<p>For clarity about the concepts that will follow, we introduce some notation in Table 2. Note that θ is used to represent a connceptual estimand and its true value.</p>
+<p><img src="images/paste-6.png" class="img-fluid"></p>
+<p>In the following sections, we outline the ADEMP structured approach to planning simulation studies.</p>
+<p>This acronym comes from: <strong>Aims, Data-generating mechanisms, Methods, Estimands, Performance measures.</strong></p>
+<section id="aims" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="aims"><span class="header-section-number">4.1</span> 3.1 Aims</h3>
+<p>In considering the aims of a simulation study, it is instructive to first consider desirable properties of an estimator θ̂ from a frequentist perspective.</p>
+<ol type="1">
+<li><span class="math inline">\hat \theta</span> should be consistent: as n → ∞, <span class="math inline">\hat \theta → \theta</span>. It is also desirable that <span class="math inline">\hat \theta</span> be unbiased for <span class="math inline">\theta</span> in finite samples: <span class="math inline">E[\theta]=\theta</span> (though arguably less important since unbiasedness is not an invariant property). Some estimators may be consistent but exhibit small-sample bias (logistic regression for example).</li>
+<li>The sample estimate <span class="math inline">\hat V[\theta]</span> should be a consistent estimate of the sampling variance of <span class="math inline">\hat \theta</span> (see, for example, the work of Kenward and Roger.18)</li>
+<li>Confidence intervals should have the property that at least 100(1 − α)% of intervals contain θ (see Section 5.2).</li>
+<li>It is desirable that <span class="math inline">\hat V[\theta]</span> be as small as possible: that <span class="math inline">\hat \theta</span> be an efficient estimator of <span class="math inline">\theta</span>.</li>
+</ol>
+<p>There are other properties we might desire, but these tend to involve combinations of the above. For example, short average confidence interval length may be desirable; this relates to (4) and its validity depends on (1), (2), and (3). Mean squared error is a combination of (1) and (4). Further, properties may be traded off; small bias may be accepted if there is a substantial reduction in Var ̂(θ). <strong>The aims of a simulation study will typically be set out in relation to the above properties, depending on what specifically we wish to learn.</strong> <strong>A simulation study might primarily investigate: large- or small-sample bias (eg, see the work of White19);</strong> precision, particularly relative to other available methods (eg, see the work of White20); <strong>Variance estimation</strong> (eg, see the work of Hughes et al21); or <strong>robustness to misspecification</strong> (eg, see the work of Morris et al22). There is a distinction between simulation studies that offer a proof-of-concept, ie, showing that a method is viable (or fallible) in some settings, and those that aim to stretch or break methods, ie, identifying settings where the method may fail. Both are useful and important in statistical research. For example, one may be faced with two competing methods of analysis, both of which are equally easy to implement. <strong>Even if the choice is unlikely to materially affect the results, it may be useful to have unrealistically extreme data-generating mechanisms to understand when and how each method fails.</strong>22 Alternatively, it may be of interest to compare methods where some or all methods have been shown to work in principle but the methods under scrutiny were designed to address slightly different problems. They may be put head-to-head in realistic scenarios. This could be to investigate properties <strong>when one method is correct – How badly do others fail? – or when all are incorrect in some way</strong> <strong>– Which is most robust? No method will be perfect, and it is useful to understand how methods are likely to perform in the sort of scenarios that might be expected in practice.</strong> However, such an approach poses tough questions in terms of generating data: Does the data-generating mechanism favor certain methods over others? How can this be checked and justified? <strong>One common justification is by reference to motivating data.</strong> <strong>However, in the absence of a broad spectrum of such motivating data, there is a risk of failing to convince readers that a method is fit for general use.</strong></p>
+</section>
+<section id="data-generating-mechanisms" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="data-generating-mechanisms"><span class="header-section-number">4.2</span> 3.2 Data-generating mechanisms</h3>
+<p>We use the term “data-generating mechanism” to denote how random numbers are used to generate a dataset. This is in preference to “data-generating model,” which implies parametric models and so is a specific class of data-generating mechanism. It is not the purpose of this article to explain how specific types of data should be generated. See Ripley6 or Morgan9 for methods to simulate data from specific distributions. <strong>In planning a simulation study, it is usual to spend more time deciding on data-generating mechanisms than any other element of ADEMP.</strong> There are many subtleties and potential pitfalls, some of which we will mention below. <strong>Data may be generated by producing parametric draws from a known model (once or many times),</strong> or <strong>by repeated resampling with replacement from a specific dataset (where the true data-generating model is unknown).</strong> For resampling studies, the true data-generating mechanism is unknown and resamples are used to study the sampling distribution. <strong>While parametric simulation can explore many different data-generating mechanisms (which may be completely unrealistic),</strong> resampling typically explores only one mechanism (which will be relevant for at least the study at hand). <strong>The choice of data-generating mechanism(s) will depend on the aims.</strong> <strong>As noted above, we might investigate a method under a simple data-generating mechanism, a realistic mechanism, or a completely unrealistic mechanism designed to stretch a method to breaking point.</strong></p>
+<p><strong>Simulation studies provide us with empirical results for specific scenarios. For this reason, simulation studies will often involve more than one data-generating mechanism to ensure coverage of different scenarios.</strong> <strong>For example, it is very common to vary the sample size of simulated datasets because performance often varies over nobs (see Section 5.2).</strong> Much can be controlled in a simulation study and statistical principles for designing experiments therefore can and should be called on.</p>
+<p>In particular, there is often more than one factor that will vary across specific data-generating mechanisms. Factors that are frequently varied are sample size (several values) and true parameter values (for example, setting one or more parameters to be zero or nonzero). Varying these factorially is likely to be more informative than one-by-one away from a “base-case” data-generating mechanism, as doing so permits the exploration of interactions between factors. There are however practical implications that might make this infeasible. <strong>The first regards presentation of results (covered in Section 6) and the second computational time.</strong> If the issue is simply around presentation, it may be preferable to define a “base case” but perform a factorial simulation study anyway, and if results are consistent with no interaction, presentation can vary factors away from the base case one-by-one. If the main issue with executing a fully factorial design is computational time, it may be necessary for the simulation study to follow a non factorial structure. Three approaches are noted below.</p>
+<p>A first pragmatic check may be to consider interactions only where main effects exist. If performance seems acceptable and does not vary according to factor A, it would seem unlikely to have chosen a data-generating mechanism that happened to exhibit this property when performance would have been poor for other choices of data-generating mechanism.</p>
+<p>A more careful approach could be taken based on making and checking predictions beyond the data-generating mechanisms initially used; an idea similar to external validation. Suppose we have two factors, A and B, where A ∈ {1, … , 8} and B ∈ {1, … , 5} in the data-generating mechanism. <strong>The base-case is A = 1, B = 1.</strong> <strong>If the nonfactorial portion of the design varies A from 1 to 8 holding B = 1, and varies B from 1 to 5 holding A = 1, this portion of the simulation study could be used to predict performance when A = 8, B = 5.</strong> Predictions may be purely qualitative (“bias increases as A increases and as B increases, so when we increase both together, we would expect even larger bias”), or quantitative (based on the marginal effects after fitting a model to existing results, thereby producing explicit predictions at unexplored values of A and B). The simulation study can then be re-run for that single data-generating mechanism, say A = 8, B = 5 and predictions compared with the empirical results (with a responsibility to expore further when predictions are poor or incorrect). Finally, a more satisfactory solution is of course to use a fractional factorial design for the data-generating mechanisms.3,23</p>
+<p>We now issue some specific pitfalls to help readers in choosing data-generating mechanisms (specifically acknowledg- ing Stephen Senn’s input).</p>
+<ol type="1">
+<li><p>Resampling with replacement from a dataset but failing to appreciate that results are relevant to an infinite population with the exact characteristics of that dataset. For example, if a trial had a nonsignificant result, the treatment effect is nonzero in the implicit population.24</p></li>
+<li><p>Missing the distinction between the logical flow of Bayesian and frequentist simulation. Repeated simulation with a single parameter value is explicitly frequentist. The fact that θ̂ is on average equal to θ does not imply that θ is on average equal to θ̂.</p></li>
+<li><p>Failing to distinguish between <strong>what the simulator can know</strong> and <strong>what the estimator can know</strong>.25</p></li>
+<li><p>Employing tricks in data-generation without appreciating that the resulting data are not what was desired. As an example, suppose one wishes to simulate bivariate data with a desired R2, say 0.3. For any given repetition, the observed R2 will not equal 0.3, but this could be fixed by scaling the residuals. This would produce unintended side effects for other statistics.</p></li>
+</ol>
+<p><strong>In our review, 97 simulation studies used some form of parametric model to generate data while three used resampling methods</strong>. Of the 97 that simulated from a parametric model, <strong>27 based parameter values on data, one based parameter values partly on data</strong>, and the remaining 69 on no data. <strong>Of these 97, 91 (94%) provided the parameters used.</strong> The most careful example26 explored analysis of meta-analysis data and drew the design factors from empirical data on 14,886 performed meta-analyses from 1,991 Cochrane Reviews. The total number of data-generating mechanisms per simulation study ranged from <strong>1 to 4.2 × 1010;</strong> Figure A2 (in the Appendix) summarises aspects of the data-generating mechanisms. <strong>Where more than one factor was varied, fully factorial designs were the most frequent, while some used partially factorial designs. None used any of the alternative approaches we have described.</strong></p>
+</section>
+<section id="estimands-and-other-targets" class="level3" data-number="4.3">
+<h3 data-number="4.3" class="anchored" data-anchor-id="estimands-and-other-targets"><span class="header-section-number">4.3</span> 3.3 Estimands and other targets</h3>
+<p>The majority of simulation studies evaluate or compare methods for estimating one or more population quantities, which we term estimands and denote by θ. <strong>An estimand is usually a parameter of the data generating model, but is occasionally some other quantity.</strong> <strong>For example, when fitting regression models with parameter β = (β0 … βc), the estimand may be a specific β, a measure of prognostic ability, the fitted outcome mean, or something else.</strong> In order to choose a relevant estimand, it is important to understand the aims of analysis in practice. <strong>The choice of estimand is sometimes a simple matter of stating a parameter of interest. At other times, it is more subtle. For example, a logistic regression model unadjusted for covariates implies a marginal estimand; a model adjusted for covariates implied a conditional estimand with a different true value (this example is expanded on in Section 3.4).</strong> Not all simulation studies evaluate or compare methods that concern an estimand. <strong>Other simulation studies evaluate methods for testing a null hypothesis, for selecting a model, or for prediction.</strong> We refer to these as targets of the simulation study. The same statistical method could be evaluated against multiple targets. <strong>For example, the best method to select a regression model to estimate the coefficient of an exposure (targeting an estimand) may differ from the best model for prediction of outcomes (targeting prediction).</strong> <strong>Where a simulation study evaluates methods for design, rather than analysis, of a biomedical study, the design is the target.</strong> Table 3 summarises different possible targets of a simulation study and suggests some performance measures (described more fully in Section 3.5) that may be relevant for each target, with examples taken from Volume 34.</p>
+<p>In our review, <strong>64 simulation studies targeted an estimand,</strong> <strong>21 targeted a null hypothesis,</strong> <strong>eight targeted a selected model</strong>, three <strong>targeted predictive performance</strong>, and four had some other target. Of the 64 targeting an estimand, 51 stated what the estimand was (either in the description of the simulation study or elsewhere in the article). A figure detailing the number of estimands in simulation studies that targeted an estimand is given in the Appendix, Figure A3.</p>
+<p><img src="images/paste-7.png" class="img-fluid" width="835"></p>
+</section>
+<section id="methods" class="level3" data-number="4.4">
+<h3 data-number="4.4" class="anchored" data-anchor-id="methods"><span class="header-section-number">4.4</span> 3.4 Methods</h3>
+<p>The term “method” is generic. Most often it refers to a model for analysis, but might refer to a design or some procedure (such as a decision rule). <strong>For example, Kahan31 and Campbell and Dean32 evaluated procedures that involved choosing an analysis based on the result of a preliminary test in the same data.</strong> In some simulation studies, there will be only one method with no comparators. In this case, selecting the method to be evaluated is very simple. When we aim to compare several methods in order to identify the best, it is important to include serious contenders. <strong>There are two issues. First, it is necessary to have knowledge of previous work in the area to understand which methods are and are not serious contenders.</strong> Some methods may be legitimately excluded if they have already been shown to be flawed, and it may be unnecessary to include such methods if the only consequences are repetition of previous research and bloating</p>
+</section>
+<section id="performance-measures" class="level3" data-number="4.5">
+<h3 data-number="4.5" class="anchored" data-anchor-id="performance-measures"><span class="header-section-number">4.5</span> 3.5 Performance measures</h3>
+<p>The term “performance measure” describes a numerical quantity used to assess the performance of a method. The equivalent term “operating characteristic” is sometimes used, particularly in the context of study designs (see, for example, the work of Royston et al39). <strong>Statistical methods for estimation may output for example an estimate</strong> <span class="math inline">\hat \theta_i</span> <strong>, an estimate of variance</strong> <span class="math inline">\hat V[\hat \theta_i]</span> <strong>(or standard error SÊ(θ̂)i), degrees of freedom, confidence intervals, test statistics, and more (such as an estimate of prognostic performance).</strong> The performance measures required in a simulation study depend on the aims and what the study targets (see Section 3.3). When the target is an estimand, <strong>the most obvious performance measure to consider is bias:</strong> <strong>the amount by which</strong> <span class="math inline">\hat \theta</span> <strong>exceeds θ on average (this can be positive or negative)</strong>. Precision and coverage of (1 − α ) confidence intervals will also be of interest. <strong>Meanwhile, if the target is a null hypothesis, power and type I error rates will be of primary interest.</strong> A simulation study targeting an estimand may of course also assess power and type I error. The performance measures seen in our review are summarised in Table 4. The denominator changes according across performance measures because some are not applicable for some simulation studies. Further, sometimes simulation studies had secondary targets. For example, nine simulation studies primarily targeted a null hypothesis but secondarily targeted an estimand and could have assessed bias, and one of these did so. For eight articles, some performance measures were unclear. In some, a performance measure was given a name that its formula demonstrated to be misleading (an example is the term “mean error,” which is bias, when the formula is for mean absolute error), emphasizing the importance of clear terminology in simulation studies.</p>
+<p>Description and estimation of common performance measures of interest are given in Section 5. An important point to appreciate in design and analysis is that simulation studies are empirical experiments, meaning performance measures are themselves estimated, and estimates of performance are thus subject to error. This fundamental feature of simulation studies does not seem to be widely appreciated, as previously noted.6 <strong>The implications are two-fold. First, we should present estimates of uncertainty (quantified as the Monte Carlo standard error; see Section 5.2).</strong> <strong>Second, we need to consider the number of repetitions nsim and how this can be chosen (see Section 5.2).</strong></p>
+<p><img src="images/paste-8.png" class="img-fluid"></p>
+</section>
+</section>
+<section id="computational-and-programming-issues-in-simulation-studies" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="computational-and-programming-issues-in-simulation-studies"><span class="header-section-number">5</span> 4 COMPUTATIONAL AND PROGRAMMING ISSUES IN SIMULATION STUDIES</h2>
+<p>In this section, we discuss consideration when coding a simulation study. It is useful to understand what sort of data are involved. There may be up to four classes of dataset, listed and described in Table 5.</p>
+<section id="random-numbers-setting-seeds-and-storing-states" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="random-numbers-setting-seeds-and-storing-states"><span class="header-section-number">5.1</span> 4.1 Random numbers: setting seeds and storing states</h3>
+<p>All statistical packages capable of Monte Carlo simulation use a pseudo-random-number generator. Each random number is a deterministic function of the current “state” of the random-number generator. After a random number is produced,the state changes, ready to produce the next random number. Because the function is deterministic, the state can be set.Typically, the state is set using a “seed.” Seeds do not necessarily map 1:1 to states and provide doors onto the path of possible states. After enough random-number draws (a very large number in software using modern pseudo-random-number generators), the state will eventually repeat: the path is circular. The “pseudo” element to random-number generators is sometimes characterised as negative. This is perhaps an artefact of the fact that some early algorithms provided very poor imitations of random numbers. However, modern-era algorithms such as the Mersenne Twister do not suffer from these problems and can, for simulation purposes, be regarded as truly random when used correctly. The toss of a coin or roll of a die may be regarded as equally deterministic, albeit the result of a complex set of unknown factors that act in an uncontrollable fashion. These are not denigrated with the term “pseudo-random”: in statistical teaching, they are often given as the ultimate example of randomness. However, many stage magicians can control the flip of a coin! If a computer pseudo-random number generator is sufficiently unpredictable and passes the various tests for randomness, it is churlish to regard the “pseudo” aspect as a weakness.</p>
+<p>There are several positive implications of using a deterministic and reproducible process for generating random num- bers. First, if the number of repetitions is regarded as insufficient, the simulation study can continue from its end state.</p>
+<p>Second and more importantly, if a certain repetition results in some failure such as nonconvergence, the starting state for that repetition can be noted and the repetition re-run under that state, enabling better understanding of when the method</p>
+<p>does not work so that issues leading to nonconvergence can be tackled. Finally, the whole simulation study can be inde- pendently run by other researchers, giving the potential for exact (rather than approximate) reproduction of results and</p>
+<p><strong>the scope for additional methods to be included. Our practical advice for utilizing the deterministic nature of random-number generators is simple but strong: (1) set the seed at the beginning, once and only once; (2) store the state of the random-number generator often (ideally once at the beginning of each repetition and once following repetition i = nsim). This is important; the following chunk of pseudocode demonstrates the concept:</strong></p>
+<p>The reason for this advice is to avoid unintended dependence between simulated datasets. We will illustrate our caution: one undesirable method of knowing the states for nsim repetitions is to set an initial seed and generate a single vector of length nsim by recording the starting state, generating a single random number, recording the new state, and so on. For the simulation itself, the seed for the ith repetition is then set to the ith element. To clarify the problem, let nobs = nsim = 4 and let the first simulation step be generation of vector x from a Uniform(0,1) distribution. The first repetition simulates x1 (which changes the random number state four times) and proceeds. The second repetition then simulates x2, which is made up of observations 2 to 4 from repetition i = 1 and just one new value. Run in Stata 15 (see supplementary material, ie, file “corrstates.do”), the resulting draws of x for the four repetitions are: Note that elements with the same shading contain the same values across rows. The fourth element of x1 is the first element of x4 and appears in all repetitions. Only when i &gt; nobs is the draw of x actually independent of the first repetition. Such dependency in simulated data can compromise both performance estimates and Monte Carlo SEs and must be avoided.</p>
+</section>
+<section id="stream-random-numbers" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="stream-random-numbers"><span class="header-section-number">5.2</span> 4.1.1 “Stream” random numbers</h3>
+<p>It is common for parts of simulation studies – fractions of all the repetitions, for example – to be run in parallel on different cores of high-performance computers (which this article will not mention further). If the advice to set the seed once only is followed, the implication for parallelisation is that, while runs for different data-generating mechanisms may be parallelised, it is inadvisable to parallelise repetitions within a specific data-generating mechanism.</p>
+<p>Suppose we wish to parallelise two sets of nsim∕2 repetitions. Any simulation study will use random numbers (in order) from a section of the circle. Here, each set of repetitions is represented by a clockwise arrow, and uses 80◦ of the total 360◦ of random numbers available in the full circle (a caricature for illustrative purposes; in practice, a much smaller fraction would be used). The seed dictates the position on the circle at which an arrow begins (and thus ends). The random numbers used up by the first nsim∕2 repetitions are represented by the red arrow and for the second nsim by the blue arrow. The left circle depicts two chunks run in parallel with two different, arbitrarily-chosen starting seeds. By chance, they may overlap as seen. This would be a cause for concern. The right circle uses separate streams of random numbers. This breaks the circle into quadrants, and setting the same value of a seed within a stream means that the separate chunks will start at the equivalent point on the quadrants and here there is no chance that one stream will enter another. In the absence of streams, repetitions should not be parallelised for the same data-generating mechanism. In Stata (version 15 or newer), the stream is set with . set rngstream # prior to setting the seed. In SAS, it is achieved within a data step with . call stream(#); In R, this can be achieved with the rstream package. Regardless of the package, the same seed must be used within different values of #. When a simulation study uses multiple data-generating mechanisms, these may be run in parallel. Because performance is typically estimated separately for different data-generating mechanisms, using the same seeds is less of a problem (and may in fact be advantageous, as described in Section 5.4). Many programs execute methods involving some stochastic element. Examples include multiple imputation, the bootstrap, the g-computation formula, multistate models, and Bayesian methods that use Markov Chain Monte Carlo. Commands to implement these methods involve some random-number generation. It is important to check that such programs do not manipulate the seed. Some packages do have a default seed if not input by the user. If they do set the seed internally, many of the nsim results will be highly correlated, if not identical, and results should not then be trusted. Checking for such behavior is worthwhile. One simple technique is to display the current state of the random-number generator, twice issue the command, and display the state after each run. If the first and second states are the same, then the program probably does not use random numbers. If the first and second states differ but the second and third do not, the seed is being reset by the program.</p>
+</section>
+<section id="start-small-and-build-up-code" class="level3" data-number="5.3">
+<h3 data-number="5.3" class="anchored" data-anchor-id="start-small-and-build-up-code"><span class="header-section-number">5.3</span> 4.2 Start small and build up code</h3>
+<p>As with any coding task it is all-too-easy to obtain misleading results in a simulation study through very minor coding errors; see, for example, the comments section of Bartlett,40 where fixing an error in a single line of code completely changed the results. A function may be sloppily written as a-b<em>c such that it is unclear if(a-b)</em>c or a-(b*c)was intended; a machine will interpret this code but will not discern the intention.Errors are often detected when results are unexpected: for example, when bias appears much greater than theory suggests. One design implication is that methods with known properties should be included where possible as a check that these properties are exhibited. One straightforward and intuitive approach for minimizing errors is to start small and specific for one repetition, then build and generalise, including plenty of built-in checks. In a simulation study with nsim &gt; 1 and several simulated variables, a good starting point is to generate one simulated dataset with large nobs. If variables are being generated separately then the code for each should be added one by one and the generated data explored to (1) check that the code behaves as expected and (2) ensure the data have the desired characteristics. For example, Stata’s rnormal(m,s)function simulates normal variates with meanmand standard devi- ations. The usual notation for a normal distribution uses a mean and variance. We have seen this syntax trip up several good programmers. By checking the standard deviation of a variable simulated by rnormal()in a single large simulated dataset, it should be obvious if it does not behave in the expected fashion. The simulation file should be built to include different data-generating mechanisms, methods, or estimands, again checking that behavior is as expected. Using the above example again, if the basic data-generating mechanism used N(μ, 1), the issue with specifying standard deviations vs variances would not be detected, but it would for data-generating mechanisms with σ2 ≠ 1. When satisfied with the large dataset being generated, we apply each method. Once satisfied that one large run is behaving sensibly, it is worth setting the required nobs for the simulation study and exploring the simulated datasets produced under a handful of different seeds. When satisfied that the program still behaves sensibly, it may be worth running a few (say tens of) repetitions. If, for example, convergence problems are anticipated, or bias is expected to be 0, this can be checked informally without the full set of simulations. After thoroughly checking through and generalizing code, the full set of nsim repetitions may be run. However, recall the precaution in Section 4.1 to store the states of the random-number generator and the reasons. If failure occurs in repetition 4120 of 5000, we will want to understand why. In this case, a record of the 4120th start state means we can reproduce the problematic dataset quickly. While the ability to reproduce specific errors is useful, it is also practically helpful to be able to continue even when an error occurs. For this purpose, we direct readers to the capture command in Stata and the try command in R. The failed analysis must be recorded as a missing value in the Estimates dataset, together with reasons if possible.</p>
+</section>
+<section id="using-different-software-packages-for-different-methods" class="level3" data-number="5.4">
+<h3 data-number="5.4" class="anchored" data-anchor-id="using-different-software-packages-for-different-methods"><span class="header-section-number">5.4</span> 4.3 Using different software packages for different methods</h3>
+<p>It is frequently the case that competing methods are implemented in different software packages, and it would be more burdensome to try and code them all in one package than to implement them in different packages. There are two possible solutions. The first is to simulate data separately in the different packages and then use the methods on those data. The second is to simulate data in one package and export simulated data so that different methods are based on the same simulated datasets. Both approaches are valid in principle, but we advocate the latter. First, if data are generated independently for differ- ent methods, there will be different (random) Monte Carlo error affecting each repetition. By using the same simulated data for both comparisons, this Monte Carlo error will affect methods’ performance in the same way because methods are matched on the same generated data. Second, it is cumbersome to do a job twice, and because different software packages have different quirks, it will not be easy to ensure data really are being generated identically. Third, it is impor- tant to understand that our aim is to compare methods, and while the software implementation may be important to evaluate, the way the software package simulates data is not of interest: using a method in practice would involve a soft- ware implementation, but not simulating data using that package. Whatever data an analyst was faced with would be the same regardless of the software being used.</p>
+</section>
+</section>
+<section id="analysis-of-estimates-data" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="analysis-of-estimates-data"><span class="header-section-number">6</span> 5. ANALYSIS OF ESTIMATES DATA</h2>
+<p>This section describes estimation for various performance measures along with Monte Carlo SEs. We advocate two preliminaries: checking for missing estimates and plots of the estimates data.</p>
+<section id="checking-the-estimates-data-and-preliminaries" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="checking-the-estimates-data-and-preliminaries"><span class="header-section-number">6.1</span> 5.1 Checking the estimates data and preliminaries</h3>
+<p>The number of missing values, eg, of θ̂ i and SÊ(θ̂ i) (for example due to nonconvergence), is the first performance measure to assess. The data produced under repetitions for which missing values were returned should be explored to understand how a method failed (see Section 4) and, ideally, the code made more robust to reduce the frequency of failures.</p>
+<p>Missing values in the estimates dataset pose a missing data problem regarding the analysis of other performance mea- sures. It seems implausible that values would be missing completely at random41; estimates will usually be missing due</p>
+<p>to nonconvergence so will likely depend on some characteristic/s of a given simulated dataset. When the “method” being evaluated involves an analyst’s procedure (as described in Section 3.4), for example, the model changes if the first-choice model does not converge, this can reduce or remove missing values from the estimates data (though it changes the nature of the method being evaluated; see Section 3.4). If more than two methods are evaluated, and one always returns an estimate θ̂</p>
+<p>i, then missing values for another method may be related to the returned values for the first method. In the presence of a nontrivial proportion of missing estimates data, analysis of further performance measures should be tentative, particularly when comparing methods with different numbers of θ̂</p>
+<p>i missing. “Nontrivial” means any proportion that could meaningfully alter estimated performance. If we</p>
+<p>are interested in detecting tiny biases, even 1% may be nontrivial. Before undertaking a formal analysis of the estimates dataset, it is sensible to undertake some exploratory analysis. Plots are often helpful here. For example, Kahan31 assessed the performance of a two-stage procedure for the analysis of factorial trials. The procedure was unbiased (both conditionally and unconditionally), yet a histogram of θ̂</p>
+<p>i exhibited a</p>
+<p>bimodal distribution with modes equally spaced at either side of θ, with almost no values of θ̂</p>
+<p>i close to θ. This may cause</p>
+<p>concern and would have been missed had the analysis proceeded straight to the estimation of performance. For simulation studies targeting an estimand, the following plots are often informative:</p>
+</section>
+<section id="estimation-of-performance-and-monte-carlo-standard-errors-for-some-common-performance-measures" class="level3" data-number="6.2">
+<h3 data-number="6.2" class="anchored" data-anchor-id="estimation-of-performance-and-monte-carlo-standard-errors-for-some-common-performance-measures"><span class="header-section-number">6.2</span> 5.2 Estimation of performance and monte carlo standard errors for some common performance measures</h3>
+<p>This section outlines some common performance measures, properties they are designed to assess, how they are estimated and how Monte Carlo standard errors are computed. We suppress the “hat” notation for performance measures, but emphasise that these are estimates. For interpretation of results, performance measures should usually be considered jointly (one could prefer a method with zero variance by conveniently ignoring bias).</p>
+<p><img src="images/paste-9.png" class="img-fluid"></p>
+<p>Monte Carlo standard errors quantify simulation uncertainty: they provide an estimate of the SE of (estimated) per- formance due to using finite nsim. The Monte Carlo SE targets the sampling distribution of repeatedly running the same simulation study (with nsim repetitions) under different random-number seeds. In our review of simulation studies in Statistics in Medicine Volume 34, 93 did not mention Monte Carlo SEs for estimated performance. The formulas for computing Monte Carlo SEs given in Table 6 with description and comments in thetext. For empirical SE, relative % increase in precision, and relative error, the Monte Carlo SE formulas assume normally distributed θ̂; for non-normal θ̂, robust SEs exist; see White and Carlin.42 Bias is frequently of central interest, and quantifies whether a method targets θ on average. Frequentist theory holds unbiasedness to be a key property. The mean of θ̂ i, θ̄, is often reported instead. This is estimated in the same way but without subtracting the constant θ, and so has the same Monte Carlo SE. It is sometimes preferable to report the relative bias, rather than absolute. If different values of θ are used for different data-generating mechanisms then relative bias permits a more straightforward comparison across values. However, relative bias can be used only for |θ| &gt; 0. The absence of bias is one property of an estimator; while it is often of central interest, we may sometimes accept small biases because of other good properties. The empirical SE is a measure of the precision or efficiency of the estimator of θ. It depends only on θ̂ i and does</p>
+<p>not require knowledge of θ. The empirical SE estimates the long-run standard deviation of θ̂</p>
+<p>i over the nsim repetitions. Several other designations are in common use; in our review, the terms used included “empirical standard deviation,” “Monte Carlo standard deviation,” “observed SE,” and “sampling SE.” The empirical standard error can be hard to interpret for a single method (unless compared to a lower bound), and the relative precision is often of interest when comparing methods. Note that, if either method is biased, relative precision should be interpreted with caution because an estimator that is biased towards the null can have small empirical SE as a result of the bias: θ̂</p>
+<p>i∕2 has smaller empirical SE than θ̂ i. A related measure, which also takes the true value of θ into account, is the mean squared error (MSE). The MSE is the</p>
+<p>sum of the squared bias and variance of θ̂. This appears a natural way to integrate both measures into one summary perfor- mance measure (low variance is penalised for bias), but we caution that, for method comparisons, the relative influence of</p>
+</section>
+<section id="sample-size-for-simulation-studies" class="level3" data-number="6.3">
+<h3 data-number="6.3" class="anchored" data-anchor-id="sample-size-for-simulation-studies"><span class="header-section-number">6.3</span> 5.3 Sample size for simulation studies</h3>
+</section>
+<section id="remarks-on-analysis" class="level3" data-number="6.4">
+<h3 data-number="6.4" class="anchored" data-anchor-id="remarks-on-analysis"><span class="header-section-number">6.4</span> 5.4 Remarks on analysis</h3>
+</section>
+</section>
+<section id="reporting" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="reporting"><span class="header-section-number">7</span> 6. REPORTING</h2>
+<section id="the-methods-section" class="level3" data-number="7.1">
+<h3 data-number="7.1" class="anchored" data-anchor-id="the-methods-section"><span class="header-section-number">7.1</span> 6.1 The “methods” section</h3>
+</section>
+<section id="presentation-of-results" class="level3" data-number="7.2">
+<h3 data-number="7.2" class="anchored" data-anchor-id="presentation-of-results"><span class="header-section-number">7.2</span> 6.2 Presentation of results</h3>
+</section>
+</section>
+<section id="worked-illustrative-example" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="worked-illustrative-example"><span class="header-section-number">8</span> 7. WORKED ILLUSTRATIVE EXAMPLE</h2>
+<section id="design-of-example" class="level3" data-number="8.1">
+<h3 data-number="8.1" class="anchored" data-anchor-id="design-of-example"><span class="header-section-number">8.1</span> 7.1 Design of example</h3>
+</section>
+<section id="exploration-and-visualisation-of-results" class="level3" data-number="8.2">
+<h3 data-number="8.2" class="anchored" data-anchor-id="exploration-and-visualisation-of-results"><span class="header-section-number">8.2</span> 7.2 Exploration and visualisation of results</h3>
+</section>
+<section id="analysis-of-example" class="level3" data-number="8.3">
+<h3 data-number="8.3" class="anchored" data-anchor-id="analysis-of-example"><span class="header-section-number">8.3</span> 7.3 Analysis of example</h3>
+</section>
+<section id="conclusions-of-example" class="level3" data-number="8.4">
+<h3 data-number="8.4" class="anchored" data-anchor-id="conclusions-of-example"><span class="header-section-number">8.4</span> 7.4 Conclusions of example</h3>
+</section>
+</section>
+<section id="concluding-remarks" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="concluding-remarks"><span class="header-section-number">9</span> 8. CONCLUDING REMARKS</h2>
+<section id="future-directions" class="level3" data-number="9.1">
+<h3 data-number="9.1" class="anchored" data-anchor-id="future-directions"><span class="header-section-number">9.1</span> 8.1 Future directions</h3>
+</section>
+<section id="final-remark" class="level3" data-number="9.2">
+<h3 data-number="9.2" class="anchored" data-anchor-id="final-remark"><span class="header-section-number">9.2</span> 8.2 Final remark</h3>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "コピーしました");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "コピーしました");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
+        for (let i=0; i<annoteTargets.length; i++) {
+          const annoteTarget = annoteTargets[i];
+          const targetCell = annoteTarget.getAttribute("data-target-cell");
+          const targetAnnotation = annoteTarget.getAttribute("data-target-annotation");
+          const contentFn = () => {
+            const content = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+            if (content) {
+              const tipContent = content.cloneNode(true);
+              tipContent.classList.add("code-annotation-tip-content");
+              return tipContent.outerHTML;
+            }
+          }
+          const config = {
+            allowHTML: true,
+            content: contentFn,
+            onShow: (instance) => {
+              selectCodeLines(instance.reference);
+              instance.reference.classList.add('code-annotation-active');
+              window.tippy.hideAll();
+            },
+            onHide: (instance) => {
+              unselectCodeLines();
+              instance.reference.classList.remove('code-annotation-active');
+            },
+            maxWidth: 300,
+            delay: [50, 0],
+            duration: [200, 0],
+            offset: [5, 10],
+            arrow: true,
+            trigger: 'click',
+            appendTo: function(el) {
+              return el.parentElement.parentElement.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'quarto',
+            placement: 'right',
+            positionFixed: true,
+            popperOptions: {
+              modifiers: [
+              {
+                name: 'flip',
+                options: {
+                  flipVariations: false, // true by default
+                  allowedAutoPlacements: ['right'],
+                  fallbackPlacements: ['right', 'top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left'],
+                },
+              },
+              {
+                name: 'preventOverflow',
+                options: {
+                  mainAxis: false,
+                  altAxis: false
+                }
+              }
+              ]        
+            }      
+          };
+          window.tippy(annoteTarget, config); 
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="https://github.com/kkts1010/kkts1010.github.io/">
+<p>Kota Sakamoto</p>
+</a>
+  </li>  
+</ul>
+    </div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/kkts1010/kkts1010.github.io/">
+<p>Kota Sakamoto</p>
+</a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/kkt_1010">
+      <i class="bi bi-twitter" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
