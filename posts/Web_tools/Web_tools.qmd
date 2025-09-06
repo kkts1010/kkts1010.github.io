@@ -11,20 +11,25 @@ title: "Web Tools"
 
 ## 論文雑誌
 
--   [計量生物学](https://www.jstage.jst.go.jp/browse/jjb/list/-char/ja)
--   [Statistics in Medicine](https://onlinelibrary.wiley.com/loi/10970258)
 -   [Pharmaceutical Statistics](https://onlinelibrary.wiley.com/toc/15391612/current)
--   [Biostatistics](https://academic.oup.com/biostatistics)
 -   [International Journal of Epidemiology](https://academic.oup.com/ije)
 -   [American Journal of Epidemiology](https://academic.oup.com/aje)
--   [Epidemiology](https://journals.lww.com/epidem/pages/default.aspx)
--   [Journal of Clinical Epidemiology](https://www.sciencedirect.com/journal/journal-of-clinical-epidemiology)
+-   [Statistics in Medicine](https://onlinelibrary.wiley.com/loi/10970258)
+-   [Biometrical Journal](https://onlinelibrary.wiley.com/journal/15214036)
 -   [Pharmacoepidemiology ＆ Drug Safety](https://onlinelibrary.wiley.com/journal/10991557)
+-   [Epidemiology](https://journals.lww.com/epidem/pages/default.aspx)
+-   [Epidemiologic Methods](https://www.degruyterbrill.com/journal/key/em/html)
+-   [Journal of Causal Inference](https://www.degruyterbrill.com/journal/key/jci/html)
+-   [Eurpean Journal of Epidmiology](https://link.springer.com/journal/10654)
+-   [Journal of Clinical Epidemiology](https://www.sciencedirect.com/journal/journal-of-clinical-epidemiology)
 -   [Journal of Epideimology](https://jeaweb.jp/journal/issues/jstage/index.html)
+-   [Biostatistics](https://academic.oup.com/biostatistics)
+-   [The International Journal of Biostatistics](https://www.degruyterbrill.com/journal/key/ijb/html#overview)
+-   [計量生物学](https://www.jstage.jst.go.jp/browse/jjb/list/-char/ja)
 -   [薬剤疫学](https://www.jstage.jst.go.jp/browse/jjpe/-char/ja)
 -   [すうがくぶんか株式会社](https://sugakubunka.com/)
 -   [Quarto](https://quarto.org/)
--   [Git公式書籍（日本語](https://git-scm.com/book/ja/v2)
+-   [Git公式書籍（日本語）](https://git-scm.com/book/ja/v2)
 
 ## 医薬品開発
 
@@ -48,8 +53,7 @@ title: "Web Tools"
 -   [Camden Lopez（海外の生物統計家ブログ）](https://www.camdenlopez.com/about/)
 -   [Biostatistics for Biomedical Research](https://hbiostat.org/bbrc/)
 -   [久保川達也先生 書籍関連](https://sites.google.com/site/ktatsuya77/xian-dai)
-- [医学のための因果推論](https://righteous-manager-7af.notion.site/d2920bb2ebb9474bb96702d29febcb53)
-
+-   [医学のための因果推論](https://righteous-manager-7af.notion.site/d2920bb2ebb9474bb96702d29febcb53)
 
 ## SASプログラミング
 
@@ -67,7 +71,7 @@ title: "Web Tools"
 -   [僕の頁 <SASと臨床試験と雑談と>](http://sasboku.blog.fc2.com/blog-date-201402.html)
 -   [データサイエンス100本ノック（構造化データ加工編）のSAS版](https://github.com/Nikkei-R-DataScience/sas-100knocks-preprocess/blob/main/answer/sas100knocks.ipynb)
 -   [RTFファイルをPDF化するDDEプログラム](https://sasonediver.blog.fc2.com/blog-entry-342.html)
-- [SGPLOTでForest plot](https://www.docswell.com/s/6484025/54QXEY-2024-04-03-082255#p13)
+-   [SGPLOTでForest plot](https://www.docswell.com/s/6484025/54QXEY-2024-04-03-082255#p13)
 
 ## Rプログラミング（書籍）
 
@@ -92,8 +96,8 @@ title: "Web Tools"
 -   [TLG Catalog](https://insightsengineering.github.io/tlg-catalog/stable/)
 -   [Introduction to {rtables}](https://insightsengineering.github.io/rtables/v0.6.10/articles/rtables.html)
 -   [Reproducible Environments(Posit社)](https://solutions.posit.co/envs-pkgs/environments/)
-- [R Submission Pilot 1](https://rconsortium.github.io/submissions-pilot1/index.html)
-- [R Submission Pilot 3](https://rconsortium.github.io/submissions-pilot3-adam/main/index.html)
+-   [R Submission Pilot 1](https://rconsortium.github.io/submissions-pilot1/index.html)
+-   [R Submission Pilot 3](https://rconsortium.github.io/submissions-pilot3-adam/main/index.html)
 
 ## Rプログラミング（日本語）
 
@@ -107,11 +111,10 @@ title: "Web Tools"
 -   [Rではじめようモダンなデータ分析](https://book.mynavi.jp/manatee/series/detail/id=54225)
 -   [私たちのR](https://www.jaysong.net/RBook/)
 -   [Rプログラムの個人ブログ](https://t-arae.blog/)
-- [データハンドリング入門](https://kazutan.github.io/kazutanR/hands_on_170730/index.html)
-- [2025年4月2日 ワークショップ「オープンソースソフトウェア「R」の承認申請業務での利用実態と今後の展望について」](https://www.jpma.or.jp/information/evaluation/symposium/DS_202504_01sympo.html)
-- [dplyrを使いこなす！Window関数編](https://qiita.com/matsuou1/items/db6e8c48fcfd791dd876)
-- [R Markdownで数式を使ったPDFを作成するときのメモ](https://www.anarchive-beta.com/entry/2019/08/10/211122)
-
+-   [データハンドリング入門](https://kazutan.github.io/kazutanR/hands_on_170730/index.html)
+-   [2025年4月2日 ワークショップ「オープンソースソフトウェア「R」の承認申請業務での利用実態と今後の展望について」](https://www.jpma.or.jp/information/evaluation/symposium/DS_202504_01sympo.html)
+-   [dplyrを使いこなす！Window関数編](https://qiita.com/matsuou1/items/db6e8c48fcfd791dd876)
+-   [R Markdownで数式を使ったPDFを作成するときのメモ](https://www.anarchive-beta.com/entry/2019/08/10/211122)
 
 ## 研究関連
 
@@ -135,7 +138,7 @@ title: "Web Tools"
 -   [tutorial](https://ivelasq.quarto.pub/building-a-blog-with-quarto/intro.html)
 -   [Building a blog with Quarto](https://qiita.com/Qiita/items/c686397e4a0f4f11683d)
 -   [Markdown記法チート](https://qiita.com/Qiita/items/c686397e4a0f4f11683d)
-- [Quartoでアカデミックなスライドを作るためのTips](https://zenn.dev/nicetak/articles/quarto-tips-2022)
+-   [Quartoでアカデミックなスライドを作るためのTips](https://zenn.dev/nicetak/articles/quarto-tips-2022)
 
 ## Tips
 
@@ -147,4 +150,4 @@ title: "Web Tools"
 
 ## その他
 
-- [熊本大学大学教育統括管理運営機構附属数理科学総合教育センター](https://www.sci.kumamoto-u.ac.jp/math/exercise.html)
+-   [熊本大学大学教育統括管理運営機構附属数理科学総合教育センター](https://www.sci.kumamoto-u.ac.jp/math/exercise.html)

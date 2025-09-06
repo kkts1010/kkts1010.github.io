@@ -1,0 +1,9 @@
+---
+title: "Causal Inference in Studying the Long-Term Health Effects of Disasters: Challenges and Potential Solutions"
+author: "坂本航太"
+categories: [博士課程]
+date-modified: "2025-08-26"
+abstract-title: Abstract
+abstract: ""
+date: "2025-08-26"
+---

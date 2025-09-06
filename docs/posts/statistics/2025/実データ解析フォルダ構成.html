@@ -8,7 +8,7 @@
 
 <meta name="author" content="坂本航太">
 
-<title>臨床研究のための実データ解析フォルダ構成 – Kota Sakamoto</title>
+<title>利用しない：臨床研究のための実データ解析フォルダ構成 – Kota Sakamoto</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -153,7 +153,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-page-left">
-      <h1 class="title">臨床研究のための実データ解析フォルダ構成</h1>
+      <h1 class="title">利用しない：臨床研究のための実データ解析フォルダ構成</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">博士課程</div>
               </div>
@@ -195,13 +195,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">目次</h2>
    
   <ul class="collapse">
-  <li><a href="#臨床研究のための実データ解析フォルダ構成透明性と再現性を最大化するプロが教える秘訣" id="toc-臨床研究のための実データ解析フォルダ構成透明性と再現性を最大化するプロが教える秘訣" class="nav-link active" data-scroll-target="#臨床研究のための実データ解析フォルダ構成透明性と再現性を最大化するプロが教える秘訣"><span class="header-section-number">1</span> 臨床研究のための実データ解析フォルダ構成：透明性と再現性を最大化するプロが教える秘訣</a>
+  <li><a href="#臨床研究のための実データ解析フォルダ構成透明性と再現性を最大化するプロが教える秘訣" id="toc-臨床研究のための実データ解析フォルダ構成透明性と再現性を最大化するプロが教える秘訣" class="nav-link active" data-scroll-target="#臨床研究のための実データ解析フォルダ構成透明性と再現性を最大化するプロが教える秘訣"><span class="header-section-number">1</span> 臨床研究のための実データ解析フォルダ構成：透明性と再現性を最大化するプロが教える秘訣</a></li>
+  <li><a href="#使わない" id="toc-使わない" class="nav-link" data-scroll-target="#使わない"><span class="header-section-number">2</span> 使わない。</a>
   <ul class="collapse">
-  <li><a href="#なぜフォルダ構成がそこまで重要なのか" id="toc-なぜフォルダ構成がそこまで重要なのか" class="nav-link" data-scroll-target="#なぜフォルダ構成がそこまで重要なのか"><span class="header-section-number">1.1</span> なぜフォルダ構成がそこまで重要なのか？</a></li>
-  <li><a href="#これが理想形臨床研究向けフォルダ構成" id="toc-これが理想形臨床研究向けフォルダ構成" class="nav-link" data-scroll-target="#これが理想形臨床研究向けフォルダ構成"><span class="header-section-number">1.2</span> これが理想形！臨床研究向けフォルダ構成</a></li>
-  <li><a href="#各フォルダの役割と運用のコツを徹底解説" id="toc-各フォルダの役割と運用のコツを徹底解説" class="nav-link" data-scroll-target="#各フォルダの役割と運用のコツを徹底解説"><span class="header-section-number">1.3</span> 各フォルダの役割と運用のコツを徹底解説！</a></li>
-  <li><a href="#rで一発作成フォルダ自動生成テンプレートと使用例" id="toc-rで一発作成フォルダ自動生成テンプレートと使用例" class="nav-link" data-scroll-target="#rで一発作成フォルダ自動生成テンプレートと使用例"><span class="header-section-number">1.4</span> Rで一発作成！フォルダ自動生成テンプレートと使用例</a></li>
-  <li><a href="#まとめあなたの研究を次のレベルへ" id="toc-まとめあなたの研究を次のレベルへ" class="nav-link" data-scroll-target="#まとめあなたの研究を次のレベルへ"><span class="header-section-number">1.5</span> まとめ：あなたの研究を次のレベルへ</a></li>
+  <li><a href="#なぜフォルダ構成がそこまで重要なのか" id="toc-なぜフォルダ構成がそこまで重要なのか" class="nav-link" data-scroll-target="#なぜフォルダ構成がそこまで重要なのか"><span class="header-section-number">2.1</span> なぜフォルダ構成がそこまで重要なのか？</a></li>
+  <li><a href="#これが理想形臨床研究向けフォルダ構成" id="toc-これが理想形臨床研究向けフォルダ構成" class="nav-link" data-scroll-target="#これが理想形臨床研究向けフォルダ構成"><span class="header-section-number">2.2</span> これが理想形！臨床研究向けフォルダ構成</a></li>
+  <li><a href="#各フォルダの役割と運用のコツを徹底解説" id="toc-各フォルダの役割と運用のコツを徹底解説" class="nav-link" data-scroll-target="#各フォルダの役割と運用のコツを徹底解説"><span class="header-section-number">2.3</span> 各フォルダの役割と運用のコツを徹底解説！</a></li>
+  <li><a href="#rで一発作成フォルダ自動生成テンプレートと使用例" id="toc-rで一発作成フォルダ自動生成テンプレートと使用例" class="nav-link" data-scroll-target="#rで一発作成フォルダ自動生成テンプレートと使用例"><span class="header-section-number">2.4</span> Rで一発作成！フォルダ自動生成テンプレートと使用例</a></li>
+  <li><a href="#まとめあなたの研究を次のレベルへ" id="toc-まとめあなたの研究を次のレベルへ" class="nav-link" data-scroll-target="#まとめあなたの研究を次のレベルへ"><span class="header-section-number">2.5</span> まとめ：あなたの研究を次のレベルへ</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -215,12 +216,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="臨床研究のための実データ解析フォルダ構成透明性と再現性を最大化するプロが教える秘訣" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> 臨床研究のための実データ解析フォルダ構成：透明性と再現性を最大化するプロが教える秘訣</h1>
-<p>こんにちは、坂本航太です！</p>
+</section>
+<section id="使わない" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> 使わない。</h1>
 <p>研究者の皆さん、日々の臨床研究におけるデータ解析、お疲れ様です。膨大なデータと複雑な解析プロセスの中で、「あのデータ、どこにあったっけ？」「この結果はどのバージョンのプログラムで出したんだっけ？」といった混乱に直面した経験はありませんか？特に臨床研究では、解析の<strong>透明性、再現性、そして監査に耐えうる品質</strong>が極めて重要になります。</p>
 <p>今回は、そんな悩みを解決するために、私がこれまでの経験から導き出した「臨床研究の実データ解析に特化した理想的なフォルダ構成」をご紹介します。シミュレーション研究で培ったノウハウも活かしつつ、<strong>ログ管理</strong>や<strong>構造定義書</strong>の重要性、さらには<strong>ミーティングでの効率的な進捗報告</strong>までを考慮に入れた、まさに「プロが使う」ための設計です。</p>
 <p>この構成を導入することで、あなたの研究プロジェクトは劇的に整理され、より効率的かつ信頼性の高いものへと進化するでしょう。</p>
-<section id="なぜフォルダ構成がそこまで重要なのか" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="なぜフォルダ構成がそこまで重要なのか"><span class="header-section-number">1.1</span> なぜフォルダ構成がそこまで重要なのか？</h2>
+<section id="なぜフォルダ構成がそこまで重要なのか" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="なぜフォルダ構成がそこまで重要なのか"><span class="header-section-number">2.1</span> なぜフォルダ構成がそこまで重要なのか？</h2>
 <p>単なるファイルの整理術と侮ってはいけません。適切なフォルダ構成は、研究の品質と直結します。</p>
 <ul>
 <li><p><strong>再現性:</strong> いつ、誰が、どのデータとプログラムを使って、どんな結果を出したのかが明確になります。これは科学的根拠の基盤です。</p></li>
@@ -230,8 +233,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <p>それでは、具体的なフォルダ構成を見ていきましょう！</p>
 </section>
-<section id="これが理想形臨床研究向けフォルダ構成" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="これが理想形臨床研究向けフォルダ構成"><span class="header-section-number">1.2</span> これが理想形！臨床研究向けフォルダ構成</h2>
+<section id="これが理想形臨床研究向けフォルダ構成" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="これが理想形臨床研究向けフォルダ構成"><span class="header-section-number">2.2</span> これが理想形！臨床研究向けフォルダ構成</h2>
 <p>この構成は、研究のワークフロー全体を考慮し、データのライフサイクル、プログラム開発、ドキュメント管理、コミュニケーションまでを網羅しています。フォルダ名の先頭に数字を付けることで、常に論理的な順序で表示されるよう工夫しています。</p>
 <pre><code>プロジェクトルート/
 ├── 00_Resources/           # 勉強した教材、参考文献、参考資料など
@@ -268,15 +271,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 │   └── Shared_Materials/   # 共有資料、テンプレートなど
 └── renv/                   # (Rの場合) Rパッケージ管理</code></pre>
 </section>
-<section id="各フォルダの役割と運用のコツを徹底解説" class="level2" data-number="1.3">
-<h2 data-number="1.3" class="anchored" data-anchor-id="各フォルダの役割と運用のコツを徹底解説"><span class="header-section-number">1.3</span> 各フォルダの役割と運用のコツを徹底解説！</h2>
+<section id="各フォルダの役割と運用のコツを徹底解説" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="各フォルダの役割と運用のコツを徹底解説"><span class="header-section-number">2.3</span> 各フォルダの役割と運用のコツを徹底解説！</h2>
 <p>それぞれのフォルダには明確な役割があります。適切に使い分けることで、プロジェクト全体が整理され、将来の自分や共同研究者が困ることがなくなります。</p>
-<section id="resources研究の知識ベース" class="level3" data-number="1.3.1">
-<h3 data-number="1.3.1" class="anchored" data-anchor-id="resources研究の知識ベース"><span class="header-section-number">1.3.1</span> 00_Resources/：研究の「知識ベース」</h3>
+<section id="resources研究の知識ベース" class="level3" data-number="2.3.1">
+<h3 data-number="2.3.1" class="anchored" data-anchor-id="resources研究の知識ベース"><span class="header-section-number">2.3.1</span> 00_Resources/：研究の「知識ベース」</h3>
 <p>このフォルダは、シミュレーション研究と同様に、あなたの研究活動を支える<strong>背景知識や参考資料</strong>を格納します。新しい統計手法の論文、Rパッケージの使い方メモ、講義ノートなど、直接データやプログラムに関わらなくても、研究の理解を深めるために不可欠な情報を整理しておきましょう。</p>
 </section>
-<section id="docs研究の骨格と仕様書" class="level3" data-number="1.3.2">
-<h3 data-number="1.3.2" class="anchored" data-anchor-id="docs研究の骨格と仕様書"><span class="header-section-number">1.3.2</span> 01_Docs/：研究の「骨格」と「仕様書」</h3>
+<section id="docs研究の骨格と仕様書" class="level3" data-number="2.3.2">
+<h3 data-number="2.3.2" class="anchored" data-anchor-id="docs研究の骨格と仕様書"><span class="header-section-number">2.3.2</span> 01_Docs/：研究の「骨格」と「仕様書」</h3>
 <p>プロジェクトの公式ドキュメントを集約する場所です。特に「構造定義書」がここに位置します。</p>
 <ul>
 <li><p><strong><code>01_Protocol/</code></strong>: <strong>研究計画書 (Protocol)</strong> を保管します。これらは、解析の根拠となる最重要ドキュメントであり、常に最新版を明確にしておく必要があります。</p></li>
@@ -284,16 +287,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p><strong><code>03_SAP/</code></strong>: <strong>統計解析計画書 (SAP)</strong> を保管します。以前の <code>03_Reports</code> から独立させ、解析の根幹となるドキュメントであることを明確にしました。</p></li>
 </ul>
 </section>
-<section id="dataデータの聖域と加工履歴" class="level3" data-number="1.3.3">
-<h3 data-number="1.3.3" class="anchored" data-anchor-id="dataデータの聖域と加工履歴"><span class="header-section-number">1.3.3</span> 02_Data/：データの「聖域」と「加工履歴」</h3>
+<section id="dataデータの聖域と加工履歴" class="level3" data-number="2.3.3">
+<h3 data-number="2.3.3" class="anchored" data-anchor-id="dataデータの聖域と加工履歴"><span class="header-section-number">2.3.3</span> 02_Data/：データの「聖域」と「加工履歴」</h3>
 <p>データの<strong>トレーサビリティ</strong>を確保するための最も重要なフォルダです。</p>
 <ul>
 <li><p><strong><code>01_Raw/</code></strong>: 外部から受け取った<strong>オリジナルの生データ</strong>を<strong>一切変更せずに</strong>格納します。データ受領時のハッシュ値なども記録しておくと、データの完全性を保証できます。</p></li>
 <li><p><strong><code>03_External/</code></strong>: コーディング辞書（MedDRAなど）や外部基準値など、外部から参照するデータはここに置きます。これらのデータも<strong>バージョン管理</strong>を徹底しましょう。</p></li>
 </ul>
 </section>
-<section id="programsプログラムの開発と確定" class="level3" data-number="1.3.4">
-<h3 data-number="1.3.4" class="anchored" data-anchor-id="programsプログラムの開発と確定"><span class="header-section-number">1.3.4</span> 03_Programs/：プログラムの「開発」と「確定」</h3>
+<section id="programsプログラムの開発と確定" class="level3" data-number="2.3.4">
+<h3 data-number="2.3.4" class="anchored" data-anchor-id="programsプログラムの開発と確定"><span class="header-section-number">2.3.4</span> 03_Programs/：プログラムの「開発」と「確定」</h3>
 <p>プログラムの<strong>バージョン管理と変更履歴</strong>を明確にするための場所です。</p>
 <ul>
 <li><p><strong><code>01_ADS/</code></strong>: <strong>解析用データセット（ADS）を作成するプログラム</strong>です。</p>
@@ -305,8 +308,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p><strong><code>03_Macros_Functions/</code></strong>: プロジェクト全体で共通利用するマクロや関数をまとめます。<code>04_Utilities/</code> は削除し、補助的なスクリプトは必要に応じて<code>Develop</code>フォルダ内や<code>03_Macros_Functions</code>に含める運用を想定します。</p></li>
 </ul>
 </section>
-<section id="output解析結果の証拠と成果物" class="level3" data-number="1.3.5">
-<h3 data-number="1.3.5" class="anchored" data-anchor-id="output解析結果の証拠と成果物"><span class="header-section-number">1.3.5</span> 04_Output/：解析結果の「証拠」と「成果物」</h3>
+<section id="output解析結果の証拠と成果物" class="level3" data-number="2.3.5">
+<h3 data-number="2.3.5" class="anchored" data-anchor-id="output解析結果の証拠と成果物"><span class="header-section-number">2.3.5</span> 04_Output/：解析結果の「証拠」と「成果物」</h3>
 <p>解析結果と、それを生成した<strong>全ての証拠（ログ）を体系的に保存</strong>する場所です。</p>
 <ul>
 <li><p><strong><code>01_Logs/</code></strong>: 全てのプログラム実行ログを、<strong>実行日時が分かるファイル名で日付フォルダ（<code>YYYYMMDD/</code>）内に保存</strong>します。ログにはプログラムの開始/終了時間、使用データ、エラーや警告の有無などを明確に記録し、何か問題が起きた際に迅速に原因を特定できるようにします。</p></li>
@@ -315,8 +318,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p><strong><code>04_Interim_Output/</code></strong>: 中間的な出力ファイル、一時ファイル、探索的データ解析の結果、品質管理のチェックリストやサマリー結果など、最終報告書には含まれないが保存しておきたい出力物を格納します。</p></li>
 </ul>
 </section>
-<section id="paper論文執筆の基地" class="level3" data-number="1.3.6">
-<h3 data-number="1.3.6" class="anchored" data-anchor-id="paper論文執筆の基地"><span class="header-section-number">1.3.6</span> 05_Paper/：論文執筆の「基地」</h3>
+<section id="paper論文執筆の基地" class="level3" data-number="2.3.6">
+<h3 data-number="2.3.6" class="anchored" data-anchor-id="paper論文執筆の基地"><span class="header-section-number">2.3.6</span> 05_Paper/：論文執筆の「基地」</h3>
 <p>論文執筆に特化したフォルダです。</p>
 <ul>
 <li><p><strong><code>Drafts/</code></strong>: 論文のドラフト版を保存します。Word、Quarto (<code>.qmd</code>)、LaTeXファイルなど、使用ツールに応じて格納してください。</p></li>
@@ -324,8 +327,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p><strong><code>References/</code></strong>: 参考文献管理ファイル（BibTeXファイルなど）や、関連論文のPDFなどを格納します。</p></li>
 </ul>
 </section>
-<section id="meeting議論の記録と進捗" class="level3" data-number="1.3.7">
-<h3 data-number="1.3.7" class="anchored" data-anchor-id="meeting議論の記録と進捗"><span class="header-section-number">1.3.7</span> 06_Meeting/：議論の「記録」と「進捗」</h3>
+<section id="meeting議論の記録と進捗" class="level3" data-number="2.3.7">
+<h3 data-number="2.3.7" class="anchored" data-anchor-id="meeting議論の記録と進捗"><span class="header-section-number">2.3.7</span> 06_Meeting/：議論の「記録」と「進捗」</h3>
 <p>会議に関する全ての資料を体系的に管理します。特に、Quartoでの進捗報告を効率的に行うための工夫があります。</p>
 <ul>
 <li><p><strong><code>YYYYMMDD_MeetingTitle/</code></strong>: <strong>日付とミーティングタイトル</strong>を組み合わせたフォルダを、各ミーティングごとに作成します。このフォルダ直下に、議題、議事録（.docx, .pdfなど）、<strong>Quarto (<code>.qmd</code>) 形式の進捗報告書ソースファイル</strong>、そしてその<code>.qmd</code>ファイルからレンダリングされた出力ファイル（.html, .pdfなど）など、そのミーティングに関連する全ての資料を格納します。</p></li>
@@ -333,8 +336,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 </section>
 </section>
-<section id="rで一発作成フォルダ自動生成テンプレートと使用例" class="level2" data-number="1.4">
-<h2 data-number="1.4" class="anchored" data-anchor-id="rで一発作成フォルダ自動生成テンプレートと使用例"><span class="header-section-number">1.4</span> Rで一発作成！フォルダ自動生成テンプレートと使用例</h2>
+<section id="rで一発作成フォルダ自動生成テンプレートと使用例" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="rで一発作成フォルダ自動生成テンプレートと使用例"><span class="header-section-number">2.4</span> Rで一発作成！フォルダ自動生成テンプレートと使用例</h2>
 <p>この理想的なフォルダ構成を、Rのスクリプトでサクッと自動生成しちゃいましょう！以下のコードをRコンソールに貼り付けるか、新しい <code>.R</code> ファイルとして保存して実行するだけです。<code>renv</code> を使用しない設定 (<code>use_renv = FALSE</code>) での具体的な使用例も示しますね。</p>
 <div class="sourceCode" id="cb2" data-eval="FALSE," data-code-overflow="wrap"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co">#' 臨床研究における実データ解析プロジェクトのフォルダ構造を自動生成する関数</span></span>
 <span id="cb2-2"><a href="#cb2-2"></a><span class="co">#'</span></span>
@@ -419,8 +422,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-81"><a href="#cb2-81"></a>  <span class="fu">message</span>(<span class="st">"  - `01_Docs/02_Specs/` にデータ定義書やADS構造定義書を必ず作成してください。"</span>)</span>
 <span id="cb2-82"><a href="#cb2-82"></a>  <span class="fu">message</span>(<span class="st">"  - `06_Meeting/` フォルダ内は、ミーティングごとに `YYYYMMDD_MeetingTitle/` 形式のサブフォルダを作成し、その直下に関連する全てのファイルを整理してください。特に `.qmd` ファイルとその出力もここに含めます。"</span>)</span>
 <span id="cb2-83"><a href="#cb2-83"></a>}</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<section id="具体的な使用例renv-false-の場合" class="level3" data-number="1.4.1">
-<h3 data-number="1.4.1" class="anchored" data-anchor-id="具体的な使用例renv-false-の場合"><span class="header-section-number">1.4.1</span> 具体的な使用例（<code>renv = FALSE</code> の場合）</h3>
+<section id="具体的な使用例renv-false-の場合" class="level3" data-number="2.4.1">
+<h3 data-number="2.4.1" class="anchored" data-anchor-id="具体的な使用例renv-false-の場合"><span class="header-section-number">2.4.1</span> 具体的な使用例（<code>renv = FALSE</code> の場合）</h3>
 <ol type="1">
 <li><p><strong>Rスクリプトの保存:</strong> 上記のRコードを、例えば <code>create_project_structure.R</code> という名前で保存します。</p></li>
 <li><p><strong>プロジェクト作成場所への移動:</strong> RコンソールまたはRStudioのターミナルで、新しいプロジェクトを作成したいディレクトリに移動します</p></li>
@@ -436,8 +439,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>これで、すぐにプロジェクト作業に取りかかれる、クリーンで整理された環境が手に入ります。</p>
 </section>
 </section>
-<section id="まとめあなたの研究を次のレベルへ" class="level2" data-number="1.5">
-<h2 data-number="1.5" class="anchored" data-anchor-id="まとめあなたの研究を次のレベルへ"><span class="header-section-number">1.5</span> まとめ：あなたの研究を次のレベルへ</h2>
+<section id="まとめあなたの研究を次のレベルへ" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="まとめあなたの研究を次のレベルへ"><span class="header-section-number">2.5</span> まとめ：あなたの研究を次のレベルへ</h2>
 <p>このフォルダ構成は、単なるファイルの置き場所ではありません。臨床研究におけるデータ解析の<strong>透明性、再現性、そして監査可能性</strong>を飛躍的に向上させるための、体系的なワークフローそのものです。</p>
 <ul>
 <li><p><strong><code>00_Resources</code></strong>: 知識の蓄積を忘れずに。</p></li>

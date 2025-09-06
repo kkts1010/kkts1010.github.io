@@ -1,0 +1,206 @@
+---
+title: "Using Propensity Score for Causal Inference -Pitfalls and Tips"
+author: "坂本航太"
+categories: [博士課程]
+date-modified: "2025-08-26"
+abstract-title: Abstract
+abstract: ""
+date: "2025-08-26"
+---
+
+## Abstract
+
+::: callout-note
+Methods based on propensity score (PS) have become increasingly popular as a tool for causal inference. A better understanding of the relative advantages and disadvantages of the alternative analytic approaches can contribute to the optimal choice and use of a specific PS method over other methods. In this article, we provide an accessible overview of causal inference from observational data and two major PS-based methods (matching and inverse probability weighting), focusing on the underlying assumptions and decision-making processes. We then discuss common pitfalls and tips for applying the PS methods to empirical research and compare the conventional multivariable outcome regression and the two alternative PS-based methods (ie, matching and inverse probability weighting) and discuss their similarities and differences. Although we note subtle differences in causal identification assumptions, we highlight that the methods are distinct primarily in terms of the statistical modeling assumptions involved and the target population for which exposure effects are being estimated.
+:::
+
+## 3 Steps
+
+1.  specifying causal estimand
+
+2.  causal identifiation
+
+3.  estimation
+
+## Basics of propensity scores
+
+## Matching
+
+## Inverse probability weighting
+
+## 
+
+## On the application of the PS methods. Tips
+
+1.  The goal of propensity score models is not to predict an exposure perfectly.
+
+    The goal of the PS methods is to achieve balance in observed confounders; hence, an optimal propensity model is not the one that best predicts an exposure. To achieve this goal of the PS methods as a tool for confounding adjustment, applied users need to consider the following two aspects of a propensity model specification: 1) variable selection and 2) model evaluation. It is recommended that a propensity model include only variables that affect an outcome. If the variables also affect an exposure, they are confounders and should be adjusted for (L1 in Figure 1). Even when they do not affect exposure and, thus, are not confounders (L2 in Figure 1), their distributions are likely not identical between the exposure groups in a finite sample; adjusting for these imbalanced variables reduces bias in an effect estimate and its variance. Importantly, the “variables that affect an outcome” should be selected based on subject-matter knowledge about underlying causal structures rather than statistical associa- tions with the outcome.24 Variables that affect only an exposure (L3 in Figure 1) should not be included in a propensity model because such variables can inflate the variance of the effect estimates.25 Moreover, variables in a propensity model should ideally be measured prior to the exposure to avoid accidentally adjusting for potential mediators (M in Figure 1).
+
+    Studies using the PS methods often report measures of “model fit” such as c-statistic (ie, area under the curve), aiming to evaluate the predictive performance of a propensity model.Because the prediction of exposure is not the goal of a propensity model, reporting the measures of model fit is of limited value.26 For instance, adding exposure predictors that are not confounders (eg, L3 in Figure 1) increases the c-statistic but does not necessarily enhance causal inference. To evaluate a propensity model in terms of confounding adjustment, covariate balance should instead be checked after PS estimation. Covariate balance can be assessed by calculating a standardized difference for each covariate using the matched sample for PSM and the weighted sample for IPW. The formulas to calculate standardized differences are available elsewhere.3,27 Some scholars have used \<0.1 standardized difference as support for covariate balance.28
+
+2.  Propensity Score Matching suffer from residual confounding even when conditional exchangeability holds.
+
+    It is generally hard to find pairs with identical PS values because PS is a continuous variable by definition and can take any value between 0 and 1. Thus, a common practice is to select an unexposed individual with a PS value closest to that of an exposed individual (nearest neighbor matching), often from a pool of unexposed individuals within a pre-specified range of PS differences from their exposed counterpart (caliper distance). Wider caliper distance may result in pairs with large differences in PS values, leading to unbalanced confounders and resulting bias in the matched sample. Austin recommends using calipers of 0.2 standard deviations of PS in the logit scale as a rule of thumb29; however, the optimal caliper width should ideally be determined based on the covariate balance in the matched sample.
+
+3.  Propensity Score Matching discards unmathced observations and and addresses potential positivity violations in exchange for a loss of statistical efficiency.
+
+    PSM discards unmatched observations with extreme PS values. This property of PSM has an advantage and a disadvantage. The advantage is that it can explicitly address potential positivity violations.13 For example, individuals with extremely high PS values tend to have covariate patterns in which only exposed individuals exist. Because PSM discards information from these individuals and analyzes people within the overlapped range of the PS distribution (ie, common support), it does not rely on model extrapolation that other analytic approaches (eg, PS regression adjustment) might do. The disadvantage is that discarding information may result in imprecise estimates and loss of statistical power. Notably, discarding unmatched observations will change the target population of interest.
+
+4.  Post-matching adjustment can sometimes induce bias.
+
+    Although PSM can achieve balance in observed covariates in expectation, applying PSM to a finite sample sometimes results in imbalanced covariates even after matching, which can cause residual confounding. To address the residual confounding, PSM is sometimes accompanied by stratification or regression adjustment after matching.30 However, bias can arise if such post- matching adjustment includes variables that are not used in a propensity model.31
+
+5.  In IPW , using stabilized weights can sometimes gain statistical efficiency.
+
+    The inverse probability weights we described above had the numerator of one and are called unstabilized weights. Alter- natively, the stabilized weights can be defined using other constant numbers for their numerator, often a marginal prevalence of exposure. Stabilized weights can gain statistical efficiency when a weighted outcome model makes modeling assumptions and is unsaturated (eg, a weighted outcome model for non-binary exposures or conditional effects with baseline covariates).21,32 When IPW was used for a binary treatment to estimate a marginal effect, a weighted outcome model would be saturated; hence, unstabilized weights and stabilized weights would give identical results. There are some cases where unstabilized weights, not stabilized weights, should be used (eg, estimating an effect of a dynamic treatment regimen), but these cases are beyond the scope of this introductory paper.33
+
+6.  IPW can be used to address selection bias too.
+
+    IPW can also address selection bias.34 Inverse probability weights for censoring (IPCW) are calculated based on probabilities of selection=censoring conditional on exposure and common causes of the censoring and the outcome. Note that the censoring weights can incorporate variables that are not confounders but cause selection bias (eg, L2 in the causal diagram in Figure 2). While IPCW is a useful tool to advance causal inference, the interpretation of the estimated effects after IPCW may not be straightforward in the presence of competing risk.35–37 Moreover, the weight calculation requires the information on exposure and covariates among the censored individuals, which often is unavailable.38
+
+7.  PSM and IPW both require methods for the analysis of correlated observations.
+
+    In PSM, the post-matching analysis needs to take account of the within-matched pair correlations.39 For example, post-matching analysis can use paired t-test or Wilcoxon’s rank sum test for continuous outcomes, and McNemar’s test and conditional logistic regression for binary outcomes, and cox proportional hazards regression for survival outcomes.39,40 Similarly, in IPW, standard errors from the IP-weighted outcome regression need to be corrected due to the dependent observations in the weighted data; using robust variance or non-parametric bootstrapping is recommended to estimate standard errors (R and SAS codes are available in eMaterials 2).32
+
+8.  The PS methods and multivariable outcome regression both assume no unmeasured confounding. However , there are properties of the PS methods that are sometimes advantageous.
+
+    The PS methods and the multivariable outcome regression approach both assume conditional exchangeability given measured covariates. Thus, they can only address confounding caused by measured covariates and are equally prone to bias due to unmeasured confounders. Nevertheless, the PS methods can sometimes be preferable for the following five reasons.
+
+    First, in theory, the PS methods can result in data analysis with more integrity and work against p-hacking.41 Most of the PS methods’ modeling decisions come before looking at outcome data. Thus, investigators may be less tempted to change model specifications to make the results align with their expectations. In PSM, for instance, the investigator first specifies a propensity model and estimate PS, creates a matched sample, checks the balance of observed covariates between the exposed and the unexposed, and, if unbalanced, goes back and re-specifies a propensity model, all of which can be done without outcome data. Even for the methods that specify an outcome model (ie, regression adjustment and IPW), the outcome model generally makes fewer or even no modeling assumptions than a multivariable outcome regression conditioning on numerous covariates. However, this first advantage may not fully be leveraged in the applied research because careless application of the PS methods would not yield this theoretical property.
+
+    Second, potential positivity violations tend to become more visible in the PS methods because extreme PS values can signal covariate patterns in which only the exposed or the unexposed are present. As we describe below, the PS methods handle potential positivity violations differently.
+
+    Third, when the outcome is rare, conditioning on numerous covariates via a multivariable regression can result in imprecise estimation. When the exposure is non-rare, the PS methods can work better for rare outcomes because they convert the high- dimensional covariates into a single variable, PS.
+
+    Fourth, the PS methods and the multivariable outcome regression make qualitatively different modeling assumptions. The PS methods’ primary modeling decisions are for a propensity model. Although the propensity models and outcome models conditional on measured covariates are both prone to misspecification, one may feel more confident of correctly specifying an exposure model in situations where more knowledge about the relationships with covariates is available for exposure than for an outcome. A doubly-robust method (eg, targeted maximum likelihood estimation) can accommodate both models and consistently estimate conditional expectancies of interest if either a propensity model or an outcome model is correctly specified.42,43 Notably, multivariable outcome regression technically estimates conditional effects within the strata of observed covariates. Although a marginal effect can rigorously be estimated via standardization(R and SAS codes are available in eMaterials 2),44 a more common approach for estimating marginal effects with multivariable outcome regression is to assume no effect measure modification by ANY of measured covariates (ie, no product term between exposure and covariates). On the other hand, the PS methods tend to make no or fewer assumptions for effect measure modification, although they instead make assumptions for a propensity model.
+
+    Lastly, IPW can be expanded to causal inference for a time- varying exposure in the presence of time-varying confounding.21,45 Conventional analytic approaches, including other PS methods, fail to estimate the effects of a time-varying exposure when prior exposure affects confounders of subsequent exposure.46
+
+9.  The alternative PS methods rely on the same assumptions for exchangeability and consistency but deal with the positivity assumption differently.
+
+    Both PSM and IPW rely on the same identifiability assumptions of conditional exchangeability and consistency. In contrast, these methods take different approaches to handle potential positivity violations. In IPW, individuals will receive substantially large or small weights when their covariate patterns potentially violate positivity. Trimming such observations with extreme weights is often recommended.47 On the other hand, PSM explicitly addresses potential positivity violations by excluding those who have extreme PS values and, thus, cannot be matched (so-called “off-support” individuals). While such explicit handling of positivity violations is the advantage of the PS methods, one caveat is that causal estimand of interest generally changes after excluding individuals who potentially violate positivity.20
+
+10. Although the PS methods both make the same exchangeability asuumption, PSM can suffer from residual confounding
+
+    Both PSM and IPW are based on the same conditional exchangeability (ie, no confounding conditional on measured covariates). However, as we noted in #2 above, PSM may result in an insufficient balance of the measured covariates when the pre-specified caliper is wide. On the other hand, IPW does not suffer from residual confounding, assuming the models involved are correctly specified.
+
+11. The PS methods make different modeling assumptions after propensity score estimation
+
+    Both PSM and IPW specify a propensity model to estimate PS. PSM often does not require any further modeling once PS is estimated although an outcome model is sometimes used to make post-matching adjustment. IPW specifies a weighted outcome model to approximate a marginal structural model, but the outcome model tends to make fewer assumptions than it does in PSM (when post-matching adjustment via regression is conducted) or even be saturated (no modeling assumption) when estimating the marginal effect of a single-point binary exposure.
+
+12. The PS methods target different causal estimands.
+
+    PSM and IPW generally target different causal estimands.20,48,49 In other words, when an effect estimate from one PS method differs from an estimate from another PS method, they can both be correct but simply answer different questions. PSM estimates a marginal effect in a population represented by a matched sample. Because the matched sample excludes individuals with extreme PS values, PSM does not estimate an exposure effect among individuals who would always or never be exposed unless they were intervened and forced to have an alternative exposure level. PSM often uses all exposed individuals and matches them with their unexposed pairs. This approach will estimate an exposure effect among the people who were in fact exposed (ie, average treatment effect in the treated).3 IPW can estimate both marginal and conditional effects, depending on the definition of weights and specification of a marginal structural model.
+
+# Rプログラム
+
+```{r}
+library(tidyverse)
+library(broom)
+library(gtsummary)
+library(MatchIt)
+library(geepack)
+library(boot)
+```
+
+```{r}
+set.seed(0)
+n.obs = 10000 #set sample size
+
+#---- True parameters in outcome model ----
+b0 = 60
+b1 = 5
+b2 = -0.3
+b3 = -0.1
+b4 = 8
+b5 = 3
+b6 = 2
+
+#---- True parameters in exposure odds model ----
+g0 = log(0.20/(1-0.20))
+g1 = log(1.01)
+g2 = log(1.005)
+g3 = log(0.6)
+g4 = log(0.5)
+g5 = log(0.8)
+
+#Function to compute outcome values
+## Use the parameters specified above
+mean_out <- function(C1, C2, C3, exposure){
+ b0 + b1*exposure + b2*C1 + b3*I(C1^2) + b4*C2 + b5*C3 + b6*exposure*C2 + rn
+orm(n = n.obs, mean = 0, sd = 5)
+}
+
+#Function to compute exposure probabilities
+## Use the parameters specified above
+prob_exp <- function(C1, C2, C3){
+ exp(g0 + g1*C1 + g2*I(C1^2) + g3*C2 + g4*C3 + g5*C2*C3)/(1 + exp(g0 + g1*C1
++ g2*I(C1^2) + g3*C2 + g4*C3 + g5*C2*C3))
+}
+
+#Simulate the data
+df.sim <- tibble("ID" = seq(from = 1, to = n.obs, by = 1),
+ "C1" = rnorm(n = n.obs, mean = 0, sd = 5),
+ "C2" = rbinom(n = n.obs, size = 1, p = 0.4),
+ "C3" = rbinom(n = n.obs, size = 1, p = 0.3),
+ "Pexposure" = prob_exp(C1, C2, C3),
+ "Exposure" = rbinom(n = n.obs, size = 1,
+ prob = Pexposure),
+ "Outcome" = as.numeric(mean_out(C1,C2,C3, Exposure))) 
+```
+
+## Multivariable regression
+
+```{r}
+# Correctly specified model
+df.sim %>%
+ lm(Outcome ~ Exposure*C2 + C1 + I(C1^2) + C3, data = .) %>%
+ tidy(conf.int = TRUE)
+
+# Misspecified model
+df.sim %>% 
+ lm(Outcome ~ Exposure + C1 + C2 + C3, data = .) %>%
+ tidy(conf.int = TRUE, exp = TRUE)
+
+```
+
+## Standardization (a.k.a., g-formula/g-computation)
+
+```{r}
+# Make copies of original data
+df.sim.a1 <- df.sim %>%
+ mutate(Outcome = NA,
+ Exposure = 1) #Assign Exposure = 1 to everyone
+
+df.sim.a0 <- df.sim %>%
+ mutate(Outcome = NA,
+ Exposure = 0) #Assign Exposure = 0 to everyone
+
+df.sim.combined <-
+ bind_rows(df.sim.a1,df.sim.a0)
+
+# Fit an outcome model to the original data
+## Correctly specified model
+
+gcomp.fit <- df.sim %>%
+ lm(Outcome ~ Exposure*C2 + C1 + I(C1^2) + C3, data = .)
+
+# Predict outcome values using the copied datasets
+df.sim.combined$pred <- predict(gcomp.fit, newdata = df.sim.combined)
+
+# ATE Estimate: Difference between mean predicted values for rows with A=1 and mean predicted values for rows with A = 0
+df.sim.combined %>%
+ group_by(Exposure) %>%
+ summarise(
+ mean.Y = mean(pred)
+ ) %>%
+ pivot_wider(
+ names_from = Exposure,
+ names_glue = "mean.Y.{Exposure}",
+ values_from = mean.Y
+ ) %>%
+ mutate(
+ ATE = mean.Y.1-mean.Y.0
+ )
+
+```
