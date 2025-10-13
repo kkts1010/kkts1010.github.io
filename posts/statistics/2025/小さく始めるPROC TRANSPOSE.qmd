@@ -1,0 +1,10 @@
+---
+title: "小さく始めるPROC TRANSPOSE "
+author: "坂本航太"
+categories: [SAS]
+date-modified: "2025-10-04"
+abstract-title: Abstract
+abstract: ""
+date: "2025-10-04"
+editor: visual
+---
