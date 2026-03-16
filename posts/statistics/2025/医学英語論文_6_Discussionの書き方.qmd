@@ -1,0 +1,240 @@
+---
+title: "Discussionの書き方"
+author: "坂本航太"
+categories: [医学論文]
+date-modified: "2025-10-13"
+abstract-title: Abstract
+abstract: ""
+date: "2025-10-13"
+---
+
+-   Discussionの鉄則
+
+    -   ㉔Discussion全体を通じた論理一貫性を強く意識する。
+
+    -   ㉕冗長・曖昧・蛇足を一切排除する。
+
+    -   ㉖すべてのトピックをConclusionに向かって一直線につなげる。
+
+    -   ㉗研究の新規性（novelty）を強調する。
+
+    -   ㉘Resultsに基づいて議論する。言えないことは言わない。
+
+    -   ㉙Spinは厳禁
+
+    -   ㉚Limitationの記載をはしょってはならない
+
+## まずいDiscussionのパターン
+
+せっかく良い研究を実施し、新しい発見や興味深い知見をもたらしたにもかかわらず、それらをまとめた論文のDiscussionがまずいせいで、投稿してもrejectされてしまう。そんな悲しい事態だけは何とかしても避けよう。
+
+論文執筆経験の浅い若手研究者たちが陥りがちな、まずいDiscussionには、いくつかのパターンがある。
+
+1.  先行文献の羅列
+
+    Discussionの冒頭から先行研究の解説が延々と続く。まとまりがなく、退屈極まりない。書いた本人は、自分が時間をかけて文献検索し、読み込んだ、その分野の研究史を丹精込めてまとめたい、という願望があるようだ。ときにそれがA４サイズのファイル数ページ分を超えることがある。しかい、それらはたいてい、せいぜい半ページに要約して書けばすむ程度の内容である。
+
+2.  枝葉末節、蛇足の記述
+
+3.  独りよがりの主張
+
+4.  論理一貫性の欠如
+
+## Discussionを書くための心構え
+
+論文執筆者が持つべき、Discussionを書くための心構えを表6-1に示す。これらの心構えを守れば、必ず良いDiscussionを書くことができる。
+
+表6.1 Discussionを書くための心構え
+
+| **① Simple is best.**                     |
+|-------------------------------------------|
+| **② Write only what is important.**       |
+| **③ One paragraph , one topic**           |
+| **④ All topics lead to Conclusion**       |
+| **⑤ One article , one take-home message** |
+
+-   Simple is best.
+
+    -   簡潔明瞭をよしとする。文章単位でも、パラグラフ単位でも、Discussion全体としても、無駄な単位や冗長な表現を排除し、なるべく短く書くべきである。1文は20\~30 wordsにまとめたほうがよく、それを超える場合は2文に分けた方が良い。1パラグラフは10行以内にまとめた方がよく、それを超える場合は2パラグラフに分けた方が良い。
+
+-   Write only what is important.
+
+    -   先行研究のpotpourriは必要ない。先行研究の解説は1パラグラフ、数行以内に簡潔にまとめるべきである。結論に影響しない、些細な結果に関する細かいDiscussionは要らない。
+
+-   One paragraph, one topic
+
+    -   1つのパラグラフに1つのトピックが原則である。1つのパラグラフに2つ以上のトピックが含まれると、焦点がぼけてしまう。各パラグラフにkey sentenceを1文ないし2文、意識的に挿入する。
+
+-   All topics lead to Conclusion.
+
+    -   すべてのトピックの論述は、最後の結論に向けて一直線に進め根ければならない。その際、論理一貫性（consistency）を強く意識しなければらなない。Discussionの途中で論理一貫性が破綻してしまうと、最後のConclusionにしまりがなくなるばかりか、論理矛盾になりえる。
+
+-   One article, one take-home message
+
+    -   読者に覚えて欲しい重要なメッセージは、1つの論文に1つだけに留める方がよい。メッセージが複数あると、簡潔明瞭さが損なわれ、Conclusionに至る論理展開も往々にして複雑化し、読者の理解を損ないがちになる。
+
+## Discussionの構成
+
+典型的かつ基本的なDiscussionの構成を示す。
+
+表6.2 Discussionの構成
+
+| **① Brief summary**                          |
+|----------------------------------------------|
+| **② Comarison with previous studies**        |
+| **③ Possible explanations and implications** |
+| **④ Lmitations**                             |
+| **⑤ Conclusion**                             |
+
+-   Brief summary
+
+    -   Discussion冒頭の1パラグラフに、カギとなる結果（key results）を簡潔明瞭に示す。Resultsで示された具体的な数値をここで繰り返す必要はなく、全体的な傾向を短く記述すればよい。
+    -   Abstractのcopy and pasteは不可
+
+-   Comparison with previous studies
+
+    -   Introductionにおける先行文献の引用と、Discussionにおける先行文献の引用は、意図が異なる。
+
+    -   Introductionには論文の方向性を示す引用を付す。Discussionは研究結果の解釈を補強するための引用を付す。
+
+    -   両者の引用元である文献は重複してもよい。しかし本文の記述そのものが重複してはならない。
+
+    -   Resultsから導かれる考察と密接に関連する文献のみを簡潔に引用する。文献解説のpotpourriは無用。
+
+    -   Smith et al showed thatのようにauther名をいちいち挙げている例をしばしば認める。Smith先生が当該研究領域では名の通った大御所ならばまだしも、有名でない研究者の名前を挙げることに意味はない。それよりも研究デザインを示す方が情報量が多い。
+
+        -   A previous randomized controlled trial showed that...
+
+        -   A recent retrospective cohort study reported that...
+
+    -   先行研究との一致性（compatibility）を確認することは、結果の妥当性を示す一助になる。しかし、それだけに終始している論文は学術的価値を認めにくい。
+
+    -   自分の研究結果が先行研究とcompatibleであることばかりを強調すべきでない。
+
+    -   自分の研究から新しい結果を導きだそうという気持ちのこもっていない論文は、科学の発展には役立たない。
+
+    -   先行研究と比較した、自分の研究の新規性（novelty）や長所（strength）を強調すべきである。
+
+    -   先行研究と比較して症例数が多く統計的検出力に優れる。先行研究とは異なる（あるいはより広い）範囲の対象者を調査した。より長期の観察期間を置いた。より精密なアウトカム測定を実施した。より厳密な交絡調整を行った。これらはすべて、研究の長所となりうる。
+
+-   Possibile explanations and implications
+
+    -   Resultsの解釈
+
+        -   DiscussionはあくまでもResultsに基づかなければならない。
+
+        -   Resultsは予想どおり（as expected）か、予想に反する（unexpected）ものか？
+
+        -   得られた知見（findings）は、biologically plausible（生物学的に説明可能）か？clinically plausible（臨床的に説明可能）か？epidemiologically plausible（疫学的に説明可能か？）
+
+        -   **Explanations (説明)**：\*\*「なぜ」\*\*その結果になったのかを考察します。（**過去・内向き**）
+
+        -   これらの解釈の根拠となる先行文献を適切に引用しつつ、論理的整合性をもって解釈を加えなければならない。
+
+        -   Resultsの解釈がauthorとreviewerとの間で異なることは、論文がrejectされる原因の一つとなる。reviewerの批判を予測し、それに対して伏線を張っておくことが重要である。具体的にはcontroversialな内容について、ヘッジング表現を用いるとよい。
+
+        -   **Result:** 新薬A群はプラセボ群より有意に効果が高かった。
+
+        -   **Explanation:** 「この結果は、新薬Aが〇〇というメカニズムで特定の受容体をブロックするため、生物学的に妥当（plausible）である。このメカニズムは、先行する動物実験（Sato et al., 2023）の結果とも一致している。」
+
+    -   因果関係に関する考察
+
+        -   観察研究においては、原則として、直接的な因果関係（causal relationship）を示す表現を用いるべきではない。関連（association）を示す表現を用いるべきである。
+
+            -   A caused B . → A is associated with B .
+
+            -   A reduced B. →A is associated with reduction B .
+
+        -   介入・曝露とアウトカムの関連についての考察では、以下についてなるべく記載すべきである。
+
+            -   関連の大きさはどの程度か。
+
+            -   他のセッティングにおける研究結果との一貫性があるか
+
+            -   その関連は基礎研究を含む他の研究の知見によって支持されるか
+
+            -   用量反応関係はあるか
+
+    -   Resultsの含意（implication）
+
+        -   Resultsから導かれる臨床的合意（clinical implication）は何か。
+
+        -   社会医学系論文では、Resultsから導かれる考察として、health policy implicationを述べることが多い。
+
+        -   **Implications (含意・示唆)**：**「だから何」**（So what?）を考察します。（**未来・外向き**）
+
+        -   Resultsから何をどこまでいえるか、未解決でさらに研究が必要な課題は何か、についても言及する。
+
+        -   ここでも、論理一貫性を強く意識し、論理の飛躍を一切排除する必要がある。
+
+        -   **Result:** 新薬A群はプラセボ群より有意に効果が高かった。
+
+        -   **Implication:** 「本研究の結果は、新薬Aが既存薬で効果不十分な患者にとって、新たな治療選択肢となる *可能性を示唆している*（Clinical Implication）。今後は、より長期の安全性や、他の薬剤との併用効果を検証する研究が *必要である*（今後の課題）。」
+
+    -   Resultsから導かれない「妄想」を書くべかららず。
+
+        -   その通り
+
+    -   Spinは厳禁
+
+        -   その通り
+
+    -   ヘッジング表現を用いる
+
+        -   未証明の仮説や主観的な意見を、あたかも疑いようのない事実のように自信たっぷりに書くと、尊大な態度であると受け取られ、reviewerやeditorを敵に回すことになる。
+
+        -   自分の研究結果をnovel,pivotal,innovative,cutting edgeなどと形容するのも、謙虚さが足りない。他人の研究についてそう書くのは構わない。
+
+        -   より控えめに、柔らかく、間接的にかけば、reviewerやeditorからの無用な反発を避けることができる。英文ライティングにおいて、このような表現方法はhedgingと呼ばれる。断定を避けることで、自分の論点が破綻したり、批判にされされたりすることを防ぐため。
+
+        -   例えば、This is the first study～といった表現の代わりに、To the best of our knowledge, as far as we knowといった、ヘッジングを食わるとよい。
+
+        -   prove/demonstrate/manifestといった断定調の動詞をsuggest/implyなどの控えめな動詞に変換する。may/couldや副詞（possibly,potentially,presumably,probaboly）などを用いる。
+
+        -   すべての考察にヘッジング表現を用いる必要はない。断定すべき箇所は断定する。
+
+-   Limitations
+
+    -   研究の限界を示すことは、自分の研究を否定的にとらえることが目的ではない。
+
+    -   読者が研究結果を臨床現場に適用する際に、慎重な姿勢を促すことが目的である。
+
+    -   さらには、自分の研究の限界を克服する将来の研究を促す、言い換えれば、むしろ学問を発展させることが目的である。
+
+    -   原則として、鍵となる結果に大なり小なり影響を与えるlmitationはすべて列挙すべきである。
+
+    -   偶然誤差の影響、短い追跡期間によるイベント発生の過少評価、様々なバイアス（選択バイアス、測定バイアス、交絡）の大きさと方向性については、適切に記載すべきである。
+
+    -   そららがResultsに及ぼす影響の程度についても、できれば示すとよい。
+
+    -   さほど大きな影響がないと考えられる場合、理由とともにそれを明示すればよい。
+
+    -   一般化可能性について、大抵の場合、組み入れ基準から外れる患者に対する一般化可能性は乏しいため、limitationにそのことを短く言及すべきである。
+
+    -   「Limitationを書きすぎるとrejectされる」という考えは杞憂である。
+
+    -   賢明なreviewerはlimitaionの記載を厳しくチェックする。重大なlimitationがあるのにそれを記載しないことはrejectの理由の一つとなる。
+
+    -   limitationの存在は、書けば免責されるというわけではない。
+
+    -   重大なlimitationの存在はそれ自体がrejectの大きな理由の一つである。それを英作文でカバーすることはできない。
+
+    -   limitationの記載において、regrettably,unfortunatelyといったワードが用いられている文章が見受けられる。こうした表現は、reviewerのコメントに対する返事には用いていいものの、論文の本文には用いるべきではない。
+
+-   Conclusion
+
+    -   Conclusionは、limitationを考慮して慎重に書かれるべきである。また、自分の研究結果は、まだ普遍の真理とはいえないはずだ。
+
+    -   将来、より優れたデザインの研究によって、覆されるかもしれない。それを踏まえて、より断定的でない（less assertive）表現を心掛けるべきである。mayやsuggestという言葉をはさんで,less assertiveにする。
+
+    -   よくないConclustion
+
+        -   A increases B with C.
+
+    -   よいConclusion
+
+        -   Our analysis suggests an increase in B associated with A with C.
+
+    -   よくConclusion
+
+        -   Our analysis demonstrated that an increase B was associated with A with C.

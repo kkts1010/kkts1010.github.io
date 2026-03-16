@@ -1,0 +1,129 @@
+---
+title: "Methodsの書き方"
+author: "坂本航太"
+categories: [医学論文]
+date-modified: "2025-10-13"
+abstract-title: Abstract
+abstract: ""
+date: "2025-10-13"
+---
+
+-   Methodsの鉄則
+
+    -   ⑮Methodsの再現可能性（reproductivity）を最重視する。
+
+    -   ⑯デザイン、セッティング、適格基準、介入・曝露を明記する。
+
+    -   ⑰アウトカムの定義と測定法を明記する。
+
+    -   ⑱統計解析手法を完璧に記述する。
+
+## Methodsの再現性
+
+科学と非科学を分けるポイントは、再現性（reproductivity）である。医学・医療の世界で自説を主張したければ、再現性のある方法を用いて、それが確からしいことを証明しなければならない。
+
+ICMJEの和訳
+
+::: callout-note
+「方法」セクションが指針とすべき原則は、研究がどのように行われ、なぜその手法がとられたかを明確にすることである。「方法」セクションに求められる目標は、データを閲覧する者が結果を再現できるだけの十分な詳細情報である。一般的に、このセクションには研究の計画またはプロトコールの作成中に入手可能だった情報のみを含めるべきで、研究中に得られた情報は、すべて「結果」セクションの内容となる。ある団体に研究実施の支援（たとえば、データの収集および管理など）を有償あるいは契約を結んで委託した場合は、「方法」セクションで詳述する必要がある。
+
+「方法」セクションには、その研究が現地、地域、または国の規制および法令に準拠した外部審査機関（倫理委員会、治験審査委員会など）によって承認された旨の声明を含める必要がある。その研究がヘルシンキ宣言に準拠して実施されたかどうかが疑わしい場合、著者は自らの方法の根拠を説明し、研究中疑義のある面については、現地、地域、または国の規制および法令に準拠した審査機関から明示的な承認が得られていることを証明しなければならない（セクションII.Eを参照）。
+
+著者は、研究の実施にAI技術を使用した場合、使用したツール、バージョン、およびプロンプト（該当する場合）を含め、その手法を再現できるだけの十分な詳細情報を方法セクションに記述すべきである。
+
+###### **i. 参加者の選定および記述**
+
+適格基準や除外基準、参加者の出身人口群を含め、観察または試験の参加者（対照群を含めた健康被験者または患者）の選定について明確に記述する。研究デザインの段階では、年齢、性別、あるいは民族といった変数について研究との関連性が常に理解されているわけではないため、いかなる種類の研究においても、研究者は主だった人口群を組み入れるよう努めるべきであり、少なくとも、これらの変数とともに、関係のある他の人口統計学的変数についても記述データを提供する必要がある。試験の参加者集団が対象集団全体をどの程度代表しているかについてコメントする。
+
+なお、性別［sex］（生物学的因子を指す場合）とジェンダー［gender］（性自認、心理社会的または文化的因子）という用語については、正しい用法を確実に守ること。不適切でない限り、被験者については性別／ジェンダー、動物や細胞については性別を報告し、性別／ジェンダーの判定に用いた方法を記述する。たとえば、特定の性別のみを組み入れるなど、排他的な集団を対象とした研究では、著者は根拠の正当性を示す必要がある。また、人種または民族性についても判定方法を明確に定義し、その妥当性を立証する必要がある。人種または民族性の情報を収集しなかった場合は、収集しなかった理由を説明する。人種および民族性は、生物学的概念ではなく社会学的概念である。著者は、人種および民族性と関連する結果については、社会学的背景に照らして解釈すべきである。著者は、試験参加者を記述する際に、中立的、正確、かつ敬意を払った言語を用いるべきであり、参加者に偏見を与える可能性のある用語の使用は避ける。
+
+###### **ii. データの収集および測定**
+
+研究の主要目的および副次目的（通常は主要評価項目および副次評価項目）を具体的に記述する。方法、機器（メーカー名および住所を括弧書きで記載）、手順について、他者がその結果を再現できるよう十分に詳述する。すでに確立された方法については、統計的手法も含め、参考文献を提示する（次項を参照）。すでに公表されているがあまり知られていない方法については、参考文献とともに簡単な説明を加える。新しい方法や大幅に修正された方法については、その方法の説明と使用の理由を示し、それらの方法の限界を査定する。使用したすべての薬剤および化学薬品の一般名、投与量、投与経路などを正確に記述する。また、適切な学名および遺伝子名を明記する。
+
+###### **iii. 統計**
+
+統計手法は、元データの閲覧が可能な専門知識のある読者がその研究に対する手法の妥当性を判断し、報告された結果を検証することができるよう十分に詳述する。可能であれば、結果を定量化し、測定誤差や不確実性を表す適切な指標（信頼区間など）とともに提示する。統計学的仮説検定（P値など）のみに頼ることは避ける。効果量および推定量の精度に関する重要な情報を伝えきれないからである。研究デザインや統計手法に関する文献は、可能であれば定評のある標準的な研究を挙げる（掲載ページを示すこと）。統計用語、略語、および一部を除く記号については定義を記載する。使用した統計ソフトとそのバージョンも明記する。予定された解析は、探索的解析（サブグループ解析など）から区別する。
+:::
+
+::: callout-note
+i\. Selection and Description of Participants Clearly describe the selection of observational or experimental participants (healthy individuals or patients, including controls), including eligibility and exclusion criteria and a description of the source population. Because the relevance of such variables as age, sex, or ethnicity is not always known at the time of study design, researchers should aim for inclusion of representative populations into all study types and at a minimum provide descriptive data for these and other relevant demographic variables. Comment on how representative the study sample is of the larger population of interest. Ensure correct use of the terms sex (when reporting biological factors) and gender (identity, psychosocial or cultural factors), and, unless inappropriate, report the sex and/or gender of study participants, the sex of animals or cells, and describe the methods used to determine sex and gender. If the study was done involving an exclusive population, for example in only one sex, authors should justify why. Authors should define how they determined race or ethnicity and justify their relevance. In the case where race or ethnicity was not collected, explain why it was not collected. Race and ethnicity are social and not biological constructs; authors should interpret results associated with race and ethnicity in that context. Authors should use neutral, precise, and respectful language to describe study participants and avoid the use of terminology that might stigmatize participants.
+
+ii\. Data Collection and Measurements Specify the study’s main and secondary objectives—usually identified as primary and secondary outcomes. Identify methods, equipment (give the manufacturer’s name and address in parentheses), and procedures in sufficient detail to allow others to reproduce the results. Give references to established methods, including statistical methods (see below); provide references and brief descriptions for methods that have been published but are not well-known; describe new or substantially modified methods, give the reasons for using them, and evaluate their limitations. Identify precisely all drugs and chemicals used, including generic name(s), dose(s), and route(s) of administration. Identify appropriate scientific names and gene names
+
+iii\. Statistics Describe statistical methods with enough detail to enable a knowledgeable reader with access to the original data to judge its appropriateness for the study and to verify the reported results. When possible, quantify findings and present them with appropriate indicators of measurement error or uncertainty (such as confidence intervals). Avoid relying solely on statistical hypothesis testing, such as P values, which fail to convey important information about effect size and precision of estimates. References for the design of the study and statistical methods should be to standard works when possible (with pages stated). Define statistical terms, abbreviations, and most symbols. Specify the statistical software package(s) and versions used. Distinguish prespecified from exploratory analyses, including subgroup analyses.
+:::
+
+臨床研究や疫学研究では、必ずしも追試は容易でない。同じ研究デザインを用いることはできても、対象となるヒト集団そのものを再現することは不可能に近い。そうであればこそ、研究デザイン、セッティング、対象者の適格基準、介入・曝露、アウトカムの定義や測定方法、統計解析などに関して、必要かつ十分な表記が肝心である。
+
+## Methodsに書くべき項目
+
+1.  研究デザイン
+
+    研究デザインはMethodsの早い段階で示すべきである。これにより読者は研究の骨格を理解できる。
+
+    例：observational study,cohort studyなど
+
+2.  セッティング
+
+    セッティングとは、研究の実施場所および基準となる日付（患者の登録、曝露、追跡、およびデータ収集期間）を指す。
+
+    コホート研究ならば、対象の追跡期間、コホート集団の概要、要因への曝露状況を示す。
+
+    症例対照研究であれば、ケースとコントロールおよびそれらの源集団について記述する。
+
+    横断研究であれば、その集団の概要や研究を行った時点を示す。
+
+3.  適格基準
+
+    対象者を明記することの意義は、研究結果の一般化可能性を示すこと、すなわち研究結果が除外患者に適用できないことを明示することにある。論文の読者に対して、書かれている研究結果を実臨床に応用する際には適用を限定するように注意喚起する、という重要な意味もある。
+
+    適用を誤れば、患者に良い治療効果をもたらすとはいえず、むしろ悪い結果をもたらす危険性すら否定できない。研究のゴールは発表ではなく、臨床への正しい適用であることを忘れてはならない。
+
+4.  介入・曝露群と対照群
+
+    どのような介入か、曝露か
+
+5.  Methodsの記載例
+
+    【例1】ランダム化比較試験
+
+    研究デザイン：
+
+    セッティング：
+
+    組み入れ基準：
+
+    除外基準：
+
+    曝露群・対照群：
+
+    【例2】観察研究
+
+    研究デザイン：a retrospective cohort study
+
+    セッティング：a national inpatient database between July 1 , 2007 and October 31, 2011
+
+    組み入れ基準：patients who were 18 years old or older satisfying the following inclusion criteria were selected
+
+    除外基準：The following patients were excluded
+
+    曝露群・対照群：Among the eligible patients, those whose first PMX session was on day 0 o 1 were identified.Propensity score matching was used to adjust for differences in baseline characteristics and severity of condition at admission between patients with and without PMX
+
+6.  倫理的配慮
+
+    インフォームド・コンセントの方法、倫理委員会の承認を記載する。
+
+7.  変数の定義
+
+## 統計手法
+
+ICMJEには以下のように書いてある。
+
+【悪い例】
+
+-   we used t-tests and x2 tests as appropriate.
+
+【良い例】
+
+-   we used t-tests to compare the averages of continuous variables (such as age) and x2 tests to compare the proportions of categorical variables (such as sex) between the groups.

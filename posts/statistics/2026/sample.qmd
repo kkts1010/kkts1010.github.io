@@ -1,0 +1,8 @@
+---
+title: "sample"
+author: "坂本航太"
+categories: [臨床試験]
+abstract-title: Abstract
+abstract: ""
+date: "2025-10-25"
+---

@@ -1,0 +1,101 @@
+---
+title: "Introductionの書き方"
+author: "坂本航太"
+categories: [医学論文]
+date-modified: "2025-10-13"
+abstract-title: Abstract
+abstract: ""
+date: "2025-10-13"
+---
+
+-   Introductionの鉄則
+
+    -   ⑪Introductionは4パラグラフ構成を基本とする。
+
+    -   ⑫各パラグラフに意識的にkey sentenceを挿入する。
+
+    -   ⑬冗長な先行文献解説を排除する。
+
+    -   ⑭末尾の研究目的に向かって、一直線に論理展開する。
+
+## 論理と構成
+
+論理（logic）とは、論文の概念（concept）を明瞭で矛盾のないものにするための思考過程であり、研究を行う合理的根拠（rationale）、研究そのものの原理、研究結果に基づく考察などすべて含む。論文の各パーツは、論理によってつなげられ、相互に関連する。
+
+構成（Structure）とは、論文を形作る格部分の構造と組み立て方である。論文の本体（main texts)に含まれる各パーツ（Introduction、Methods、Results, and Discussion、IMRAD）を節（section）という。各節はいくつかのパラグラフ（paragraph）を含む。パラグラフは1つの話題（topic）を説明するために組み立てられた複数の文章の最小単位である。
+
+1つのパラグラフには、1つのトピックのみを含めるべきである。（one paragraph, one topic）
+
+読者はパラグラフ単位で文章を理解しようと試みるものである。1つのパラグラフに2つ以上のトピックがあると、とたんに読みにくくなる。
+
+Fool-proof Englishを書くために最も重要な点は、論文の論理と構成をしっかりと意識することである。non-nativeである医学研究者は、平易な文章を用いて、正しい校正に沿って論理だった文章を書かなければならない。
+
+## まずいIntroductionの典型
+
+投稿論文のIntroductionがまずいと、編集者（editor）や査読者（reviewer）の心証はひどく悪いものになる。
+
+投稿論文の良し悪しはIntroductionを読むだけで分かる。研究計画を固めずに何となく取れたデータを何となくまとめて投稿した論文は、Introductionを読むだけで看破できてしまう。そのような論文は、Introductionを読んでいる途中で、外部査読者（external reviewer）に回すことなく不採択（reject）を決めてしまう。
+
+以下はダメな例
+
+1.  教科書的記述の羅列
+
+2.  先行文献解説のpotpourri
+
+3.  研究目的が不明
+
+4.  パラグラフ間のつながりがバラバラ
+
+## Introductionにおける論理
+
+Introductionは、Discussionと並んで論文中の最も書きにくいパーツと考えられている。しかし、論理され理解すれば比較的すっきりと書けるものである。
+
+Introductionにおける論理の枠組みは以下の通りである。
+
+1.  研究の背景を示す
+
+    問題の所在とその性質・範囲を簡潔に示す。
+
+2.  論文の方向性を示すために簡潔な文献情報を記す。
+
+    科学の出発点は、既知と未知の線引きである。先行研究でどこまで明らかになっているか（What is already knowon?)、まだ明らかになっていないことは何か（What remains unknown？）を簡潔に記すことにより、自分の研究の現代科学における位置づけを明らかにする。
+
+3.  証明すべき仮説、研究目的を明示する。
+
+    証明すべき仮説を提示し、研究目的を明示する。これらは、Discussionで論じるべき内容の伏線となる。Discussionでは、本研究のどこに新規性があるか、本研究が既存の知見に何を追加できるかについて論じることになる。結論にまでつながらう最初の入り口に読者を導き、読者に「読みたい」という興味を抱かせることが肝心である。
+
+## Introductionの構成
+
+1.  読みやすいIntroduction
+
+    典型的で読みやすいIntroductionの構成は、次の4パラグラフ構成である。
+
+    【Introductionの構成】
+
+    第1パラグラフ：Background
+
+    第2パラグラフ：What is already known?
+
+    第3パラグラフ：What remains unknown?
+
+    第4パラグラフ：What are the aims of the present study
+
+2.  Key sentenceの挿入
+
+    格パラグラフに1文のkey sentenceを意識的に挿入する。key sentenceはパラグラフの冒頭に置かれることが多いものの、パラグラフの末尾や中間においてもよい。INtroductionを4パラグラフ構成とした場合、必然的にkey sentenceは4つ存在する。key sentenceをつなぎ合わせると、Introductionの全体像を把握できるように書くことが重要である。
+
+3.  Introductionの長さ
+
+    本文全体とどうよう、Introductionも簡潔明瞭であればあるほどよい。多くの読者が集中力を切らさず一気に読めるIntroductionの長さはせいぜい500 words以内であろう
+
+4.  Introductionの引用文献
+
+    Introductionにおける引用文献に関する記述は、Discussionにおけるそれとは役割は異なる。
+
+    Introductionにおける引用文献は、焦点を能ている研究テーマに関する最新医学の現状を明らかにし、その後に展開するMethods、Resultsの方向性を示すものでなければならない。論文全体の方向性に決定的に影響する文献のみんを厳選して引用することが肝心であり、その他一切は無用である。
+
+    それに対して、Discussionにおける引用文献は、Resultsに対する補足説明や、Resultsに基づく考察を裏付けるという役割である。IntroductionとDiscussionに同じ文献を引用し、似たような解説を2度繰り返している投稿論文が見受けられる。紙面の無駄であり、editorの心証を悪くする。
+
+## Introductionの例
+
+省略

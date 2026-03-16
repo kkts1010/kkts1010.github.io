@@ -1,0 +1,9 @@
+---
+title: "Information for Authors: General Statistical Guidance"
+author: "坂本航太"
+categories: [医学論文]
+date-modified: "2025-10-13"
+abstract-title: Abstract
+abstract: ""
+date: "2025-10-13"
+---

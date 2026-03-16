@@ -1,0 +1,23 @@
+---
+title: "投稿から掲載まで2"
+author: "坂本航太"
+categories: [医学論文]
+date-modified: "2025-10-13"
+abstract-title: Abstract
+abstract: ""
+date: "2025-10-13"
+---
+
+## 投稿から掲載まで2
+
+## Revisionの鉄則
+
+-   38.投稿前に原稿の体裁を完璧に整える。
+
+-   39.Authorの要件を満たさない者をco-authorに加えるべきでない。
+
+-   40\. Aims and Scopeに合う適切な投稿先を選択する。
+
+-   41\. 記念受験するべからず。身の程をしるべし。
+
+##
