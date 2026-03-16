@@ -204,6 +204,9 @@ window.Quarto = {
    
   <ul class="collapse">
   <li><a href="#回目" id="toc-回目" class="nav-link active" data-scroll-target="#回目"><span class="header-section-number">1</span> 1回目</a></li>
+  <li><a href="#回目-1" id="toc-回目-1" class="nav-link" data-scroll-target="#回目-1"><span class="header-section-number">2</span> 2回目</a></li>
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"><span class="header-section-number">3</span> </a></li>
+  <li><a href="#回目-2" id="toc-回目-2" class="nav-link" data-scroll-target="#回目-2"><span class="header-section-number">4</span> 3回目</a></li>
   </ul>
 </nav>
     </div>
@@ -228,6 +231,51 @@ window.Quarto = {
 </ul></li>
 <li><p>データをベクトルとみなして、cosθと捉え直す方法</p></li>
 </ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="回目-1" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="回目-1"><span class="header-section-number">2</span> 2回目</h2>
+</section>
+<section id="section" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="section"><span class="header-section-number">3</span> </h2>
+</section>
+<section id="回目-2" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="回目-2"><span class="header-section-number">4</span> 3回目</h2>
+<ul>
+<li><p>行列の掛け算</p>
+<ul>
+<li><p>パターン1：左の行列を「列ベクトルの集まり」、右の行列を「その重み」とみる。</p>
+<ul>
+<li><p>左を2×2行列、右を2×1の行列（ベクトル）とする。</p></li>
+<li><p>そうすると、重み付き和として捉えられる。</p></li>
+<li><p>掛け算と思うから気持ち悪いが、線形和（一次結合）を行列では掛け算と呼んでいる、と捉えると分かる。</p></li>
+<li><p>例：線形回帰分析</p>
+<ul>
+<li><p><span class="math inline">y_1=\beta_0+\beta_1x_1</span></p></li>
+<li><p><span class="math inline">y_2=\beta_0+\beta_1x_2</span></p></li>
+<li><p>すなわち、<span class="math inline">Y=X\beta</span></p></li>
+</ul></li>
+</ul></li>
+<li><p>パターン2：内積の集まり</p>
+<ul>
+<li><p>左は行ベクトルの集まり</p></li>
+<li><p>右は列ベクトルの集まり</p></li>
+</ul></li>
+</ul></li>
+</ul>
+<p><img src="images/paste-12.png" class="img-fluid" width="602"></p>
+<ul>
+<li>線形回帰モデルの最小二乗法</li>
+</ul>
+<p>定理</p>
+<ul>
+<li><p><span class="math inline">\beta</span>の最小二乗推定量は、<span class="math inline">X^TX\beta=X^Ty</span> の解である。</p></li>
+<li><p>yを1ベクトルとベクトルXが張る平面Mに垂直に降ろしてできるベクトル<span class="math inline">\hat y</span></p></li>
+<li><p>主成分分析</p>
+<ul>
+<li><p><span class="math inline">z_i=w_1x_{i1}+...+w_dx_{id}</span> i行目の線形和</p></li>
+<li><p>このとき<span class="math inline">z_1,...,z_n</span> の分散を最大にするような<span class="math inline">w_1,..,w_d</span> を最大にするような<span class="math inline">z_i</span> を第1主成分という。</p></li>
 </ul></li>
 </ul>
 

@@ -8,7 +8,7 @@
 
 <meta name="author" content="坂本航太">
 
-<title>情報幾何学入門 – Kota Sakamoto</title>
+<title>JAMA：Reporting Standards and Data Presentation – Kota Sakamoto</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -69,49 +69,6 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
-  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
-  <script>document.addEventListener("DOMContentLoaded", function () {
- var mathElements = document.getElementsByClassName("math");
- var macros = [];
- for (var i = 0; i < mathElements.length; i++) {
-  var texText = mathElements[i].firstChild;
-  if (mathElements[i].tagName == "SPAN") {
-   katex.render(texText.data, mathElements[i], {
-    displayMode: mathElements[i].classList.contains('display'),
-    throwOnError: false,
-    macros: macros,
-    fleqn: false
-   });
-}}});
-  </script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="../../../styles.css">
 </head>
@@ -161,9 +118,9 @@ window.Quarto = {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-page-left">
-      <h1 class="title">情報幾何学入門</h1>
+      <h1 class="title">JAMA：Reporting Standards and Data Presentation</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">数理統計</div>
+                <div class="quarto-category">医学論文</div>
               </div>
                   </div>
   </div>
@@ -181,14 +138,14 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">公開</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">2025年10月13日</p>
+        <p class="date">2025年10月28日</p>
       </div>
     </div>
     
       <div>
       <div class="quarto-title-meta-heading">更新日</div>
       <div class="quarto-title-meta-contents">
-        <p class="date-modified">2025年10月13日</p>
+        <p class="date-modified">2025年10月28日</p>
       </div>
     </div>
       
@@ -203,8 +160,16 @@ window.Quarto = {
     <h2 id="toc-title">目次</h2>
    
   <ul class="collapse">
-  <li><a href="#回目" id="toc-回目" class="nav-link active" data-scroll-target="#回目"><span class="header-section-number">1</span> 1回目</a></li>
-  <li><a href="#回目-1" id="toc-回目-1" class="nav-link" data-scroll-target="#回目-1"><span class="header-section-number">2</span> 3回目</a></li>
+  <li><a href="#jamaの投稿ガイドライン" id="toc-jamaの投稿ガイドライン" class="nav-link active" data-scroll-target="#jamaの投稿ガイドライン"><span class="header-section-number">1</span> JAMAの投稿ガイドライン</a></li>
+  <li><a href="#cohort-study" id="toc-cohort-study" class="nav-link" data-scroll-target="#cohort-study"><span class="header-section-number">2</span> Cohort Study</a></li>
+  <li><a href="#manuscript-submission" id="toc-manuscript-submission" class="nav-link" data-scroll-target="#manuscript-submission"><span class="header-section-number">3</span> Manuscript Submission</a></li>
+  <li><a href="#tables-and-figures" id="toc-tables-and-figures" class="nav-link" data-scroll-target="#tables-and-figures"><span class="header-section-number">4</span> Tables and Figures</a></li>
+  <li><a href="#table-creation" id="toc-table-creation" class="nav-link" data-scroll-target="#table-creation"><span class="header-section-number">5</span> Table Creation</a></li>
+  <li><a href="#table-footnotes" id="toc-table-footnotes" class="nav-link" data-scroll-target="#table-footnotes"><span class="header-section-number">6</span> Table Footnotes</a></li>
+  <li><a href="#figures" id="toc-figures" class="nav-link" data-scroll-target="#figures"><span class="header-section-number">7</span> Figures</a></li>
+  <li><a href="#general-figure-guidelines" id="toc-general-figure-guidelines" class="nav-link" data-scroll-target="#general-figure-guidelines"><span class="header-section-number">8</span> General Figure Guidelines</a></li>
+  <li><a href="#table-of-figure-requirements" id="toc-table-of-figure-requirements" class="nav-link" data-scroll-target="#table-of-figure-requirements"><span class="header-section-number">9</span> Table of Figure Requirements</a></li>
+  <li><a href="#statisistical-methods-and-data-presentation" id="toc-statisistical-methods-and-data-presentation" class="nav-link" data-scroll-target="#statisistical-methods-and-data-presentation"><span class="header-section-number">10</span> Statisistical Methods and Data Presentation</a></li>
   </ul>
 </nav>
     </div>
@@ -215,61 +180,142 @@ window.Quarto = {
 
 
 
-<section id="回目" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="回目"><span class="header-section-number">1</span> 1回目</h2>
+<section id="jamaの投稿ガイドライン" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="jamaの投稿ガイドライン"><span class="header-section-number">1</span> JAMAの投稿ガイドライン</h2>
+<p><a href="https://jamanetwork.com/journals/jama/pages/instructions-for-authors#SecReportingStandardsandDataPresentation" class="uri">https://jamanetwork.com/journals/jama/pages/instructions-for-authors#SecReportingStandardsandDataPresentation</a></p>
+</section>
+<section id="cohort-study" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="cohort-study"><span class="header-section-number">2</span> Cohort Study</h2>
 <ul>
-<li><p>情報幾何学は、確率分布全体の集合を一つの空間（多様体）とみなし、そこに幾何学的な構造を与えて解析する学問分野である。</p></li>
-<li><p>ユークリッド空間では、点と点の間に「距離」を定義したり、曲線の「長さ」を測ったりすることができる。情報幾何学は、この考え方を統計モデルの世界に持ち込みます。</p>
+<li><p>Description</p>
 <ul>
-<li><p>空間の「点」：一つ一つの確率分布</p></li>
-<li><p>空間の「座標」：分布を特徴づけるパラメータ</p></li>
+<li>An observational study that follows a group (cohort) of individuals who are initially free of the outcome of interest. Individuals in the cohort may share some underlying characteristic, such as age, sex, diagnosis, exposure to a risk factor, or treatment.</li>
 </ul></li>
-<li><p>この「統計多様体」と呼ばれる空間に、距離や角度、曲率といった幾何学的な「ものさし」を導入することで、これまでとは異なる視点から統計モデルの性質を理解することを目指す。</p></li>
-<li><p>スコア関数</p>
+<li><p>Requirements</p>
 <ul>
-<li><span class="math inline">S(\theta)=\frac{\partial log p(x;\theta)}{\partial \theta}</span></li>
-</ul></li>
-<li><p>スコア関数の性質</p>
-<ul>
-<li><span class="math inline">E[\frac{\partial log p(x;\theta)}{\partial \theta}] =0</span></li>
-</ul></li>
-<li><p>Fisher情報量</p>
-<ul>
-<li><p><span class="math inline">I_{ij}=E[\frac{\partial log p(x;\theta)}{\partial \theta_i}\frac{\partial log p(x;\theta)}{\partial \theta_j}]</span></p></li>
-<li><p>スコア関数の分散共分散行列</p></li>
-</ul></li>
-<li><p>定理</p>
-<ul>
-<li><p>確率変数Ｘがパラメータθによって定義される確率分布 <span class="math inline">p(x;\theta)</span> に従っているとする。変換Y=f(X)が逆関数<span class="math inline">g=f^{-1}</span> を持つとき、Xが持つフィッシャー情報量<span class="math inline">I_x(\theta)</span> とYが持つフィッシャー情報量</p>
-<p><span class="math inline">I_Y(\theta)</span> は等しい。</p></li>
-</ul></li>
-<li><p>Cramer-Raoの下限</p>
-<ul>
-<li><p>Cramer-Raoの下限は、不偏推定量が持ちうる分散の下限を与えます。</p></li>
-<li><p>パラメータθの任意の不偏推定量<span class="math inline">\hat \theta</span> の分散は次を満たす。</p></li>
-<li><p><span class="math inline">V[\hat \theta]≥\frac{1}{I(\theta)}</span></p></li>
-<li><p>個の不等式は、Fisher情報量が大きいほど推定量の分散が小さくなる（＝より高精度な推定が可能になる）ことを示します。</p></li>
-</ul></li>
-<li><p>Cramer-Raoの下限の幾何学的解釈</p>
-<ul>
-<li><p><span class="math inline">\hat \theta</span> 不偏推定量→<span class="math inline">E[\hat \theta \frac{\partial log p(x;\theta)}{\partial \theta} ] =1</span></p>
-<p>これはそれぞれθとスコア関数をベクトルとみなすと、内積の期待値が1になることを意味している。</p></li>
-<li><p>これは正射影の話である。</p></li>
-<li><p><span class="math inline">\hat \theta-\theta</span>のベクトルをスコア関数の空間に射影しているときの長さの下限を示している。</p></li>
+<li><p>3000 words</p></li>
+<li><p>≤5 tables and/or figures</p></li>
+<li><p>50-75 references</p></li>
+<li><p>Structured abstract</p></li>
+<li><p>Key Points</p></li>
+<li><p><a href="https://jamanetwork.com/journals/jama/pages/instructions-for-authors#SecDataSharingStatement">Data Sharing Statement</a></p></li>
+<li><p>Follow <a href="https://www.equator-network.org/reporting-guidelines/strobe">STROBE Reporting Guidelines</a></p></li>
 </ul></li>
 </ul>
 </section>
-<section id="回目-1" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="回目-1"><span class="header-section-number">2</span> 3回目</h2>
+<section id="manuscript-submission" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="manuscript-submission"><span class="header-section-number">3</span> Manuscript Submission</h2>
 <ul>
-<li><p>リーマン計量</p>
+<li><p>All manuscripts must be submitted online via the <a href="https://manuscripts.jama.com/">online manuscript submission and review system</a>.</p></li>
+<li><p>At the time of submission, complete contact information (affiliation, postal/mail address, email address, and telephone numbers) for the corresponding author is required. First and last names, email addresses, and institutional affiliations of all coauthors are also required. After the manuscript is submitted, the corresponding author will receive an acknowledgment confirming receipt and a manuscript number. Authors will be able to track the status of their manuscripts via the online system. After manuscript submission, all authors of papers under consideration for publication will be sent a link to the Authorship Form to complete and submit. See other details in these instructions for additional requirements.<sup><a href="https://jamanetwork.com/journals/jama/pages/instructions-for-authors#Ref2">2</a>,<a href="https://jamanetwork.com/journals/jama/pages/instructions-for-authors#Ref4">4</a></sup></p></li>
+</ul>
+</section>
+<section id="tables-and-figures" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="tables-and-figures"><span class="header-section-number">4</span> Tables and Figures</h2>
 <ul>
-<li><p>リーマン多様体という「空間の捉え方」</p></li>
-<li><p>内積を考えるときは、グラム行列を通しておこう。</p>
+<li><p>Restrict tables and figures to those needed to explain and support the argument of the article and to report all outcomes identified in the Methods section. Number each table and figure and provide a descriptive title for each. Every table and figure should have an in-text citation. Verify that data are consistently reported across text, tables, figures, and supplementary material.</p></li>
+<li><p>Frequency data should be reported as “No.&nbsp;(%),” not as percentages alone (exception, sample sizes exceeding ~10,000). Whenever possible, proportions and percentages should be accompanied by the actual numerator and denominator from which they were derived. This is particularly important when the sample size is less than 100. Do not use decimal places (ie, xx%, not xx.xx%) if the sample size is less than 100. Tables that include results from multivariable regression models should focus on the primary results. Provide the unadjusted and adjusted results for the primary exposure(s) or comparison(s) of interest. If a more detailed description of the model is required, consider providing the additional unadjusted and adjusted results in supplementary tables.</p></li>
+<li><p>Tables have a minimum of 2 columns. Comparisons must read across the table columns.</p></li>
+<li><p>Do not duplicate data in figures and tables. For all primary outcomes noted in the Methods section, exact values with measures of uncertainty should be reported in the text or in a table and in the Abstract, and not only represented graphically in figures.</p></li>
+<li><p>Pie charts and 3-D graphs should not be used and should be revised to alternative graph types.</p></li>
+<li><p>Bar graphs should be used to present frequency data only (ie, numbers and rates). Avoid stacked bar charts and consider alternative formats (eg, tables or splitting bar segments into side-by-side bars) except for comparisons of distributions of ordinal data.</p></li>
+<li><p>Summary data (eg, means, odds ratios) should be reported using data markers for point estimates, not bars, and should include error bars indicating measures of uncertainty (eg, SDs, 95% CIs). Actual values (not log-transformed values) of relative data (for example, odds ratios, hazard ratios) should be plotted on log scales.</p></li>
+</ul>
+</section>
+<section id="table-creation" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="table-creation"><span class="header-section-number">5</span> Table Creation</h2>
 <ul>
-<li>座標を張るベクトルの大きさと内積＝グラム行列</li>
+<li><p>Use the table menu in the software program used to prepare the text. Tables can be built de novo using Insert→Table or copied into the text file from another document (eg, Word, Excel, or a statistical spreadsheet).</p></li>
+<li><p>Tables should be single-spaced and in a 10- or 12-point font (do not shrink the point size to fit the table onto the page). Do not draw extra lines or rules—the table grid will display the outlines of each cell.</p></li>
+<li><p>Missing data and blank space in the table field (ie, an empty cell) may create ambiguity and should be avoided; use abbreviations such as NA for not applicable or not available. Each piece of data needs to be contained in its own cell. Do not try to align cells with hard returns or tabs; alignment will be imposed in the production system if the manuscript is accepted. To show an indent, add 2 spaces.</p></li>
+<li><p>When presenting percentages, include numbers (numerator and denominator).</p></li>
+<li><p>Include statistical variability where applicable (eg, mean [SD], median [IQR]). For additional detail on requirements for data presentation in tables, see&nbsp;<a href="https://jamanetwork.com/journals/jama/pages/instructions-for-authors#SecStatisticalMethodsandDataPresentation">Statistical Methods and Data Presentation</a>.</p></li>
+<li><p>Place each row of data in a separate row of cells, and note that No.&nbsp;(%) and measures of variability are presented in the same cell as in the example&nbsp;<a href="https://jamanetwork.com/journals/jama/pages/instructions-for-authors#SecTable1">Table 1</a>&nbsp;below:</p></li>
+</ul>
+<p><img src="images/paste-13.png" class="img-fluid"></p>
+<p><img src="images/paste-14.png" class="img-fluid"></p>
+<p><img src="images/paste-15.png" class="img-fluid"></p>
+</section>
+<section id="table-footnotes" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="table-footnotes"><span class="header-section-number">6</span> Table Footnotes</h2>
+<ul>
+<li><p>Footnotes to tables may apply to the entire table, portions (eg, a column), or an individual entry.</p></li>
+<li><p>When both a footnote letter and reference number follow data in a table, set the superscript reference number first followed by a comma and the superscript letter.</p></li>
+<li><p>Use superscript letters (a, b, c) to mark each footnote and be sure each footnote in the table has a corresponding note (and vice versa).</p></li>
+<li><p>List abbreviations in the footnote section and explain any empty cells.</p></li>
+<li><p>If relevant, add a footnote to explain why numbers may not sum to group totals or percentages do not add to 100%.</p></li>
+<li><p>For more detail on the components and recommended structure of tables, see the <a href="https://academic.oup.com/amamanualofstyle/book/27941/chapter/207563838#382789057"><em>AMA Manual of Style</em></a>.<sup><a href="https://jamanetwork.com/journals/jama/pages/instructions-for-authors#Ref2">2</a></sup></p></li>
+</ul>
+</section>
+<section id="figures" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="figures"><span class="header-section-number">7</span> Figures</h2>
+<ul>
+<li><p>For initial manuscript submissions, figures must be of sufficient quality and may be embedded at the end of the file for editorial assessment and peer review. If a revision is requested and before a manuscript is accepted, authors will be asked to provide figures that meet the requirements described in&nbsp;<a href="https://jamanetwork.com/journals/jama/pages/instructions-for-authors#SecFigureFileRequirementsforPublication">Figure File Requirements for Publication</a>.</p></li>
+<li><p>See the&nbsp;<a href="https://jamanetwork.com/journals/jama/pages/instructions-for-authors#SecTableofFigureRequirements">Table of Figure Requirements</a>&nbsp;for additional guidance for specific types of figures for suggested resolution and file formats. In general each figure should be no larger than 1 MB.</p></li>
+<li><p>Figure Titles and Legends</p>
+<ul>
+<li>At the end of the manuscript, include a title for each figure. The figure title should be a brief descriptive phrase, preferably no longer than 10 to 15 words. A figure legend (caption) can be used for a brief explanation of the figure or markers if needed and expansion of abbreviations. For photomicrographs, include the type of specimen, original magnification or a scale bar, and stain in the legend. For gross pathology specimens, label any rulers with unit of measure. Digitally enhanced images must be clearly identified in the figure legends as enhanced or manipulated, eg, computed tomographic scans, magnetic resonance images, photographs, photomicrographs, x-ray films</li>
 </ul></li>
-<li></li>
+</ul>
+</section>
+<section id="general-figure-guidelines" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="general-figure-guidelines"><span class="header-section-number">8</span> General Figure Guidelines</h2>
+<ul>
+<li><p>Primary outcome data should not be presented in figures alone. Exact values with measure of variability should be reported in the text or table as well as in the abstract.</p></li>
+<li><p>All symbols, indicators (including error bars), line styles, colors, and abbreviations should be defined in a legend.</p></li>
+<li><p>Each axis on a statistical graph must have a label and units of measure should be labeled.</p></li>
+<li><p>Do not use pie charts, 3-D graphs, and stacked bar charts as these are not appropriate for accurate statistical presentation of data and should be revised to another figure type or converted to a table.</p></li>
+<li><p>Error bars should be included in both directions, unless only 1-sided variability was calculated.</p></li>
+<li><p>Values for ratio data—odds ratios, relative risks, hazard ratios—should be plotted on a log scale. Values for ratio data should not be log transformed.</p></li>
+<li><p>For footnotes, use letters (a, b, c, etc) not symbols.</p></li>
+<li><p>Do not submit figures with more than 4 panels unless otherwise justified.</p></li>
+<li><p>See the <a href="https://academic.oup.com/amamanualofstyle/book/27941/chapter/207563838#382789206"><em>AMA Manual of Style</em></a> for more guidance on figure types and components</p></li>
+</ul>
+</section>
+<section id="table-of-figure-requirements" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="table-of-figure-requirements"><span class="header-section-number">9</span> Table of Figure Requirements</h2>
+<ul>
+<li><p>Bar graph</p>
+<p><img src="images/paste-16.png" class="img-fluid"></p></li>
+<li><p>Dot plot</p>
+<p><img src="images/paste-18.png" class="img-fluid"></p></li>
+</ul>
+</section>
+<section id="statisistical-methods-and-data-presentation" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="statisistical-methods-and-data-presentation"><span class="header-section-number">10</span> Statisistical Methods and Data Presentation</h2>
+<ul>
+<li><p>General Considerations</p>
+<ul>
+<li><p>Authors are encouraged to consult “Reporting Statistical Information in Medical Journal Articles.”<sup><a href="https://jamanetwork.com/journals/jama/pages/instructions-for-authors#Ref1">1</a></sup> In the Methods section, describe statistical methods with enough detail to enable a knowledgeable reader with access to the original data to reproduce the reported results. Such description should include appropriate references to the original literature, particularly for uncommon statistical methods. For more advanced or novel methods, provide a brief explanation of the methods and appropriate use in the text and consider providing a detailed description in an online supplement.</p></li>
+<li><p>In the reporting of results, when possible, quantify findings and present them with appropriate indicators of measurement error or uncertainty, such as confidence intervals (see <a href="https://jamanetwork.com/journals/jama/pages/instructions-for-authors#SecReportingStandardsandDataPresentation">Reporting Standards and Data Presentation</a>). Avoid relying solely on statistical hypothesis testing, such as the use of <em>P</em> values, which fails to convey important quantitative information. For observational studies, provide the numbers of observations. For randomized trials, provide the numbers randomized. Report losses to observation or follow up (see <a href="https://jamanetwork.com/journals/jama/pages/instructions-for-authors#SecMissingData">Missing Data</a>). For multivariable models, report all variables included in models, and report model diagnostics and overall fit of the model when available (see <a href="https://jamanetwork.com/journals/jama/pages/instructions-for-authors#SecStatisticalProcedures">Statistical Procedures</a>).</p></li>
+<li><p>Define statistical terms, abbreviations, and symbols, if included. Avoid nontechnical uses of technical terms in statistics, such as correlation, normal, predictor, random, sample, significant, trend. Do not use inappropriate hedge terms such as marginal significance or trend toward significance for results that are not statistically significant. Causal language (including use of terms such as effect and efficacy) should be used only for randomized clinical trials. For all other study designs (including meta-analyses of randomized clinical trials), methods and results should be described in terms of association or correlation and should avoid cause-and-effect wording.</p></li>
+</ul></li>
+<li><p>Descriptive Statistics</p>
+<ul>
+<li>It is generally not necessary to provide a detailed description of the methods used to generate summary statistics, but the tests should be briefly noted in the Methods section (eg, ANOVA or Fisher exact test).</li>
+</ul></li>
+<li><p>Statistical Procedures</p>
+<ul>
+<li><p>Identify regression models with more than 1 independent variable as multivariable and regression models with more than 1 dependent variable as multivariate. Report all variables included in models, as well as any mathematical transformations of those variables. Provide the scientific rationale (clinical, statistical, or otherwise) for including variables in regression models.</p></li>
+<li><p>For regression models fit to dependent data (eg, clustered or longitudinal data), the models should account for the correlations that arise from clustering and/or repeated measures. Failure to account for such correlation will result in incorrect estimates of uncertainty (eg, confidence intervals). Describe how the model accounted for correlation. For example, for an analysis based on generalized estimating equations, identify the assumed correlation structure and whether robust (or, sandwich) variance estimators were used. Or, for an analysis based on mixed-effects models, identify the assumed structure for the random effects, such as the level of random intercepts and whether any random slopes were included. Fixed-effects estimation should be described as conditional likelihood. Avoid the term fixed effects for describing covariates.</p></li>
+</ul></li>
+<li><p>Missing Data</p>
+<ul>
+<li>Report losses to observation, such as dropouts from a clinical trial or those lost to follow-up or unavailable in an observational study. If some participants are excluded from analyses because of missing or incomplete data, provide a supplementary table that compares the observed characteristics between participants with complete and incomplete data. Consider multiple imputation methods to impute missing data and include an assessment of whether data were missing at random. Approaches based on “last observation carried forward” should not be used.</li>
+</ul></li>
+<li><p>Primary Outcomes</p>
+<ul>
+<li><p>Both randomized and observational studies should identify the primary outcome(s) before the study began, as well as any prespecified secondary, subgroup, and/or sensitivity analyses. Comparisons arrived at during the course of the analysis or after the study was completed should be identified as post hoc.</p></li>
+<li><p>For analyses of more than 1 primary outcome, corrections for multiple testing should generally be used. For secondary outcomes, address multiple comparisons or consider such analyses as exploratory and interpret them as hypothesis-generating. The reporting of all outcomes should match that included in study protocols. For randomized clinical trials, protocols with complete statistical analysis plans should be cited in the Methods section and submitted as online supplementary content. Randomized clinical trials should be primarily analyzed according to the intention-to-treat approach. Deviations from strict intention-to-treat analysis should be described as “modified intention-to-treat,” with the modifications clearly described.</p></li>
+</ul></li>
+<li><p>Statistical Analysis Subsection</p>
+<ul>
+<li>At the end of the Methods section, briefly describe the statistical tests used for the analysis. State any a priori levels of significance and whether hypothesis tests were 1- or 2-sided. Also include the statistical software used to perform the analysis, including the version and manufacturer, along with any extension packages (eg, the svy suite of commands in Stata or the survival package in R). Do not describe software commands (eg, SAS proc mixed was used to fit a linear mixed-effects model). If analysis code is included, it should be placed in the online supplementary content</li>
+</ul></li>
+<li><p>Reporting Standards and Data Presentation</p>
+<ul>
+<li><p>Analyses should follow&nbsp;<a href="https://www.equator-network.org/">EQUATOR Reporting Guidelines</a>&nbsp;and be consistent with the protocol and statistical analysis plan, or described as post hoc.</p></li>
+<li><p>When possible, present numerical results (eg, absolute numbers and/or rates) with appropriate indicators of uncertainty, such as confidence intervals. Include absolute numbers and/or rates with any ratio measures and avoid redundant reporting of relative data (eg, % increase or decrease). Use means and standard deviations (SDs) for normally distributed data and medians and ranges or interquartile ranges (IQRs) for data that are not normally distributed. Avoid solely reporting the results of statistical hypothesis testing, such as&nbsp;<em>P</em>&nbsp;values, which fail to convey important quantitative information. For most studies,&nbsp;<em>P</em>&nbsp;values should follow the reporting of comparisons of absolute numbers or rates and measures of uncertainty (eg, 0.8%, 95% CI −0.2% to 1.8%;&nbsp;<em>P</em> = .13).&nbsp;<em>P</em>&nbsp;values should never be presented alone without the data that are being compared. If&nbsp;<em>P</em>&nbsp;values are reported, follow standard conventions for decimal places: for&nbsp;<em>P</em>&nbsp;values less than .001, report as “<em>P</em>&lt;.001”; for&nbsp;<em>P</em>&nbsp;values between .001 and .01, report the value to the nearest thousandth; for&nbsp;<em>P</em>&nbsp;values greater than or equal to .01, report the value to the nearest hundredth; and for&nbsp;<em>P</em>&nbsp;values greater than .99, report as “<em>P</em>&gt;.99.” For studies with exponentially small&nbsp;<em>P</em>&nbsp;values (eg, genetic association studies),&nbsp;<em>P</em>&nbsp;values may be reported with exponents (eg,&nbsp;<em>P</em> = 1×10<sup>−5</sup>). In general, there is no need to present the values of test statistics (eg, F statistics or χ² results) and degrees of freedom when reporting results.</p></li>
 </ul></li>
 </ul>
 
